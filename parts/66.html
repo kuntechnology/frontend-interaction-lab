@@ -1,0 +1,48 @@
+ document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+    return Promise.resolve();
+  }
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.copy-btn');
+    if(!btn) return;
+    var promptEl = btn.closest('.prompt');
+    var text = promptEl.querySelector('pre').textContent;
+    copyText(text).then(function(){
+      var old = btn.innerHTML;
+      btn.classList.add('is-done');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>已复制';
+      var guided = false;
+      try{ guided = sessionStorage.getItem('lab-copy-guided'); }catch(e){}
+      if(!guided){
+        showToast('success', '已复制，去 AI 工具粘贴');
+        try{ sessionStorage.setItem('lab-copy-guided','1'); }catch(e){}
+      } else {
+        showToast('success', '提示词已复制到剪贴板');
+      }
+      setTimeout(function(){ btn.classList.remove('is-done'); btn.innerHTML = old; }, 2000);
+    });
+  });
+
+  /* ===== v3.3 · 明暗主题切换 ===== */
+  var themeBtn = document.getElementById('theme-toggle');
+  themeBtn.addEventListener('click', function(){
+    var d = document.documentElement;
+    var next = d.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    d.setAttribute('data-theme', next);
+    try{ localStorage.setItem('lab-theme', next); }catch(e){}
+  });
+  /* v3.4 · 霓虹氛围灯 */
+  document.querySelectorAll('.accent-dot').forEach(function(dot){
+    dot.addEventListener('click', function(){
+      var d = document.documentElement;
+      var acc = dot.getAttribute('data-accent');
+      d.setAttribute('data-accent', acc);
+      document.querySelectorAll('.accent-dot').forEach(function(x){ x.classList.toggle('is-active', x === dot); });
+      try{ localStorage.setItem('lab-accent', acc); }catch(e){}
+    });
+  });
+
+  /* ===== 侧栏滚动高亮（滚动监听） ===== */
+  var railLinks = Array.prototype.slice.call(document.quer

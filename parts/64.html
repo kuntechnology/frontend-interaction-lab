@@ -1,0 +1,32 @@
+js'] },
+    three:   { js: ['https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js'] },
+    p5:      { js: ['https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js'] },
+    echarts: { js: ['https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js'] },
+    d3:      { js: ['https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js'] },
+    swiper:  { js: ['https://cdn.jsdelivr.net/npm/swiper@11.1.15/swiper-bundle.min.js'] },
+    embla:   { js: ['https://cdn.jsdelivr.net/npm/embla-carousel@8.1.6/embla-carousel.umd.js'] },
+    hammer:  { js: ['https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js'] },
+    tone:    { js: ['https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js'] },
+    vue:     { js: ['https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js'] },
+    preact:  { js: ['https://cdn.jsdelivr.net/npm/preact@10.26.4/dist/preact.min.umd.js','https://cdn.jsdelivr.net/npm/preact@10.26.4/hooks/dist/hooks.umd.js','https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js'] },
+    htmx:    { js: ['https://cdn.jsdelivr.net/npm/htmx.org@2.0.4/dist/htmx.min.js'] },
+    alpine:  { js: ['https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js'] },
+    tailwind:{ js: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.13/dist/index.global.js'] },
+    jotai:   { js: ['https://cdn.jsdelivr.net/npm/jotai@2.2.0/umd/vanilla.production.js'] },
+    rxjs:    { js: ['https://cdn.jsdelivr.net/npm/rxjs@7.8.2/dist/bundles/rxjs.umd.min.js'] },
+    lit:     { js: null }
+  };
+  var LAB = (function(){
+    var ready = {}, loading = {}, waiters = {}, timers = {};
+    function flush(k){
+      var list = (waiters[k] || []).splice(0);
+      waiters[k] = [];
+      list.forEach(function(it){ it.fn(); });
+    }
+    function fail(k){
+      var list = (waiters[k] || []).slice();
+      /* 保留等待者：CDN 抖动导致首次加载失败后，LAB.load 重试成功仍会 flush 初始化 demo（自愈） */
+      list.forEach(function(it){ (it.fb || defaultFb)(it); });
+    }
+    function defaultFb(it){
+      if(it.id) noLib(it.id, it.

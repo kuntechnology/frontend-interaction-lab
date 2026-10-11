@@ -1,0 +1,63 @@
+name);
+      else showToast('error', (it.name || '库') + ' 加载失败，请联网后刷新页面');
+    }
+    function load(k){
+      if(ready[k] || loading[k]) return;
+      var urls = LIBS[k] && LIBS[k].js;
+      if(!urls){ ready[k] = true; flush(k); return; }
+      loading[k] = true;
+      inject(0);
+      function inject(i){
+        var s = document.createElement('script');
+        s.src = urls[i];
+        s.onload = function(){
+          if(i < urls.length - 1){ inject(i + 1); }
+          else { loading[k] = false; ready[k] = true; flush(k); }
+        };
+        s.onerror = function(){ loading[k] = false; fail(k); };
+        document.head.appendChild(s);
+      }
+    }
+    function wait(opt){
+      var k = opt.key, it = opt;
+      (waiters[k] = waiters[k] || []).push(it);
+      if(ready[k]){ flush(k); return; }
+      if(timers[k]) clearTimeout(timers[k]);
+      timers[k] = setTimeout(function(){
+        if(!ready[k]){
+          if(loading[k]){
+            /* 慢网：库仍在加载，先提示兜底，保留等待者——加载完成仍会初始化 demo */
+            var list = (waiters[k] || []).slice();
+            list.forEach(function(w){ (w.fb || defaultFb)(w); });
+          }else{
+            fail(k);
+          }
+        }
+      }, 12000);
+    }
+    return { load: load, wait: wait };
+  })();
+  /* 进入视口预加载：demo 靠近视口 420px 内时注入其依赖库 */
+  var lazyIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        (en.target.getAttribute('data-lib') || '').split(',').forEach(function(k){
+          k = k.trim();
+          if(k) LAB.load(k);
+        });
+      }
+    });
+  }, { rootMargin: '0px 0px 420px 0px' });
+  document.querySelectorAll('.demo[data-lib]').forEach(function(s){ lazyIO.observe(s); });
+
+
+  /* ===== 复制提示词 ===== */
+  function copyText(text){
+    if(navigator.clipboard && window.isSecureContext){
+      return navigator.clipboard.writeText(text);
+    }
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+   
