@@ -1,0 +1,45 @@
+Carousel(document.getElementById('embla-viewport'), { dragFree: true });
+    var dot = document.getElementById('embla-dot');
+    function update(){
+      dot.textContent = (embla.selectedScrollSnap() + 1) + ' / ' + embla.scrollSnapList().length;
+    }
+    embla.on('select', update);
+    update();
+    document.getElementById('embla-prev').addEventListener('click', function(){ embla.scrollPrev(); });
+    document.getElementById('embla-next').addEventListener('click', function(){ embla.scrollNext(); });
+  })();
+
+  /* ===== 27 Hammer 手势 ===== */
+  (function run(){
+    if(typeof Hammer === 'undefined'){
+      LAB.wait({ key: 'hammer', name: 'hammerjs', fn: run });
+      return;
+    }
+    var pad = document.getElementById('gesture-pad');
+    var log = document.getElementById('gesture-log');
+    var mc = new Hammer(pad);
+    var names = { tap: '轻点', press: '长按', swipe: '滑动', pan: '拖拽', rotate: '旋转', pinch: '捏合' };
+    var dirs = { 2: '左', 4: '右', 8: '上', 16: '下' };
+    function record(type, e){
+      var dir = e.direction ? (' · ' + (dirs[e.direction] || '')) : '';
+      var line = document.createElement('span');
+      line.innerHTML = '<b>' + (names[type] || type) + '</b>' + dir + ' @ (' + Math.round(e.center.x) + ',' + Math.round(e.center.y) + ')';
+      log.insertBefore(line, log.firstChild);
+      while(log.children.length > 6) log.lastChild.remove();
+    }
+    ['tap', 'press', 'swipe', 'pan', 'rotate', 'pinch'].forEach(function(t){
+      mc.on(t, function(e){ record(t, e); });
+    });
+  })();
+
+  /* ===== 28 Tone 音序器 ===== */
+  (function run(){
+    if(typeof Tone === 'undefined'){
+      LAB.wait({ key: 'tone', id: 'seq-play', name: 'tone', fn: run });
+      return;
+    }
+    var cells = Array.prototype.slice.call(document.querySelectorAll('#stage-28 .seq-cell'));
+    var playBtn = document.getElementById('seq-play');
+    var status = document.getElementById('seq-status');
+    var playing = false, started = false, synth = null, bass = null, seq = null;
+    cells.forEach

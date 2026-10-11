@@ -1,0 +1,50 @@
+ return d.label; });
+    var sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id(function(d){ return d.id; }).distance(90))
+      .force('charge', d3.forceManyBody().strength(-260))
+      .force('center', d3.forceCenter(W / 2, H / 2))
+      .force('collide', d3.forceCollide(28));
+    sim.on('tick', function(){
+      linkEl.attr('x1', function(d){ return d.source.x; }).attr('y1', function(d){ return d.source.y; })
+        .attr('x2', function(d){ return d.target.x; }).attr('y2', function(d){ return d.target.y; });
+      nodeEl.attr('transform', function(d){ return 'translate(' + d.x + ',' + d.y + ')'; });
+    });
+    function dragStart(e, d){
+      if(!e.active) sim.alphaTarget(0.3).restart();
+      d.fx = d.x; d.fy = d.y;
+    }
+    function dragged(e, d){ d.fx = e.x; d.fy = e.y; }
+    function dragEnd(e, d){
+      if(!e.active) sim.alphaTarget(0);
+      d.fx = null; d.fy = null;
+    }
+  })();
+
+  /* ===== 25 Swiper ===== */
+  (function run(){
+    if(typeof Swiper === 'undefined'){
+      LAB.wait({ key: 'swiper', name: 'swiper', fn: run });
+      return;
+    }
+    new Swiper('.lab-swiper', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 1.6,
+      loop: true,
+      speed: 500,
+      autoplay: { delay: 2200, disableOnInteraction: false },
+      pagination: { el: '.lab-swiper .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.lab-swiper .swiper-button-next', prevEl: '.lab-swiper .swiper-button-prev' },
+      coverflowEffect: { rotate: 34, stretch: 0, depth: 90, modifier: 1.2, slideShadows: false },
+      breakpoints: { 640: { slidesPerView: 2 } }
+    });
+  })();
+
+  /* ===== 26 Embla ===== */
+  (function run(){
+    if(typeof EmblaCarousel === 'undefined'){
+      LAB.wait({ key: 'embla', id: 'embla-prev', name: 'embla-carousel', fn: run, fb: function(){ noLib('embla-prev', 'embla-carousel'); noLib('embla-next', 'embla-carousel'); } });
+      return;
+    }
+    var embla = Embla

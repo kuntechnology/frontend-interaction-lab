@@ -1,0 +1,43 @@
+(function(c){
+      c.addEventListener('click', function(){ c.classList.toggle('is-on'); });
+    });
+    document.getElementById('seq-clear').addEventListener('click', function(){
+      cells.forEach(function(c){ c.classList.remove('is-on'); });
+    });
+    playBtn.addEventListener('click', function(){
+      if(!started){
+        Tone.start();
+        synth = new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: .01, decay: .2, sustain: .1, release: .4 } }).toDestination();
+        bass = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: .02, decay: .3, sustain: .2, release: .5 } }).toDestination();
+        bass.volume.value = -8;
+        started = true;
+      }
+      playing = !playing;
+      if(playing){
+        Tone.Transport.bpm.value = 112;
+        var melodyCells = document.querySelectorAll('.seq-cells[data-voice="melody"] .seq-cell');
+        var bassCells = document.querySelectorAll('.seq-cells[data-voice="bass"] .seq-cell');
+        var scale = [261.63, 293.66, 329.63, 392, 440, 493.88, 523.25, 587.33];
+        seq = new Tone.Sequence(function(time, step){
+          cells.forEach(function(c, i){ c.classList.toggle('is-play', i === step); });
+          if(melodyCells[step].classList.contains('is-on')) synth.triggerAttackRelease(scale[step], '8n', time);
+          if(bassCells[step].classList.contains('is-on')) bass.triggerAttackRelease(scale[step % 4] / 2, '8n', time);
+        }, [0, 1, 2, 3, 4, 5, 6, 7], '8n');
+        Tone.Transport.start();
+        playBtn.textContent = '停止';
+        status.textContent = '播放中 · 点击格子实时编辑';
+      }else{
+        Tone.Transport.stop();
+        if(seq){ seq.dispose(); seq = null; }
+        cells.forEach(function(c){ c.classList.remove('is-play'); });
+        playBtn.textContent = '播放';
+        status.textContent = '已停止';
+      }
+    });
+  })();
+
+  /* ===== 29 多主题切换 ===== */
+  (function(){
+    var stage = document.getElementById('stage-29');
+    var tag = stage.querySelector('.theme-tag');
+    
