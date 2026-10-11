@@ -1,0 +1,27 @@
+/* ===== 10 折叠面板 ===== */
+#stage-10{align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.acc-item{width:100%;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.acc-item + .acc-item{margin-top:10px}
+.acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:none;padding:13px 18px;font-family:var(--font-ui);font-size:14.5px;font-weight:500;color:var(--ink);cursor:pointer;text-align:left}
+.acc-head:hover{background:#F7F4EC}
+.acc-ico{width:8px;height:8px;border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:rotate(45deg);transition:transform .3s;flex:none;margin-top:-4px}
+.acc-open .acc-ico{transform:rotate(-135deg);margin-top:4px}
+.acc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease}
+.acc-open .acc-body{grid-template-rows:1fr}
+.acc-content{overflow:hidden;min-height:0}
+.acc-content p{margin:0;padding:4px 18px 16px;color:var(--ink-2);font-size:13.5px;line-height:1.8}
+
+/* ===== 11 Tab 切换 ===== */
+#stage-11{align-items:stretch;justify-content:flex-start}
+.tabs{width:100%;max-width:560px}
+.tab-bar{position:relative;display:flex;gap:2px;border-bottom:1px solid var(--line)}
+.tab-btn{appearance:none;border:none;background:transparent;font-family:var(--font-ui);font-size:14.5px;font-weight:500;color:var(--ink-2);padding:11px 22px;cursor:pointer;position:relative;z-index:1}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.is-active{color:var(--accent-deep)}
+.tab-ink{position:absolute;bottom:-1px;left:0;height:2px;background:var(--accent);transition:transform .28s cubic-bezier(.4,0,.2,1),width .28s cubic-bezier(.4,0,.2,1)}
+.tab-panels{margin-top:16px}
+.tab-panel{display:none;color:var(--ink-2);font-size:14px;line-height:1.85;min-height:84px}
+.tab-panel.is-active{display:block;animation:panel-in .3s ease}
+@keyframes panel-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ====
