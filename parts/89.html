@@ -1,0 +1,54 @@
+{
+          sub.next({ q: q, hits: q.length * 7 });
+          sub.complete();
+        }, 500);
+        return function(){ clearTimeout(t); };
+      });
+    }
+    rxjs.fromEvent(input, 'input').pipe(
+      op.debounceTime(300),
+      op.map(function(e){ return e.target.value.trim(); }),
+      op.distinctUntilChanged(),
+      op.tap(function(){ statusEl.textContent = '请求中…'; }),
+      op.switchMap(mockSearch)
+    ).subscribe(function(res){
+      if(res.empty){
+        statusEl.textContent = '空闲';
+        resultEl.textContent = '输入后停止 300ms 触发模拟请求';
+        return;
+      }
+      statusEl.textContent = '完成（期间新输入会自动取消上一次）';
+      resultEl.innerHTML = '结果：<b>' + res.q + '</b> · 约 ' + res.hits + ' 条命中';
+    });
+    rxjs.fromEvent(stage, 'mousemove').pipe(op.throttleTime(100)).subscribe(function(e){
+      var r = stage.getBoundingClientRect();
+      coordEl.textContent = 'x: ' + Math.round(e.clientX - r.left) + ', y: ' + Math.round(e.clientY - r.top);
+    });
+  })();
+
+  /* ===== 37 Lit ESM 动态加载 ===== */
+  (function(){
+    function run(){
+    if(!('customElements' in window)){
+      showToast('error', '当前浏览器不支持自定义元素');
+      return;
+    }
+    Promise.all([
+      import('https://cdn.jsdelivr.net/npm/lit-html@3.2.0/+esm'),
+      import('https://cdn.jsdelivr.net/npm/lit-element@4.1.0/lit-element.js/+esm')
+    ]).then(function(mods){
+      var html = mods[0].html;
+      var LitElement = mods[1].LitElement;
+      class LiveClock extends LitElement {
+        constructor(){ super(); this._t = new Date(); }
+        connectedCallback(){
+          super.connectedCallback();
+          this._id = setInterval(function(){ this._t = new Date(); this.requestUpdate(); }.bind(this), 1000);
+        }
+        disconnectedCallback(){ super.disconnectedCallback(); clearInterval(this._id); }
+        render(){
+          return html`<div style="font-family:monospace;font-size:22px;color:#D4480F">🕐 ${this._t.toLocaleTimeString()}</div>`;
+        }
+      }
+      class CountUp extends LitElement {
+    

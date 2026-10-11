@@ -1,0 +1,49 @@
+    static get properties(){ return { start:{ type: Number }, step:{ type: Number } }; }
+        constructor(){ super(); this.start = 0; this.step = 1; this._v = 0; }
+        connectedCallback(){
+          super.connectedCallback();
+          this._v = this.start;
+          this._id = setInterval(function(){ this._v += this.step; this.requestUpdate(); }.bind(this), 100);
+        }
+        disconnectedCallback(){ super.disconnectedCallback(); clearInterval(this._id); }
+        render(){
+          return html`<div style="font-family:monospace;font-size:22px;color:#D4480F">▲ ${this._v}</div>`;
+        }
+      }
+      if(!customElements.get('live-clock')) customElements.define('live-clock', LiveClock);
+      if(!customElements.get('count-up')) customElements.define('count-up', CountUp);
+    }).catch(function(){
+      showToast('error', 'Lit 加载失败，请联网后刷新页面');
+    });
+    }
+    LAB.wait({ key: 'lit', name: 'Lit', fn: run });
+  })();
+
+  /* ===== 38 滚动驱动动画：纯 CSS，仅检测支持并提示 ===== */
+  (function(){
+    var note = document.getElementById('sd-note');
+    if(note && !CSS.supports('animation-timeline', 'view(inline)')){
+      note.textContent = '当前浏览器不支持 animation-timeline，卡片为静态展示。建议 Chrome 115+ 体验。';
+    }
+  })();
+
+  /* ===== 40 Container Queries ===== */
+  (function(){
+    var range = document.getElementById('cq-range');
+    var wrap = document.getElementById('cq-wrap');
+    if(!range || !wrap) return;
+    function apply(){ wrap.style.width = range.value + 'px'; }
+    range.addEventListener('input', apply);
+    apply();
+  })();
+
+  /* ===== 41 Anchor Positioning ===== */
+  (function(){
+    var wrap = document.getElementById('anc-wrap');
+    var anchor = document.getElementById('anc-anchor');
+    var pop = document.getElementById('anc-pop');
+    var note = document.getElementById('anc-note');
+    if(!anchor || !pop) return;
+    var supportsAnchor = false;
+    try{ supportsAnchor = CSS.supports('anchor-name', '--anc'); }catch(e){}
+    if(!supportsAnchor && note) note.textContent = '当

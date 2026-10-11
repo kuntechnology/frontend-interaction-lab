@@ -1,0 +1,54 @@
+showToast('success', stage.classList.contains('dark') ? '已切暗色' : '已切亮色');
+    });
+    input.addEventListener('input', function(){
+      live.className = baseCls + ' ' + input.value;
+    });
+  })();
+
+  /* ===== 35 Jotai vanilla ===== */
+  (function run(){
+    var J = window.jotai || window.jotaiVanilla || window.JotaiVanilla;
+    if(!J || !J.atom){
+      LAB.wait({ key: 'jotai', name: 'jotai', fn: run });
+      return;
+    }
+    var aAtom = J.atom(3), bAtom = J.atom(2);
+    var cAtom = J.atom(function(get){ return get(aAtom) * get(bAtom); });
+    var store = J.createStore();
+    var aVal = document.getElementById('jt-a-val');
+    var bVal = document.getElementById('jt-b-val');
+    var cVal = document.getElementById('jt-c-val');
+    function render(){
+      aVal.textContent = store.get(aAtom);
+      bVal.textContent = store.get(bAtom);
+      cVal.textContent = store.get(cAtom);
+    }
+    render();
+    store.sub(aAtom, render);
+    store.sub(bAtom, render);
+    store.sub(cAtom, render);
+    var map = { 'inc-a':[aAtom,1], 'dec-a':[aAtom,-1], 'inc-b':[bAtom,1], 'dec-b':[bAtom,-1] };
+    document.querySelectorAll('#stage-35 [data-jt]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var m = map[btn.getAttribute('data-jt')];
+        store.set(m[0], function(v){ return v + m[1]; });
+      });
+    });
+  })();
+
+  /* ===== 36 RxJS ===== */
+  (function run(){
+    if(typeof rxjs === 'undefined'){
+      LAB.wait({ key: 'rxjs', name: 'rxjs', fn: run });
+      return;
+    }
+    var stage = document.getElementById('stage-36');
+    var input = document.getElementById('rx-input');
+    var statusEl = document.getElementById('rx-status');
+    var resultEl = document.getElementById('rx-result');
+    var coordEl = document.getElementById('rx-coord');
+    var op = rxjs.operators;
+    function mockSearch(q){
+      return new rxjs.Observable(function(sub){
+        if(!q){ sub.next({ empty: true }); sub.complete(); return; }
+        var t = setTimeout(function()
