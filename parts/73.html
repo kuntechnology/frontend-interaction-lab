@@ -1,0 +1,54 @@
+var KEY = 'lab-dark-theme';
+    function apply(isDark){
+      stage.classList.toggle('is-dark', isDark);
+      toggle.setAttribute('role', 'switch');
+      toggle.setAttribute('aria-checked', isDark ? 'true' : 'false');
+    }
+    var saved = null;
+    try{ saved = localStorage.getItem(KEY); }catch(e){}
+    var isDark = saved === '1' || (saved === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    apply(isDark);
+    toggle.addEventListener('click', function(){
+      isDark = !isDark;
+      apply(isDark);
+      try{ localStorage.setItem(KEY, isDark ? '1' : '0'); }catch(e){}
+    });
+  })();
+
+  /* ===== 15 Canvas 粒子 ===== */
+  (function(){
+    var stage = document.getElementById('stage-15');
+    var canvas = document.getElementById('px-canvas');
+    var ctx = canvas.getContext('2d');
+    var W = 0, H = 0, dpr = 1;
+    var mouse = { x: -1e4, y: -1e4 };
+    var particles = [];
+    var raf = null;
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = stage.clientWidth; H = stage.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var count = Math.min(70, Math.max(24, Math.round(W * H / 16000)));
+      particles = [];
+      for(var i = 0; i < count; i++){
+        particles.push({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - .5) * .6, vy: (Math.random() - .5) * .6,
+          r: Math.random() * 2.2 + 1.2
+        });
+      }
+    }
+    function loop(){
+      ctx.clearRect(0, 0, W, H);
+      var LINK = 120;
+      particles.forEach(function(p){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < 0 || p.x > W) p.vx *= -1;
+        if(p.y < 0 || p.y > H) p.vy *= -1;
+        var dx = p.x - mouse.x, dy = p.y - mouse.y;
+        var d2 = dx * dx + dy * dy;
+        if(d2 < 19600){
+          var d = Math.sqrt(d2) || 1;
+          var force =

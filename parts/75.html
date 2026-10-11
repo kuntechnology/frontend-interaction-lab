@@ -1,0 +1,57 @@
+nction pos(e){
+      var r = canvas.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+    canvas.addEventListener('pointerdown', function(e){
+      drawing = true;
+      try{ canvas.setPointerCapture(e.pointerId); }catch(err){}
+      last = pos(e);
+      ctx.beginPath();
+      ctx.arc(last.x, last.y, size / 2, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    });
+    canvas.addEventListener('pointermove', function(e){
+      if(!drawing) return;
+      var p = pos(e);
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = size;
+      ctx.stroke();
+      last = p;
+    });
+    function stop(){ drawing = false; last = null; }
+    canvas.addEventListener('pointerup', stop);
+    canvas.addEventListener('pointercancel', stop);
+    stage.addEventListener('click', function(e){
+      var c = e.target.closest('.draw-color');
+      if(c){
+        color = c.getAttribute('data-color');
+        stage.querySelectorAll('.draw-color').forEach(function(x){ x.classList.remove('is-active'); });
+        c.classList.add('is-active');
+        return;
+      }
+      var s = e.target.closest('.draw-size');
+      if(s){
+        size = parseInt(s.getAttribute('data-size'), 10);
+        stage.querySelectorAll('.draw-size').forEach(function(x){ x.classList.remove('is-active'); });
+        s.classList.add('is-active');
+      }
+    });
+    document.getElementById('draw-clear').addEventListener('click', function(){
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    });
+    window.addEventListener('resize', resize);
+    resize();
+  })();
+
+  /* ===== 17 GSAP + ScrollTrigger ===== */
+  (function run(){
+    if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined'){
+      LAB.wait({ key: 'gsap', id: 'gs-play', name: 'GSAP', fn: run });
+      return;
+    }
