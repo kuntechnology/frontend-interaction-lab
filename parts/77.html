@@ -1,0 +1,48 @@
+k":0},"o":{"a":0,"k":100}}
+          ],"nm":"ringgrp"}],
+          "ip":0,"op":90,"st":0
+        },
+        {"ddd":0,"ind":2,"ty":4,"nm":"dot","sr":1,"ks":{
+          "o":{"a":1,"k":[
+            {"t":0,"s":[0],"e":[100],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}},
+            {"t":45,"s":[100],"e":[100]},
+            {"t":75,"s":[100],"e":[0]}
+          ]},
+          "r":{"a":0,"k":0},
+          "p":{"a":1,"k":[
+            {"t":0,"s":[100,100,0],"e":[100,62,0],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}},
+            {"t":45,"s":[100,62,0],"e":[100,138,0],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}},
+            {"t":90,"s":[100,138,0],"e":[100,100,0]}
+          ]},
+          "a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},
+          "ao":0,
+          "shapes":[{"ty":"gr","it":[
+            {"ty":"el","p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[34,34]}},
+            {"ty":"fl","c":{"a":0,"k":[0.933,0.357,0.122,1]},"o":{"a":0,"k":100}},
+            {"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}
+          ],"nm":"dotgrp"}],
+          "ip":0,"op":90,"st":0
+        }
+      ]
+    };
+    var anim = lottie.loadAnimation({
+      container: document.getElementById('lottie-box'),
+      renderer: 'svg', loop: true, autoplay: true, animationData: animData
+    });
+    var playing = true;
+    document.getElementById('lottie-toggle').addEventListener('click', function(){
+      playing = !playing;
+      if(playing){ anim.play(); this.textContent = '暂停'; }
+      else{ anim.pause(); this.textContent = '播放'; }
+    });
+  })();
+
+  /* ===== 19 Anime.js ===== */
+  (function run(){
+    if(typeof anime === 'undefined'){
+      LAB.wait({ key: 'anime', id: 'anime-play', name: 'anime.js', fn: run });
+      return;
+    }
+    document.getElementById('anime-play').addEventListener('click', function(){
+      var tl = anime.timeline({ easing: 'easeInOutExpo' });
+      tl.add({ targets: '#anime-box', translateX:

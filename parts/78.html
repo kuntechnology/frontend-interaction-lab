@@ -1,0 +1,47 @@
+ 90, rotate: 180, scale: [1, 1.25, 1], duration: 900 })
+        .add({ targets: '#anime-box', translateX: 0, rotate: 0, duration: 900 })
+        .add({ targets: '#anime-box', backgroundColor: ['#EE5B1F', '#2F6FD6', '#2F9E63', '#EE5B1F'], duration: 1200, easing: 'easeOutQuad' });
+    });
+  })();
+
+  /* ===== 20 Motion 交错 ===== */
+  (function run(){
+    if(typeof Motion === 'undefined' || typeof Motion.animate !== 'function'){
+      LAB.wait({ key: 'motion', id: 'motion-run', name: 'motion', fn: run });
+      return;
+    }
+    var items = Array.prototype.slice.call(document.querySelectorAll('#motion-list .motion-item'));
+    function run(){
+      try{ Motion.animate('#motion-list .motion-item', { y: 24, opacity: [0, 1] }, { duration: 0.5, delay: Motion.stagger(0.06), easing: 'ease-out' }); }
+      catch(e){ /* 目标选择器不可用时静默降级 */ }
+    }
+    run();
+    document.getElementById('motion-run').addEventListener('click', run);
+  })();
+
+  /* ===== 21 Three.js ===== */
+  (function run(){
+    if(typeof THREE === 'undefined'){
+      LAB.wait({ key: 'three', name: 'three.js', fn: run });
+      return;
+    }
+    var box = document.getElementById('three-box');
+    var W = box.clientWidth || 640, H = box.clientHeight || 320;
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
+    camera.position.z = 5;
+    var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(W, H);
+    box.appendChild(renderer.domElement);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+    var light = new THREE.PointLight(0xEE5B1F, 1.6, 20);
+    light.position.set(3, 3, 3);
+    scene.add(light);
+    var mesh = new THREE.Mesh(
+      new THREE.TorusKnotGeometry(1, 0.32, 128, 24),
+      new THREE.MeshStandardMaterial({ color: 0xEE5B1F, roughness: 0.35, metalness: 0.1 })
+    );
+    scene.add(mesh);
+    var dragging = false, lastX = 0, lastY = 0;
+    var s
