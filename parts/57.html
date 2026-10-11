@@ -1,0 +1,29 @@
+iew(inline) 把 keyframes 绑定到滚动视角：卡片进入视口时 scale/opacity/translate 随进度变化，离开反向回退。纯 CSS，无滚动监听 JS。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-39" data-tags="css,:has(),关系选择器,父级感知,新特性">
+    <div class="demo-head"><span class="demo-no">39</span><h3>:has() 选择器</h3></div>
+    <p class="demo-desc"><code>:has()</code> 让父级感知子级状态：勾选卡片即整卡高亮加徽章，跨分支影响无需 JS 类切换。</p>
+    <div class="stage" id="stage-39">
+      <div class="has-grid">
+        <label class="has-card"><input type="checkbox" name="has-demo"><b>标题 A</b><span>勾选我，整卡 :has 生效</span></label>
+        <label class="has-card"><input type="checkbox" name="has-demo"><b>标题 B</b><span>勾选我，整卡 :has 生效</span></label>
+        <label class="has-card"><input type="checkbox" name="has-demo"><b>标题 C</b><span>勾选我，整卡 :has 生效</span></label>
+      </div>
+      <div class="has-rows">
+        <span>纯 CSS 实现：父级 .has-card:has(input:checked) 高亮并显示徽章。</span>
+        <span>相邻影响：.has-rows span:has(+ span) 给非末项加分隔线。</span>
+      </div>
+      <span class="stage-hint">勾选卡片体验整卡联动</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 .card:has(input:checked) 让父级感知子项选中态：选中时整卡高亮、伪元素显示徽章；:has(+ ) 还能做相邻兄弟影响。省掉 JS 类切换。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-40" data-tags="css,container queries,容器查询,响应式,新特性">
+    <div class="demo-head"><span class="demo-no">40</span><h3>Container Queries</h3></div>
+    <p class="demo-desc">容器查询按「容器宽度」而非视口响应：拖窄容器，卡片自动从横排变纵排、字号变小。</p>
+    <div class="stage" id="stage-40">
+      <input type="range" id="cq-range" min="220" max="620" value="620" aria-label="容器宽度">
+      <div class="cq-wrap" id="cq-wrap">
+        <div class="cq-card"><b>卡片一</b><span>宽度足够时横

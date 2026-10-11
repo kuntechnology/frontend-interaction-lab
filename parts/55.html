@@ -1,0 +1,27 @@
+ss="demo-no">36</span><h3>RxJS 响应式流</h3></div>
+    <p class="demo-desc">输入流 debounceTime(300) + switchMap 模拟搜索；鼠标移动 throttleTime 节流显示坐标。</p>
+    <div class="stage" id="stage-36">
+      <div class="rx-search">
+        <input id="rx-input" type="text" placeholder="输入关键词，如 vue / htmx…">
+        <div class="rx-status" id="rx-status">空闲</div>
+        <div id="rx-result" class="fw-card" style="margin-top:8px;min-height:48px">输入后停止 300ms 触发模拟请求</div>
+      </div>
+      <div class="rx-pipe">输入 <span class="arrow">→</span> debounceTime(300ms) <span class="arrow">→</span> switchMap(mockSearch) <span class="arrow">→</span> 渲染结果</div>
+      <div>鼠标在舞台上移动：<span class="rx-coord" id="rx-coord">x: –, y: –</span></div>
+      <span class="stage-hint">快速连续输入会自动取消上一次请求</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 rxjs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>fromEvent(input,'input') → debounceTime(300) → distinctUntilChanged → switchMap(q => mockApi$(q))，订阅后渲染结果；鼠标流用 throttleTime(100) 节流显示坐标。需引入 rxjs。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-37" data-lib="lit" data-tags="lit,web component,shadow dom,自定义元素,esm,框架">
+    <div class="demo-head"><span class="demo-no">37</span><h3>Lit Web Components</h3></div>
+    <p class="demo-desc">动态 import ESM 加载 Lit，注册 &lt;live-clock&gt; 与 &lt;count-up&gt;：Shadow DOM 封装、响应式属性、框架无关。</p>
+    <div class="stage" id="stage-37">
+      <div id="lit-mount" style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center;align-items:center;width:100%;min-height:60px">
+        <live-clock></live-clock>
+        <count-up start="0" step="1"></count-up>
+      </div>
+      <p class="fw-note">Shadow DOM 样式隔离 · 可嵌入任何框架 · 加载失败见右上角提示</

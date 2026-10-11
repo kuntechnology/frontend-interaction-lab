@@ -1,0 +1,21 @@
+p>
+      <span class="stage-hint">进入页面自动加载 Lit ESM</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 lit（ESM 动态加载）</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>动态 import() 加载 Lit ESM，用 LitElement + html 标签函数定义自定义元素，properties 声明响应式属性；Shadow DOM 样式隔离，框架无关可嵌入。需引入 lit（ESM 动态加载）。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-38" data-tags="css,scroll-timeline,view-timeline,滚动驱动,新特性">
+    <div class="demo-head"><span class="demo-no">38</span><h3>滚动驱动动画</h3></div>
+    <p class="demo-desc">CSS <code>view-timeline</code> 让动画进度直接绑定滚动位置：卡片随进入视角缩放、上浮、变色，零 JS。</p>
+    <div class="stage" id="stage-38">
+      <div class="sd-track" id="sd-track">
+        <span class="sd-chip">A</span><span class="sd-chip">B</span><span class="sd-chip">C</span><span class="sd-chip">D</span><span class="sd-chip">E</span><span class="sd-chip">F</span><span class="sd-chip">G</span><span class="sd-chip">H</span><span class="sd-chip">I</span><span class="sd-chip">J</span><span class="sd-chip">K</span><span class="sd-chip">L</span><span class="sd-chip">M</span><span class="sd-chip">N</span>
+      </div>
+      <p class="fw-note" id="sd-note">横向拖动轨道，卡片随进入/离开视角自动缩放上浮。需 Chrome 115+ 支持 animation-timeline。</p>
+      <span class="stage-hint">纯 CSS：animation-timeline: view(inline)</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 animation-timeline: v
