@@ -1,0 +1,32 @@
+:click="open=false">操作三</button>
+          </div>
+        </div>
+        <div class="alp-stepper">
+          <button type="button" class="btn btn-ghost btn-sm" x-on:click="qty=qty-1" x-bind:disabled="qty<=1">−</button>
+          <b x-text="qty"></b>
+          <button type="button" class="btn btn-ghost btn-sm" x-on:click="qty=qty+1">＋</button>
+        </div>
+        <button type="button" class="btn btn-primary" x-on:click="modal=true">打开模态</button>
+      </div>
+      <div class="alp-modal-mask" x-show="modal" x-cloak x-on:click.self="modal=false">
+        <div class="alp-modal">
+          <b style="font-size:15px">Alpine 模态框</b>
+          <p style="font-size:13px;color:var(--ink-2);margin:10px 0 16px">x-show 控制显隐，x-on:click.self 点遮罩关闭。</p>
+          <button type="button" class="btn btn-primary btn-sm" x-on:click="modal=false">关闭</button>
+        </div>
+      </div>
+      <span class="stage-hint">全部行为由 HTML 属性声明</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 alpinejs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 x-data 声明状态，x-show 控制显隐，x-on:click 绑事件，x-bind:disabled 绑属性，x-on:click.outside 点外部关闭。同等交互用原生 JS 约需 60+ 行。需引入 alpinejs。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-34" data-lib="tailwind" data-tags="tailwind,css,原子类,utility,暗色,运行时编译,框架">
+    <div class="demo-head"><span class="demo-no">34</span><h3>Tailwind CSS v4 原子类</h3></div>
+    <p class="demo-desc">@tailwindcss/browser 运行时即时编译；utility 写按钮/徽章，可切暗色，class 编辑器实时预览。</p>
+    <div class="stage" id="stage-34">
+      <div class="tw-preview bg-white dark:bg-stone-900" id="tw-preview">
+        <div class="flex flex-wrap gap-3 items-center">
+          <button type="button" class="bg-orange-600 

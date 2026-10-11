@@ -1,0 +1,34 @@
+ass="jt-grid">
+        <div class="jt-node">
+          <div class="jt-label">atom · 数量 a</div>
+          <div class="jt-val" id="jt-a-val">–</div>
+          <div style="display:flex;gap:6px;justify-content:center">
+            <button type="button" class="btn btn-ghost btn-sm" data-jt="dec-a">−1</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-jt="inc-a">+1</button>
+          </div>
+        </div>
+        <div class="jt-node">
+          <div class="jt-label">atom · 倍数 b</div>
+          <div class="jt-val" id="jt-b-val">–</div>
+          <div style="display:flex;gap:6px;justify-content:center">
+            <button type="button" class="btn btn-ghost btn-sm" data-jt="dec-b">−</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-jt="inc-b">＋</button>
+          </div>
+        </div>
+        <div class="jt-node derived">
+          <div class="jt-label">派生 atom · a × b</div>
+          <div class="jt-val" id="jt-c-val">–</div>
+          <div style="font-size:11px;color:var(--ink-3)">自动重算</div>
+        </div>
+      </div>
+      <div class="jt-graph">依赖图：<code>atomA</code> <span>×</span> <code>atomB</code> <span class="arrow">→</span> <code>derivedAtom = a × b</code></div>
+      <span class="stage-hint">改 a 或 b，三处局部更新</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 jotai (vanilla)</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 jotai/vanilla 的 atom + createStore 建基础 atom 与派生 atom；store.sub 订阅，任意 set 只通知依赖它的订阅处，实现细粒度局部更新。需引入 jotai (vanilla)。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-36" data-lib="rxjs" data-tags="rxjs,响应式流,debounce,switchmap,throttle,observable,框架">
+    <div class="demo-head"><span cla

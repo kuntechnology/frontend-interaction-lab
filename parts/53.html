@@ -1,0 +1,26 @@
+text-white px-4 py-2 rounded-md hover:bg-orange-700">主按钮</button>
+          <button type="button" class="border border-stone-300 px-4 py-2 rounded-md dark:border-stone-600 dark:text-stone-100">次按钮</button>
+          <span class="px-2 py-0.5 text-xs rounded bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">徽章</span>
+          <span class="px-2 py-0.5 text-xs rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">成功</span>
+        </div>
+        <p class="mt-4 text-sm text-stone-600 dark:text-stone-300">这段文字随暗色切换变色，卡片背景也跟着切换。</p>
+      </div>
+      <div class="tw-editor">
+        <input id="tw-class-input" type="text" placeholder="输入 utility 类，如 bg-sky-100 p-6 rounded-lg">
+        <button type="button" class="btn btn-ghost btn-sm" id="tw-dark-toggle">切暗色</button>
+      </div>
+      <div id="tw-live" class="border border-dashed border-stone-300 dark:border-stone-600 p-4 text-sm text-stone-700 dark:text-stone-200">实时预览：在这里应用你输入的类</div>
+      <p class="fw-note">Play CDN 仅用于开发原型，生产需构建</p>
+      <span class="stage-hint">输入类名即时编译</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 @tailwindcss/browser</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 @tailwindcss/browser 在浏览器即时编译 utility 类；dark: 前缀配合 .dark 根类做暗色；class 编辑器监听 input 把类名实时写到预览元素上。需引入 @tailwindcss/browser。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-35" data-lib="jotai" data-tags="jotai,原子,状态管理,store,派生atom,细粒度,框架">
+    <div class="demo-head"><span class="demo-no">35</span><h3>Jotai 原子状态</h3></div>
+    <p class="demo-desc">vanilla UMD 不依赖 React：多订阅共享 atom，任一处修改局部更新；一颗派生 atom 依赖两颗基础 atom。</p>
+    <div class="stage" id="stage-35">
+      <div cl
