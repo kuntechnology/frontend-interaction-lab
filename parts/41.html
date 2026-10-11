@@ -1,0 +1,28 @@
+  <section class="demo" id="demo-17" data-lib="gsap" data-tags="gsap,滚动,编排,scrolltrigger,动画,库">
+    <div class="demo-head"><span class="demo-no">17</span><h3>GSAP 滚动编排</h3></div>
+    <p class="demo-desc">GSAP + ScrollTrigger：进入视口自动播放，点击按钮随时重放时间线。</p>
+    <div class="stage stage-col" id="stage-17">
+      <div class="gs-scroll" id="gs-scroll">
+        <div class="gs-block gs-block-1">GSAP 时间线</div>
+        <div class="gs-block gs-block-2">滚动触发</div>
+        <div class="gs-block gs-block-3">交错入场</div>
+      </div>
+      <button type="button" class="btn btn-primary btn-sm" id="gs-play">播放时间线</button>
+      <span class="stage-hint">进入视口自动播放，可手动重放</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 GSAP + ScrollTrigger</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 GSAP 时间线编排一组元素依次入场：位移 + 透明度错峰 0.18s；再用 ScrollTrigger 绑定滚动，元素进入视口（start: top 85%）时自动播放。CDN 引入 gsap 与 ScrollTrigger。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-18" data-lib="lottie" data-tags="lottie,矢量,动画,json,svg,库">
+    <div class="demo-head"><span class="demo-no">18</span><h3>Lottie 矢量动画</h3></div>
+    <p class="demo-desc">播放内联 bodymovin 动画 JSON，SVG 渲染矢量缩放不失真，可暂停。</p>
+    <div class="stage" id="stage-18">
+      <div id="lottie-box" class="lottie-box"></div>
+      <button type="button" class="btn btn-ghost btn-sm" id="lottie-toggle">暂停</button>
+      <span class="stage-hint">内联动画数据，无需外部 JSON</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 lottie-web</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y=

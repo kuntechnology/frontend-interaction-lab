@@ -1,0 +1,30 @@
+"9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 lottie-web 加载 bodymovin 格式的动画 JSON（可直接内联为对象），renderer 用 svg 保证矢量清晰，loop 循环播放；暴露 play / pause 控制接口。CDN 引入 lottie-web。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-19" data-lib="anime" data-tags="anime,补间,tween,时间线,动画,库">
+    <div class="demo-head"><span class="demo-no">19</span><h3>Anime.js 补间</h3></div>
+    <p class="demo-desc">一条时间线串联位移、旋转、缩放与颜色循环补间，一键触发。</p>
+    <div class="stage" id="stage-19">
+      <div class="anime-box" id="anime-box"></div>
+      <button type="button" class="btn btn-primary btn-sm" id="anime-play">播放</button>
+      <span class="stage-hint">观察方块的多属性补间</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 animejs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 anime.js 的 timeline 串联多个补间：位移、旋转 180°、缩放回弹与背景色循环，easing 用 easeInOutExpo；每段 add 一个目标状态即可。CDN 引入 animejs。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-20" data-lib="motion" data-tags="motion,stagger,交错,弹簧,动画,库">
+    <div class="demo-head"><span class="demo-no">20</span><h3>Motion 交错</h3></div>
+    <p class="demo-desc">Motion（motion.dev）的 stagger 让列表项依次弹出，进入视口自动播放。</p>
+    <div class="stage stage-col" id="stage-20">
+      <div class="motion-list" id="motion-list">
+        <span class="motion-item">01</span><span class="motion-item">02</span><span class="motion-item">03</span><span class="motion-item">04</span><span class="motion-item">05</span><span class="motion-item">06</span>
+      </div>
+      <button type="button" class="btn btn-primary btn-sm" id="motion-run">交错入场</button>
+      <span class="stage-hint">对比 GSAP 的编排方式</span>
+    </div>
+    <div

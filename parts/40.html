@@ -1,0 +1,32 @@
+p="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>Canvas 粒子连线：粒子在画布内匀速运动，间距小于阈值时连线、透明度随距离递减；鼠标经过产生斥力。resize 自适应，移动端降低粒子数量。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-16" data-tags="draw,画板,绘画,canvas,笔,手绘">
+    <div class="demo-head"><span class="demo-no">16</span><h3>手绘画板</h3></div>
+    <p class="demo-desc">Pointer Events 绘制平滑曲线，支持笔宽、颜色与清空。</p>
+    <div class="stage stage-col stage-draw" id="stage-16">
+      <div class="draw-toolbar">
+        <button type="button" class="draw-color is-active" data-color="#211E1A" aria-label="墨色"></button>
+        <button type="button" class="draw-color" data-color="#EE5B1F" aria-label="橙色"></button>
+        <button type="button" class="draw-color" data-color="#2F6FD6" aria-label="蓝色"></button>
+        <button type="button" class="draw-color" data-color="#2F9E63" aria-label="绿色"></button>
+        <span class="draw-sep"></span>
+        <button type="button" class="draw-size is-active" data-size="3">细</button>
+        <button type="button" class="draw-size" data-size="8">中</button>
+        <button type="button" class="draw-size" data-size="16">粗</button>
+        <span class="draw-sep"></span>
+        <button type="button" class="btn btn-ghost btn-sm" id="draw-clear">清空</button>
+      </div>
+      <canvas id="draw-canvas"></canvas>
+      <span class="stage-hint">鼠标或手指直接绘制</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>Pointer Events 手绘画板：pointerdown / move / up 绘制平滑曲线，支持笔宽、颜色切换与清空；用 rAF 节流绘制，兼容鼠标与触屏。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 库 · 动效 ===== -->
+
