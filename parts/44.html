@@ -1,0 +1,31 @@
+on" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 p5.js 实例模式：draw 中按概率在光标附近生成粒子，粒子随机漂移并逐步淡出；背景用低透明度填充实现拖尾。限制粒子总量，触屏同样生效。CDN 引入 p5。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 库 · 数据可视化 ===== -->
+
+  <section class="demo" id="demo-23" data-lib="echarts" data-tags="echarts,图表,折线,数据可视化,实时,库">
+    <div class="demo-head"><span class="demo-no">23</span><h3>ECharts 动态图表</h3></div>
+    <p class="demo-desc">折线图每 2s 追加数据点，模拟实时监控面板，可暂停与重置。</p>
+    <div class="stage" id="stage-23">
+      <div id="echart-box" class="echart-box"></div>
+      <div class="ec-actions">
+        <button type="button" class="btn btn-ghost btn-sm" id="ec-toggle">暂停更新</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="ec-reset">重置</button>
+      </div>
+      <span class="stage-hint">观察折线实时滚动</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 echarts</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 echarts.init 初始化折线图，setOption 定义双数据系列与双 y 轴；setInterval 每 2s push 一个新数据点并重设 option，数据超长时 shift 旧点；提供暂停 / 继续与重置按钮。CDN 引入 echarts。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-24" data-lib="d3" data-tags="d3,力导向,graph,图,数据可视化,库">
+    <div class="demo-head"><span class="demo-no">24</span><h3>D3 力导向图</h3></div>
+    <p class="demo-desc">力导向布局 + 节点拖拽：拖动任意节点，整图按物理规则重新分布。</p>
+    <div class="stage" id="stage-24">
+      <svg id="d3-graph" class="d3-graph" viewBox="0 0 640 320" role="img" aria-label="力导向关系图"></svg>
+      <span class="stage-hint">拖动任意节点</span>
+    </div>
