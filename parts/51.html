@@ -1,0 +1,25 @@
+">加载片段 B</button>
+      </div>
+      <div class="hx-frag" style="width:100%">轮询状态：<span id="hx-poll" hx-get="/frag-poll" hx-trigger="every 3s" hx-swap="innerHTML">等待首帧…</span></div>
+      <template data-url="/frag-a"><div class="hx-frag">片段 <b>A</b> · 局部 swap 完成，URL 与整页都没变。</div></template>
+      <template data-url="/frag-b"><div class="hx-frag">片段 <b>B</b> · 来自内联 template 的模拟响应片段。</div></template>
+      <template data-url="/frag-poll">轮询帧 <b>#{{n}}</b> · 每 3 秒自动更新一次</template>
+      <span class="stage-hint">htmx 属性驱动 · file:// 用 template mock</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 htmx.org</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 hx-get/hx-target/hx-swap 让普通按钮触发局部刷新，hx-trigger="every 3s" 做轮询。离线环境监听 htmx:beforeRequest 并 preventDefault，从内联 template 取片段手动 swap。需引入 htmx.org。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-33" data-lib="alpine" data-tags="alpine,属性驱动,下拉,模态,stepper,零js,框架">
+    <div class="demo-head"><span class="demo-no">33</span><h3>Alpine.js 属性驱动</h3></div>
+    <p class="demo-desc">纯 x-data / x-show / x-on / x-bind 实现下拉、模态、数量器，零手写业务 JS。</p>
+    <div class="stage" id="stage-33" x-data="{open:false, modal:false, qty:1}">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;justify-content:center;width:100%">
+        <div class="alp-menu">
+          <button type="button" class="btn btn-ghost" x-on:click="open=!open">菜单 ▾</button>
+          <div class="alp-dropdown" x-show="open" x-cloak x-on:click.outside="open=false">
+            <button type="button" x-on:click="open=false">操作一</button>
+            <button type="button" x-on:click="open=false">操作二</button>
+            <button type="button" x-on

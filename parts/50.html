@@ -1,0 +1,27 @@
+><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 Vue.createApp 挂载：ref 计数器 + v-model 双向绑定输入框 + computed 实时字数；子组件用响应式 props 解构保持 prop 响应式。需引入 vue（全局构建 vue.global.prod.js）。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-31" data-lib="preact" data-tags="preact,react,htm,hooks,usestate,useeffect,函数组件,框架">
+    <div class="demo-head"><span class="demo-no">31</span><h3>Preact + htm</h3></div>
+    <p class="demo-desc">htm.bind(preact.h) 免 JSX 编译，函数组件 + useState/useEffect 计数器，组件化拆分。</p>
+    <div class="stage" id="stage-31">
+      <div id="preact-root" class="pa-box"></div>
+      <p class="fw-note">Preact 3KB · React API 兼容 · React 19 官方已无 UMD 构建</p>
+      <span class="stage-hint">点击按钮计数</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 preact + htm</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 htm.bind(preact.h) 得到 html 标签函数，免 JSX 编译；preact.render 挂载函数组件，useState 计数、useEffect 打印副作用日志。需引入 preact + htm。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-32" data-lib="htmx" data-tags="htmx,超媒体,局部刷新,ajax,swap,轮询,框架">
+    <div class="demo-head"><span class="demo-no">32</span><h3>htmx 超媒体</h3></div>
+    <p class="demo-desc">hx-get 触发局部内容 swap；every 3s 轮询。file:// 下用内联 template 模拟响应，双击即可运行。</p>
+    <div class="stage" id="stage-32">
+      <div class="hx-swap" id="hx-target"><div class="hx-frag">初始内容：点击下方按钮，我会被局部替换（不刷新整页）。</div></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button type="button" class="btn btn-primary" hx-get="/frag-a" hx-target="#hx-target" hx-swap="innerHTML">加载片段 A</button>
+        <button type="button" class="btn btn-ghost" hx-get="/frag-b" hx-target="#hx-target" hx-swap="innerHTML

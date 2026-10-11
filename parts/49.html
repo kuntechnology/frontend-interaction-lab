@@ -1,0 +1,32 @@
+>
+        <div class="theme-body">
+          <p>背景、文字、边框、强调色均通过 CSS 变量声明，切换主题时组件零改动。</p>
+          <button type="button" class="btn theme-btn">主要按钮</button>
+          <button type="button" class="btn theme-btn-ghost">次要按钮</button>
+        </div>
+      </div>
+      <div class="theme-switcher">
+        <button type="button" class="theme-opt is-active" data-theme="paper">纸张</button>
+        <button type="button" class="theme-opt" data-theme="night">墨夜</button>
+        <button type="button" class="theme-opt" data-theme="sand">沙金</button>
+        <button type="button" class="theme-opt" data-theme="mint">青翠</button>
+      </div>
+      <span class="stage-hint">点击主题即时切换</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 html[data-theme] + CSS 变量实现多主题：每个主题只重定义一组颜色变量（背景/文字/边框/强调色），组件样式全部引用 var()；切换时更新 dataset 并做颜色过渡。原生实现，无需第三方库。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 框架与生态 ===== -->
+
+  <section class="demo" id="demo-30" data-lib="vue" data-tags="vue,响应式,ref,computed,v-model,组件,框架">
+    <div class="demo-head"><span class="demo-no">30</span><h3>Vue 3.5 响应式</h3></div>
+    <p class="demo-desc">createApp 全局构建：ref 计数器、v-model 双向输入、computed 实时字数；子组件演示 3.5 响应式 props 解构。</p>
+    <div class="stage" id="stage-30">
+      <div id="vue-root" class="vue-box"></div>
+      <span class="stage-hint">点击按钮计数 · 输入文字实时统计</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 vue</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/
