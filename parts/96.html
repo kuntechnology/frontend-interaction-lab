@@ -1,0 +1,46 @@
+1';
+      if(n < 30) return 'g2';
+      if(n < 38) return 'g3';
+      return 'g4';
+    }
+    function update(){
+      ticking = false;
+      var el = document.elementFromPoint(Math.floor(window.innerWidth/2), Math.floor(window.innerHeight*0.5));
+      var sec = el ? el.closest('.demo') : null;
+      if(sec){
+        var no = parseInt(sec.id.replace('demo-',''), 10);
+        ambient.setAttribute('data-glow', groupOf(no));
+      }
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    update();
+  })();
+
+/* ===== v3.2 · 对比矩阵展开/收起 ===== */
+  var mToggle = document.getElementById('matrix-toggle');
+  var mWrap = document.getElementById('matrix');
+  mToggle.addEventListener('click', function(){
+    var open = mWrap.hidden;
+    mWrap.hidden = !open;
+    mToggle.setAttribute('aria-expanded', String(open));
+    mToggle.textContent = open ? '收起对比矩阵' : '查看框架对比矩阵';
+  });
+
+  /* ===== v3.2 · 滚动位置记忆 ===== */
+  try{
+    var labSaved = sessionStorage.getItem('lab-scroll');
+    if(labSaved){
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ window.scrollTo(0, parseInt(labSaved, 10) || 0); }); });
+    }
+    var labT = null;
+    window.addEventListener('scroll', function(){
+      if(labT) return;
+      labT = setTimeout(function(){ labT = null; try{ sessionStorage.setItem('lab-scroll', String(window.scrollY)); }catch(e){} }, 200);
+    }, { passive: true });
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

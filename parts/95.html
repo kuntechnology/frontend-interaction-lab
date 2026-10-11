@@ -1,0 +1,56 @@
+rn;
+      }
+      if(wlSentinel){
+        wlSentinel.release().then(function(){
+          wlSentinel = null;
+          wlBtn.textContent = '保持屏幕常亮';
+          wlStatus.textContent = '已释放常亮';
+        });
+        return;
+      }
+      navigator.wakeLock.request('screen').then(function(s){
+        wlSentinel = s;
+        wlBtn.textContent = '释放常亮';
+        wlStatus.textContent = '屏幕常亮已开启（离开页面自动释放）';
+      }).catch(function(e){ wlStatus.textContent = '常亮申请失败：' + String(e).slice(0, 40); });
+    });
+    document.addEventListener('visibilitychange', function(){
+      if(document.visibilityState === 'visible' && wlSentinel){
+        navigator.wakeLock.request('screen').then(function(s){ wlSentinel = s; });
+      }
+    });
+  })();
+
+  /* ===== 47 Web Share ===== */
+  (function(){
+    var status = document.getElementById('share-status');
+    var btn = document.getElementById('share-run');
+    if(!status || !btn) return;
+    btn.addEventListener('click', function(){
+      var data = { title: '前端交互实验室', text: '47 个可即开即用的前端交互 demo，带可复制提示词。', url: location.href };
+      function fallback(){
+        var ta = document.createElement('textarea');
+        ta.value = location.href; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); status.textContent = '当前环境无系统分享，已复制页面地址到剪贴板'; }
+        catch(e2){ status.textContent = '分享不可用，也无法复制地址'; }
+        document.body.removeChild(ta);
+      }
+      if(navigator.share){
+        navigator.share(data).then(function(){ status.textContent = '已调起系统分享面板'; })
+          .catch(function(e){
+            if(e && e.name === 'AbortError'){ status.textContent = '分享被取消'; }
+            else { fallback(); }
+          });
+      } else { fallback(); }
+    });
+  })();
+
+  
+  /* ===== v3.6 · 光随内容走 ===== */
+  (function(){
+    var ambient = document.querySelector('.ambient');
+    if(!ambient) return;
+    var ticking = false;
+    function groupOf(n){
+      if(n < 17) return 'g

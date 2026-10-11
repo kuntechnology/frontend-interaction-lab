@@ -1,0 +1,44 @@
+ 'self.onmessage=function(e){var n=e.data;var s=new Uint8Array(n+1);var c=0;for(var i=2;i<=n;i++){if(!s[i]){c++;for(var j=i*i;j<=n;j+=i)s[j]=1;}}self.postMessage(c);};';
+    document.getElementById('wk-run').addEventListener('click', function(){
+      out.textContent = 'Worker 计算中…';
+      try{
+        var worker = new Worker(URL.createObjectURL(new Blob([workerCode], { type: 'application/javascript' })));
+        worker.onmessage = function(e){
+          out.textContent = '2–200000 区间质数个数：' + e.data.toLocaleString() + '（后台线程完成，主线程未卡顿）';
+          worker.terminate();
+        };
+        worker.onerror = function(){ out.textContent = 'Worker 运行出错'; };
+        worker.postMessage(200000);
+      }catch(e2){
+        out.textContent = '当前环境不支持 Worker：' + String(e2).slice(0, 46);
+      }
+    });
+  })();
+
+  /* ===== 46 Fullscreen + Wake Lock ===== */
+  (function(){
+    var fsBtn = document.getElementById('fs-toggle');
+    var wlBtn = document.getElementById('wl-toggle');
+    var fsStatus = document.getElementById('fs-status');
+    var wlStatus = document.getElementById('wl-status');
+    if(!fsBtn || !wlBtn) return;
+    var wlSentinel = null;
+    function fsOn(){ return !!(document.fullscreenElement); }
+    fsBtn.addEventListener('click', function(){
+      if(fsOn()){
+        if(document.exitFullscreen) document.exitFullscreen().catch(function(){});
+      } else {
+        var el = document.documentElement;
+        if(el.requestFullscreen){
+          el.requestFullscreen().catch(function(e){ fsStatus.textContent = '全屏被拒绝：' + String(e).slice(0, 40); });
+        } else { fsStatus.textContent = '当前浏览器不支持全屏'; }
+      }
+    });
+    document.addEventListener('fullscreenchange', function(){
+      fsBtn.textContent = fsOn() ? '退出全屏' : '进入 / 退出全屏';
+      fsStatus.textContent = fsOn() ? '已进入全屏（按 Esc 退出）' : '全屏已退出';
+    });
+    wlBtn.addEventListener('click', function(){
+      if(!('wakeLock' in navigator)){
+        wlStatus.textContent = '当前环境不支持 Wake Lock（需 HTTPS + 用户手势）';
+        retu
