@@ -1,0 +1,27 @@
+</p>
+      <p class="fw-note" id="wl-status">常亮：navigator.wakeLock.request("screen")，需 HTTPS / 本地文件 + 用户手势</p>
+      <span class="stage-hint">requestFullscreen / wakeLock.request</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>document.documentElement.requestFullscreen() 全屏，fullscreenchange 监听状态；navigator.wakeLock?.request("screen") 保持常亮，visibilitychange 时重新申请。均需用户手势。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-47" data-tags="api,web share,分享,系统分享">
+    <div class="demo-head"><span class="demo-no">47</span><h3>Web Share</h3></div>
+    <p class="demo-desc">Web Share 调起系统分享面板（移动端友好），桌面端自动降级为复制链接 + 提示。</p>
+    <div class="stage" id="stage-47">
+      <button type="button" class="btn btn-primary" id="share-run">分享这个实验室</button>
+      <p class="fw-note" id="share-status">navigator.share({ title, text, url }) —— 点击后调用系统分享；失败或不可用时复制页面地址。</p>
+      <span class="stage-hint">navigator.share / 降级复制链接</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>navigator.share({title, text, url}) 调起系统分享面板（需用户手势 + secure context）；不支持或取消时降级 navigator.clipboard.writeText 复制链接并 toast。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 调研说明 ===== -->
+  <section class="research">
+    <h3>已调研但未收录</h3>
+    <ul>
+      <li><b>Svelte 5</b> — 需编译，无浏览器运行时，单文件双击不可运行。</li>
+      <li><b>SolidJS</b> — 需 JSX/Soli

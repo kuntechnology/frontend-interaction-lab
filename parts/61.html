@@ -1,0 +1,29 @@
+/svg>复制提示词</button></div>
+      <pre>new SpeechSynthesisUtterance(text) + speechSynthesis.speak() 朗读；rate/pitch 可调，cancel() 停止。必须由用户手势触发，选 zh-CN 语音。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-45" data-tags="api,web worker,多线程,计算">
+    <div class="demo-head"><span class="demo-no">45</span><h3>Web Worker</h3></div>
+    <p class="demo-desc">Worker 把重计算搬到后台线程：求第 40 万位的质数区间，主线程动画依然满帧流畅。</p>
+    <div class="stage" id="stage-45">
+      <div class="wk-bar">
+        <button type="button" class="btn btn-primary btn-sm" id="wk-run">计算质数（后台线程）</button>
+        <span class="wk-fps" id="wk-fps">帧率 --</span>
+      </div>
+      <pre class="wk-out" id="wk-out">点击开始：在 Worker 中筛选 2–200000 的质数并统计个数。</pre>
+      <p class="fw-note">右侧帧率计数器持续跳动，证明主线程未被阻塞。Worker 代码用 Blob URL 内联。</p>
+      <span class="stage-hint">new Worker(URL.createObjectURL(blob))</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>把 CPU 密集任务封装成 new Worker(URL.createObjectURL(new Blob([code]))) 内联脚本，postMessage 通信；主线程保持渲染流畅，任务结束 onmessage 回收。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-46" data-tags="api,fullscreen,全屏,wake lock,屏幕常亮">
+    <div class="demo-head"><span class="demo-no">46</span><h3>Fullscreen + Wake Lock</h3></div>
+    <p class="demo-desc">全屏沉浸 + 屏幕常亮：适合演示、阅读、看板等场景，两个 API 都由用户手势触发。</p>
+    <div class="stage" id="stage-46">
+      <div class="wk-bar">
+        <button type="button" class="btn btn-primary btn-sm" id="fs-toggle">进入 / 退出全屏</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="wl-toggle">保持屏幕常亮</button>
+      </div>
+      <p class="fw-note" id="fs-status">全屏：document.documentElement.requestFullscreen()

@@ -1,0 +1,54 @@
+d 编译，无 UMD 构建。</li>
+      <li><b>Astro</b> — SSG / 构建框架，非运行时库。</li>
+      <li><b>Qwik</b> — 需构建期序列化，社区热度下行。</li>
+      <li><b>shadcn/ui</b> — 源码复制集而非库，无 CDN 入口。</li>
+      <li><b>React 19</b> — 官方已移除 UMD 构建，本实验室用 Preact + htm 兼容路线替代演示。</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <span>前端交互实验室 · 16 原生 + 13 精选库 + 8 前沿框架 + 10 新特性 / API</span>
+    <span><b>v3.6.0</b> · Pride Versioning（Proud 3 · Default 6 · Shame 0）</span>
+    <span>框架调研覆盖：State of JS / Rising Stars / HN / 掘金 / V2EX 等 8 渠道</span>
+    <span>库类演示依赖 jsDelivr CDN，需联网打开</span>
+  </footer>
+</main>
+
+<div id="toast-wrap" aria-live="polite"></div>
+
+<!-- ===== 第三方库（jsDelivr CDN）===== -->
+
+<!-- ===== v3 新增：前沿框架 CDN（jsDelivr 优先）===== -->
+
+<script>
+(function(){
+  'use strict';
+
+  /* ===== Toast 通知 ===== */
+  var toastWrap = document.getElementById('toast-wrap');
+  function showToast(type, msg){
+    var el = document.createElement('div');
+    el.className = 'toast t-' + (type || 'success');
+    var dot = document.createElement('i');
+    el.appendChild(dot);
+    el.appendChild(document.createTextNode(msg));
+    toastWrap.appendChild(el);
+    setTimeout(function(){ el.classList.add('is-out'); }, 2600);
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 3000);
+  }
+  window.showToast = showToast;
+
+  /* 库加载失败兜底：按钮保留，点击提示联网 */
+  function noLib(id, name){
+    var b = document.getElementById(id);
+    if(!b) return;
+    b.addEventListener('click', function(){
+      showToast('error', name + ' 加载失败，请联网后刷新页面');
+    });
+  }
+  /* ===== v3.2 · CDN 按需加载 ===== */
+  var LIBS = {
+    gsap:    { js: ['https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js','https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'] },
+    lottie:  { js: ['https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js'] },
+    anime:   { js: ['https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js'] },
+    motion:  { js: ['https://cdn.jsdelivr.net/npm/motion@10.18.0/dist/motion.umd.
