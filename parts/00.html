@@ -22,43 +22,4 @@
 .cl-bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .cl-out{min-height:34px;max-width:620px;margin:10px auto 0;font-size:12.5px;color:var(--ink-2)}
 /* 44 Speech */
-.sp-src{font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;max-width:620px;margin:0 auto 10px;line-height:1.7}
-.sp-bar{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
-.sp-rate{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
-.sp-rate input{accent-color:var(--accent);width:110px}
-/* 45 Worker / 46 Fullscreen 共用 */
-.wk-bar{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
-.wk-fps{font-family:var(--font-mono);font-size:12px;color:var(--accent-deep);min-width:64px}
-.wk-out{min-height:34px;max-width:640px;margin:10px auto 0;font-size:12.5px;color:var(--ink-2);text-align:center}
-#fs-status,#wl-status{max-width:640px;margin:6px auto 0;font-size:12.5px;color:var(--ink-2);text-align:center}
-</style>
-<style>
-/* ============ 设计 Token ============ */
-:root{
-  --bg:#F5F3EE;            /* 纸张 */
-  --panel:#FFFFFF;
-  --ink:#211E1A;           /* 墨 */
-  --ink-2:#6F6A5F;
-  --ink-3:#9C968A;
-  --line:#E5E1D6;
-  --line-strong:#D5D0C2;
-  --accent:#EE5B1F;        /* 信号橙 */
-  --accent-deep:#D4480F;
-  --accent-soft:#FBE4D4;
-  --ok:#2F9E63;
-  --err:#D64545;
-  --warn:#D98A2B;
-  --code-bg:#211E1A;
-  --code-ink:#F5F3EE;
-  --code-ink-2:#B9B3A6;
-  --radius:10px;
-  --font-ui:'Noto Sans SC',system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
-  --font-mono:'JetBrains Mono','SF Mono',SFMono-Regular,Consolas,'Liberation Mono',monospace;
-  --topbar-h:56px;
-  --rail-w:240px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
-/* 纸张噪点：极淡 grain 提升印刷质感（内容层之下，不影响任何组件渲染） */
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' 
+.sp-src{font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;max-width

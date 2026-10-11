@@ -1,0 +1,27 @@
+nt)}
+.rail-link.is-active b{color:var(--accent-deep)}
+
+/* ============ 主区 ============ */
+.main{margin-left:var(--rail-w);padding:48px 56px 90px;max-width:1180px}
+@media(min-width:1200px){.main{padding-left:72px;padding-right:72px}}
+
+/* 介绍区 */
+.intro{padding-bottom:48px;border-bottom:1px solid var(--line)}
+.intro h2{font-size:32px;font-weight:700;letter-spacing:1px}
+.intro .lead{color:var(--ink-2);font-size:15.5px;max-width:60ch;margin-top:12px;text-wrap:pretty}
+.steps{display:flex;gap:40px;margin-top:28px;flex-wrap:wrap}
+.step{flex:1;min-width:180px;display:flex;gap:12px;align-items:flex-start}
+.step b{font-family:var(--font-mono);font-size:14px;color:var(--accent-deep);font-weight:600;line-height:1.6;flex:none}
+.step p{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+
+/* ============ 演示区块（行式，非卡片） ============ */
+.demo{border-top:1px solid var(--line);padding:46px 0 42px;scroll-margin-top:calc(var(--topbar-h) + 20px)}
+.demo-head{display:flex;gap:16px;align-items:baseline}
+.demo-no{font-family:var(--font-mono);font-size:14px;color:var(--accent-deep);font-weight:600;width:46px;flex:none}
+.demo-head h3{font-size:22px;font-weight:700;letter-spacing:.3px;text-wrap:balance}
+.demo-desc{margin-top:4px;color:var(--ink-2);font-size:14px;max-width:64ch}
+.demo-meta{margin-top:8px;font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:1px}
+
+/* 演示舞台 */
+.stage{position:relative;margin-top:20px;background:radial-gradient(520px 280px at 88% -8%,rgba(238,91,31,.055),transparent 70%),radial-gradient(460px 260px at 0% 106%,rgba(47,111,214,.05),transparent 70%),var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px 28px 44px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;min-height:210px;overflow:hidden}
+.stage-hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);font-size:11px;color:var(--ink-3);letter-spacing:1px;pointer-events:none;white-space:nowrap;background:rgba(255,255,255,.
