@@ -1,0 +1,51 @@
+ging) return;
+      var target = e.target.closest('li');
+      if(!target || target === dragging) return;
+      var rect = target.getBoundingClientRect();
+      var before = e.clientY < rect.top + rect.height / 2;
+      list.insertBefore(dragging, before ? target : target.nextSibling);
+    });
+    list.addEventListener('drop', function(e){ e.preventDefault(); });
+    list.addEventListener('dragend', function(){
+      if(dragging) dragging.classList.remove('drag-src');
+      dragging = null;
+    });
+  })();
+
+  /* ===== 10 折叠面板 ===== */
+  (function(){
+    var stage = document.getElementById('stage-10');
+    var items = Array.prototype.slice.call(stage.querySelectorAll('.acc-item'));
+    stage.addEventListener('click', function(e){
+      var head = e.target.closest('.acc-head');
+      if(!head) return;
+      var item = head.closest('.acc-item');
+      var wasOpen = item.classList.contains('acc-open');
+      items.forEach(function(it){ it.classList.remove('acc-open'); });
+      if(!wasOpen) item.classList.add('acc-open');
+    });
+  })();
+
+  /* ===== 11 Tab 切换 ===== */
+  (function(){
+    var stage = document.getElementById('stage-11');
+    var bar = stage.querySelector('.tab-bar');
+    var btns = Array.prototype.slice.call(bar.querySelectorAll('.tab-btn'));
+    var panels = Array.prototype.slice.call(stage.querySelectorAll('.tab-panel'));
+    var ink = bar.querySelector('.tab-ink');
+    function moveInk(btn){
+      ink.style.left = btn.offsetLeft + 'px';
+      ink.style.width = btn.offsetWidth + 'px';
+    }
+    function activate(btn, focus){
+      btns.forEach(function(b){
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+      });
+      panels.forEach(function(p, i){ p.classList.toggle('is-active', btns[i] === btn); });
+      moveInk(btn);
+      if(focus) btn.focus();
+    }
+    bar.addEventListener('click', function(e){
+      var btn = e.target.closest('.tab-btn');
+      if(btn) activate(btn, false

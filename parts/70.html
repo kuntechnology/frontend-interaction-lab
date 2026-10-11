@@ -1,0 +1,58 @@
+(function(n){ n.textContent = '0'; }); run(); }
+    });
+  })();
+
+  /* ===== 06 滚动揭示 ===== */
+  (function(){
+    var items = Array.prototype.slice.call(document.querySelectorAll('#stage-06 .reveal-item'));
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add('is-in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    items.forEach(function(it){ io.observe(it); });
+  })();
+
+  /* ===== 07 视差滚动 ===== */
+  (function(){
+    var view = document.querySelector('#stage-07 .px-view');
+    var bg = view.querySelector('.px-bg');
+    var raf = null;
+    view.addEventListener('scroll', function(){
+      if(raf) return;
+      raf = requestAnimationFrame(function(){
+        raf = null;
+        bg.style.transform = 'translate3d(0,' + (view.scrollTop * 0.45).toFixed(1) + 'px,0)';
+      });
+    }, { passive: true });
+  })();
+
+  /* ===== 08 3D 翻转 ===== */
+  (function(){
+    var flip = document.querySelector('#stage-08 .flip');
+    flip.addEventListener('click', function(){ flip.classList.toggle('is-flipped'); });
+    flip.addEventListener('mouseenter', function(){ flip.classList.add('is-flipped'); });
+    flip.addEventListener('mouseleave', function(){ flip.classList.remove('is-flipped'); });
+    flip.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip.classList.toggle('is-flipped'); }
+    });
+  })();
+
+  /* ===== 09 拖拽排序 ===== */
+  (function(){
+    var list = document.getElementById('drag-list');
+    var dragging = null;
+    list.addEventListener('dragstart', function(e){
+      var li = e.target.closest('li');
+      if(!li) return;
+      dragging = li;
+      li.classList.add('drag-src');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', li.textContent);
+    });
+    list.addEventListener('dragover', function(e){
+      e.preventDefault();
+      if(!drag
