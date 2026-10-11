@@ -1,0 +1,46 @@
+);
+          if(pt.life > 0){
+            p.fill(238, 91, 31, pt.life * 150);
+            p.circle(pt.x, pt.y, 5 + pt.life * 7);
+          }
+        });
+        particles = particles.filter(function(pt){ return pt.life > 0; });
+        if(particles.length > 600) particles.splice(0, particles.length - 600);
+      };
+      p.windowResized = function(){
+        var w = box.clientWidth, h = box.clientHeight;
+        if(w > 0 && h > 0) p.resizeCanvas(w, h);
+      };
+    };
+    new p5(sketch, 'p5-box');
+  })();
+
+  /* ===== 23 ECharts ===== */
+  (function run(){
+    if(typeof echarts === 'undefined'){
+      LAB.wait({ key: 'echarts', id: 'ec-toggle', name: 'echarts', fn: run, fb: function(){ noLib('ec-toggle', 'echarts'); noLib('ec-reset', 'echarts'); } });
+      return;
+    }
+    var chart = echarts.init(document.getElementById('echart-box'));
+    var base = -7;
+    var series = [
+      { name: '请求量', data: [], lineStyle: { color: '#EE5B1F', width: 2 }, itemStyle: { color: '#EE5B1F' }, smooth: true },
+      { name: '错误率', data: [], lineStyle: { color: '#2F6FD6', width: 2 }, itemStyle: { color: '#2F6FD6' }, smooth: true, yAxisIndex: 1 }
+    ];
+    function push(shift){
+      base++;
+      series[0].data.push([String(base), Math.round(50 + Math.random() * 40)]);
+      series[1].data.push([String(base), +(Math.random() * 2.5).toFixed(1)]);
+      if(shift){ series.forEach(function(s){ s.data.shift(); }); }
+    }
+    for(var i = 0; i < 8; i++) push(false);
+    function render(){
+      chart.setOption({
+        animation: false,
+        grid: { left: 42, right: 50, top: 36, bottom: 30 },
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['请求量', '错误率'], top: 0 },
+        xAxis: { type: 'category', data: series[0].data.map(function(d){ return d[0]; }), boundaryGap: false, axisLine: { lineStyle: { color: '#D5D0C2' } } },
+        yAxis: [
+          { type: 'value', name: '请求量', min: 0, max: 100, splitLine: { lineStyle: { color: '#EFEBDF' } } },
+          { type: 'value'

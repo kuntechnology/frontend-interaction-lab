@@ -1,0 +1,49 @@
+, name: '错误率 %', min: 0, max: 3, splitLine: { show: false } }
+        ],
+        series: series
+      });
+    }
+    render();
+    var timer = null, running = true;
+    function step(){ push(true); render(); }
+    timer = setInterval(step, 2000);
+    document.getElementById('ec-toggle').addEventListener('click', function(){
+      running = !running;
+      if(running){ timer = setInterval(step, 2000); this.textContent = '暂停更新'; }
+      else{ clearInterval(timer); timer = null; this.textContent = '继续更新'; }
+    });
+    document.getElementById('ec-reset').addEventListener('click', function(){
+      base = -7;
+      series.forEach(function(s){ s.data = []; });
+      for(var i = 0; i < 8; i++) push(false);
+      render();
+    });
+    window.addEventListener('resize', function(){ chart.resize(); });
+  })();
+
+  /* ===== 24 D3 力导向图 ===== */
+  (function run(){
+    if(typeof d3 === 'undefined'){
+      LAB.wait({ key: 'd3', name: 'd3', fn: run });
+      return;
+    }
+    var nodes = [
+      { id: 'a', label: '用户' }, { id: 'b', label: '订单' }, { id: 'c', label: '支付' },
+      { id: 'd', label: '商品' }, { id: 'e', label: '库存' }, { id: 'f', label: '物流' },
+      { id: 'g', label: '售后' }, { id: 'h', label: '风控' }
+    ];
+    var links = [
+      { source: 'a', target: 'b' }, { source: 'b', target: 'c' }, { source: 'b', target: 'd' },
+      { source: 'd', target: 'e' }, { source: 'b', target: 'f' }, { source: 'a', target: 'h' },
+      { source: 'c', target: 'h' }, { source: 'f', target: 'g' }, { source: 'd', target: 'g' }
+    ];
+    var svg = d3.select('#d3-graph');
+    var W = 640, H = 320;
+    var linkEl = svg.append('g').selectAll('line').data(links).join('line').attr('class', 'link');
+    var nodeEl = svg.append('g').selectAll('g').data(nodes).join('g').attr('class', 'node')
+      .call(d3.drag()
+        .on('start', dragStart)
+        .on('drag', dragged)
+        .on('end', dragEnd));
+    nodeEl.append('circle').attr('r', 16);
+    nodeEl.append('text').attr('dy', 30).text(function(d){

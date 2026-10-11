@@ -1,0 +1,57 @@
+tage = document.getElementById('stage-21');
+    stage.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'mouse' && e.button !== 0) return;
+      dragging = true; lastX = e.clientX; lastY = e.clientY;
+      try{ stage.setPointerCapture(e.pointerId); }catch(err){}
+    });
+    stage.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      mesh.rotation.y += (e.clientX - lastX) * 0.012;
+      mesh.rotation.x += (e.clientY - lastY) * 0.012;
+      lastX = e.clientX; lastY = e.clientY;
+    });
+    stage.addEventListener('pointerup', function(){ dragging = false; });
+    stage.addEventListener('pointercancel', function(){ dragging = false; });
+    function loop(){
+      if(!dragging) mesh.rotation.y += 0.004;
+      renderer.render(scene, camera);
+      requestAnimationFrame(loop);
+    }
+    loop();
+    window.addEventListener('resize', function(){
+      var w2 = box.clientWidth, h2 = box.clientHeight;
+      if(w2 > 0 && h2 > 0){
+        camera.aspect = w2 / h2;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w2, h2);
+      }
+    });
+  })();
+
+  /* ===== 22 p5.js ===== */
+  (function run(){
+    if(typeof p5 === 'undefined'){
+      LAB.wait({ key: 'p5', name: 'p5.js', fn: run });
+      return;
+    }
+    var box = document.getElementById('p5-box');
+    var sketch = function(p){
+      var particles = [];
+      p.setup = function(){
+        p.createCanvas(Math.max(box.clientWidth, 200), Math.max(box.clientHeight, 200));
+        p.background(245, 243, 238);
+        p.noStroke();
+      };
+      p.draw = function(){
+        p.background(245, 243, 238, 26);
+        if(p.mouseX > 0 && p.mouseY > 0 && p.frameCount % 2 === 0){
+          particles.push({
+            x: p.mouseX + p.random(-16, 16),
+            y: p.mouseY + p.random(-16, 16),
+            life: 1
+          });
+        }
+        particles.forEach(function(pt){
+          pt.life -= 0.018;
+          pt.x += p.random(-0.6, 0.6);
+          pt.y += p.random(-0.6, 0.6
