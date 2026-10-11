@@ -1,0 +1,32 @@
+="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>实现磁性按钮：监听 mousemove，光标进入按钮周围 80px 范围时按钮向光标方向平滑偏移，最大 10px；光标离开后弹性回位。仅桌面启用，触屏设备忽略此效果。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-03" data-tags="spotlight,光标,聚光灯,mask,高亮,跟随">
+    <div class="demo-head"><span class="demo-no">03</span><h3>光标聚光灯</h3></div>
+    <p class="demo-desc">光标经过时照亮局部区域，其余内容压暗。触屏设备自动隐藏。</p>
+    <div class="stage" id="stage-03">
+      <div class="spot-wrap">
+        <p>把光标移入这片区域，一个圆形聚光会跟随你的指针移动，照亮下面的文字内容。</p>
+        <p>实现思路：用 CSS 变量存储光标坐标，叠加一个径向渐变遮罩层，配合 rAF 节流更新，性能开销极小。</p>
+        <p>聚光半径、颜色与衰减均可调，常用于夜间模式、沉浸式阅读或产品首页的氛围营造。</p>
+      </div>
+      <div class="spot-mask" aria-hidden="true"></div>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>实现光标聚光灯：页面跟随光标显示一个径向渐变高亮圆，其余区域压暗。用 CSS 变量存光标坐标，mousemove 时以 rAF 节流更新；触屏设备（无 hover 能力）自动隐藏。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 动效呈现 ===== -->
+
+  <section class="demo" id="demo-04" data-tags="typewriter,打字机,文字,循环,光标">
+    <div class="demo-head"><span class="demo-no">04</span><h3>打字机</h3></div>
+    <p class="demo-desc">多段文案逐字打出、停顿、删除再循环，带闪烁光标。</p>
+    <div class="stage" id="stage-04">
+      <p class="type-line"><span id="type-text" class="type-text"></span><span class="type-caret" aria-hidden="true"></span></p>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="r

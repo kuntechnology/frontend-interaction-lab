@@ -1,0 +1,33 @@
+ound"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>实现打字机循环：多条文案逐字打出，停顿后逐字删除再输入下一条。打字速度与停顿时长可调，带闪烁光标。原生 JS 实现，不依赖任何库。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-05" data-tags="counter,数字滚动,countup,缓动,rAF,统计">
+    <div class="demo-head"><span class="demo-no">05</span><h3>数字滚动</h3></div>
+    <p class="demo-desc">数字从 0 平滑递增到目标值，rAF + 缓动函数实现。</p>
+    <div class="stage" id="stage-05">
+      <div class="stat"><b class="stat-num" data-target="128">0</b><span>用户数</span></div>
+      <div class="stat"><b class="stat-num" data-target="99.7" data-decimal="1">0</b><span>满意度 %</span></div>
+      <div class="stat"><b class="stat-num" data-target="42">0</b><span>上线版本</span></div>
+      <button type="button" class="btn btn-ghost btn-sm" id="stat-run">重新播放</button>
+      <span class="stage-hint">进入视口自动播放，可手动重播</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>数字滚动计数：数字从 0 平滑递增到目标值，用 requestAnimationFrame 与缓动函数实现，支持小数与千分位格式；进入视口或点击时触发。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-06" data-tags="reveal,滚动揭示,进入视口,intersection,淡入">
+    <div class="demo-head"><span class="demo-no">06</span><h3>滚动揭示</h3></div>
+    <p class="demo-desc">元素进入视口时淡入上移呈现，IntersectionObserver 触发一次。</p>
+    <div class="stage stage-col" id="stage-06">
+      <p class="reveal-item">第 1 行 · 进入视口即淡入</p>
+      <p class="reveal-item">第 2 行 · 依次错峰出现</p>
+      <p class="reveal-item">第 3 行 · 仅触发一次，性能友好</p>
+      <p class="reveal-item">第 4 行 · 支持任意元素与过渡</p>
+      <span class="stage-hint">上下滚动本页查看效果</span>
+    </div>
+    <div class="prompt">
+      <div class="promp

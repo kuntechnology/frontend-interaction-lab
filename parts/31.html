@@ -1,0 +1,35 @@
+td>快速原型、设计收敛</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fw-note" style="margin-top:10px;text-align:left">注：Tailwind Play CDN 仅用于开发原型，生产环境需经构建流程；体积数字为大致量级，随版本波动。</p>
+  </section>
+
+  <!-- ===== 微交互 ===== -->
+
+  <section class="demo" id="demo-01" data-tags="ripple,按钮,微交互,原生,material,水波纹">
+    <div class="demo-head"><span class="demo-no">01</span><h3>涟漪按钮</h3></div>
+    <p class="demo-desc">点击按钮，波纹从指针落点向外扩散并淡出，原生实现。</p>
+    <div class="stage" id="stage-01">
+      <button type="button" class="btn btn-primary ripple-demo">保存</button>
+      <button type="button" class="btn btn-ghost ripple-demo">取消</button>
+      <button type="button" class="btn btn-primary ripple-demo">提交订单</button>
+      <span class="stage-hint">任意位置点击</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用原生 JS 与 CSS 实现涟漪按钮：点击时从指针落点生成圆形波纹，0.6s 内扩散至按钮边界并淡出。波纹由绝对定位元素承载，颜色取主色半透明。不依赖任何库。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-02" data-tags="magnetic,磁性,按钮,微交互,物理,磁吸">
+    <div class="demo-head"><span class="demo-no">02</span><h3>磁性按钮</h3></div>
+    <p class="demo-desc">光标靠近时按钮被轻轻吸引，离开后弹性回位。仅桌面端生效。</p>
+    <div class="stage" id="stage-02">
+      <button type="button" class="btn btn-primary mag-btn">开始体验</button>
+      <button type="button" class="btn btn-ghost mag-btn">查看文档</button>
+      <button type="button" class="btn btn-primary mag-btn">立即下载</button>
+      <span class="stage-hint">移动光标靠近按钮</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width

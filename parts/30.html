@@ -1,0 +1,38 @@
+ad">47 个可即开即用的前端交互演示：16 原生 + 13 精选库 + 8 前沿框架 + 10 CSS 新特性 / 原生 API。每个都带可直接复制的精简提示词；库与框架演示依赖 CDN，需联网打开。</p>
+    <div class="steps">
+      <div class="step"><b>01</b><p>体验：在下方演示区直接点击、拖拽、书写，感受交互效果。</p></div>
+      <div class="step"><b>02</b><p>复制：点击提示词区块右上角的「复制提示词」，拿到精简实现描述。</p></div>
+      <div class="step"><b>03</b><p>复用：将提示词粘贴进你的项目或 AI 工具，按需调整细节后投入使用。</p></div>
+    </div>
+  </section>
+
+  <div id="search-status" class="search-status" aria-live="polite"></div>
+
+  <!-- ===== 框架对比矩阵 ===== -->
+  <button type="button" class="btn btn-ghost" id="matrix-toggle" aria-expanded="false" style="margin-top:30px">查看框架对比矩阵</button>
+  <section class="matrix-wrap" id="matrix" hidden>
+    <div class="matrix-title">框架对比矩阵</div>
+    <p class="matrix-sub">8 个前沿框架与原生 JS 的横向取舍。单文件原型场景优先看「单文件友好度」一列。</p>
+    <div class="matrix-scroll">
+      <table class="matrix">
+        <colgroup>
+          <col class="c-dim">
+          <col class="c-lib"><col class="c-lib"><col class="c-lib"><col class="c-lib"><col class="c-lib"><col class="c-lib">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>原生 JS</th>
+            <th>Vue 3.5</th>
+            <th>Preact (React)</th>
+            <th>htmx</th>
+            <th>Alpine.js</th>
+            <th>Tailwind v4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>体积 (gzip)</th><td>0 KB</td><td>~35 KB</td><td>~3 KB</td><td>~14 KB</td><td>~15 KB</td><td>Play 运行时</td></tr>
+          <tr><th>学习曲线</th><td>平缓，需原生功底</td><td>平缓–中等</td><td>平缓，React 心智</td><td>极平缓，HTML 属性</td><td>极平缓，HTML 属性</td><td>平缓，utility 记忆</td></tr>
+          <tr><th>核心范式</th><td>命令式 DOM</td><td>响应式 + 组件</td><td>函数组件 + Hooks</td><td>超媒体，局部 swap</td><td>声明式属性增强</td><td>原子类，utility-first</td></tr>
+          <tr><th>单文件友好度</th><td>极高</td><td>高（全局构建）</td><td>高（UMD + htm）</td><td>高</td><td>高</td><td>中（运行时编译）</td></tr>
+          <tr><th>典型场景</th><td>轻量交互、脚本增强</td><td>中大型 SPA / 组件库</td><td>兼容 React 生态的小体量场景</td><td>服务端模板局部刷新</td><td>渐进增强小部件</td><
