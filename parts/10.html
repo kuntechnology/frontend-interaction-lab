@@ -1,0 +1,26 @@
+:15px}
+.dm-panel p{font-size:13.5px;color:var(--ink-2);margin-bottom:10px;transition:color .35s}
+.dm-panel p:last-child{margin-bottom:0}
+.dm-toggle{appearance:none;border:none;background:transparent;cursor:pointer;padding:0}
+.dm-track{display:inline-block;width:46px;height:24px;border-radius:12px;background:#D9D4C6;position:relative;transition:background .3s}
+.dm-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.stage.is-dark .dm-panel{background:var(--code-bg);border-color:#3A362E;color:var(--code-ink)}
+.stage.is-dark .dm-panel p{color:var(--code-ink-2)}
+.stage.is-dark .dm-track{background:var(--accent)}
+.stage.is-dark .dm-thumb{transform:translateX(22px)}
+
+/* ===== 15 Canvas 粒子 ===== */
+#stage-15{padding:0;min-height:320px;background:var(--code-bg)}
+#px-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
+#stage-15 .stage-hint{color:#8A8478;background:rgba(33,30,26,.72);border-color:#3A362E}
+
+/* ===== 16 手绘画板 ===== */
+#stage-16{align-items:stretch;justify-content:flex-start;flex-direction:column;padding:18px}
+.draw-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.draw-color{width:22px;height:22px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;background:var(--dc,#211E1A);transition:transform .15s}
+.draw-color:hover{transform:scale(1.15)}
+.draw-color.is-active{border-color:var(--accent);box-shadow:0 0 0 2px #fff inset}
+.draw-sep{width:1px;height:20px;background:var(--line-strong);margin:0 4px}
+.draw-size{appearance:none;border:1px solid var(--line-strong);background:var(--panel);border-radius:6px;font-family:var(--font-ui);font-size:12.5px;padding:5px 12px;cursor:pointer;color:var(--ink-2)}
+.draw-size.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
+#draw-canvas{width:100%;height:280px;border:1px solid var(--line);border-radius:8px;background:#

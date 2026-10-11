@@ -1,0 +1,26 @@
+h:min(560px,100%);border:2px dashed var(--line-strong);border-radius:12px;padding:26px;text-align:center;background:#FBFAF7;touch-action:manipulation}
+.gesture-pad p{color:var(--ink-2);font-size:14px}
+.gesture-log{margin-top:14px;min-height:96px;font-family:var(--font-mono);font-size:13px;color:var(--ink-2);line-height:2;word-break:break-word}
+.gesture-log span{display:block}
+.gesture-log b{color:var(--accent-deep)}
+
+/* ===== 28 Tone 音序器 ===== */
+#stage-28{align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.seq-rows{display:flex;flex-direction:column;gap:10px}
+.seq-row{display:flex;align-items:center;gap:12px}
+.seq-row>span{width:44px;flex:none;font-size:12.5px;color:var(--ink-3);letter-spacing:1px}
+.seq-cells{display:flex;gap:6px;flex-wrap:wrap}
+.seq-cell{width:34px;height:34px;border-radius:8px;border:1px solid var(--line-strong);background:var(--panel);cursor:pointer;transition:background .12s,transform .12s}
+.seq-cell:hover{transform:translateY(-1px)}
+.seq-cell.is-on{background:var(--accent);border-color:var(--accent)}
+.seq-cell.is-play{outline:2px solid var(--ink);outline-offset:2px}
+.seq-actions{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.seq-status{font-size:12.5px;color:var(--ink-3)}
+
+/* ===== 29 多主题切换 ===== */
+#stage-29{align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+#stage-29{--t-bg:#F5F3EE;--t-panel:#fff;--t-ink:#211E1A;--t-ink2:#6F6A5F;--t-line:#E5E1D6;--t-accent:#EE5B1F;--t-accent-deep:#D4480F}
+#stage-29[data-theme="night"]{--t-bg:#201D19;--t-panel:#2A2621;--t-ink:#F5F3EE;--t-ink2:#B9B3A6;--t-line:#3A362E;--t-accent:#F59A4B;--t-accent-deep:#EE5B1F}
+#stage-29[data-theme="sand"]{--t-bg:#F3EADB;--t-panel:#FBF6EC;--t-ink:#3B342A;--t-ink2:#7D7261;--t-line:#E2D5BE;--t-accent:#C77B23;--t-accent-deep:#A05F16}
+#stage-29[data-theme="mint"]{--t-bg:#EAF3EF;--t-panel:#F7FBF9;--t-ink:#1F332C;--t-ink2:#5F7A70;--t-line:#CFE2D9;--t-accent:#1E8E6A;--t-accent-deep:#14664D}
+.theme-demo{width
