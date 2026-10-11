@@ -1,0 +1,29 @@
+" data-step="0" aria-label="低音第1步"></button>
+          <button type="button" class="seq-cell" data-step="1" aria-label="低音第2步"></button>
+          <button type="button" class="seq-cell" data-step="2" aria-label="低音第3步"></button>
+          <button type="button" class="seq-cell is-on" data-step="3" aria-label="低音第4步"></button>
+          <button type="button" class="seq-cell is-on" data-step="4" aria-label="低音第5步"></button>
+          <button type="button" class="seq-cell" data-step="5" aria-label="低音第6步"></button>
+          <button type="button" class="seq-cell is-on" data-step="6" aria-label="低音第7步"></button>
+          <button type="button" class="seq-cell" data-step="7" aria-label="低音第8步"></button>
+        </div></div>
+      </div>
+      <div class="seq-actions">
+        <button type="button" class="btn btn-primary btn-sm" id="seq-play">播放</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="seq-clear">清空</button>
+        <span class="seq-status" id="seq-status">点击播放开始发声</span>
+      </div>
+      <span class="stage-hint">点击格子编辑，播放时跟随</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 tone</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 Tone.Synth + Tone.Transport 做 8 步音序器：Tone.Sequence 按步触发音符，当前步高亮用 on('step') 更新格子状态；首次点击播放时调用 Tone.start() 解锁音频。CDN 引入 tone。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-29" data-tags="theme,主题,css变量,多主题,配色">
+    <div class="demo-head"><span class="demo-no">29</span><h3>多主题切换</h3></div>
+    <p class="demo-desc">同一套组件四个主题一键切换：颜色全部走 CSS 变量，原生实现。</p>
+    <div class="stage" id="stage-29">
+      <div class="theme-demo">
+        <div class="theme-head"><b>主题预览面板</b><span class="theme-tag">当前：纸张</span></div

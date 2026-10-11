@@ -1,0 +1,38 @@
+section>
+
+  <section class="demo" id="demo-26" data-lib="embla" data-tags="embla,轮播,carousel,轻量,滑动,库">
+    <div class="demo-head"><span class="demo-no">26</span><h3>Embla 轻量轮播</h3></div>
+    <p class="demo-desc">drag free 滑动 + 上/下一张控制，核心 API 仅约 12KB，无依赖。</p>
+    <div class="stage" id="stage-26">
+      <div class="embla">
+        <div class="embla-viewport" id="embla-viewport">
+          <div class="embla-container">
+            <div class="embla-slide e1">轻量</div>
+            <div class="embla-slide e2">流畅</div>
+            <div class="embla-slide e3">可拖</div>
+            <div class="embla-slide e4">API 简洁</div>
+          </div>
+        </div>
+      </div>
+      <div class="embla-actions">
+        <button type="button" class="btn btn-ghost btn-sm" id="embla-prev">上一张</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="embla-next">下一张</button>
+        <span class="embla-dot" id="embla-dot">1 / 4</span>
+      </div>
+      <span class="stage-hint">左右拖动或点击按钮</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 embla-carousel</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 embla-carousel 核心 API：EmblaCarousel(viewport, { dragFree: true })；scrollPrev / scrollNext 做按钮控制，on('select') 回调更新页码指示。CDN 引入 embla-carousel 的 UMD 构建。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 库 · 手势音频与主题 ===== -->
+
+  <section class="demo" id="demo-27" data-lib="hammer" data-tags="hammer,手势,gesture,触摸,库">
+    <div class="demo-head"><span class="demo-no">27</span><h3>Hammer 手势识别</h3></div>
+    <p class="demo-desc">在面板上做手势：点击、长按、滑动、拖拽，实时显示识别结果。</p>
+    <div class="stage" id="stage-27">
+      <div id="gesture-pad" class="gesture-pad">
+        <p>在这片区域做手势</p>
+        <div class="gesture-l

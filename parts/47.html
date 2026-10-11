@@ -1,0 +1,27 @@
+og" id="gesture-log"><span>等待手势…</span></div>
+      </div>
+      <span class="stage-hint">鼠标或手指均可，触屏支持双指捏合</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 hammerjs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 Hammer(dom) 绑定 tap / press / swipe / pan / rotate / pinch 手势，各事件回调读取 e.type 与 e.direction 更新反馈面板；捏合与旋转默认需双指，桌面端自动忽略。CDN 引入 hammerjs。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-28" data-lib="tone" data-tags="tone,音频,音乐,音序器,合成器,webaudio,库">
+    <div class="demo-head"><span class="demo-no">28</span><h3>Tone 音序器</h3></div>
+    <p class="demo-desc">8 步音序器：点击格子编辑节拍，播放时高亮走位并发声。</p>
+    <div class="stage" id="stage-28">
+      <div class="seq-rows">
+        <div class="seq-row"><span>主音</span><div class="seq-cells" data-voice="melody">
+          <button type="button" class="seq-cell is-on" data-step="0" aria-label="主音第1步"></button>
+          <button type="button" class="seq-cell" data-step="1" aria-label="主音第2步"></button>
+          <button type="button" class="seq-cell is-on" data-step="2" aria-label="主音第3步"></button>
+          <button type="button" class="seq-cell is-on" data-step="3" aria-label="主音第4步"></button>
+          <button type="button" class="seq-cell" data-step="4" aria-label="主音第5步"></button>
+          <button type="button" class="seq-cell is-on" data-step="5" aria-label="主音第6步"></button>
+          <button type="button" class="seq-cell" data-step="6" aria-label="主音第7步"></button>
+          <button type="button" class="seq-cell is-on" data-step="7" aria-label="主音第8步"></button>
+        </div></div>
+        <div class="seq-row"><span>低音</span><div class="seq-cells" data-voice="bass">
+          <button type="button" class="seq-cell is-on
