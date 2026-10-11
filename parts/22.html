@@ -1,0 +1,23 @@
+webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 46px rgba(255,106,42,.16)}
+html[data-theme="dark"] .intro h2::after{content:"";display:block;width:66px;height:3px;margin-top:16px;border-radius:99px;background:linear-gradient(90deg,#FF6A2A,#4E8CFF);box-shadow:0 0 20px rgba(255,106,42,.7)}
+/* 进度光轨 */
+html[data-theme="dark"] #progress i{background:linear-gradient(90deg,#FF6A2A,#4E8CFF);box-shadow:0 0 12px rgba(255,106,42,.8)}
+/* 当前 demo 标题发光 */
+html[data-theme="dark"] .demo.is-current .demo-head h3{color:var(--accent-deep);text-shadow:0 0 26px rgba(255,106,42,.5)}
+/* 图表展品纸底（深色玻璃展柜里的白展板） */
+html[data-theme="dark"] .echart-box{background:rgba(247,244,238,.94);border-radius:10px}
+html[data-theme="dark"] .d3-graph .link{stroke:rgba(255,255,255,.25)}
+/* toast 玻璃 */
+html[data-theme="dark"] .toast{background:rgba(20,18,16,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 8px 28px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08)}
+/* ============ v3.4 · 霓虹氛围灯 / 玻璃扫光 / 启动序列 / 星云 ============ */
+/* 霓虹四色：亮色 + 暗色双套 */
+html[data-accent="cyan"]{--accent:#0E9FD6;--accent-deep:#087FB0;--accent-soft:#DBF1FB}
+html[data-theme="dark"][data-accent="cyan"]{--accent:#22D3EE;--accent-deep:#67E8F9;--accent-soft:rgba(34,211,238,.16)}
+html[data-accent="violet"]{--accent:#7C3AED;--accent-deep:#6D28D9;--accent-soft:#EDE5FD}
+html[data-theme="dark"][data-accent="violet"]{--accent:#A78BFA;--accent-deep:#C4B5FD;--accent-soft:rgba(167,139,250,.16)}
+html[data-accent="lime"]{--accent:#16A34A;--accent-deep:#15803D;--accent-soft:#DCFCE7}
+html[data-theme="dark"][data-accent="lime"]{--accent:#4ADE80;--accent-deep:#86EFAC;--accent-soft:rgba(74,222,128,.16)}
+/* 氛围灯切换器 */
+.accent-switch{display:inline-flex;align-items:center;gap:6px;margin:0 6px;flex:none}
+.accent-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(33,30,26,.18);background:var(--dot);cursor:pointer;padding:0;transition:transform .18s,box-shadow .18s;flex:none}
+.acc

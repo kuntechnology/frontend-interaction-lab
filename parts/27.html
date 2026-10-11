@@ -1,0 +1,23 @@
+data-glow="g3"] .a2,html[data-theme="dark"] .ambient[data-glow="g4"] .a3{opacity:1;filter:brightness(1.75)}
+@media(prefers-reduced-motion:reduce){html[data-theme="dark"] .ambient i{transition:none}}
+</style>
+<script>try{var lt=localStorage.getItem('lab-theme');document.documentElement.setAttribute('data-theme',lt==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}try{var la=localStorage.getItem('lab-accent');if(la)document.documentElement.setAttribute('data-accent',la)}catch(e){}</script>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i><i class="stars"></i></div>
+
+<div id="progress"><i></i></div>
+
+<header class="topbar">
+  <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#EE5B1F"/><circle cx="32" cy="32" r="14" fill="none" stroke="#F5F3EE" stroke-width="5"/><circle cx="32" cy="32" r="4" fill="#F5F3EE"/></svg>
+  <h1>前端交互实验室</h1>
+  <span class="tag">v3.6.0</span>
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="search-input" type="search" placeholder="搜索演示…" autocomplete="off" aria-label="搜索演示">
+    <button type="button" id="search-clear" class="search-clear" aria-label="清空搜索">×</button>
+  </div>
+  <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换明暗主题" title="切换明暗主题"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  <div class="accent-switch" role="group" aria-label="霓虹氛围灯">
+    <button type="button" class="accent-dot is-active" data-accent="orange" aria-label="信号橙" title="信号橙" style="--dot:#FF6A2A"></button>
+    <button type="button" class="accent-dot" data-accent="cyan" aria-label="电光青" title="电光青" style="--dot:#22D3EE"></

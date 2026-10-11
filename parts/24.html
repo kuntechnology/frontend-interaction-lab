@@ -1,0 +1,21 @@
+heen{0%,62%{transform:translateX(-130%) skewX(-8deg)}78%,100%{transform:translateX(130%) skewX(-8deg)}}
+html[data-theme="dark"] .btn,html[data-theme="dark"] .copy-btn{position:relative;overflow:hidden}
+html[data-theme="dark"] .btn-primary::after,html[data-theme="dark"] .copy-btn::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-130%);transition:transform .65s ease}
+html[data-theme="dark"] .btn-primary:hover::after,html[data-theme="dark"] .copy-btn:hover::after{transform:translateX(130%)}
+/* 启动序列 */
+html[data-theme="dark"] .intro h2{animation:lab-on .9s cubic-bezier(.22,1,.36,1) both}
+html[data-theme="dark"] .intro .lead{animation:lab-fade .7s ease .15s both}
+html[data-theme="dark"] .intro .steps{animation:lab-fade .7s ease .3s both}
+@keyframes lab-on{from{opacity:0;filter:blur(9px);transform:translateY(16px)}to{opacity:1;filter:blur(0);transform:none}}
+@keyframes lab-fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="dark"] .stage::after,html[data-theme="dark"] .btn-primary::after,html[data-theme="dark"] .copy-btn::after,html[data-theme="dark"] .ambient .stars,html[data-theme="dark"] .ambient .a1,html[data-theme="dark"] .ambient .a2,html[data-theme="dark"] .ambient .a3,html[data-theme="dark"] .ambient .a4{animation:none!important}
+  html[data-theme="dark"] .intro h2,html[data-theme="dark"] .intro .lead,html[data-theme="dark"] .intro .steps{animation:none!important}
+}
+
+/* ============ v3.5 · CSS 新特性 + 原生 API ============ */
+/* 38 滚动驱动动画 */
+.sd-track{display:flex;gap:14px;overflow-x:auto;padding:10px 4px 18px;scroll-snap-type:x proximity;max-width:100%}
+.sd-track::-webkit-scrollbar{height:6px}
+.sd-track::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px}
+.sd-chip{flex:none;width:86px;height:72px;display:flex;align-items:center;justify-co

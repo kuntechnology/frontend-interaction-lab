@@ -1,0 +1,26 @@
+;max-width:100%;transition:width .1s}
+.cq-card{flex:1 1 0;min-width:0;display:flex;flex-direction:row;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:13px;color:var(--ink)}
+.cq-card b{color:var(--accent-deep);flex:none}
+@container (max-width: 360px){
+  .cq-card{flex-direction:column;text-align:center;font-size:12px}
+  .cq-card span{display:none}
+}
+html[data-theme="dark"] .cq-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+/* 41 Anchor Positioning */
+.anc-wrap{position:relative;width:100%;height:180px;border:1px dashed var(--line-strong);border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:visible}
+.anc-anchor{position:absolute;left:calc(50% - 37px);top:calc(50% - 19px);width:74px;height:38px;border-radius:999px;background:var(--accent);border:0;color:#fff;font-size:13px;cursor:grab;touch-action:none;box-shadow:0 4px 14px -6px rgba(238,91,31,.6)}
+.anc-anchor:active{cursor:grabbing}
+.anc-pop{position:absolute;padding:10px 14px;border-radius:8px;background:var(--panel);border:1px solid var(--line-strong);font-size:12.5px;color:var(--ink);box-shadow:0 12px 30px -14px rgba(0,0,0,.4);z-index:2;pointer-events:none;text-align:center;line-height:1.6}
+.anc-bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+@supports (anchor-name: --anc){
+  .anc-anchor{anchor-name:--anc}
+  .anc-pop{position-anchor:--anc;position-area:top;left:auto;right:auto;top:auto;bottom:auto}
+  .anc-pop.anc-right{position-area:right}
+  .anc-pop.anc-bottom{position-area:bottom}
+  .anc-pop.anc-left{position-area:left}
+}
+html[data-theme="dark"] .anc-pop{background:rgba(32,29,25,.92)}
+
+/* v3.6 · 光随内容：当前章节对应光斑聚焦微亮 */
+html[data-theme="dark"] .ambient[data-glow] i{opacity:.4;transition:opacity .9s ease,filter .9s ease}
+html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .ambient[data-glow="g2"] .a4,html[data-theme="dark"] .ambient[
