@@ -1,0 +1,30 @@
+troke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>HTML5 拖拽排序列表：用 dragstart / dragover / drop 完成重排，拖起时显示半透明占位，落点处做 DOM 插入。触屏设备需另行实现 pointer 事件方案。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-10" data-tags="accordion,折叠,手风琴,展开,faq">
+    <div class="demo-head"><span class="demo-no">10</span><h3>折叠面板</h3></div>
+    <p class="demo-desc">同一时间仅展开一项，grid-template-rows 平滑过渡。</p>
+    <div class="stage stage-col" id="stage-10">
+      <div class="acc-item acc-open">
+        <button type="button" class="acc-head">什么是折叠面板的平滑动画要点？<span class="acc-ico" aria-hidden="true"></span></button>
+        <div class="acc-body"><div class="acc-content"><p>展开收起时内容高度不确定，用 grid-template-rows 在 0fr 与 1fr 之间过渡，动画不会随内容高度跳变。</p></div></div>
+      </div>
+      <div class="acc-item">
+        <button type="button" class="acc-head">如何保证同一时间只展开一项？<span class="acc-ico" aria-hidden="true"></span></button>
+        <div class="acc-body"><div class="acc-content"><p>维护一个「当前展开项」状态，展开新项时先把上一项收起，再展开当前项。</p></div></div>
+      </div>
+      <div class="acc-item">
+        <button type="button" class="acc-head">折叠面板适合什么场景？<span class="acc-ico" aria-hidden="true"></span></button>
+        <div class="acc-body"><div class="acc-content"><p>FAQ、设置分组、条款说明等「多段短内容按需查看」的场景，能显著降低页面信息密度。</p></div></div>
+      </div>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>折叠面板：同一时间只展开一项；用 grid-template-rows 0fr→1fr 过渡实现平滑展开收起，点击头部切换；内容高度变化时动画不跳变。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-11" data-tags="tab,标签页,切换,导航,下划线">
+    <div class="d

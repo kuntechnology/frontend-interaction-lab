@@ -1,0 +1,29 @@
+t-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>滚动揭示：元素进入视口时淡入并上移 16px 呈现。用 IntersectionObserver 触发一次后停止观察，尊重 prefers-reduced-motion 关闭动画。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-07" data-tags="parallax,视差,滚动,层次,背景">
+    <div class="demo-head"><span class="demo-no">07</span><h3>视差滚动</h3></div>
+    <p class="demo-desc">背景层以 0.45 倍速移动，前景自然滚动，形成层次感。</p>
+    <div class="stage" id="stage-07">
+      <div class="px-view">
+        <div class="px-bg" aria-hidden="true"><span class="px-dot px-dot-1"></span><span class="px-dot px-dot-2"></span><span class="px-dot px-dot-3"></span></div>
+        <div class="px-fg">
+          <h4>远景缓慢移动，近景正常滚动</h4>
+          <p>在区域内上下滚动，观察两个图层的速度差。背景圆点以 0.45 倍速跟随，形成纵深错觉。</p>
+          <p>实现要点：滚动监听里只更新 transform 的 translate3d，把合成交给 GPU，避免直接读写 scrollTop 引发整页重排。</p>
+          <p>视差常用于产品页、故事化长页与游戏化叙事，速度系数建议控制在 0.3 – 0.7 之间，避免晕动。</p>
+        </div>
+      </div>
+      <span class="stage-hint">在区域内滚动</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>实现视差滚动：滚动时背景层以 0.45 倍速、前景以 1 倍速移动，产生层次感。用 rAF + translate3d 更新，不直接读写 scrollTop 引发重排；速度系数控制在 0.3–0.7。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-08" data-tags="flip,翻转,3d,卡片,perspective,rotateY">
+    <div class="demo-head"><span class="demo-no">08</span><h3>3D 翻转</h3></div>
+    <p class="demo-desc">perspective + rotateY 实现正反面翻转，hover 

@@ -1,0 +1,32 @@
+"round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>骨架屏：内容加载前用灰色块占位，带流动高光 shimmer 动画；数据就绪后骨架淡出、真实内容淡入。用 CSS keyframes 实现，避免布局跳动（CLS）。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-14" data-tags="dark,暗色,主题,mode,css变量,夜间">
+    <div class="demo-head"><span class="demo-no">14</span><h3>暗色模式</h3></div>
+    <p class="demo-desc">CSS 变量 + 状态类切换主题，偏好写入 localStorage 自动恢复。</p>
+    <div class="stage" id="stage-14">
+      <div class="dm-panel">
+        <div class="dm-head"><b>主题演示面板</b><button type="button" class="dm-toggle" id="dm-toggle" aria-label="切换明暗主题"><span class="dm-track"><span class="dm-thumb"></span></span></button></div>
+        <p>当前所有颜色都通过 CSS 变量声明。切换主题时，背景、文字、边框与强调色一次性整体变化，不需要改动任何组件代码。</p>
+        <p>偏好写入 localStorage，下次打开页面自动恢复上次的选择。</p>
+      </div>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>暗色模式：用 html[data-theme] + CSS 变量实现主题切换，所有颜色走 var()；切换时背景与图标平滑过渡，偏好写入 localStorage 并自动恢复。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 创意绘图 ===== -->
+
+  <section class="demo" id="demo-15" data-tags="particle,粒子,canvas,连线,斥力,交互">
+    <div class="demo-head"><span class="demo-no">15</span><h3>Canvas 粒子</h3></div>
+    <p class="demo-desc">粒子匀速运动，距离过近自动连线，鼠标经过产生斥力。</p>
+    <div class="stage stage-canvas" id="stage-15">
+      <canvas id="px-canvas"></canvas>
+      <span class="stage-hint">移动光标扰动粒子</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-lineca

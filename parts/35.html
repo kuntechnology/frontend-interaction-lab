@@ -1,0 +1,33 @@
+与点击均可触发。</p>
+    <div class="stage" id="stage-08">
+      <div class="flip" role="button" tabindex="0" aria-label="3D 翻转演示，点击翻转">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span>正面 · Front</span></div>
+          <div class="flip-face flip-back"><span>背面 · Back</span></div>
+        </div>
+      </div>
+      <span class="stage-hint">悬停或点击翻转</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>CSS 3D 翻转：容器设置 perspective，子元素 rotateY(180deg) 翻面；背面加 backface-visibility:hidden。hover 或点击触发，0.6s 缓动过渡。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 交互范式 ===== -->
+
+  <section class="demo" id="demo-09" data-tags="drag,拖拽,排序,dnd,列表,拖放">
+    <div class="demo-head"><span class="demo-no">09</span><h3>拖拽排序</h3></div>
+    <p class="demo-desc">HTML5 原生拖放实现列表重排，拖起项半透明占位。</p>
+    <div class="stage" id="stage-09">
+      <ul class="drag-list" id="drag-list">
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目一</li>
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目二</li>
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目三</li>
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目四</li>
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目五</li>
+      </ul>
+      <span class="stage-hint">按住左侧手柄拖动</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" s

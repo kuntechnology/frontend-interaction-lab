@@ -1,0 +1,30 @@
+emo-head"><span class="demo-no">11</span><h3>Tab 切换</h3></div>
+    <p class="demo-desc">标签切换内容面板，下滑指示线平滑滑动到当前项。</p>
+    <div class="stage stage-col" id="stage-11">
+      <div class="tabs">
+        <div class="tab-bar" role="tablist" aria-label="示例标签页">
+          <button type="button" class="tab-btn is-active" role="tab" aria-selected="true">概述</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false">用法</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false">技巧</button>
+          <span class="tab-ink" aria-hidden="true"></span>
+        </div>
+        <div class="tab-panels">
+          <div class="tab-panel is-active" role="tabpanel">Tab 切换是内容分组的最基础范式：一组互斥的标签对应一组面板，激活态必须有清晰的位置反馈。</div>
+          <div class="tab-panel" role="tabpanel">用 role=tablist / tab / tabpanel 标记结构，支持方向键切换，激活面板用 aria-selected 与 hidden 表达状态。</div>
+          <div class="tab-panel" role="tabpanel">指示线通过测量激活标签的 offsetLeft 与 offsetWidth 做 transform 平移，避免反复读取布局。</div>
+        </div>
+      </div>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>Tab 切换：点击标签切换内容面板，激活标签带下滑指示线并平滑滑动到当前项。用 role=tablist / tab / tabpanel 保证可访问性，方向键可切换。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-12" data-tags="toast,通知,提示,弹窗,反馈">
+    <div class="demo-head"><span class="demo-no">12</span><h3>Toast 通知</h3></div>
+    <p class="demo-desc">右上角堆叠弹出，支持三种类型，自动消失可手动关闭。</p>
+    <div class="stage" id="stage-12">
+      <button type="button" class="btn btn-primary toast-trigger" data-type="success">成功通知</button>
+      <button type="button" class="btn btn-ghost toast-trigger" data-type="warning">警告通知</button>
+      

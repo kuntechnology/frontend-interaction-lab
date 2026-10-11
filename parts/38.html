@@ -1,0 +1,34 @@
+<button type="button" class="btn btn-ghost toast-trigger" data-type="error">错误通知</button>
+      <span class="stage-hint">点击查看右上角反馈</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>Toast 通知系统：右上角堆叠弹出，支持 success / warning / error 三种类型，自动 3s 消失可手动关闭；进出场带动画，队列管理避免重叠。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-13" data-tags="skeleton,骨架屏,加载,loading,占位">
+    <div class="demo-head"><span class="demo-no">13</span><h3>骨架屏</h3></div>
+    <p class="demo-desc">加载前灰块占位并带流动高光，数据就绪后淡出换内容。</p>
+    <div class="stage stage-col" id="stage-13">
+      <div class="sk-wrap">
+        <div class="sk-shimmer" id="sk-shimmer" aria-hidden="true">
+          <div class="sk-line sk-line-avatar"></div>
+          <div class="sk-line sk-line-title"></div>
+          <div class="sk-line"></div>
+          <div class="sk-line sk-line-short"></div>
+        </div>
+        <div class="sk-content" id="sk-content" hidden>
+          <div class="sk-avatar-real" aria-hidden="true"></div>
+          <h4>数据分析周报 · 第 39 期</h4>
+          <p>本周访问量 12.8 万，环比 +6.2%；转化率 3.1%，其中移动端贡献 58%。完整报告已同步至团队空间。</p>
+        </div>
+      </div>
+      <div class="sk-actions">
+        <button type="button" class="btn btn-primary btn-sm" id="sk-load">模拟加载</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="sk-reset">重置</button>
+      </div>
+      <span class="stage-hint">观察骨架与内容的交替</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin=
