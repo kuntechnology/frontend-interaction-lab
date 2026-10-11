@@ -1,0 +1,32 @@
+ast-trigger[data-type="error"]{background:var(--err)}
+  .toast-trigger[data-type="error"]:hover{background:#B33A3A}
+}
+
+/* 移动端搜索换行 */
+@media(max-width:640px){
+  .topbar{flex-wrap:wrap;height:auto;padding:8px 16px;gap:8px}
+  .search-box{order:10;flex-basis:100%;width:100%;margin-left:0}
+}
+
+/* ============ v3.3 · 夜光实验室（暗色主题 + 玻璃艺术） ============ */
+html[data-theme="dark"]{
+  --bg:#141210;--panel:rgba(30,27,23,.62);--ink:#F2EFE8;--ink-2:#B7B0A3;--ink-3:#8B8478;
+  --line:rgba(255,255,255,.09);--line-strong:rgba(255,255,255,.22);
+  --accent:#FF6A2A;--accent-deep:#FF8A55;--accent-soft:rgba(255,106,42,.16);
+  --ok:#3EC57C;--err:#E05B5B;--warn:#E8A53C;
+  --code-bg:rgba(10,9,8,.55);--code-ink:#F2EFE8;--code-ink-2:#A49E92;
+}
+html[data-theme="dark"] body::before{opacity:.07;mix-blend-mode:overlay}
+/* 光斑氛围层 */
+.ambient{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.ambient i{position:absolute;border-radius:50%;opacity:0;transition:opacity 1s}
+.ambient .a1{width:560px;height:560px;left:-140px;top:-100px;background:radial-gradient(circle,rgba(255,106,42,.2),transparent 65%)}
+.ambient .a2{width:660px;height:660px;right:-190px;bottom:-150px;background:radial-gradient(circle,rgba(64,140,255,.15),transparent 65%)}
+html[data-theme="dark"] .ambient i{opacity:1;animation:drift 24s ease-in-out infinite alternate}
+html[data-theme="dark"] .ambient .a2{animation-delay:-11s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(80px,55px) scale(1.18)}}
+@media(prefers-reduced-motion:reduce){html[data-theme="dark"] .ambient i{animation:none}}
+/* 顶栏玻璃 + 搜索聚焦发光 */
+html[data-theme="dark"] .topbar{background:rgba(20,18,16,.74);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border-bottom-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .search-box input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+html[data-theme="dark"] .search-box in
