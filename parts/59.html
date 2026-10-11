@@ -1,0 +1,26 @@
+width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>锚点元素设 anchor-name: --anc，弹层用 position-anchor: --anc + position-area: top 定位；旧浏览器用 getBoundingClientRect 手动摆位降级。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-42" data-tags="api,view transitions,页面过渡,新特性">
+    <div class="demo-head"><span class="demo-no">42</span><h3>View Transitions</h3></div>
+    <p class="demo-desc"><code>document.startViewTransition()</code> 让视图切换拥有平滑的交叉淡化，浏览器自动捕获新旧状态。</p>
+    <div class="stage" id="stage-42">
+      <button type="button" class="btn btn-primary btn-sm" id="vt-toggle">切换为列表视图</button>
+      <div class="vt-grid" id="vt-view">
+        <span class="vt-cell">1</span><span class="vt-cell">2</span><span class="vt-cell">3</span><span class="vt-cell">4</span><span class="vt-cell">5</span><span class="vt-cell">6</span>
+      </div>
+      <p class="fw-note">点击切换网格 / 列表，旧视图淡出、新视图淡入。Chrome 111+ 支持；旧浏览器直接切换。</p>
+      <span class="stage-hint">startViewTransition(() =&gt; 改 DOM)</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>document.startViewTransition(() => 切换视图类) 一行触发平滑过渡：浏览器自动做新旧快照交叉淡化，降级直接切换。适合多视图页面的廉价转场。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-43" data-tags="api,clipboard,剪贴板,复制,粘贴">
+    <div class="demo-head"><span class="demo-no">43</span><h3>Clipboard 剪贴板</h3></div>
+    <p class="demo-desc">Async Clipboard API 读写剪贴板：复制演示文本、读取剪贴板内容，均可在 file:// 下工作。</p>
+    <div class="stage" id="stage-43">
+      <p class="cl-src" id="cl-src">这段文字将被复制到剪贴板——来自 Clipboard API 演示。</p>
+      <div class="cl-bar">
+        <button type="button" class="btn btn-primary btn-sm" id

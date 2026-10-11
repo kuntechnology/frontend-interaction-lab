@@ -1,0 +1,26 @@
+排展示，容器收窄后自动纵向堆叠。</span></div>
+        <div class="cq-card"><b>卡片二</b><span>@container (max-width: 360px) 内切换布局与字号。</span></div>
+      </div>
+      <p class="fw-note">拖动滑块改变容器宽度，观察卡片响应。Chrome 105+ 支持 container queries。</p>
+      <span class="stage-hint">@container (max-width: 360px)</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>容器设 container-type: inline-size，内部组件用 @container (max-width: 360px) 断点切换布局/字号，响应式绑定到容器而非视口，组件可复用。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-41" data-tags="css,anchor positioning,锚点定位,气泡,新特性">
+    <div class="demo-head"><span class="demo-no">41</span><h3>Anchor Positioning</h3></div>
+    <p class="demo-desc">锚点定位让弹层相对任意锚点摆放：拖拽锚点，气泡自动跟随；点击切换四向位置。</p>
+    <div class="stage" id="stage-41">
+      <div class="anc-wrap" id="anc-wrap">
+        <button type="button" class="anc-anchor" id="anc-anchor" aria-label="拖动锚点">锚点</button>
+        <div class="anc-pop" id="anc-pop" hidden>定位提示<br>拖拽我上方的锚点试试</div>
+      </div>
+      <div class="anc-bar">
+        <button type="button" class="btn btn-primary btn-sm" id="anc-toggle">显示 / 隐藏气泡</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="anc-pos">切换位置（上 / 右 / 下 / 左）</button>
+      </div>
+      <p class="fw-note" id="anc-note">Chrome 125+ 原生 anchor-name 定位；旧浏览器自动降级为 JS 计算定位。</p>
+      <span class="stage-hint">position-anchor + position-area</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" 
