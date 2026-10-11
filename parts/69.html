@@ -1,0 +1,67 @@
+.style.setProperty('--sy', (e.clientY - r.top) + 'px');
+        ticking = false;
+      });
+    });
+  })();
+
+  /* ===== 04 打字机 ===== */
+  (function(){
+    var el = document.getElementById('type-text');
+    var phrases = [
+      '原生 JS 实现，无依赖，可直接复用。',
+      '逐字打出，停顿后删除，再输入下一条。',
+      '速度与停顿时长均可按需调整。'
+    ];
+    var p = 0, i = 0, deleting = false, timer = null;
+    function tick(){
+      var cur = phrases[p];
+      if(!deleting){
+        i++;
+        el.textContent = cur.slice(0, i);
+        if(i === cur.length){ deleting = true; timer = setTimeout(tick, 1700); return; }
+      }else{
+        i--;
+        el.textContent = cur.slice(0, i);
+        if(i === 0){
+          deleting = false;
+          p = (p + 1) % phrases.length;
+          timer = setTimeout(tick, 420);
+          return;
+        }
+      }
+      timer = setTimeout(tick, deleting ? 34 : 72);
+    }
+    timer = setTimeout(tick, 350);
+  })();
+
+  /* ===== 05 数字滚动 ===== */
+  (function(){
+    var stage = document.getElementById('stage-05');
+    var nums = Array.prototype.slice.call(stage.querySelectorAll('.stat-num'));
+    var running = 0;
+    function run(){
+      nums.forEach(function(n){
+        var target = parseFloat(n.getAttribute('data-target'));
+        var dec = parseInt(n.getAttribute('data-decimal') || '0', 10);
+        var start = null;
+        running++;
+        function fmt(v){
+          return dec > 0 ? v.toFixed(dec) : Math.round(v).toLocaleString('zh-CN');
+        }
+        function frame(ts){
+          if(!start) start = ts;
+          var t = Math.min((ts - start) / 1300, 1);
+          var eased = 1 - Math.pow(1 - t, 3);
+          n.textContent = fmt(target * eased);
+          if(t < 1){ requestAnimationFrame(frame); }
+          else{
+            n.textContent = fmt(target);
+            running--;
+          }
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+    run();
+    document.getElementById('stat-run').addEventListener('click', function(){
+      if(running === 0){ nums.forEach

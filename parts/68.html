@@ -1,0 +1,56 @@
+er: hover)').matches) return;
+    var raf = null;
+    stage.addEventListener('mousemove', function(e){
+      if(raf) return;
+      raf = requestAnimationFrame(function(){
+        raf = null;
+        var best = null, bd = Infinity;
+        btns.forEach(function(b){
+          var r = b.getBoundingClientRect();
+          var dx = e.clientX - (r.left + r.width / 2);
+          var dy = e.clientY - (r.top + r.height / 2);
+          var d = Math.hypot(dx, dy);
+          if(d < bd){ bd = d; best = b; }
+        });
+        btns.forEach(function(b){
+          var r = b.getBoundingClientRect();
+          var dx = e.clientX - (r.left + r.width / 2);
+          var dy = e.clientY - (r.top + r.height / 2);
+          if(b === best && bd < 90){
+            var pull = bd === 0 ? 0 : Math.min(bd * 0.16, 10);
+            var nx = bd ? (dx / bd) * pull : 0;
+            var ny = bd ? (dy / bd) * pull : 0;
+            b.style.transform = 'translate(' + nx.toFixed(1) + 'px,' + ny.toFixed(1) + 'px)';
+            b.classList.remove('is-away');
+          }else{
+            b.style.transform = '';
+          }
+        });
+      });
+    });
+    stage.addEventListener('mouseleave', function(){
+      btns.forEach(function(b){
+        b.style.transform = '';
+        b.classList.add('is-away');
+      });
+    });
+    stage.addEventListener('click', function(e){
+      if(e.target.closest('.mag-btn')){
+        showToast('success', '磁性按钮交互已触发，点击动作可按需绑定');
+      }
+    });
+  })();
+
+  /* ===== 03 光标聚光灯 ===== */
+  (function(){
+    var stage = document.getElementById('stage-03');
+    var mask = stage.querySelector('.spot-mask');
+    if(!window.matchMedia('(hover: hover)').matches){ mask.style.opacity = '0'; return; }
+    var ticking = false;
+    stage.addEventListener('mousemove', function(e){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var r = stage.getBoundingClientRect();
+        stage.style.setProperty('--sx', (e.clientX - r.left) + 'px');
+        stage

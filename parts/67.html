@@ -1,0 +1,53 @@
+ySelectorAll('.rail-link'));
+  var demoSeen = {};
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        var id = en.target.id;
+        demoSeen[id] = true;
+        railLinks.forEach(function(a){
+          a.classList.toggle('is-active', a.getAttribute('href') === '#' + id);
+        });
+        document.querySelectorAll('.demo.is-current').forEach(function(d){ d.classList.remove('is-current'); });
+        var cur = document.getElementById(id);
+        if(cur) cur.classList.add('is-current');
+      }
+    });
+  }, { rootMargin: '-15% 0px -62% 0px' });
+  document.querySelectorAll('.demo').forEach(function(s){ spy.observe(s); });
+
+  /* ===== 顶部滚动进度条 ===== */
+  var prog = document.querySelector('#progress i');
+  function updateProg(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - window.innerHeight;
+    var v = max > 0 ? window.scrollY / max : 0;
+    prog.style.transform = 'scaleX(' + v + ')';
+  }
+  window.addEventListener('scroll', updateProg, { passive: true });
+  window.addEventListener('resize', updateProg);
+  updateProg();
+
+  /* ===== 01 涟漪按钮 ===== */
+  (function(){
+    var stage = document.getElementById('stage-01');
+    stage.addEventListener('click', function(e){
+      var btn = e.target.closest('.ripple-demo');
+      if(!btn) return;
+      var r = btn.getBoundingClientRect();
+      var d = Math.max(r.width, r.height) * 2;
+      var s = document.createElement('span');
+      s.className = 'ripple';
+      s.style.width = s.style.height = d + 'px';
+      s.style.left = (e.clientX - r.left - d / 2) + 'px';
+      s.style.top = (e.clientY - r.top - d / 2) + 'px';
+      btn.appendChild(s);
+      s.addEventListener('animationend', function(){ s.remove(); });
+    });
+  })();
+
+  /* ===== 02 磁性按钮 ===== */
+  (function(){
+    var stage = document.getElementById('stage-02');
+    var btns = Array.prototype.slice.call(stage.querySelectorAll('.mag-btn'));
+    if(!window.matchMedia('(hov
