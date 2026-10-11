@@ -1,0 +1,53 @@
+;
+    document.getElementById('cl-read').addEventListener('click', function(){
+      if(navigator.clipboard && navigator.clipboard.readText){
+        navigator.clipboard.readText().then(function(t){
+          out.textContent = '剪贴板内容：' + (t || '(空)');
+        }).catch(function(){
+          out.textContent = '读取被拒绝（浏览器要求 HTTPS / 本地文件与用户授权）';
+        });
+      } else {
+        out.textContent = '当前环境不支持 navigator.clipboard.readText';
+      }
+    });
+  })();
+
+  /* ===== 44 Speech 语音合成 ===== */
+  (function(){
+    var status = document.getElementById('sp-status');
+    var rate = document.getElementById('sp-rate');
+    var srcEl = document.querySelector('#stage-44 .sp-src');
+    if(!status || !rate || !srcEl) return;
+    var text = srcEl.textContent.replace(/\s+/g, ' ').trim();
+    document.getElementById('sp-play').addEventListener('click', function(){
+      if(!('speechSynthesis' in window)){ status.textContent = '当前浏览器不支持 SpeechSynthesis'; return; }
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN';
+      u.rate = parseFloat(rate.value);
+      speechSynthesis.speak(u);
+      status.textContent = '正在朗读（语速 ×' + rate.value + '）…';
+    });
+    document.getElementById('sp-stop').addEventListener('click', function(){
+      if('speechSynthesis' in window) speechSynthesis.cancel();
+      status.textContent = '已停止朗读';
+    });
+    rate.addEventListener('input', function(){ status.textContent = '语速设为 ×' + rate.value; });
+  })();
+
+  /* ===== 45 Web Worker ===== */
+  (function(){
+    var out = document.getElementById('wk-out');
+    var fps = document.getElementById('wk-fps');
+    if(!out || !fps) return;
+    var frames = 0, last = performance.now();
+    (function tick(){
+      frames++;
+      var now = performance.now();
+      if(now - last >= 500){
+        fps.textContent = '帧率 ' + Math.round(frames * 1000 / (now - last));
+        frames = 0; last = now;
+      }
+      requestAnimationFrame(tick);
+    })();
+    var workerCode =

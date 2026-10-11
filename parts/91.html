@@ -1,0 +1,36 @@
+前浏览器不支持 Anchor Positioning，已降级为 JS 计算定位（Chrome 125+ 体验原生锚点）。';
+    var dirs = ['top', 'right', 'bottom', 'left'], di = 0;
+    function place(){
+      var r = anchor.getBoundingClientRect(), w = wrap.getBoundingClientRect();
+      var x = r.left - w.left, y = r.top - w.top;
+      var bw = pop.offsetWidth, bh = pop.offsetHeight;
+      var dir = pop.getAttribute('data-pos') || 'top';
+      if(dir === 'top'){ pop.style.left = (x + r.width / 2 - bw / 2) + 'px'; pop.style.top = (y - bh - 8) + 'px'; }
+      else if(dir === 'right'){ pop.style.left = (x + r.width + 8) + 'px'; pop.style.top = (y + r.height / 2 - bh / 2) + 'px'; }
+      else if(dir === 'bottom'){ pop.style.left = (x + r.width / 2 - bw / 2) + 'px'; pop.style.top = (y + r.height + 8) + 'px'; }
+      else { pop.style.left = (x - bw - 8) + 'px'; pop.style.top = (y + r.height / 2 - bh / 2) + 'px'; }
+    }
+    document.getElementById('anc-toggle').addEventListener('click', function(){
+      pop.hidden = !pop.hidden;
+      if(!pop.hidden && !supportsAnchor) place();
+    });
+    document.getElementById('anc-pos').addEventListener('click', function(){
+      di = (di + 1) % 4;
+      pop.setAttribute('data-pos', dirs[di]);
+      pop.className = 'anc-pop' + (supportsAnchor ? ' anc-' + dirs[di] : '');
+      if(!pop.hidden && !supportsAnchor) place();
+    });
+    var dragging = false, ox = 0, oy = 0;
+    anchor.addEventListener('pointerdown', function(e){
+      dragging = true; ox = e.clientX; oy = e.clientY;
+      try{ anchor.setPointerCapture(e.pointerId); }catch(err){}
+    });
+    anchor.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      var wr = wrap.getBoundingClientRect();
+      var ar = anchor.getBoundingClientRect();
+      var x = (ar.left - wr.left) + (e.clientX - ox);
+      var y = (ar.top - wr.top) + (e.clientY - oy);
+      x = Math.max(0, Math.min(wr.width - anchor.offsetWidth, x));
+      y = Math.max(0, Math.min(wr.height - anchor.offsetHeight, y));
+      anchor.style.left = x + 'px

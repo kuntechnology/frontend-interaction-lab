@@ -1,0 +1,54 @@
+';
+      anchor.style.top = y + 'px';
+      ox = e.clientX; oy = e.clientY;
+      if(!pop.hidden && !supportsAnchor) place();
+    });
+    anchor.addEventListener('pointerup', function(){ dragging = false; });
+    anchor.addEventListener('pointercancel', function(){ dragging = false; });
+  })();
+
+  /* ===== 42 View Transitions ===== */
+  (function(){
+    var view = document.getElementById('vt-view');
+    var btn = document.getElementById('vt-toggle');
+    if(!view || !btn) return;
+    var isList = false;
+    function flip(){
+      isList = !isList;
+      view.classList.toggle('vt-list', isList);
+      btn.textContent = isList ? '切换为网格视图' : '切换为列表视图';
+    }
+    var vtBusy = false;
+    btn.addEventListener('click', function(){
+      if(vtBusy) return;
+      vtBusy = true;
+      setTimeout(function(){ vtBusy = false; }, 800);
+      if(document.startViewTransition){
+        try{
+          var vt = document.startViewTransition(flip);
+          try{ if(vt.finished){ vt.finished.catch(function(){}); } }catch(e){}
+        }catch(e){ flip(); }
+      } else { flip(); }
+    });
+  })();
+
+  /* ===== 43 Clipboard ===== */
+  (function(){
+    var out = document.getElementById('cl-out');
+    var srcEl = document.getElementById('cl-src');
+    if(!out || !srcEl) return;
+    var src = srcEl.textContent.replace(/\s+/g, ' ').trim();
+    function done(){ out.textContent = '已复制：' + src.slice(0, 26) + '…'; }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = src; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); done(); }
+      catch(e){ out.textContent = '复制失败，请手动选择文本'; }
+      document.body.removeChild(ta);
+    }
+    document.getElementById('cl-copy').addEventListener('click', function(){
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(src).then(done).catch(fallback);
+      } else { fallback(); }
+    })
