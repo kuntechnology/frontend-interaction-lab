@@ -1,0 +1,48 @@
+style="font-size:12px;color:var(--ink-3);margin-top:8px">函数组件 + useState · 父级传入：${props.title}</div>
+        </div>`;
+    }
+    preact.render(html`<${Counter} title="Preact 计数器" />`, document.getElementById('preact-root'));
+  })();
+
+  /* ===== 32 htmx 超媒体（file:// 下用 template mock）===== */
+  (function run(){
+    if(typeof htmx === 'undefined'){
+      LAB.wait({ key: 'htmx', name: 'htmx', fn: run });
+      return;
+    }
+    var pollCount = 0;
+    document.addEventListener('htmx:beforeRequest', function(evt){
+      var elt = (evt.detail && evt.detail.elt) ? evt.detail.elt : evt.target;
+      if(!elt || !elt.getAttribute) return;
+      var url = elt.getAttribute('hx-get') || elt.getAttribute('hx-post') || '';
+      var tpl = document.querySelector('template[data-url="' + url + '"]');
+      if(!tpl) return;
+      evt.preventDefault();
+      var out = tpl.innerHTML;
+      if(url === '/frag-poll'){ pollCount++; out = out.replace('{{n}}', pollCount); }
+      var sel = elt.getAttribute('hx-target');
+      var target = sel ? document.querySelector(sel) : elt;
+      if(target) target.innerHTML = out;
+    }, true);
+  })();
+
+  /* ===== 33 Alpine.js 兜底 ===== */
+  (function run(){
+    if(typeof Alpine === 'undefined'){
+      LAB.wait({ key: 'alpine', name: 'Alpine', fn: run, fb: function(){
+        showToast('error', 'Alpine 加载失败，请联网后刷新页面');
+        document.getElementById('stage-33').addEventListener('click', function(){ showToast('error', 'Alpine 未加载，属性驱动交互不可用'); });
+      } });
+    }
+  })();
+
+  /* ===== 34 Tailwind v4 ===== */
+  (function(){
+    var stage = document.getElementById('stage-34');
+    var toggle = document.getElementById('tw-dark-toggle');
+    var input = document.getElementById('tw-class-input');
+    var live = document.getElementById('tw-live');
+    var baseCls = 'border border-dashed border-stone-300 dark:border-stone-600 p-4 text-sm text-stone-700 dark:text-stone-200';
+    toggle.addEventListener('click', function(){
+      stage.classList.toggle('dark');
+      

@@ -1,0 +1,45 @@
+nction(){
+          return Vue.h('div', { 'class': 'vue-child' },
+            '子组件收到 prop：' + props.initial + '（响应式 props 解构，随父级实时更新）');
+        };
+      }
+    };
+    var App = {
+      components: { 'my-child': Child },
+      data: function(){ return { count: 0, text: '' }; },
+      computed: { chars: function(){ return this.text.length; } },
+      template:
+        '<div>' +
+        '  <div class="vue-counter">{{ count }}</div>' +
+        '  <div style="display:flex;gap:8px;margin:10px 0">' +
+        '    <button type="button" class="btn btn-primary btn-sm" @click="count=count+1">+1</button>' +
+        '    <button type="button" class="btn btn-ghost btn-sm" @click="count=count-1">-1</button>' +
+        '  </div>' +
+        '  <input class="vue-input" v-model="text" placeholder="输入点什么…">' +
+        '  <div style="font-size:13px;color:var(--ink-2)">已输入 <b style="font-family:var(--font-mono);color:var(--accent-deep)">{{ chars }}</b> 个字符</div>' +
+        '  <my-child :initial="count"></my-child>' +
+        '</div>'
+    };
+    Vue.createApp(App).mount('#vue-root');
+  })();
+
+  /* ===== 31 Preact + htm ===== */
+  (function run(){
+    if(typeof preact === 'undefined' || typeof htm === 'undefined' || typeof preactHooks === 'undefined'){
+      LAB.wait({ key: 'preact', name: 'Preact+htm', fn: run });
+      return;
+    }
+    var html = htm.bind(preact.h);
+    var useState = preactHooks.useState, useEffect = preactHooks.useEffect;
+    function Counter(props){
+      var st = useState(0);
+      var count = st[0], set = st[1];
+      useEffect(function(){ /* 副作用：count 变化时打日志 */ });
+      return html`
+        <div>
+          <div class="pa-count">${count}</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button type="button" class="btn btn-primary btn-sm" onClick=${function(){ set(count + 1); }}>+1</button>
+            <button type="button" class="btn btn-ghost btn-sm" onClick=${function(){ set(count - 1); }}>-1</button>
+          </div>
+          <div 

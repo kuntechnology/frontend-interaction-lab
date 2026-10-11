@@ -1,0 +1,54 @@
+var names = { paper: '纸张', night: '墨夜', sand: '沙金', mint: '青翠' };
+    stage.addEventListener('click', function(e){
+      var opt = e.target.closest('.theme-opt');
+      if(!opt) return;
+      stage.querySelectorAll('.theme-opt').forEach(function(x){ x.classList.remove('is-active'); });
+      opt.classList.add('is-active');
+      var t = opt.getAttribute('data-theme');
+      stage.setAttribute('data-theme', t);
+      tag.textContent = '当前：' + names[t];
+    });
+  })();
+
+  /* ===== DEMO-SCRIPTS-SLOT ===== */
+
+  /* ===== v3 搜索 / 筛选 ===== */
+  (function(){
+    var input = document.getElementById('search-input');
+    var clearBtn = document.getElementById('search-clear');
+    var status = document.getElementById('search-status');
+    var demos = Array.prototype.slice.call(document.querySelectorAll('.demo'));
+    function apply(){
+      var q = input.value.trim().toLowerCase();
+      var n = 0;
+      demos.forEach(function(sec){
+        var h3 = sec.querySelector('h3');
+        var desc = sec.querySelector('.demo-desc');
+        var hay = (h3 ? h3.textContent : '') + ' ' + (desc ? desc.textContent : '') + ' ' + (sec.getAttribute('data-tags') || '');
+        var hit = !q || hay.toLowerCase().indexOf(q) !== -1;
+        sec.style.display = hit ? '' : 'none';
+        if(hit) n++;
+      });
+      if(q){
+        status.textContent = '找到 ' + n + ' 个演示（关键词：' + input.value.trim() + '）';
+        status.classList.add('is-show');
+        clearBtn.classList.add('is-show');
+      }else{
+        status.classList.remove('is-show');
+        clearBtn.classList.remove('is-show');
+      }
+    }
+    input.addEventListener('input', apply);
+    clearBtn.addEventListener('click', function(){ input.value = ''; apply(); input.focus(); });
+  })();
+
+  /* ===== 30 Vue 3.5 响应式 ===== */
+  (function run(){
+    if(typeof Vue === 'undefined'){
+      LAB.wait({ key: 'vue', name: 'Vue', fn: run });
+      return;
+    }
+    var Child = {
+      props: ['initial'],
+      setup: function(props){
+        return fu
