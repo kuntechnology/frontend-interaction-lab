@@ -1,4 +1,21 @@
-ast-trigger[data-type="error"]{background:var(--err)}
+.theme-opt{background:rgba(255,255,255,.40)}
+.theme-opt.is-active{background:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 0 1px rgba(33,30,26,.35),0 2px 6px rgba(33,30,26,.1)}
+.theme-btn-ghost{background:rgba(255,255,255,.35)}
+.draw-size{background:rgba(255,255,255,.45)}
+.draw-size.is-active{background:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 0 1px rgba(33,30,26,.35),0 2px 6px rgba(33,30,26,.1)}
+.search-clear{background:rgba(255,255,255,.55)}
+/* 无 backdrop-filter 支持：回退为原实色，保证对比度 */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .btn-primary,.copy-btn{background:var(--accent)}
+  .btn-primary:hover,.copy-btn:hover{background:var(--accent-deep)}
+  .theme-btn{background:var(--t-accent)}
+  .theme-btn:hover{background:var(--t-accent-deep)}
+  .copy-btn.is-done{background:var(--ok)}
+  .toast-trigger[data-type="success"]{background:var(--ok)}
+  .toast-trigger[data-type="success"]:hover{background:#277F50}
+  .toast-trigger[data-type="warning"]{background:var(--warn)}
+  .toast-trigger[data-type="warning"]:hover{background:#B9711E}
+  .toast-trigger[data-type="error"]{background:var(--err)}
   .toast-trigger[data-type="error"]:hover{background:#B33A3A}
 }
 
