@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>前端交互实验室 · 加载中</title>
+<style>html,body{margin:0;height:100%;background:#0a0e16;color:#9aa7bd;font:14px/1.6 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}.w{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;letter-spacing:.08em}.w b{font-weight:500;color:#c9d4e6;margin-right:10px}.d{width:18px;height:18px;border:2px solid rgba(255,255,255,.15);border-top-color:#ff7a45;border-radius:50%;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}</style>
+</head>
+<body>
+<div class="w"><b>前端交互实验室加载中</b><span class="d"></span></div>
+<script>
+(function(){
+  var N = 11;
+  function dec(buf){ return new TextDecoder('utf-8').decode(buf); }
+  var jobs = [];
+  for(var i=0;i<N;i++){
+    jobs.push(fetch('parts/'+(i<10?'0'+i:i)+'.html').then(function(r){return r.arrayBuffer();}));
+  }
+  Promise.all(jobs).then(function(bufs){
+    var html = bufs.map(dec).join('');
+    document.open();
+    document.write(html);
+    document.close();
+  }).catch(function(){
+    document.body.innerHTML='<div style="padding:40px;text-align:center">页面分片加载失败，请检查网络后刷新。</div>';
+  });
+})();
+</script>
+</body>
+</html>
