@@ -4,26 +4,72 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>前端交互实验室 · 加载中</title>
-<style>html,body{margin:0;height:100%;background:#0a0e16;color:#9aa7bd;font:14px/1.6 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}.w{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;letter-spacing:.08em}.w b{font-weight:500;color:#c9d4e6;margin-right:10px}.d{width:18px;height:18px;border:2px solid rgba(255,255,255,.15);border-top-color:#ff7a45;border-radius:50%;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}</style>
+<style>
+  html,body{margin:0;height:100%;background:#0a0e16;color:#9aa7bd;font:14px/1.6 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+  .w{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;letter-spacing:.08em;gap:16px}
+  .w b{font-weight:500;color:#c9d4e6}
+  .d{width:20px;height:20px;border:2px solid rgba(255,255,255,.15);border-top-color:#ff7a45;border-radius:50%;animation:sp .8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  #prog{font:11px/1 ui-monospace,Menlo,Consolas,monospace;color:#6b7891;letter-spacing:.12em}
+  .fail{padding:40px;text-align:center}
+  .fail button{margin-top:16px;padding:9px 20px;border:1px solid rgba(255,122,69,.5);border-radius:8px;background:rgba(255,122,69,.12);color:#ffb08a;font:13px system-ui;cursor:pointer}
+</style>
 </head>
 <body>
-<div class="w"><b>前端交互实验室加载中</b><span class="d"></span></div>
+<div class="w" id="loading"><span class="d"></span><b id="lbl">前端交互实验室加载中</b><span id="prog">0 / 97</span></div>
 <script>
 (function(){
-  var N = 11;
-  function dec(buf){ return new TextDecoder('utf-8').decode(buf); }
-  var jobs = [];
-  for(var i=0;i<N;i++){
-    jobs.push(fetch('parts/'+(i<10?'0'+i:i)+'.html').then(function(r){return r.arrayBuffer();}));
+  var N = 97, CONC = 8, EXPECT_DEMOS = 47;
+  var prog = document.getElementById('prog'), lbl = document.getElementById('lbl');
+  function name(i){ return 'parts/'+(i<10?'0'+i:i)+'.html'; }
+  function sleep(ms){ return new Promise(function(res){ setTimeout(res, ms); }); }
+
+  function fetchBuf(url, attempt){
+    return fetch(url, {cache:'no-store'}).then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.arrayBuffer();
+    }).then(function(buf){
+      if(!buf || buf.byteLength === 0) throw new Error('empty body');
+      return buf;
+    }).catch(function(e){
+      if(attempt >= 5) throw e;
+      return sleep(280*attempt).then(function(){ return fetchBuf(url, attempt+1); });
+    });
   }
-  Promise.all(jobs).then(function(bufs){
-    var html = bufs.map(dec).join('');
-    document.open();
-    document.write(html);
-    document.close();
-  }).catch(function(){
-    document.body.innerHTML='<div style="padding:40px;text-align:center">页面分片加载失败，请检查网络后刷新。</div>';
-  });
+
+  function loadAll(){
+    var bufs = new Array(N), next = 0, done = 0;
+    function worker(){
+      var i = next++;
+      if(i >= N) return;
+      return fetchBuf(name(i), 1).then(function(buf){
+        bufs[i] = buf;
+        done++;
+        if(prog) prog.textContent = done + ' / ' + N;
+        return worker();
+      });
+    }
+    var ws = [];
+    for(var k=0;k<CONC;k++) ws.push(worker());
+    return Promise.all(ws).then(function(){ return bufs; });
+  }
+
+  function render(){
+    if(lbl) lbl.textContent = '前端交互实验室加载中';
+    return loadAll().then(function(bufs){
+      var html = bufs.map(function(b){ return new TextDecoder('utf-8').decode(b); }).join('');
+      var demos = (html.match(/id="demo-/g)||[]).length;
+      if(demos !== EXPECT_DEMOS || html.lastIndexOf('</html>') < html.length - 40){
+        throw new Error('integrity check failed: demos='+demos);
+      }
+      document.open(); document.write(html); document.close();
+    });
+  }
+
+  function showFail(){
+    document.body.innerHTML = '<div class="fail">页面分片加载失败，可能是网络不稳定或被限流。<br>请点击下方按钮重试。<br><button onclick="location.reload()">重新加载</button></div>';
+  }
+  render().catch(showFail);
 })();
 </script>
 </body>
