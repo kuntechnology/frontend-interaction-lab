@@ -24,46 +24,8 @@
   function name(i){ return 'parts/'+(i<10?'0'+i:i)+'.html'; }
   function sleep(ms){ return new Promise(function(res){ setTimeout(res, ms); }); }
 
-  /* 合并后注入：返回主页按钮（玻璃体）+ 极简 PV/UV（不蒜子，异步、失败静默）。
-     97 个分片零改动；此脚本在新文档解析时执行。 */
-  var INJECT = '<style>'
-    + '#home-link{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;margin-right:2px;border-radius:9px;border:1px solid rgba(140,140,140,.32);background:rgba(140,140,140,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:inherit;text-decoration:none;font-size:12.5px;letter-spacing:.04em;transition:background .18s,border-color .18s}'
-    + '#home-link:hover{background:rgba(140,140,140,.26);border-color:rgba(140,140,140,.5)}'
-    + '#home-link svg{flex:none}'
-    + '@media(max-width:640px){#home-link{height:32px;padding:0 9px;gap:0}#home-link .hl-txt{display:none}}'
-    + '.site-stats{font-variant-numeric:tabular-nums}'
-    + '</style>'
-    + '<script>'
-    + '(function(){'
-    + 'function init(){'
-    + 'var bar=document.querySelector(".topbar");'
-    + 'if(bar&&!document.getElementById("home-link")){'
-    + 'var a=document.createElement("a");'
-    + 'a.id="home-link";a.href="https://kuntechnology.github.io/";'
-    + 'a.title="返回主页";a.setAttribute("aria-label","返回主页");'
-    + 'a.innerHTML=\'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="hl-txt">主页</span>\';'
-    + 'var ref=bar.querySelector(".search-box");'
-    + 'if(ref)bar.insertBefore(a,ref);else bar.appendChild(a);'
-    + '}'
-    + 'function doStats(){'
-    + 'var f=document.querySelector(".footer");'
-    + 'if(f&&!document.getElementById("busuanzi_container_site_pv")){'
-    + 'var w=document.createElement("span");w.className="site-stats";'
-    + 'w.innerHTML=\'<span id="busuanzi_container_site_pv" style="display:none">本站访问 <span id="busuanzi_value_site_pv"></span> 次</span><span style="margin:0 6px;opacity:.4">·</span><span id="busuanzi_container_site_uv" style="display:none">访客 <span id="busuanzi_value_site_uv"></span> 人</span>\';'
-    + 'f.appendChild(w);'
-    + 'var s=document.createElement("script");'
-    + 's.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js";'
-    + 's.async=true;s.defer=true;'
-    + 'document.body.appendChild(s);'
-    + '}'
-    + '}'
-    + 'if(document.readyState==="complete")doStats();'
-    + 'else window.addEventListener("load",doStats);'
-    + '}'
-    + 'if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);'
-    + 'else init();'
-    + '})();'
-    + '<\/script>';
+  /* 97 个分片零改动；合并后再加载 inject.html（返回主页按钮 + 自建 PV/UV 上报），
+     失败自动重试；完整性校验仍要求 47 个 demo。 */
 
   function fetchBuf(url, attempt){
     return fetch(url, {cache:'no-store'}).then(function(r){
@@ -103,8 +65,11 @@
       if(demos !== EXPECT_DEMOS || html.lastIndexOf('</html>') < html.length - 40){
         throw new Error('integrity check failed: demos='+demos);
       }
-      html = html.replace('</body>', INJECT + '</body>');
-      document.open(); document.write(html); document.close();
+      return fetchBuf('inject.html', 1).then(function(ib){
+        var inj = new TextDecoder('utf-8').decode(ib);
+        html = html.replace('</body>', inj + '</body>');
+        document.open(); document.write(html); document.close();
+      });
     });
   }
 
