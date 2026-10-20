@@ -26,13 +26,25 @@
     a.id="home-link"; a.href=HOME; a.title="返回主页";
     a.setAttribute("aria-label","返回主页");
     a.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="hl-txt">主页</span>';
-    var bar=document.querySelector(".topbar")||document.querySelector("header")||document.querySelector("nav");
-    if(bar){
-      var ref=bar.querySelector(".search-box");
-      if(ref) bar.insertBefore(a,ref); else bar.insertBefore(a,bar.firstChild);
+    var topbar=document.querySelector(".topbar");
+    if(topbar){
+      var s=topbar.querySelector(".search-box");
+      topbar.insertBefore(a, s||topbar.firstChild);
     }else{
-      a.style.cssText="position:fixed;top:12px;left:12px;z-index:9999";
-      (document.body||document.documentElement).appendChild(a);
+      var nav=document.querySelector("nav");
+      var search=document.querySelector(".search-box");
+      var header=document.querySelector("header");
+      if(nav){
+        nav.parentNode.insertBefore(a, nav);
+      }else if(search){
+        search.parentNode.insertBefore(a, search);
+      }else if(header){
+        var inner=header.querySelector(".header-inner,.header-content,.container")||header;
+        inner.insertBefore(a, inner.firstChild);
+      }else{
+        a.style.cssText="position:fixed;bottom:12px;left:12px;z-index:9999";
+        (document.body||document.documentElement).appendChild(a);
+      }
     }
   }
 
@@ -74,7 +86,7 @@
     else window.addEventListener("load",report);
   }
 
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot);
+  if(document.readyState=="loading") document.addEventListener("DOMContentLoaded",boot);
   else boot();
 })();
 </script>
