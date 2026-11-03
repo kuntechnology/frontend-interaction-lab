@@ -52,6 +52,23 @@ fs.writeFileSync(OUT, html, 'utf8');
 const nojekyll = path.join(root, '.nojekyll');
 if (fs.existsSync(nojekyll)) fs.copyFileSync(nojekyll, path.join(OUT_DIR, '.nojekyll'));
 
+/* ---------- 3b. SEO 基建：robots / sitemap / 404 ----------
+   改前这三样都不存在（线上 404），搜索与分享基本没有抓手。
+   单页站只有一个可索引 URL，但 robots + sitemap 仍是抓取入口的必要声明。 */
+const SITE = 'https://kuntechnology.github.io/frontend-interaction-lab/';
+const today = new Date().toISOString().slice(0, 10);
+
+fs.writeFileSync(path.join(OUT_DIR, 'robots.txt'),
+    `User-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`, 'utf8');
+
+fs.writeFileSync(path.join(OUT_DIR, 'sitemap.xml'),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${SITE}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>\n</urlset>\n`, 'utf8');
+
+/* 404：GitHub Pages 会对任意不存在路径返回它，给一个回主站的出口而不是空白页 */
+fs.writeFileSync(path.join(OUT_DIR, '404.html'),
+    `<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>页面不存在 · 前端交互实验室</title>\n<style>html,body{margin:0;height:100%;background:#141210;color:#f2efe8;font:15px/1.7 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;display:flex;align-items:center;justify-content:center}\ndiv{text-align:center;padding:24px}\nh1{font-size:19px;margin:0 0 10px;font-weight:600}\np{margin:0 0 18px;color:#b9b3a6;font-size:13.5px}\na{color:#f2efe8;border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:8px 16px;text-decoration:none;font-size:13.5px}\na:hover{border-color:rgba(255,255,255,.55)}</style>\n</head>\n<body><div><h1>这个地址没有内容</h1><p>演示可能已重命名，或者链接输错了。</p><a href="/frontend-interaction-lab/">回到实验室首页</a></div></body>\n</html>\n`, 'utf8');
+notes.push('已生成 robots.txt / sitemap.xml / 404.html');
+
 /* ---------- 4. 断言 ---------- */
 const count = (re) => (html.match(re) || []).length;
 
