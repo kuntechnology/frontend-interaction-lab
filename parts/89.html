@@ -18,7 +18,10 @@
         return;
       }
       statusEl.textContent = '完成（期间新输入会自动取消上一次）';
-      resultEl.innerHTML = '结果：<b>' + res.q + '</b> · 约 ' + res.hits + ' 条命中';
+      resultEl.replaceChildren(document.createTextNode('结果：'));
+      var queryText = document.createElement('b');
+      queryText.textContent = res.q;
+      resultEl.append(queryText, document.createTextNode(' · 约 ' + res.hits + ' 条命中'));
     });
     rxjs.fromEvent(stage, 'mousemove').pipe(op.throttleTime(100)).subscribe(function(e){
       var r = stage.getBoundingClientRect();

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>前端交互实验室</title><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="../assets/lab.css"></head><body class="lab-shell">
+<a class="lab-skip" href="#main-content">跳至内容</a>
+<header class="topbar lab-header">
+  <a class="lab-brand" href="#main-content" aria-label="前端交互实验室首页"><span class="lab-mark" aria-hidden="true">fi<span>·</span></span><div class="lab-brand-copy"><h1>前端交互实验室</h1><small>FRONTEND INTERACTION LAB</small></div></a>
+  <div class="lab-header-right">
+    <!-- SEARCH --><a class="lab-find" href="#catalog">按分类查找 <span>索引 ↓</span></a><!-- /SEARCH -->
+    <a class="lab-home" href="https://kuntechnology.github.io/" id="home-link">主页 ↗</a>
+    <span class="lab-edition">VOL. 04</span>
+  </div>
+</header>
+<aside class="rail">
+  <p class="lab-rail-hint">演示目录 <span>左右滑动查看更多 →</span></p><nav aria-label="演示目录">
+    <div class="rail-cat">微交互</div>
+    <a class="rail-link" href="#demo-01"><b>01</b>涟漪按钮</a>
+    <a class="rail-link" href="#demo-02"><b>02</b>磁性按钮</a>
+    <a class="rail-link" href="#demo-03"><b>03</b>光标聚光灯</a>
+    <a class="rail-link" href="#demo-51"><b>51</b>前后对比滑块</a>
+    <div class="rail-cat">动效呈现</div>
+    <a class="rail-link" href="#demo-04"><b>04</b>打字机</a>
+    <a class="rail-link" href="#demo-05"><b>05</b>数字滚动</a>
+    <a class="rail-link" href="#demo-06"><b>06</b>滚动揭示</a>
+    <a class="rail-link" href="#demo-07"><b>07</b>视差滚动</a>
+    <a class="rail-link" href="#demo-08"><b>08</b>3D 翻转</a>
+    <div class="rail-cat">交互范式</div>
+    <a class="rail-link" href="#demo-09"><b>09</b>拖拽排序</a>
+    <a class="rail-link" href="#demo-10"><b>10</b>折叠面板</a>
+    <a class="rail-link" href="#demo-11"><b>11</b>Tab 切换</a>
+    <a class="rail-link" href="#demo-12"><b>12</b>Toast 通知</a>
+    <a class="rail-link" href="#demo-13"><b>13</b>骨架屏</a>
+    <a class="rail-link" href="#demo-14"><b>14</b>暗色模式</a>
+    <a class="rail-link" href="#demo-48"><b>48</b>原生对话框 + Popover</a>
+    <a class="rail-link" href="#demo-49"><b>49</b>⌘K 命令面板</a>
+    <a class="rail-link" href="#demo-50"><b>50</b>虚拟滚动（10 万行）</a>
+    <a class="rail-link" href="#demo-52"><b>52</b>拖拽上传 + 预览</a>
+    <a class="rail-link" href="#demo-53"><b>53</b>Scroll Snap 吸附</a>
+    <div class="rail-cat">创意绘图</div>
+    <a class="rail-link" href="#demo-15"><b>15</b>Canvas 粒子</a>
+    <a class="rail-link" href="#demo-16"><b>16</b>手绘画板</a>
+    <div class="rail-cat">库 · 动效</div>
+    <a class="rail-link" href="#demo-17"><b>17</b>GSAP 滚动编排</a>
+    <a class="rail-link" href="#demo-18"><b>18</b>Lottie 矢量动画</a>
+    <a class="rail-link" href="#demo-19"><b>19</b>Anime.js 补间</a>
+    <a class="rail-link" href="#demo-20"><b>20</b>Motion 交错</a>
+    <div class="rail-cat">库 · 3D 视觉</div>
+    <a class="rail-link" href="#demo-21"><b>21</b>Three.js 3D</a>
+    <a class="rail-link" href="#demo-22"><b>22</b>p5.js 生成艺术</a>
+    <div class="rail-cat">库 · 数据可视化</div>
+    <a class="rail-link" href="#demo-23"><b>23</b>ECharts 图表</a>
+    <a class="rail-link" href="#demo-24"><b>24</b>D3 力导向图</a>
+    <div class="rail-cat">库 · 滑动组件</div>
+    <a class="rail-link" href="#demo-25"><b>25</b>Swiper 轮播</a>
+    <a class="rail-link" href="#demo-26"><b>26</b>Embla 轻量轮播</a>
+    <div class="rail-cat">库 · 手势音频</div>
+    <a class="rail-link" href="#demo-27"><b>27</b>Hammer 手势</a>
+    <a class="rail-link" href="#demo-28"><b>28</b>Tone 音序器</a>
+    <div class="rail-cat">库 · 主题系统</div>
+    <a class="rail-link" href="#demo-29"><b>29</b>多主题切换</a>
+    <div class="rail-cat">框架与生态</div>
+    <a class="rail-link" href="#demo-30"><b>30</b>Vue 3.5 响应式</a>
+    <a class="rail-link" href="#demo-31"><b>31</b>Preact + htm</a>
+    <a class="rail-link" href="#demo-32"><b>32</b>htmx 超媒体</a>
+    <a class="rail-link" href="#demo-33"><b>33</b>Alpine 属性驱动</a>
+    <a class="rail-link" href="#demo-34"><b>34</b>Tailwind v4 原子类</a>
+    <a class="rail-link" href="#demo-35"><b>35</b>Jotai 原子状态</a>
+    <a class="rail-link" href="#demo-36"><b>36</b>RxJS 响应式流</a>
+    <a class="rail-link" href="#demo-37"><b>37</b>Lit Web Components</a>
+    <div class="rail-cat">CSS 新特性</div>
+    <a class="rail-link" href="#demo-38"><b>38</b>滚动驱动动画</a>
+    <a class="rail-link" href="#demo-39"><b>39</b>:has() 选择器</a>
+    <a class="rail-link" href="#demo-40"><b>40</b>Container Queries</a>
+    <a class="rail-link" href="#demo-41"><b>41</b>Anchor Positioning</a>
+    <a class="rail-link" href="#demo-54"><b>54</b>@property 色阶生成</a>
+    <div class="rail-cat">原生 API</div>
+    <a class="rail-link" href="#demo-42"><b>42</b>View Transitions</a>
+    <a class="rail-link" href="#demo-43"><b>43</b>Clipboard 剪贴板</a>
+    <a class="rail-link" href="#demo-44"><b>44</b>Speech 语音合成</a>
+    <a class="rail-link" href="#demo-45"><b>45</b>Web Worker</a>
+    <a class="rail-link" href="#demo-46"><b>46</b>Fullscreen + Wake Lock</a>
+    <a class="rail-link" href="#demo-47"><b>47</b>Web Share</a>
+  </nav>
+</aside><main class="main">
+<section class="intro lab-intro" id="main-content" tabindex="-1">
+  <div class="lab-hero-copy">
+    <p class="lab-kicker"><span></span> A FIELD GUIDE TO INTERACTION</p>
+    <h2>把交互，<br>做成<span>手感。</span></h2>
+    <p class="lead">从一个按钮的反馈，到一整个界面的流动。<br class="lab-desktop-break">在这里体验、拆解，找到适合你项目的交互。</p>
+    <div class="lab-hero-actions"><a class="lab-primary" href="#demo-01">开始体验 <span aria-hidden="true">↗</span></a><a class="lab-text-link" href="#catalog">浏览交互索引 <span aria-hidden="true">↓</span></a></div>
+    <div class="lab-facts"><span><strong class="lab-total">54</strong> 个演示</span><span>可复制提示词与代码</span><span>原生优先 · 库按需加载</span></div>
+  </div>
+  <figure class="lab-specimen">
+    <div class="lab-specimen-top"><span>INTERACTION / 051</span><span class="lab-specimen-pill">对比滑块</span></div>
+    <div class="lab-compare-art" aria-hidden="true">
+      <div class="lab-art-side lab-art-before"><span>BEFORE</span><div class="lab-mini-page"><i></i><b></b><b></b><div><em></em><em></em><em></em></div></div></div>
+      <div class="lab-art-side lab-art-after"><span>AFTER</span><div class="lab-mini-page"><i></i><b></b><b></b><div><em></em><em></em><em></em></div></div></div>
+      <div class="lab-art-divider"><span>↔</span></div>
+      <span class="lab-art-position">50 / 50</span>
+    </div>
+    <figcaption><span>一个输入，两种视角。<small>原生 range × CSS clip-path</small></span><a href="#demo-51" aria-label="体验前后对比滑块">体验 <span aria-hidden="true">↗</span></a></figcaption>
+  </figure>
+</section>
+<section class="lab-catalog" id="catalog" aria-labelledby="catalog-title">
+  <div class="lab-section-label"><h2 id="catalog-title">从你需要的地方开始</h2><span>04 个方向 / 自由探索</span></div>
+  <div class="lab-category-grid">
+    <a href="#demo-01" class="lab-category"><span class="lab-category-index">01—16 <span>↗</span></span><h3>细微之处</h3><p>按钮、反馈与基础交互</p><span class="lab-category-foot">16 个演示 <i></i> 原生 CSS / JS</span></a>
+    <a href="#demo-17" class="lab-category"><span class="lab-category-index">17—29 <span>↗</span></span><h3>让界面流动</h3><p>动画、图形与声音</p><span class="lab-category-foot">13 个演示 <i></i> 精选库与主题</span></a>
+    <a href="#demo-30" class="lab-category"><span class="lab-category-index">30—37 <span>↗</span></span><h3>状态的表达</h3><p>响应式、组件与数据流</p><span class="lab-category-foot">8 个演示 <i></i> 框架实践</span></a>
+    <a href="#demo-38" class="lab-category"><span class="lab-category-index lab-api-range">38—54 <span>↗</span></span><h3>浏览器的可能</h3><p>CSS 新特性与原生 API</p><span class="lab-category-foot"><span class="lab-api-count">17</span> 个演示 <i></i> 现代 Web</span></a>
+  </div>
+  <p class="lab-network-note">库与框架演示需要联网加载 CDN；原生示例无需额外库。浏览器支持情况见各演示标注。</p>
+</section>
+<div class="lab-prototype-demos"><section id="demo-01"><h3>01 / 涟漪按钮</h3><p>点击按钮，波纹从指针落点向外扩散并淡出，原生实现。</p></section><section id="demo-02"><h3>02 / 磁性按钮</h3><p>光标靠近时按钮被轻轻吸引，离开后弹性回位。仅桌面端生效。</p></section><section id="demo-03"><h3>03 / 光标聚光灯</h3><p>光标经过时照亮局部区域，其余内容压暗。触屏设备自动隐藏。</p></section><section id="demo-04"><h3>04 / 打字机</h3><p>多段文案逐字打出、停顿、删除再循环，带闪烁光标。</p></section><section id="demo-05"><h3>05 / 数字滚动</h3><p>数字从 0 平滑递增到目标值，rAF + 缓动函数实现。</p></section><section id="demo-06"><h3>06 / 滚动揭示</h3><p>元素进入视口时淡入上移呈现，IntersectionObserver 触发一次。</p></section><section id="demo-07"><h3>07 / 视差滚动</h3><p>背景层以 0.45 倍速移动，前景自然滚动，形成层次感。</p></section><section id="demo-08"><h3>08 / 3D 翻转</h3><p>perspective + rotateY 实现正反面翻转，hover 与点击均可触发。</p></section><section id="demo-09"><h3>09 / 拖拽排序</h3><p>HTML5 原生拖放实现列表重排，拖起项半透明占位。</p></section><section id="demo-10"><h3>10 / 折叠面板</h3><p>同一时间仅展开一项，grid-template-rows 平滑过渡。</p></section><section id="demo-11"><h3>11 / Tab 切换</h3><p>标签切换内容面板，下滑指示线平滑滑动到当前项。</p></section><section id="demo-12"><h3>12 / Toast 通知</h3><p>右上角堆叠弹出，支持三种类型，自动消失可手动关闭。</p></section><section id="demo-13"><h3>13 / 骨架屏</h3><p>加载前灰块占位并带流动高光，数据就绪后淡出换内容。</p></section><section id="demo-14"><h3>14 / 暗色模式</h3><p>CSS 变量 + 状态类切换主题，偏好写入 localStorage 自动恢复。</p></section><section id="demo-15"><h3>15 / Canvas 粒子</h3><p>粒子匀速运动，距离过近自动连线，鼠标经过产生斥力。</p></section><section id="demo-16"><h3>16 / 手绘画板</h3><p>Pointer Events 绘制平滑曲线，支持笔宽、颜色与清空。</p></section><section id="demo-17"><h3>17 / GSAP 滚动编排</h3><p>GSAP + ScrollTrigger：进入视口自动播放，点击按钮随时重放时间线。</p></section><section id="demo-18"><h3>18 / Lottie 矢量动画</h3><p>播放内联 bodymovin 动画 JSON，SVG 渲染矢量缩放不失真，可暂停。</p></section><section id="demo-19"><h3>19 / Anime.js 补间</h3><p>一条时间线串联位移、旋转、缩放与颜色循环补间，一键触发。</p></section><section id="demo-20"><h3>20 / Motion 交错</h3><p>Motion（motion.dev）的 stagger 让列表项依次弹出，进入视口自动播放。</p></section><section id="demo-21"><h3>21 / Three.js 3D</h3><p>WebGL 场景：环面结自转 + 点光源，鼠标移动改变视角姿态。</p></section><section id="demo-22"><h3>22 / p5.js 生成艺术</h3><p>移动光标，彩色粒子沿路径流动，半透明覆盖形成笔触拖尾。</p></section><section id="demo-23"><h3>23 / ECharts 动态图表</h3><p>折线图每 2s 追加数据点，模拟实时监控面板，可暂停与重置。</p></section><section id="demo-24"><h3>24 / D3 力导向图</h3><p>力导向布局 + 节点拖拽：拖动任意节点，整图按物理规则重新分布。</p></section><section id="demo-25"><h3>25 / Swiper 3D 轮播</h3><p>coverflow 3D 效果轮播：自动播放 + 分页器与前后箭头。</p></section><section id="demo-26"><h3>26 / Embla 轻量轮播</h3><p>drag free 滑动 + 上/下一张控制，核心 API 仅约 12KB，无依赖。</p></section><section id="demo-27"><h3>27 / Hammer 手势识别</h3><p>在面板上做手势：点击、长按、滑动、拖拽，实时显示识别结果。</p></section><section id="demo-28"><h3>28 / Tone 音序器</h3><p>8 步音序器：点击格子编辑节拍，播放时高亮走位并发声。</p></section><section id="demo-29"><h3>29 / 多主题切换</h3><p>同一套组件四个主题一键切换：颜色全部走 CSS 变量，原生实现。</p></section><section id="demo-30"><h3>30 / Vue 3.5 响应式</h3><p>createApp 全局构建：ref 计数器、v-model 双向输入、computed 实时字数；子组件演示 3.5 响应式 props 解构。</p></section><section id="demo-31"><h3>31 / Preact + htm</h3><p>htm.bind(preact.h) 免 JSX 编译，函数组件 + useState/useEffect 计数器，组件化拆分。</p></section><section id="demo-32"><h3>32 / htmx 超媒体</h3><p>hx-get 触发局部内容 swap；every 3s 轮询。file:// 下用内联 template 模拟响应，双击即可运行。</p></section><section id="demo-33"><h3>33 / Alpine.js 属性驱动</h3><p>纯 x-data / x-show / x-on / x-bind 实现下拉、模态、数量器，零手写业务 JS。</p></section><section id="demo-34"><h3>34 / Tailwind CSS v4 原子类</h3><p>@tailwindcss/browser 运行时即时编译；utility 写按钮/徽章，可切暗色，class 编辑器实时预览。</p></section><section id="demo-35"><h3>35 / Jotai 原子状态</h3><p>vanilla UMD 不依赖 React：多订阅共享 atom，任一处修改局部更新；一颗派生 atom 依赖两颗基础 atom。</p></section><section id="demo-36"><h3>36 / RxJS 响应式流</h3><p>输入流 debounceTime(300) + switchMap 模拟搜索；鼠标移动 throttleTime 节流显示坐标。</p></section><section id="demo-37"><h3>37 / Lit Web Components</h3><p>动态 import ESM 加载 Lit，注册 &lt;live-clock&gt; 与 &lt;count-up&gt;：Shadow DOM 封装、响应式属性、框架无关。</p></section><section id="demo-38"><h3>38 / 滚动驱动动画</h3><p>CSS <code>view-timeline</code> 让动画进度直接绑定滚动位置：卡片随进入视角缩放、上浮、变色，零 JS。</p></section><section id="demo-39"><h3>39 / :has() 选择器</h3><p><code>:has()</code> 让父级感知子级状态：勾选卡片即整卡高亮加徽章，跨分支影响无需 JS 类切换。</p></section><section id="demo-40"><h3>40 / Container Queries</h3><p>容器查询按「容器宽度」而非视口响应：拖窄容器，卡片自动从横排变纵排、字号变小。</p></section><section id="demo-41"><h3>41 / Anchor Positioning</h3><p>锚点定位让弹层相对任意锚点摆放：拖拽锚点，气泡自动跟随；点击切换四向位置。</p></section><section id="demo-42"><h3>42 / View Transitions</h3><p><code>document.startViewTransition()</code> 让视图切换拥有平滑的交叉淡化，浏览器自动捕获新旧状态。</p></section><section id="demo-43"><h3>43 / Clipboard 剪贴板</h3><p>Async Clipboard API 读写剪贴板：复制演示文本、读取剪贴板内容，均可在 file:// 下工作。</p></section><section id="demo-44"><h3>44 / Speech 语音合成</h3><p>SpeechSynthesis 让页面开口朗读：中文朗读演示文案，语速可调，支持播放与停止。</p></section><section id="demo-45"><h3>45 / Web Worker</h3><p>Worker 把重计算搬到后台线程：求第 40 万位的质数区间，主线程动画依然满帧流畅。</p></section><section id="demo-46"><h3>46 / Fullscreen + Wake Lock</h3><p>全屏沉浸 + 屏幕常亮：适合演示、阅读、看板等场景，两个 API 都由用户手势触发。</p></section><section id="demo-47"><h3>47 / Web Share</h3><p>Web Share 调起系统分享面板（移动端友好），桌面端自动降级为复制链接 + 提示。</p></section><section id="demo-48"><h3>48 / 原生对话框 + Popover</h3><p>showModal() 自带焦点陷阱、Esc 关闭与 ::backdrop 遮罩；popover 属性则是轻量浮层。两者都不需要一行第三方 JS。</p></section><section id="demo-49"><h3>49 / ⌘K 命令面板</h3><p>输入即过滤，↑↓ 移动高亮，Enter 执行，Esc 关闭——命令面板的全部要素，60 行原生 JS。</p></section><section id="demo-50"><h3>50 / 虚拟滚动（10 万行）</h3><p>DOM 里始终只有约 8 个节点，滚动时按 scrollTop 换一批。10 万行也不掉帧。</p></section><section id="demo-51"><h3>51 / 前后对比滑块</h3><p>一个 range 输入控制 clip-path 的 inset 百分比，无需 canvas，也不用两张图对齐。</p></section><section id="demo-52"><h3>52 / 拖拽上传 + 预览</h3><p>dragover 高亮、drop 取文件、URL.createObjectURL 即时预览，全程不联网、不上传。</p></section><section id="demo-53"><h3>53 / Scroll Snap 吸附</h3><p>两行 CSS 就得到带惯性的横向吸附，不需要轮播库，也不拦截原生滚动。</p></section><section id="demo-54"><h3>54 / @property 色阶生成</h3><p>注册一个 --hue 自定义属性后，color-mix 在 oklab 空间里插值，一个输入生成整条色阶。</p></section><section id="matrix"><h3>框架对比矩阵</h3><p>框架、组件与数据流的不同选择。</p></section></div></main></body></html>

@@ -1,5 +1,5 @@
 {
-  "note": "产物允许出现的全部外部 URL（含 inject.html 引入的主页与分析端点）；新增 CDN 依赖必须同步更新",
+  "note": "产物允许出现的全部外部 URL；新增 CDN 依赖必须同步更新。无访问统计端点。",
   "urls": [
     "http://www.w3.org/2000/svg",
     "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.13/dist/index.global.js",
@@ -28,7 +28,6 @@
     "https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js",
     "https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js",
     "https://kuntechnology.github.io/",
-    "https://lab-meta.yagook.workers.dev",
     "https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap",
     "https://web-platform-dx.github.io/baseline/"
   ]

@@ -1,0 +1,15 @@
+{
+  "stage": "G4 final independent re-review",
+  "base_commit": "ed9a355c8a7cb3f5ce145b575a81e5b5565028bc",
+  "weights": {"technical":0.30,"beauty":0.25,"workflow":0.25,"domain_fit":0.20},
+  "thresholds": {"technical":90,"beauty":85,"workflow":90,"domain_fit":90,"weighted":89,"ai_slop_max":12},
+  "reviewer_A": {"job":"job_cGHQinqB","technical":92,"beauty":89,"workflow":91,"domain_fit":93,"weighted":91.2,"ai_slop":8,"pass":true},
+  "reviewer_B": {"job":"job_XroFQYiW","technical":92,"beauty":86,"workflow":92,"domain_fit":93,"weighted":90.7,"ai_slop":8,"pass":true},
+  "gate_pass":true,
+  "verified_remediation":["optional stats requests/polling/identifier generation removed","legacy local identifier only cleared","dependency whitelist removes stats origin without adding dependencies","real light desktop/mobile screenshots taken through theme button with theme/background assertions"],
+  "regression":{"demos":56,"failed":0,"degraded":3,"console_errors":0,"page_errors":0,"failed_requests":0,"robustness_passed":10,"extras_passed":8},
+  "limitations":["demo43/46/47 platform or permission outcomes explicitly degraded","Chromium evidence does not certify Safari, Firefox or physical screen readers"],
+  "nonblocking_followups":["mobile catalog and category scroll areas could be more distinct","redundant empty favicon declaration can be cleaned in a later iteration"],
+  "reviewed_code_hashes":"design/evidence/review-code.sha256",
+  "prior_failures_retained":"design/evidence/g4-reviews-round1.json"
+}

@@ -1,0 +1,8 @@
+{
+  "stage":"G1 static shell final",
+  "reviewer_A":{"job":"job_iqrXaTfN","technical":92,"beauty":88,"workflow":90,"domain_fit":92,"weighted":90.5,"ai_slop":8,"pass":true},
+  "reviewer_B":{"job":"job_WObGplOq","technical":92,"beauty":88,"workflow":92,"domain_fit":93,"weighted":91.2,"ai_slop":7,"pass":true},
+  "both_independently_verified":["screenshots desktop/mobile","five viewport no-overflow","44px navigation targets","valid heading wrapper","explicit mobile horizontal-navigation hint","real anchor targets"],
+  "gate_pass":true,
+  "remaining_note":"Review B saw an unlocated 404; final suite must capture response and console URLs, including favicon noise."
+}

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>前端交互实验室 v3.7.0 · Frontend Interaction Lab</title>
+<title>前端交互实验室 v3.8.0 · Frontend Interaction Lab</title>
 <meta name="description" content="54 个前端交互技术演示：22 原生 + 13 精选库 + 8 前沿框架 + 11 新特性/API。每个演示标注 Baseline 支持度，附框架对比矩阵、可复制提示词与代码。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23EE5B1F'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23F5F3EE' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23F5F3EE'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
@@ -850,33 +850,36 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
 #fs-status,#wl-status{max-width:640px;margin:6px auto 0;font-size:12.5px;color:var(--ink-2);text-align:center}
 </style>
 <script>try{var lt=localStorage.getItem('lab-theme');document.documentElement.setAttribute('data-theme',lt==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}try{var la=localStorage.getItem('lab-accent');if(la)document.documentElement.setAttribute('data-accent',la)}catch(e){}</script>
+<link rel="icon" href="data:,">
 </head>
-<body>
+<body class="lab-shell">
 <div class="ambient" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i><i class="stars"></i></div>
 
 <div id="progress"><i></i></div>
 
-<header class="topbar">
-  <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#EE5B1F"/><circle cx="32" cy="32" r="14" fill="none" stroke="#F5F3EE" stroke-width="5"/><circle cx="32" cy="32" r="4" fill="#F5F3EE"/></svg>
-  <h1>前端交互实验室</h1>
-  <span class="tag">v3.7.0</span>
-  <div class="search-box">
+
+<a class="lab-skip" href="#main-content">跳至内容</a>
+<header class="topbar lab-header">
+  <a class="lab-brand" href="#main-content" aria-label="前端交互实验室首页"><span class="lab-mark" aria-hidden="true">fi<span>·</span></span><div class="lab-brand-copy"><h1>前端交互实验室</h1><small>FRONTEND INTERACTION LAB</small></div></a>
+  <div class="lab-header-right">
+    <div class="search-box">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
     <input id="search-input" type="search" placeholder="搜索演示…" autocomplete="off" aria-label="搜索演示">
     <button type="button" id="search-clear" class="search-clear" aria-label="清空搜索">×</button>
-  </div>
-  <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换明暗主题" title="切换明暗主题"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-  <div class="accent-switch" role="group" aria-label="霓虹氛围灯">
+  </div><button type="button" class="lab-command-trigger" id="lab-command-open" aria-label="打开演示命令面板，快捷键 Ctrl 或 Command K">⌘K</button><details class="lab-appearance"><summary aria-label="显示偏好">显示</summary><div class="lab-appearance-panel"><p>明暗主题</p><button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换明暗主题" title="切换明暗主题"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button><p>强调色</p><div class="accent-switch" role="group" aria-label="霓虹氛围灯">
     <button type="button" class="accent-dot is-active" data-accent="orange" aria-label="信号橙" title="信号橙" style="--dot:#FF6A2A"></button>
     <button type="button" class="accent-dot" data-accent="cyan" aria-label="电光青" title="电光青" style="--dot:#22D3EE"></button>
     <button type="button" class="accent-dot" data-accent="violet" aria-label="霓虹紫" title="霓虹紫" style="--dot:#A855F7"></button>
     <button type="button" class="accent-dot" data-accent="lime" aria-label="荧光绿" title="荧光绿" style="--dot:#4ADE80"></button>
+  </div><button type="button" id="lab-motion-toggle" class="lab-motion-button" aria-pressed="false">减少动效：跟随系统</button></div></details>
+    <a class="lab-home" href="https://kuntechnology.github.io/" id="home-link">主页 ↗</a>
+    <span class="lab-edition">v3.8</span>
   </div>
-  <span class="meta">54 DEMOS · 原生 + 精选库 + 前沿框架</span>
 </header>
 
+
 <aside class="rail">
-  <nav aria-label="演示目录">
+  <p class="lab-rail-hint">演示目录 <span>左右滑动查看更多 →</span></p><nav aria-label="演示目录">
     <div class="rail-cat">微交互</div>
     <a class="rail-link" href="#demo-01"><b>01</b>涟漪按钮</a>
     <a class="rail-link" href="#demo-02"><b>02</b>磁性按钮</a>
@@ -944,22 +947,44 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     <a class="rail-link" href="#demo-45"><b>45</b>Web Worker</a>
     <a class="rail-link" href="#demo-46"><b>46</b>Fullscreen + Wake Lock</a>
     <a class="rail-link" href="#demo-47"><b>47</b>Web Share</a>
-  </nav>
+  <div class="rail-cat">工作流</div><a class="rail-link" href="#demo-55"><b>55</b><span>可撤销列表操作</span></a><a class="rail-link" href="#demo-56"><b>56</b><span>可调整分栏</span></a></nav>
 </aside>
 
-<main class="main">
+<main class="main"><noscript>当前已关闭 JavaScript。演示说明、目录与提示词可继续阅读；操作演示需要启用 JavaScript。</noscript>
 <div class="filter-bar" id="filter-bar" role="group" aria-label="按分类筛选演示"></div>
 
-  <section class="intro">
-    <h2>前端交互实验室</h2>
-    <p class="lead">54 个可即开即用的前端交互演示：22 原生 + 13 精选库 + 8 前沿框架 + 11 CSS 新特性 / 原生 API。每个都带可直接复制的精简提示词；库与框架演示依赖 CDN，需联网打开。</p>
-  <p class="bl-legend"><span class="bl-badge bl-widely">Baseline 广泛可用</span><span class="bl-badge bl-newly">Baseline 新近可用</span><span class="bl-badge bl-limited">支持有限</span><span>按 <a href="https://web-platform-dx.github.io/baseline/" target="_blank" rel="noopener">Web Platform Baseline</a> 标注；库与框架类演示不适用 Baseline，不显示徽标。</span></p>
-    <div class="steps">
-      <div class="step"><b>01</b><p>体验：在下方演示区直接点击、拖拽、书写，感受交互效果。</p></div>
-      <div class="step"><b>02</b><p>复制：点击提示词区块右上角的「复制提示词」，拿到精简实现描述。</p></div>
-      <div class="step"><b>03</b><p>复用：将提示词粘贴进你的项目或 AI 工具，按需调整细节后投入使用。</p></div>
+
+<section class="intro lab-intro" id="main-content" tabindex="-1">
+  <div class="lab-hero-copy">
+    <p class="lab-kicker"><span></span> A FIELD GUIDE TO INTERACTION</p>
+    <h2>把交互，<br>做成<span>手感。</span></h2>
+    <p class="lead">从一个按钮的反馈，到一整个界面的流动。<br class="lab-desktop-break">在这里体验、拆解，找到适合你项目的交互。</p>
+    <div class="lab-hero-actions"><a class="lab-primary" href="#demo-01">开始体验 <span aria-hidden="true">↗</span></a><a class="lab-text-link" href="#catalog">浏览交互索引 <span aria-hidden="true">↓</span></a></div>
+    <div class="lab-facts"><span><strong class="lab-total">56</strong> 个演示</span><span>可复制提示词与代码</span><span>原生优先 · 库按需加载</span></div>
+  </div>
+  <figure class="lab-specimen">
+    <div class="lab-specimen-top"><span>INTERACTION / 051</span><span class="lab-specimen-pill">对比滑块</span></div>
+    <div class="lab-compare-art" aria-hidden="true">
+      <div class="lab-art-side lab-art-before"><span>BEFORE</span><div class="lab-mini-page"><i></i><b></b><b></b><div><em></em><em></em><em></em></div></div></div>
+      <div class="lab-art-side lab-art-after"><span>AFTER</span><div class="lab-mini-page"><i></i><b></b><b></b><div><em></em><em></em><em></em></div></div></div>
+      <div class="lab-art-divider"><span>↔</span></div>
+      <span class="lab-art-position">50 / 50</span>
     </div>
-  </section>
+    <figcaption><span>一个输入，两种视角。<small>原生 range × CSS clip-path</small></span><a href="#demo-51" aria-label="体验前后对比滑块">体验 <span aria-hidden="true">↗</span></a></figcaption>
+  </figure>
+</section>
+<section class="lab-catalog" id="catalog" aria-labelledby="catalog-title">
+  <div class="lab-section-label"><h2 id="catalog-title">从你需要的地方开始</h2><span>04 个方向 / 自由探索</span></div>
+  <div class="lab-category-grid">
+    <a href="#demo-01" class="lab-category"><span class="lab-category-index">01—16 <span>↗</span></span><h3>细微之处</h3><p>按钮、反馈与基础交互</p><span class="lab-category-foot">16 个演示 <i></i> 原生 CSS / JS</span></a>
+    <a href="#demo-17" class="lab-category"><span class="lab-category-index">17—29 <span>↗</span></span><h3>让界面流动</h3><p>动画、图形与声音</p><span class="lab-category-foot">13 个演示 <i></i> 精选库与主题</span></a>
+    <a href="#demo-30" class="lab-category"><span class="lab-category-index">30—37 <span>↗</span></span><h3>状态的表达</h3><p>响应式、组件与数据流</p><span class="lab-category-foot">8 个演示 <i></i> 框架实践</span></a>
+    <a href="#demo-38" class="lab-category"><span class="lab-category-index lab-api-range">38—56 <span>↗</span></span><h3>浏览器的可能</h3><p>CSS 新特性与原生 API</p><span class="lab-category-foot"><span class="lab-api-count">19</span> 个演示 <i></i> 现代 Web</span></a>
+  </div>
+  <p class="bl-legend"><span class="bl-badge bl-widely">Baseline 广泛可用</span><span class="bl-badge bl-newly">Baseline 新近可用</span><span class="bl-badge bl-limited">支持有限</span><span>按 <a href="https://web-platform-dx.github.io/baseline/" target="_blank" rel="noopener">Web Platform Baseline</a> 标注；库与框架类演示不适用 Baseline，不显示徽标。</span></p>
+<p class="lab-network-note">库与框架演示需要联网加载 CDN；原生示例无需额外库。浏览器支持情况见各演示标注。</p>
+</section>
+
 
   <div id="search-status" class="search-status" aria-live="polite"></div>
 
@@ -1919,21 +1944,21 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     </div>
     <div class="prompt">
       <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
-      <pre>用原生 <dialog> 做模态：dialog.showModal() 自带焦点陷阱、Esc 关闭、::backdrop 遮罩，关闭后焦点自动回到触发按钮。轻量浮层用 popover 属性 + popovertarget，点击外部区域自动收起。两者都不需要第三方库。</pre>
+      <pre>用原生 &lt;dialog&gt; 做模态：dialog.showModal() 自带焦点陷阱、Esc 关闭、::backdrop 遮罩，关闭后焦点自动回到触发按钮。轻量浮层用 popover 属性 + popovertarget，点击外部区域自动收起。两者都不需要第三方库。</pre>
     </div>
   </section>
 
   <section class="demo" id="demo-49" data-baseline="widely" data-tags="command palette,⌘K,键盘导航,搜索,交互范式">
     <div class="demo-head"><span class="demo-no">49</span><h3>⌘K 命令面板</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
-    <p class="demo-desc">输入即过滤，↑↓ 移动高亮，Enter 执行，Esc 关闭——命令面板的全部要素，60 行原生 JS。</p>
+    <p class="demo-desc">搜索真实演示，↑↓ 移动、Enter 跳转、Esc 关闭；原生 dialog 管理焦点，支持点击与键盘。</p>
     <div class="stage" id="stage-49">
       <button type="button" class="btn btn-ghost btn-sm" id="cmdk-open">⌘K 打开命令面板</button>
-      <div class="cmdk-mask" id="cmdk-mask" hidden>
-        <div class="cmdk" role="dialog" aria-label="命令面板">
-          <input id="cmdk-input" type="text" placeholder="搜索命令…" aria-label="搜索命令" autocomplete="off">
-          <ul id="cmdk-list" role="listbox" aria-label="命令列表"></ul>
+      <dialog class="lab-command-dialog" id="cmdk-mask" aria-labelledby="cmdk-title">
+        <div class="cmdk"><div class="lab-command-title"><h4 id="cmdk-title">查找演示</h4><button id="cmdk-close" type="button" aria-label="关闭命令面板">关闭 · Esc</button></div>
+          <input id="cmdk-input" type="text" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list" placeholder="输入演示名称或编号…" aria-label="搜索演示命令" autocomplete="off">
+          <ul id="cmdk-list" role="listbox" aria-label="演示结果"></ul><p id="cmdk-empty" role="status" hidden>没有匹配的演示，请换个关键词。</p>
         </div>
-      </div>
+      </dialog>
       <span class="stage-hint">↑↓ 选择 · Enter 执行 · Esc 关闭</span>
     </div>
     <div class="prompt">
@@ -1944,12 +1969,12 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
 
   <section class="demo" id="demo-50" data-baseline="widely" data-tags="virtual scroll,虚拟滚动,性能,长列表,渲染窗口">
     <div class="demo-head"><span class="demo-no">50</span><h3>虚拟滚动（10 万行）</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
-    <p class="demo-desc">DOM 里始终只有约 8 个节点，滚动时按 scrollTop 换一批。10 万行也不掉帧。</p>
+    <p class="demo-desc">只渲染可视区和缓冲行，滚动时按 scrollTop 更新窗口；十万行数据不需要十万个 DOM 节点。</p>
     <div class="stage" id="stage-50">
       <div class="vs-view" id="vs-view" tabindex="0" role="group" aria-label="虚拟滚动列表，共十万行">
         <div class="vs-spacer" id="vs-spacer"><div class="vs-rows" id="vs-rows"></div></div>
       </div>
-      <span class="stage-hint">共 100,000 行 · 实际渲染 8 个节点</span>
+      <span class="stage-hint">共 100,000 行 · 可视区 + 缓冲约 12 行</span>
     </div>
     <div class="prompt">
       <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
@@ -2018,26 +2043,45 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     </div>
     <div class="prompt">
       <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
-      <pre>用 @property 注册 --hue（syntax:"<number>"）后，它成为可动画、可参与计算的类型化属性；再用 oklch(亮度% 彩度 var(--hue)) 与 color-mix(in oklab, …) 生成整条色阶。相比手写 6 个十六进制值，改一个数字就能换整套主题色。</pre>
+      <pre>用 @property 注册 --hue（syntax:"&lt;number&gt;"）后，它成为可动画、可参与计算的类型化属性；再用 oklch(亮度% 彩度 var(--hue)) 与 color-mix(in oklab, …) 生成整条色阶。相比手写 6 个十六进制值，改一个数字就能换整套主题色。</pre>
     </div>
   </section>
 
-  <!-- ===== 调研说明 ===== -->
-  <section class="research">
-    <h3>已调研但未收录</h3>
-    <ul>
-      <li><b>Svelte 5</b> — 需编译，无浏览器运行时，单文件双击不可运行。</li>
-      <li><b>SolidJS</b> — 需 JSX/Solid 编译，无 UMD 构建。</li>
-      <li><b>Astro</b> — SSG / 构建框架，非运行时库。</li>
-      <li><b>Qwik</b> — 需构建期序列化，社区热度下行。</li>
-      <li><b>shadcn/ui</b> — 源码复制集而非库，无 CDN 入口。</li>
-      <li><b>React 19</b> — 官方已移除 UMD 构建，本实验室用 Preact + htm 兼容路线替代演示。</li>
-    </ul>
-  </section>
+  <section class="demo" id="demo-55" data-baseline="widely">
+  <div class="demo-head"><span class="demo-no">55</span><h3>可撤销列表操作</h3><span class="bl-badge bl-widely">Widely available</span></div>
+  <p class="demo-desc">移除操作会立即从列表删除项目；可连续移除，并按相反顺序逐步精确撤销。撤销记录不会自动过期，重置可恢复初始列表。</p>
+  <div class="stage" id="stage-55">
+    <div class="undo-demo">
+      <ul id="undo-list" class="undo-list" aria-label="可操作项目">
+        <li data-item="1"><span class="undo-label">项目一 · 设计稿评审</span><button class="btn btn-ghost undo-remove" type="button" aria-label="移除项目一：设计稿评审">移除</button></li>
+        <li data-item="2"><span class="undo-label">项目二 · API 文档</span><button class="btn btn-ghost undo-remove" type="button" aria-label="移除项目二：API 文档">移除</button></li>
+        <li data-item="3"><span class="undo-label">项目三 · 发布检查</span><button class="btn btn-ghost undo-remove" type="button" aria-label="移除项目三：发布检查">移除</button></li>
+      </ul>
+      <div class="undo-actions"><button id="undo-last" class="btn btn-primary" type="button" disabled>撤销上一步</button><button id="undo-reset" class="btn btn-ghost" type="button">重置列表</button></div>
+      <p id="undo-status" class="demo-status" role="status" aria-live="polite" aria-atomic="true">列表已就绪，共 3 项。可连续移除，撤销将逐步恢复最近移除的项目。</p>
+    </div>
+  </div>
+  <div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn">复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div><pre>实现一个原生 JavaScript 可撤销列表：操作按钮实际移除对应列表项；支持连续移除，以栈保存原节点、原位置和焦点信息，撤销时精确逐步恢复；撤销记录没有自动过期计时；重置恢复初始列表并清空历史。状态使用 aria-live 区域说明结果和数量，按钮边界 disabled 正确，操作后焦点保持可用。所有用户文本使用 textContent 或安全 DOM 节点，不使用 innerHTML。</pre></div>
+</section>
+<section class="demo" id="demo-56" data-baseline="widely">
+  <div class="demo-head"><span class="demo-no">56</span><h3>可调整分栏</h3><span class="bl-badge bl-widely">Widely available</span></div>
+  <p class="demo-desc">用原生范围控件或左右按钮调整两栏比例（15%–85%）；可键盘操作、触屏拖动，并一键回到 50%。</p>
+  <div class="stage" id="stage-56">
+    <div class="split-demo">
+      <div class="split-controls"><button id="split-less" class="btn btn-ghost" type="button" aria-label="减少左栏宽度">−</button><label class="split-range-label" for="split-range">左栏比例</label><input id="split-range" type="range" min="15" max="85" step="1" value="50" aria-describedby="split-output"><button id="split-more" class="btn btn-ghost" type="button" aria-label="增加左栏宽度">+</button><button id="split-reset" class="btn btn-ghost" type="button">重置 50%</button></div>
+      <p id="split-output" class="split-output" aria-live="polite" aria-atomic="true">左栏 50%，右栏 50%</p>
+      <div id="split-layout" class="split-layout" style="--split:50fr;--split-rest:50fr" aria-label="可调整比例的双栏内容"><div class="split-pane"><h4>左栏</h4><p>主要内容区域。拖动上方范围控件或使用左右按钮调整宽度。</p></div><div class="split-pane"><h4>右栏</h4><p>辅助内容区域。两栏随比例同步变化，并在窄屏下保持可读。</p></div></div>
+    </div>
+  </div>
+  <div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn">复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div><pre>实现原生可调整双栏布局：原生 input type="range" 的 min 为 15、max 为 85，初值 50；CSS Grid 使用同一个比例变量驱动两栏。左右按钮每次调整 5 个百分点并遵守边界，重置为 50%。range 保留原生键盘方向键、Home、End 与触屏操作；实时输出两栏比例并提供可访问名称，控件至少 44px。适配窄屏，不依赖外部库。</pre></div>
+</section>
+
+<!-- ===== 调研说明 ===== -->
+
 
   <footer class="footer">
     <span>前端交互实验室 · 22 原生 + 13 精选库 + 8 前沿框架 + 11 新特性 / API</span>
-    <span><b>v3.7.0</b> · Pride Versioning（Proud 3 · Default 7 · Shame 0）</span>
+    <span><b>v3.8.0</b> · Pride Versioning（Proud 3 · Default 7 · Shame 0）</span>
     <span>框架调研覆盖：State of JS / Rising Stars / HN / 掘金 / V2EX 等 8 渠道</span>
     <span>库类演示依赖 jsDelivr CDN，需联网打开</span>
   </footer>
@@ -2099,56 +2143,65 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     lit:     { js: null }
   };
   var LAB = (function(){
-    var ready = {}, loading = {}, waiters = {}, timers = {};
+    var ready = {}, loading = {}, waiters = {}, timers = {}, versions = {}, flushing = {}, loaded = {};
+    function stages(k){ return Array.from(document.querySelectorAll('.demo[data-lib]')).filter(function(s){ return s.dataset.lib.split(',').map(function(v){return v.trim();}).includes(k); }); }
+    function state(k, value, message){
+      stages(k).forEach(function(sec){
+        sec.dataset.libState = value;
+        var old = sec.querySelector('.lab-lib-notice');
+        if(old) old.remove();
+        if(value !== 'error') return;
+        var note = document.createElement('div'); note.className = 'lab-lib-notice'; note.setAttribute('role','status');
+        var text = document.createElement('span'); text.textContent = message + '；其他演示不受影响。';
+        var retry = document.createElement('button'); retry.type = 'button'; retry.className = 'btn btn-ghost btn-sm'; retry.textContent = '重试加载';
+        retry.addEventListener('click', function(){ load(k); });
+        note.append(text, retry); sec.querySelector('.stage').appendChild(note);
+      });
+    }
+    function fail(k, message){ loading[k] = false; clearTimeout(timers[k]); state(k,'error',message || '依赖加载失败，请检查网络后重试'); }
     function flush(k){
-      var list = (waiters[k] || []).splice(0);
-      waiters[k] = [];
-      list.forEach(function(it){ it.fn(); });
-    }
-    function fail(k){
-      var list = (waiters[k] || []).slice();
-      /* 保留等待者：CDN 抖动导致首次加载失败后，LAB.load 重试成功仍会 flush 初始化 demo（自愈） */
-      list.forEach(function(it){ (it.fb || defaultFb)(it); });
-    }
-    function defaultFb(it){
-      if(it.id) noLib(it.id, it.name);
-      else showToast('error', (it.name || '库') + ' 加载失败，请联网后刷新页面');
+      var list = (waiters[k] || []).splice(0); waiters[k] = [];
+      list.forEach(function(it){
+        if(it.done) return;
+        try {
+          flushing[k] = true;
+          var result = it.fn();
+          if(result && typeof result.then === 'function'){
+            state(k,'loading');
+            result.then(function(){it.done=true;state(k,'ready');}).catch(function(error){ready[k]=false;waiters[k].push(it);fail(k,'模块加载失败，可重试；若仍失败请刷新');console.warn('Lab module:',k,error);});
+          } else it.done = true;
+        }
+        catch(e){ ready[k] = false; waiters[k].push(it); fail(k,'依赖初始化失败，可重试'); console.error('Lab initialization:', k, e); }
+        finally { flushing[k] = false; }
+      });
+      if(ready[k]) state(k,'ready');
     }
     function load(k){
-      if(ready[k] || loading[k]) return;
+      if(ready[k]) { flush(k); return; }
+      if(loading[k]) return;
       var urls = LIBS[k] && LIBS[k].js;
       if(!urls){ ready[k] = true; flush(k); return; }
-      loading[k] = true;
-      inject(0);
+      loading[k] = true; state(k,'loading');
+      var version = versions[k] = (versions[k] || 0) + 1;
+      timers[k] = setTimeout(function(){ if(versions[k] === version && !ready[k]) fail(k,'依赖加载超时'); },12000);
       function inject(i){
-        var s = document.createElement('script');
-        s.src = urls[i];
-        s.onload = function(){
-          if(i < urls.length - 1){ inject(i + 1); }
-          else { loading[k] = false; ready[k] = true; flush(k); }
-        };
-        s.onerror = function(){ loading[k] = false; fail(k); };
-        document.head.appendChild(s);
+        if(versions[k] !== version) return;
+        if(i >= urls.length){ clearTimeout(timers[k]); loading[k] = false; ready[k] = true; flush(k); return; }
+        if(loaded[urls[i]]) { inject(i+1); return; }
+        var script = document.createElement('script'); script.src = urls[i]; script.async = true;
+        script.onload = function(){ if(versions[k] !== version) return; loaded[urls[i]] = true; inject(i+1); };
+        script.onerror = function(){ if(versions[k] === version) { script.remove(); fail(k,'依赖未能下载'); } };
+        document.head.appendChild(script);
       }
+      inject(0);
     }
     function wait(opt){
-      var k = opt.key, it = opt;
-      (waiters[k] = waiters[k] || []).push(it);
-      if(ready[k]){ flush(k); return; }
-      if(timers[k]) clearTimeout(timers[k]);
-      timers[k] = setTimeout(function(){
-        if(!ready[k]){
-          if(loading[k]){
-            /* 慢网：库仍在加载，先提示兜底，保留等待者——加载完成仍会初始化 demo */
-            var list = (waiters[k] || []).slice();
-            list.forEach(function(w){ (w.fb || defaultFb)(w); });
-          }else{
-            fail(k);
-          }
-        }
-      }, 12000);
+      var k = opt.key;
+      if(flushing[k]) throw new Error('Dependency interface unavailable: ' + k);
+      (waiters[k] = waiters[k] || []).push(opt);
+      if(ready[k]) flush(k);
     }
-    return { load: load, wait: wait };
+    return {load:load, wait:wait};
   })();
   /* 进入视口预加载：demo 靠近视口 420px 内时注入其依赖库 */
   var lazyIO = new IntersectionObserver(function(entries){
@@ -2166,18 +2219,16 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
 
   /* ===== 复制提示词 ===== */
   function copyText(text){
-    if(navigator.clipboard && window.isSecureContext){
-      return navigator.clipboard.writeText(text);
+    function fallback(){
+      var focus = document.activeElement, ta = document.createElement('textarea'), ok = false;
+      ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;left:-9999px';
+      document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand('copy'); } catch(e) {}
+      ta.remove(); if(focus && focus.focus) focus.focus({preventScroll:true});
+      return ok ? Promise.resolve() : Promise.reject(new Error('Clipboard denied'));
     }
-    var ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    try{ document.execCommand('copy'); }catch(e){}
-    document.body.removeChild(ta);
-    return Promise.resolve();
+    if(navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).catch(fallback);
+    return fallback();
   }
   /* ===== 复制代码：从页面自身的 style / script 里按注释切片，零额外体积 ===== */
   (function(){
@@ -2191,8 +2242,8 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
       }
       return '';
     }
-    var styleText = regionText(function(t){ return t.indexOf('/* ===== 01') !== -1; });
-    var scriptText = regionText(function(t){ return t.indexOf('function copyText') !== -1; });
+    var styleText = Array.from(document.querySelectorAll('style')).map(function(n){return n.textContent;}).join('\n');
+    var scriptText = Array.from(document.querySelectorAll('script')).map(function(n){return n.textContent;}).join('\n');
 
     function sliceByMarker(text, no){
       if(!text) return '';
@@ -2204,9 +2255,12 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     }
 
     function buildCode(no){
+      styleText = Array.from(document.querySelectorAll("style")).map(function(n){return n.textContent;}).join("\n");
+      scriptText = Array.from(document.querySelectorAll("script")).map(function(n){return n.textContent;}).join("\n");
       var sec = document.getElementById('demo-' + no);
       if(!sec) return { text: '', css: false };
       var htmlPart = sec.outerHTML;
+      if(no === '49') htmlPart += '\n' + document.getElementById('cmdk-mask').outerHTML;
       var cssPart = sliceByMarker(styleText, no);
       var jsPart = sliceByMarker(scriptText, no);
       var out = [];
@@ -2232,10 +2286,10 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
         btn.textContent = '已复制';
         /* 诚实提示：大部分演示的样式写在页面公共样式表里，单独复制出去不能直接跑 */
         showToast('success', built.css
-          ? '已复制 HTML + CSS + JS'
+          ? '已复制代码片段（仍需页面公共样式与辅助逻辑）'
           : '已复制 HTML + JS（样式依赖页面公共样式表）');
         setTimeout(function(){ btn.classList.remove('is-done'); btn.textContent = old; }, 2000);
-      });
+      }).catch(function(){ showToast('error', '复制被拒绝，请手动选择代码或提示词'); });
     });
   })();
 
@@ -2257,7 +2311,7 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
         showToast('success', '提示词已复制到剪贴板');
       }
       setTimeout(function(){ btn.classList.remove('is-done'); btn.innerHTML = old; }, 2000);
-    });
+    }).catch(function(){ showToast('error', '复制被拒绝，请手动选择提示词'); });
   });
 
   /* ===== v3.3 · 明暗主题切换 ===== */
@@ -2554,7 +2608,7 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
         b.classList.toggle('is-active', b === btn);
         b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
       });
-      panels.forEach(function(p, i){ p.classList.toggle('is-active', btns[i] === btn); });
+      panels.forEach(function(p, i){ p.classList.toggle('is-active', btns[i] === btn); p.hidden = btns[i] !== btn; btns[i].tabIndex = btns[i] === btn ? 0 : -1; });
       moveInk(btn);
       if(focus) btn.focus();
     }
@@ -2567,6 +2621,8 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
       if(idx === -1) return;
       if(e.key === 'ArrowRight'){ e.preventDefault(); activate(btns[(idx + 1) % btns.length], true); }
       if(e.key === 'ArrowLeft'){ e.preventDefault(); activate(btns[(idx + btns.length - 1) % btns.length], true); }
+      if(e.key === 'Home'){ e.preventDefault(); activate(btns[0], true); }
+      if(e.key === 'End'){ e.preventDefault(); activate(btns[btns.length-1], true); }
     });
     var active = bar.querySelector('.tab-btn.is-active');
     moveInk(active);
@@ -2920,6 +2976,11 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     scene.add(mesh);
     var dragging = false, lastX = 0, lastY = 0;
     var stage = document.getElementById('stage-21');
+    stage.addEventListener('lab-rotate', function(e){
+      if(e.detail === 'reset') mesh.rotation.set(0,0,0);
+      else mesh.rotation.y += e.detail === 'left' ? -0.3 : 0.3;
+      renderer.render(scene,camera);
+    });
     stage.addEventListener('pointerdown', function(e){
       if(e.pointerType === 'mouse' && e.button !== 0) return;
       dragging = true; lastX = e.clientX; lastY = e.clientY;
@@ -2934,7 +2995,8 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     stage.addEventListener('pointerup', function(){ dragging = false; });
     stage.addEventListener('pointercancel', function(){ dragging = false; });
     function loop(){
-      if(!dragging) mesh.rotation.y += 0.004;
+      if(document.hidden){ setTimeout(loop,250); return; }
+      if(!dragging && document.documentElement.dataset.motion !== 'reduce' && !matchMedia('(prefers-reduced-motion: reduce)').matches) mesh.rotation.y += 0.004;
       renderer.render(scene, camera);
       requestAnimationFrame(loop);
     }
@@ -3484,7 +3546,10 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
         return;
       }
       statusEl.textContent = '完成（期间新输入会自动取消上一次）';
-      resultEl.innerHTML = '结果：<b>' + res.q + '</b> · 约 ' + res.hits + ' 条命中';
+      resultEl.replaceChildren(document.createTextNode('结果：'));
+      var queryText = document.createElement('b');
+      queryText.textContent = res.q;
+      resultEl.append(queryText, document.createTextNode(' · 约 ' + res.hits + ' 条命中'));
     });
     rxjs.fromEvent(stage, 'mousemove').pipe(op.throttleTime(100)).subscribe(function(e){
       var r = stage.getBoundingClientRect();
@@ -3494,14 +3559,16 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
 
   /* ===== 37 Lit ESM 动态加载 ===== */
   (function(){
+    var attempt = 0;
     function run(){
+    attempt++;
     if(!('customElements' in window)){
       showToast('error', '当前浏览器不支持自定义元素');
       return;
     }
-    Promise.all([
-      import('https://cdn.jsdelivr.net/npm/lit-html@3.2.0/+esm'),
-      import('https://cdn.jsdelivr.net/npm/lit-element@4.1.0/lit-element.js/+esm')
+    return Promise.all([
+      import('https://cdn.jsdelivr.net/npm/lit-html@3.2.0/+esm' + (attempt>1?'?retry='+attempt:'')),
+      import('https://cdn.jsdelivr.net/npm/lit-element@4.1.0/lit-element.js/+esm' + (attempt>1?'?retry='+attempt:''))
     ]).then(function(mods){
       var html = mods[0].html;
       var LitElement = mods[1].LitElement;
@@ -3531,8 +3598,6 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
       }
       if(!customElements.get('live-clock')) customElements.define('live-clock', LiveClock);
       if(!customElements.get('count-up')) customElements.define('count-up', CountUp);
-    }).catch(function(){
-      showToast('error', 'Lit 加载失败，请联网后刷新页面');
     });
     }
     LAB.wait({ key: 'lit', name: 'Lit', fn: run });
@@ -3585,6 +3650,17 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
       di = (di + 1) % 4;
       pop.setAttribute('data-pos', dirs[di]);
       pop.className = 'anc-pop' + (supportsAnchor ? ' anc-' + dirs[di] : '');
+      if(!pop.hidden && !supportsAnchor) place();
+    });
+    anchor.setAttribute('aria-label','移动锚点：方向键移动，Shift 加速，Home 复位');
+    anchor.addEventListener('keydown', function(e){
+      var delta = {ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
+      if(!delta && e.key !== 'Home') return;
+      e.preventDefault(); var wr = wrap.getBoundingClientRect(), ar = anchor.getBoundingClientRect(), step = e.shiftKey ? 20 : 5;
+      var x = e.key === 'Home' ? (wr.width-anchor.offsetWidth)/2 : ar.left-wr.left+delta[0]*step;
+      var y = e.key === 'Home' ? (wr.height-anchor.offsetHeight)/2 : ar.top-wr.top+delta[1]*step;
+      anchor.style.left = Math.max(0,Math.min(wr.width-anchor.offsetWidth,x))+'px';
+      anchor.style.top = Math.max(0,Math.min(wr.height-anchor.offsetHeight,y))+'px';
       if(!pop.hidden && !supportsAnchor) place();
     });
     var dragging = false, ox = 0, oy = 0;
@@ -3645,7 +3721,7 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
       var ta = document.createElement('textarea');
       ta.value = src; ta.style.position = 'fixed'; ta.style.opacity = '0';
       document.body.appendChild(ta); ta.select();
-      try{ document.execCommand('copy'); done(); }
+      try{ if(!document.execCommand('copy')) throw new Error('Copy denied'); done(); }
       catch(e){ out.textContent = '复制失败，请手动选择文本'; }
       document.body.removeChild(ta);
     }
@@ -3755,20 +3831,17 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
           wlSentinel = null;
           wlBtn.textContent = '保持屏幕常亮';
           wlStatus.textContent = '已释放常亮';
-        });
+        }).catch(function(){wlStatus.textContent='释放常亮失败，请重试';});
         return;
       }
       navigator.wakeLock.request('screen').then(function(s){
         wlSentinel = s;
+        s.addEventListener('release',function(){if(wlSentinel===s){wlSentinel=null;wlBtn.textContent='保持屏幕常亮';wlStatus.textContent='常亮已释放，可按需重新开启';}});
         wlBtn.textContent = '释放常亮';
         wlStatus.textContent = '屏幕常亮已开启（离开页面自动释放）';
       }).catch(function(e){ wlStatus.textContent = '常亮申请失败：' + String(e).slice(0, 40); });
     });
-    document.addEventListener('visibilitychange', function(){
-      if(document.visibilityState === 'visible' && wlSentinel){
-        navigator.wakeLock.request('screen').then(function(s){ wlSentinel = s; });
-      }
-    });
+
   })();
 
   /* ===== 47 Web Share ===== */
@@ -3777,12 +3850,12 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     var btn = document.getElementById('share-run');
     if(!status || !btn) return;
     btn.addEventListener('click', function(){
-      var data = { title: '前端交互实验室', text: '54 个可即开即用的前端交互 demo，带可复制提示词与代码。', url: location.href };
+      var data = { title: '前端交互实验室', text: '56 个可即开即用的前端交互 demo，带可复制提示词与代码。', url: location.href };
       function fallback(){
         var ta = document.createElement('textarea');
         ta.value = location.href; ta.style.position = 'fixed'; ta.style.opacity = '0';
         document.body.appendChild(ta); ta.select();
-        try{ document.execCommand('copy'); status.textContent = '当前环境无系统分享，已复制页面地址到剪贴板'; }
+        try{ if(!document.execCommand('copy')) throw new Error('Copy denied'); status.textContent = '当前环境无系统分享，已复制页面地址到剪贴板'; }
         catch(e2){ status.textContent = '分享不可用，也无法复制地址'; }
         document.body.removeChild(ta);
       }
@@ -3796,7 +3869,7 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     });
   })();
 
-  
+
   /* ===== v3.6 · 光随内容走 ===== */
   (function(){
     var ambient = document.querySelector('.ambient');
@@ -3856,47 +3929,39 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
 
   /* ===== 49 ⌘K 命令面板 ===== */
   (function(){
-    var cmdkMask = document.getElementById('cmdk-mask');
-    var cmdkInput = document.getElementById('cmdk-input');
-    var cmdkList = document.getElementById('cmdk-list');
-    var cmdkOpen = document.getElementById('cmdk-open');
-    var CMDS = ['新建文件', '搜索演示', '切换主题', '复制链接', '打开设置'];
-    var cmdkIdx = 0, cmdkHits = CMDS.slice();
-    /* 加载即填充：listbox 在空状态下违反 aria-required-children（需要 option 子节点） */
-    if(cmdkList) cmdkPaint();
-    /* 加载即填充：listbox 在空状态下违反 aria-required-children（需要 option 子节点） */
-    if(cmdkList) cmdkPaint();
-
-    function cmdkPaint(){
-      cmdkList.innerHTML = cmdkHits.map(function(t, i){
-        return '<li role="option" class="' + (i === cmdkIdx ? 'is-active' : '') + '" data-i="' + i + '">' + t + '</li>';
-      }).join('') || '<li>无匹配命令</li>';
+    var dialog = document.getElementById('cmdk-mask'), input = document.getElementById('cmdk-input'), list = document.getElementById('cmdk-list');
+    if(!dialog || !input || !list) return;
+    document.body.appendChild(dialog);
+    var commands = Array.from(document.querySelectorAll('.demo')).map(function(sec){ return {id:sec.id,title:sec.querySelector('h3').textContent}; });
+    var hits = commands.slice(), index = 0, opener = null;
+    function paint(){
+      list.replaceChildren(); input.removeAttribute('aria-activedescendant');
+      hits.forEach(function(cmd,i){
+        var li = document.createElement('li'); li.id = 'command-result-'+i; li.setAttribute('role','option'); li.setAttribute('aria-selected',String(i===index)); li.className = i===index ? 'is-active' : ''; li.textContent = cmd.id.slice(5)+' / '+cmd.title; li.dataset.i = i; list.appendChild(li);
+      });
+      document.getElementById('cmdk-empty').hidden = hits.length > 0;
+      if(hits[index]) { input.setAttribute('aria-activedescendant','command-result-'+index); list.children[index].scrollIntoView({block:'nearest'}); }
     }
-    function cmdkShow(){ cmdkMask.hidden = false; cmdkInput.value = ''; cmdkHits = CMDS.slice(); cmdkIdx = 0; cmdkPaint(); cmdkInput.focus(); }
-    function cmdkHide(){ cmdkMask.hidden = true; cmdkOpen && cmdkOpen.focus(); }
-
-    if(cmdkOpen) cmdkOpen.addEventListener('click', cmdkShow);
-    if(cmdkInput) cmdkInput.addEventListener('input', function(){
-      var q = cmdkInput.value.trim();
-      cmdkHits = CMDS.filter(function(t){ return !q || t.indexOf(q) !== -1; });
-      cmdkIdx = 0; cmdkPaint();
+    function show(){ opener = document.activeElement; input.value=''; hits=commands.slice(); index=0; paint(); if(!dialog.open) dialog.showModal(); input.focus(); }
+    function go(){
+      var cmd=hits[index]; if(!cmd) return;
+      var clear=document.querySelector('#filter-bar [data-cat="all"]');
+      var search=document.getElementById('search-input'); search.value=''; search.dispatchEvent(new Event('input',{bubbles:true}));
+      var all=Array.from(document.querySelectorAll('#filter-bar button')).find(function(b){return b.dataset.cat==='全部'||b.dataset.cat==='all'||b.textContent.startsWith('全部');}); if(all) all.click();
+      var sec=document.getElementById(cmd.id); opener=sec; dialog.close(); sec.scrollIntoView({behavior:'auto',block:'start'}); sec.tabIndex=-1; sec.focus({preventScroll:true}); history.replaceState(null,'','#'+cmd.id);
+    }
+    input.addEventListener('input',function(){ var q=input.value.trim().toLowerCase(); hits=commands.filter(function(c){return (c.title+' '+c.id).toLowerCase().includes(q);}); index=0; paint(); });
+    dialog.addEventListener('keydown',function(e){
+      if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){e.preventDefault(); index=e.key==='Home'?0:e.key==='End'?Math.max(0,hits.length-1):Math.max(0,Math.min(hits.length-1,index+(e.key==='ArrowDown'?1:-1))); paint();}
+      if(e.key==='Enter'){e.preventDefault();go();}
     });
-    document.addEventListener('keydown', function(e){
-      if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); cmdkShow(); return; }
-      if(cmdkMask.hidden) return;
-      if(e.key === 'Escape'){ cmdkHide(); }
-      else if(e.key === 'ArrowDown'){ e.preventDefault(); cmdkIdx = Math.min(cmdkIdx + 1, cmdkHits.length - 1); cmdkPaint(); }
-      else if(e.key === 'ArrowUp'){ e.preventDefault(); cmdkIdx = Math.max(cmdkIdx - 1, 0); cmdkPaint(); }
-      else if(e.key === 'Enter' && cmdkHits[cmdkIdx]){ showToast('success', '执行：' + cmdkHits[cmdkIdx]); cmdkHide(); }
-    });
-    if(cmdkList) cmdkList.addEventListener('click', function(e){
-      var li = e.target.closest('li[data-i]');
-      if(!li) return;
-      showToast('success', '执行：' + cmdkHits[+li.getAttribute('data-i')]);
-      cmdkHide();
-    });
+    list.addEventListener('click',function(e){ var li=e.target.closest('li[data-i]'); if(li){index=Number(li.dataset.i);go();} });
+    document.querySelectorAll('#cmdk-open,#lab-command-open').forEach(function(b){b.addEventListener('click',show);});
+    dialog.addEventListener('close',function(){if(opener && document.contains(opener)) opener.focus({preventScroll:true});});
+    document.getElementById('cmdk-close').addEventListener('click',function(){dialog.close();});
+    document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'&&!e.repeat){e.preventDefault();show();}});
+    paint();
   })();
-
   /* ===== 50 虚拟滚动（10 万行） ===== */
   (function(){
     var vsView = document.getElementById('vs-view');

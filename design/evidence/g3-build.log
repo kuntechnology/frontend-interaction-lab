@@ -1,0 +1,14 @@
+构建产物: dist/index.html
+  · 已内联 inject.html（0.1 KB）
+  · 已生成 robots.txt / sitemap.xml / 404.html
+  · title: 前端交互实验室 v3.8.0 · Frontend Interaction Lab
+  · Baseline 分布: widely 29 / newly 4 / limited 3 / na 20
+  · 代码切片覆盖: CSS 38/56 · JS 55/56
+  · demo 56 个 / 目录链接 56 个
+  · raw 296.7 KB / gzip 73.8 KB
+
+全部断言通过
+产物 dist/index.html
+  raw 296.7 KB / gzip 73.8 KB / demo 56 个
+
+产物校验通过

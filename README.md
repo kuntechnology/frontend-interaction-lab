@@ -1,148 +1,70 @@
 # 前端交互实验室 · Frontend Interaction Lab
 
-54 个可即开即用的前端交互演示：**22 原生 + 13 精选库 + 8 前沿框架 + 11 CSS 新特性 / 原生 API**。
+56 个可直接体验的前端交互演示，涵盖原生 CSS / JavaScript、动画与可视化库、组件框架及现代浏览器 API。每个演示提供说明、精简提示词和代码片段复制。库与框架演示需要联网，原生演示不依赖 CDN；Baseline 徽标只用于适用的 Web 平台特性。
 
-每个演示都有：可交互的 stage、一条 Baseline 支持度标注、可直接复制的精简提示词，以及可复制的源码（HTML + CSS + JS）。
+**在线访问：** https://kuntechnology.github.io/frontend-interaction-lab/
 
-🌐 **在线访问：** https://kuntechnology.github.io/frontend-interaction-lab/
+## v3.8：更清晰的入口，更完整的操作路径
 
----
+保留 v3.7 的全部 54 个演示，增加 **55 可撤销列表操作**和 **56 可调整分栏**。前者支持连续实际移除、逐步精确撤销和重置，没有自动消失时限；后者支持 15%–85% 原生 range、左右按钮、键盘与触屏操作。
 
-## 一、为什么改成了静态构建
+新的编辑式外壳提供真实演示索引、搜索、分类、全局命令导航和显示偏好。明暗主题、四种强调色和 URL 筛选继续保留；减少动效可跟随系统或手动开启。拖拽列表增加上/下移动，锚点增加方向键与 Home，手势和 3D 增加按钮替代，Tab / Accordion 状态与无障碍语义同步。命令面板使用原生 dialog，实际跳转到所选演示，而不是假装执行未实现的命令。
 
-改造前，这个站是 **97 个 2000 字符硬切片 + 运行时 `document.write` 合并**：首屏要发 98 个请求（97 片 + inject.html），每片 `cache:'no-store'`，最后由 `document.open()/write()` 把整页重写一遍。
+RxJS 查询结果使用文本节点渲染；历史 `parts/89.html` 同一问题已同步修补。复制拒绝和旧式复制返回 false 不会被报告为成功。依赖失败仅影响对应演示，提供局部重试；异步模块也进入容错路径。本版本不再请求访问统计或生成访客标识；此前的本地匿名标识仅被清理，不向外发送。
 
-实测（8 并发取完 97 片）耗时 8.1 秒，期间只有一个转圈；爬虫拿到的只有「加载中」三个字。
+## 静态直出，而不是运行时拼接
 
-现在产物是**一份静态 HTML**：1 个请求，`gzip` 后 62.6 KB，无 JS 也能读到全部 54 个演示，搜索引擎可索引。
+站点发布一份自包含 HTML，正文不再等待 97 个分片全部返回，不使用 `document.write`、分片 `fetch` 或 `cache:'no-store'`。关闭 JavaScript 后仍可阅读全部说明和提示词、使用目录锚点；运行交互需要启用 JavaScript。
 
-| 指标 | 改造前 | 改造后 |
-|---|---|---|
-| 首屏 HTML 请求 | 99（1 外壳 + 97 分片 + 1 inject） | **1** |
-| 首次可读内容 | 4–8 秒后 | 立即可读 |
-| 无 JS 用户 | 永久转圈 | 完整可读 |
-| 可被搜索引擎索引 | 否（只有「加载中」外壳） | 是 |
-| robots / sitemap / 404 | 全部 404 | 随产物生成 |
-| 构建期断言 | 0 | 14 项 |
+`node tools/build.mjs` 同时生成 `dist/index.html` 与仓库根 `index.html`，两者字节一致。根入口也已替换，不再保留会空白的旧加载器。Pages 仍只上传 `dist/`，并包含 robots、sitemap、404 和 `.nojekyll`。
 
----
+## 编辑位置与构建
 
-## 二、目录结构
-
+```text
+src/lab.html             全部56项演示、正式外壳和原有交互的唯一HTML编辑源
+src/shell.html           静态首屏门禁原型输入；非另一份正式演示源
+assets/lab.css          正式壳层与等价操作样式
+assets/lab.js           按功能独立初始化的渐进增强
+assets/modern.css/js    55/56 的编号样式和行为片段
+design/tokens.css      签封设计令牌
+inject.html            仅清理旧本地标识，构建时内联
+tools/build.mjs        内联本地资产、生成产物、运行17组断言
+tools/verify.mjs       独立校验产物字节与56项计数
+tools/contrast.mjs     原有明/暗×四强调色的令牌对比度断言
+tests/                 浏览器回归、安全、键盘与触屏验证
+dist/                  构建产物，Git忽略，由CI生成
+parts/                 历史归档，不参与构建
 ```
-frontend-interaction-lab/
-├── src/lab.html            # ★ 唯一人工编辑源（改内容只改这里）
-├── inject.html             # 返回主页按钮 + 自建 PV/UV 上报，构建时内联
-├── tools/
-│   ├── build.mjs           # src → dist：内联 inject + 生成 robots/sitemap/404 + 14 项断言
-│   ├── verify.mjs          # 独立校验 dist 那份字节（不复用构建的中间变量）
-│   └── deps.snapshot.json  # 产物允许出现的 29 个外部 URL 白名单
-├── dist/                   # 构建产物，git 忽略，CI 里生成
-├── parts/                  # 历史分片，已冻结为存档，不参与构建
-├── .github/workflows/
-│   └── deploy.yml          # 构建 + 校验 → 只上传 dist/
-└── index.html              # 旧外壳，保留作回滚兜底，不参与构建
-```
-
-**为什么 `src/lab.html` 而不是继续改 `parts/`**：97 个分片是按 2000 字符硬切的（不是旧 README 写的 18000），96 个切点里 45 个落在标签或属性中间、33 个在 `<script>` 内、27 个在 `<style>` 内。在这种切法上做任何横切改动，都会变成 97 个文件全 diff，且极易把 `</style>` 切错片。
-
-`parts/` 仍在仓库里可查，只是不再作为构建输入。
-
----
-
-## 三、本地开发
 
 ```bash
-node tools/build.mjs                  # 构建 dist/
-node tools/verify.mjs                 # 校验产物
-python3 -m http.server -d dist 8097   # 本地预览
+node tools/build.mjs
+node tools/verify.mjs
+node tools/contrast.mjs
+python3 -m http.server 8873 --directory .
+# 浏览 http://localhost:8873/dist/
 ```
 
-无第三方依赖、无 `npm install`、无打包器。
+构建只使用 Node 内置模块，无需 `npm install`。不要再以硬切分片作为编辑源；切点会落在标签、脚本和样式中间。设计文档及令牌的签封可用 `sha256sum -c design/freeze.sha256` 核对。
 
----
+## 校验与体积约束
 
-## 四、构建期断言
+构建检查文档/标签平衡、唯一 ID、演示连续编号、56项完整结构、目录双向对应、合法 Baseline、外部 URL 白名单、静态直出、代码切片标记和色彩约束。任一失败使 CI 失败，不上传 Pages。原有 **raw ≤300 KB、gzip -9 ≤75 KB** 预算保持不变，没有新增生产依赖。
 
-`tools/build.mjs` 任一失败即 `exit 1`，CI 里构建失败就不会发布：
+代码复制从当前文档的全部内联 style/script 中按 `/* ===== NN` 切片，不内嵌第二份代码 JSON。55/56 的 CSS/JS 标记单独受断言保护。复制结果是片段：公共样式、辅助逻辑、第三方库或特定运行环境可能仍需引入，提示不会保证粘贴后即可独立运行。
 
-| 编号 | 断言 |
-|---|---|
-| A1 | 以 doctype 开头，`</html>` 在文件末尾 |
-| A2 | `html` / `head` / `body` 各恰好 1 次 |
-| A3 | `style` / `script` / `section` / `main` / `footer` 开闭平衡 |
-| A4 | `title` 非空且不含「加载中」 |
-| A5 | `meta description` 长度 40–220 |
-| A6 | demo 数 = `DEMO_TOTAL` 且编号连续 |
-| A7 | 全文档 id 无重复 |
-| A8 | 每个 demo 都有 `.demo-head` / `h3` / `.stage` / `.prompt` |
-| A9 | 目录链接与 demo 锚点双向对应 |
-| A10 | `data-baseline` 取值合法，徽标数 = 演示数 − na 数 |
-| A11 | 外部 URL 与 `deps.snapshot.json` 完全一致（防静默引入 CDN） |
-| A12 | 产物无 `parts/` 引用、无 `document.write` |
-| A13 | 体积预算：raw ≤ 300KB，gzip ≤ 75KB |
-| A14 | 「复制代码」可切片覆盖：CSS ≥ 29、JS ≥ 46 |
-| A15 | `--ink-3` 不得作文字色（仅装饰），留 `a11y-allow:ink3-text` 逃生口 |
-| A16 | 不得有硬编码橙色实色底（不透明度 ≥0.5），须用 `--accent-btn` |
-| A17 | 实心填充类选择器不得再用 `var(--accent)` 作背景 |
+开发验证使用 Python Playwright、系统 Chromium 和 Beautiful Soup（仅测试工具，不随网站发布）：
 
-新增演示时只需改 `src/lab.html`，并把 `tools/build.mjs` 的 `DEMO_TOTAL` 加一——A6 会在忘记时直接报错并指出改哪。
+```bash
+python3 tests/regression.py
+python3 tests/robustness.py
+```
 
----
+脚本默认本地端口 8873。验证记录位于 `design/evidence/`，应阅读每项结果及 degraded / 权限限制，不只看总数。不同浏览器、辅助技术和设备的支持不能由一次 Chromium 回归推断；当前不声称已经完成 Safari / Firefox 或真实屏幕阅读器认证。减少动效会停止 CSS 动画/过渡并减轻部分原生循环，不代表所有第三方 GPU 渲染器都已优化。
 
-## 五、几个设计取舍
+`tools/contrast.mjs` 是显式令牌配对检查，不是整页无障碍合规证明；浏览器测试仍需验证实际颜色、焦点、键盘、触屏和权限拒绝。前沿 API 的不支持状态须有可理解的说明，不应伪称所有平台可用。
 
-**Baseline 标注**：一半演示用的是 `scroll-timeline`、`Anchor Positioning`、`View Transitions` 这类前沿特性，读者复制走了才发现不支持。现在按 Web Platform Baseline 逐条标注（widely 27 / newly 4 / limited 3 / na 20）。库与框架类演示不适用 Baseline，不渲染徽标——渲染成「未知」只是噪音。徽标文字统一用 `--ink`，颜色只放在左侧圆点上，因为实测 `--ink-3` 在页面底上只有 2.65:1。
+## 历史版本
 
-**筛选只有一个显示真源**：库里原本躺着一条从未被使用的 `body.is-filtering .demo:not(.is-match){display:none}`，而搜索是直接写 `style.display` 的。现在搜索与分类筛选共用 `paint()`，显示与否完全由 CSS 决定，JS 只切类。分类从左侧目录的 `.rail-cat` / `.rail-link` 派生——目录即分类，不维护第二份映射。
+v3.7：47→54 个演示；加入原生 dialog/Popover、命令面板、虚拟滚动、对比滑块、上传预览、Scroll Snap 和 @property；引入 Baseline、分类/URL 筛选、代码复制、静态构建、SEO 产物及多主题对比度检查。
 
-**「复制代码」零额外体积**：没有在构建期把 54 段代码塞进 JSON（那要多背 100KB），而是点击时从当前文档的 `style` / `script` 里按 `/* ===== NN` 注释切段。代价是部分演示的 CSS 写在公共样式表里、切不出来（CSS 可切片 36/54、JS 53/54）——这种情况下 toast 会明说「已复制 HTML + JS（样式依赖页面公共样式表）」，不暗示能独立运行。
-
-**外部依赖仍是 jsdelivr 单源**：20 个库按需懒加载（进入视口 420px 才注入），CDN 失败有兜底提示。若要换成多源或自托管，改 `LIBS` 表即可，但记得同步 `deps.snapshot.json`，否则 A11 会拦住。
-
----
-
-## 六、色彩令牌与对比度
-
-浅色主题原本有 180 处（真实值 251 处）对比度不达标，暗色为 0——因为默认主题是暗色，这个问题长期没被看到。现在两套主题 × 四套强调色盘（orange/cyan/violet/lime）全部 0 违规。
-
-### 令牌分工
-
-| 令牌 | 用途 | 约束 |
-|---|---|---|
-| `--ink` / `--ink-2` | 正文 / 次要文字 | ≥4.5:1 on bg / panel / accent-soft |
-| `--ink-3` | **仅装饰**（分隔线、圆点、指示点） | 不作文字色，由 A15 静态断言守住 |
-| `--accent` | 边框、装饰、光晕 | **不作白字底**（#EE5B1F 上白字仅 3.41） |
-| `--accent-deep` | 强调文字、焦点环 | ≥4.5:1；焦点环另需 ≥3:1 |
-| `--accent-btn` / `-hover` / `-ink` | 实色按钮底与其文字 | 文字 ≥4.5:1，填充与背景 ≥3:1 |
-| `--ok/err/warn-btn` + `-ink` | 语义按钮 | 同上；琥珀色用深墨字（白字永远到不了 4.5） |
-| `--code-ink` / `--code-ink-2` | 深色代码面板内的文字 | 浅色面令牌**不得**用在这里 |
-
-### 为什么必须有 `tools/contrast.mjs`
-
-axe 对「渐变背景 / 半透明叠色」上的文字只报 **incomplete（needs review）**，不报 violation。实测被 axe 完全放过的有：`.btn-primary` 玻璃叠白底 **3.90**、`.toast-trigger` 三态 **2.54 / 2.17 / 3.19**、`.e4` 白字 **3.39**、`.s1` 渐变最亮停靠点 **1.94**。
-
-所以本仓库的判定标准是：**`tools/contrast.mjs` 全绿是充分条件，axe 归零只是必要条件**。前者遍历明/暗 × 四盘共 8 个上下文，断言正文、强调文字、代码面板、实色按钮文字（4.5:1）与按钮轮廓（3:1）。
-
-三条静态断言（A15–A17）负责防回滚：不许把 `--ink-3` 当文字色、不许硬编码橙色实色底、实心填充类选择器不许再用 `--accent`。A15 留了 `/* a11y-allow:ink3-text */` 逃生口，命中时会在构建输出里以 `⚠ 允许项` 列出。
-
-`body::before` 那层 4% 噪点会让 axe 对整页背景弃权（约 300 条 incomplete）。这是工具局限，不是缺陷；实测关掉噪点层后 violations 仍为 0。
-
----
-
-## 七、更新记录
-
-### v3.7.0
-- 新增 7 个演示（47 → 54）：原生 dialog + Popover、⌘K 命令面板、虚拟滚动 10 万行、前后对比滑块、拖拽上传预览、Scroll Snap 吸附、`@property` 色阶
-- 每个演示加 Baseline 支持度徽标与图例
-- 新增分类筛选条，与搜索合并为单一显示真源，筛选状态写入 URL
-- 每个演示可复制自身代码（HTML + CSS + JS），覆盖率纳入断言
-- 交付方式重构：静态构建 + 14 项断言 + 只上传 dist/，首屏请求 99 → 1
-- 新增 robots.txt / sitemap.xml / 404.html
-- **浅色主题对比度从 251 处修到 0**（明/暗 × 四盘共 8 个上下文）：`--ink-3` 退出文字体系、四盘 `--accent-deep` 压深、新增 `--accent-btn` 与语义按钮令牌、白字实色底去玻璃叠色、渐变幻灯片改深墨字
-- 新增 `tools/contrast.mjs`（8 上下文断言矩阵）与 A15–A17 三条静态检查，接入部署流程
-- 修复 demo 42–47 样式从不生效（规则写在 tailwindcss 类型样式块里）、命令面板遮罩常显、listbox 空状态违反 aria
-- 无障碍：Swiper 箭头改真 button、可滚动区域补 tabindex、暗色下 ghost 按钮对比度
-
-### v3.6.0
-- 单文件源页面按 2000 字符切片存放于 `parts/`，运行时合并渲染
+v3.6：原单文件按 2000 字符切分为 `parts/`，在浏览器运行时合并；现只保留归档用于历史追溯。

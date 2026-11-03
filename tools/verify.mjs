@@ -45,7 +45,7 @@ check('无 fetch 分片', !/fetchBuf\(|fetch\('parts/.test(html));
 
 // 4 内容完整（这是本次改造的核心收益：无 JS 也能读到全部内容）
 const demos = new Set([...html.matchAll(/id="demo-(\d{2})"/g)].map((m) => m[1])).size;
-check('demo 数量 ≥ 54', demos >= 54, `实际 ${demos}`);
+check('demo 数量 = 56', demos === 56, `实际 ${demos}`);
 check('有正文标题层级', count(/<h3>/g) >= demos, `h3 ${count(/<h3>/g)} 个 / demo ${demos} 个`);
 check('有 noscript 或静态正文', /<section class="demo"/.test(html));
 

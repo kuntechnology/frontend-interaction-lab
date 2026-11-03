@@ -1,0 +1,67 @@
+[
+  {
+    "viewport": [
+      1440,
+      1000
+    ],
+    "missing_anchors": [],
+    "overflow": false,
+    "console_errors": [],
+    "skip_link_focus": true,
+    "main_focus": true,
+    "min_nav_height": 44,
+    "heading_valid": true
+  },
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "missing_anchors": [],
+    "overflow": false,
+    "console_errors": [],
+    "skip_link_focus": true,
+    "main_focus": true,
+    "min_nav_height": 44,
+    "heading_valid": true
+  },
+  {
+    "viewport": [
+      320,
+      844
+    ],
+    "missing_anchors": [],
+    "overflow": false,
+    "console_errors": [],
+    "skip_link_focus": true,
+    "main_focus": true,
+    "min_nav_height": 44,
+    "heading_valid": true
+  },
+  {
+    "viewport": [
+      768,
+      1024
+    ],
+    "missing_anchors": [],
+    "overflow": false,
+    "console_errors": [],
+    "skip_link_focus": true,
+    "main_focus": true,
+    "min_nav_height": 44,
+    "heading_valid": true
+  },
+  {
+    "viewport": [
+      1024,
+      768
+    ],
+    "missing_anchors": [],
+    "overflow": false,
+    "console_errors": [],
+    "skip_link_focus": true,
+    "main_focus": true,
+    "min_nav_height": 44,
+    "heading_valid": true
+  }
+]

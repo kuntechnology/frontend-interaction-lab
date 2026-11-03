@@ -1,0 +1,98 @@
+{
+  "results": [
+    {
+      "test": "static-and-syntax",
+      "status": "pass",
+      "detail": "root/dist byte-identical; all inline scripts parse; no runtime parts; archived search sink fixed"
+    },
+    {
+      "test": "no-javascript",
+      "status": "pass",
+      "detail": "56 descriptions/prompts and 56 links visible without JavaScript"
+    },
+    {
+      "test": "responsive-and-skip-link",
+      "status": "pass",
+      "detail": [
+        {
+          "width": 1440,
+          "themes": [
+            "dark",
+            "light"
+          ],
+          "overflow": false
+        },
+        {
+          "width": 1024,
+          "themes": [
+            "dark",
+            "light"
+          ],
+          "overflow": false
+        },
+        {
+          "width": 768,
+          "themes": [
+            "dark",
+            "light"
+          ],
+          "overflow": false
+        },
+        {
+          "width": 390,
+          "themes": [
+            "dark",
+            "light"
+          ],
+          "overflow": false
+        },
+        {
+          "width": 320,
+          "themes": [
+            "dark",
+            "light"
+          ],
+          "overflow": false
+        }
+      ]
+    },
+    {
+      "test": "keyboard-core-workflows",
+      "status": "pass",
+      "detail": "sort + boundaries/live status; tabs Home/End; accordion; anchor; native modal Escape/focus; real command navigation clears filters"
+    },
+    {
+      "test": "undo-and-split-keyboard",
+      "status": "pass",
+      "detail": "3 consecutive removals precisely reversed; reset; range Home/End 15/85 + disabled boundaries + real grid 50/50"
+    },
+    {
+      "test": "clipboard-and-storage-denied",
+      "status": "pass",
+      "detail": "clipboard write/read and execCommand false are visible failures; denied storage does not stop native interactions"
+    },
+    {
+      "test": "all-external-dependencies-fail",
+      "status": "pass",
+      "detail": "all external origins blocked: native demos remain usable, failed library exposes local retry; no uncaught exception"
+    },
+    {
+      "test": "user-input-xss",
+      "status": "pass",
+      "detail": "img/onerror, svg/onload and quote/tag payloads remain literal text; no injected nodes or executed marker"
+    },
+    {
+      "test": "real-touch-workflows",
+      "status": "pass",
+      "detail": "trusted touch: sorting, undo, split button/range, comparison, popover light-dismiss, canvas pixels changed; outside-canvas gesture scrolls page"
+    },
+    {
+      "test": "reduced-motion",
+      "status": "pass",
+      "detail": "system reduced-motion media and persisted manual CSS/transition reduction respected; no claim of full third-party GPU optimization"
+    }
+  ],
+  "passed": 10,
+  "total": 10,
+  "all_pass": true
+}

@@ -1,0 +1,274 @@
+{
+  "results": [
+    {
+      "test": "real-cdn-retry-recovery",
+      "status": "pass",
+      "detail": "first actual GSAP request blocked, explicit retry fetched real CDN chain; initialized once and removed error notice"
+    },
+    {
+      "test": "real-code-and-prompt-copy",
+      "status": "pass",
+      "detail": "actual clipboard contains CSS+JS for 55/56, real native dialog markup for 49, correct prompt text"
+    },
+    {
+      "test": "filter-url-roundtrip",
+      "status": "pass",
+      "detail": {
+        "filtered_url": "http://127.0.0.1:8873/dist/?cat=%E5%B7%A5%E4%BD%9C%E6%B5%81&q=%E5%8F%AF%E6%92%A4%E9%94%80",
+        "restored_demo": "55",
+        "cleared_count": 56
+      }
+    },
+    {
+      "test": "shell-actual-eight-theme-contrast",
+      "status": "pass",
+      "detail": [
+        {
+          "theme": "dark",
+          "accent": "orange",
+          "ratios": [
+            {
+              "selector": ".lead",
+              "ratio": 9.2
+            },
+            {
+              "selector": ".lab-facts",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-brand small",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-category-foot",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-primary",
+              "ratio": 6.89
+            }
+          ]
+        },
+        {
+          "theme": "dark",
+          "accent": "cyan",
+          "ratios": [
+            {
+              "selector": ".lead",
+              "ratio": 9.2
+            },
+            {
+              "selector": ".lab-facts",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-brand small",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-category-foot",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-primary",
+              "ratio": 12.89
+            }
+          ]
+        },
+        {
+          "theme": "dark",
+          "accent": "violet",
+          "ratios": [
+            {
+              "selector": ".lead",
+              "ratio": 9.2
+            },
+            {
+              "selector": ".lab-facts",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-brand small",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-category-foot",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-primary",
+              "ratio": 10.12
+            }
+          ]
+        },
+        {
+          "theme": "dark",
+          "accent": "lime",
+          "ratios": [
+            {
+              "selector": ".lead",
+              "ratio": 9.2
+            },
+            {
+              "selector": ".lab-facts",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-brand small",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-category-foot",
+              "ratio": 6.18
+            },
+            {
+              "selector": ".lab-primary",
+              "ratio": 13.31
+            }
+          ]
+        },
+        {
+          "theme": "light",
+          "accent": "orange",
+          "ratios": [
+            {
+              "selector": ".lead",
+              "ratio": 6.48
+            },
+            {
+              "selector": ".lab-facts",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-brand small",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-category-foot",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-primary",
+              "ratio": 5.41
+            }
+          ]
+        },
+        {
+          "theme": "light",
+          "accent": "cyan",
+          "ratios": [
+            {
+              "selector": ".lead",
+              "ratio": 6.48
+            },
+            {
+              "selector": ".lab-facts",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-brand small",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-category-foot",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-primary",
+              "ratio": 5.08
+            }
+          ]
+        },
+        {
+          "theme": "light",
+          "accent": "violet",
+          "ratios": [
+            {
+              "selector": ".lead",
+              "ratio": 6.48
+            },
+            {
+              "selector": ".lab-facts",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-brand small",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-category-foot",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-primary",
+              "ratio": 6.41
+            }
+          ]
+        },
+        {
+          "theme": "light",
+          "accent": "lime",
+          "ratios": [
+            {
+              "selector": ".lead",
+              "ratio": 6.48
+            },
+            {
+              "selector": ".lab-facts",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-brand small",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-category-foot",
+              "ratio": 4.72
+            },
+            {
+              "selector": ".lab-primary",
+              "ratio": 4.97
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "test": "navigation-touch-targets",
+      "status": "pass",
+      "detail": [
+        {
+          "width": 1440,
+          "minimum_height": 44
+        },
+        {
+          "width": 390,
+          "minimum_height": 44
+        },
+        {
+          "width": 320,
+          "minimum_height": 44
+        }
+      ]
+    },
+    {
+      "test": "local-image-preview",
+      "status": "pass",
+      "detail": "one-pixel local fixture decodes from a blob URL; no remote upload endpoint used"
+    },
+    {
+      "test": "wake-lock-capability-and-denial",
+      "status": "pass",
+      "detail": {
+        "native_outcome": "屏幕常亮已开启（离开页面自动释放）",
+        "forced_permission_denial": "visible failure, no uncaught error"
+      }
+    },
+    {
+      "test": "no-visitor-tracking-or-stats-request",
+      "status": "pass",
+      "detail": "no tracking origin or poll in production; pre-existing test identifier removed locally; zero stats requests observed"
+    }
+  ],
+  "all_pass": true
+}

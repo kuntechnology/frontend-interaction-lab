@@ -1,0 +1,221 @@
+
+[light/orange]  bg #F5F3EE
+  断言                          前景      背景      比值   判定
+  ink × bg                       #211E1A  #F5F3EE  14.97   ✓
+  ink × panel                    #211E1A  #FFFFFF  16.60   ✓
+  ink-2 × bg                     #6B6558  #F5F3EE   5.22   ✓
+  ink-2 × panel                  #6B6558  #FFFFFF   5.79   ✓
+  ink-2 × accent-soft            #6B6558  #FBE4D4   4.73   ✓
+  ink-2 × #ECE8DD                #6B6558  #ECE8DD   4.73   ✓
+  ink-2 × #EFEBE0                #6B6558  #EFEBE0   4.86   ✓
+  accent-deep × bg               #B04317  #F5F3EE   5.17   ✓
+  accent-deep × panel            #B04317  #FFFFFF   5.74   ✓
+  accent-deep × accent-soft      #B04317  #FBE4D4   4.68   ✓
+  accent-deep × #EFEBE0          #B04317  #EFEBE0   4.82   ✓
+  code-ink × code-bg             #F5F3EE  #211E1A  14.97   ✓
+  code-ink-2 × code-bg           #B9B3A6  #211E1A   7.95   ✓
+  ok × code-bg                   #2F9E63  #211E1A   4.89   ✓
+  accent-btn-ink × accent-btn    #FFFFFF  #C4491A   4.87   ✓
+  accent-btn-ink × accent-btn-hover #FFFFFF  #A63B0D   6.46   ✓
+  ok-btn-ink × ok-btn            #FFFFFF  #24804F   4.91   ✓
+  err-btn-ink × err-btn          #FFFFFF  #B83B3B   5.63   ✓
+  warn-btn-ink × warn-btn        #211E1A  #D98A2B   6.02   ✓
+  accent-btn × bg                #C4491A  #F5F3EE   4.39   ✓
+  accent-btn × panel             #C4491A  #FFFFFF   4.87   ✓
+  accent-btn-hover × bg          #A63B0D  #F5F3EE   5.82   ✓
+  ok-btn × bg                    #24804F  #F5F3EE   4.43   · 仅提示
+  err-btn × bg                   #B83B3B  #F5F3EE   5.08   · 仅提示
+  warn-btn × bg                  #D98A2B  #F5F3EE   2.49   · 仅提示
+
+[light/cyan]  bg #F5F3EE
+  断言                          前景      背景      比值   判定
+  ink × bg                       #211E1A  #F5F3EE  14.97   ✓
+  ink × panel                    #211E1A  #FFFFFF  16.60   ✓
+  ink-2 × bg                     #6B6558  #F5F3EE   5.22   ✓
+  ink-2 × panel                  #6B6558  #FFFFFF   5.79   ✓
+  ink-2 × accent-soft            #6B6558  #DBF1FB   4.96   ✓
+  ink-2 × #ECE8DD                #6B6558  #ECE8DD   4.73   ✓
+  ink-2 × #EFEBE0                #6B6558  #EFEBE0   4.86   ✓
+  accent-deep × bg               #0A6F96  #F5F3EE   5.08   ✓
+  accent-deep × panel            #0A6F96  #FFFFFF   5.63   ✓
+  accent-deep × accent-soft      #0A6F96  #DBF1FB   4.83   ✓
+  accent-deep × #EFEBE0          #0A6F96  #EFEBE0   4.73   ✓
+  code-ink × code-bg             #F5F3EE  #211E1A  14.97   ✓
+  code-ink-2 × code-bg           #B9B3A6  #211E1A   7.95   ✓
+  ok × code-bg                   #2F9E63  #211E1A   4.89   ✓
+  accent-btn-ink × accent-btn    #FFFFFF  #0B79A3   4.91   ✓
+  accent-btn-ink × accent-btn-hover #FFFFFF  #085F80   7.10   ✓
+  ok-btn-ink × ok-btn            #FFFFFF  #24804F   4.91   ✓
+  err-btn-ink × err-btn          #FFFFFF  #B83B3B   5.63   ✓
+  warn-btn-ink × warn-btn        #211E1A  #D98A2B   6.02   ✓
+  accent-btn × bg                #0B79A3  #F5F3EE   4.43   ✓
+  accent-btn × panel             #0B79A3  #FFFFFF   4.91   ✓
+  accent-btn-hover × bg          #085F80  #F5F3EE   6.40   ✓
+  ok-btn × bg                    #24804F  #F5F3EE   4.43   · 仅提示
+  err-btn × bg                   #B83B3B  #F5F3EE   5.08   · 仅提示
+  warn-btn × bg                  #D98A2B  #F5F3EE   2.49   · 仅提示
+
+[light/violet]  bg #F5F3EE
+  断言                          前景      背景      比值   判定
+  ink × bg                       #211E1A  #F5F3EE  14.97   ✓
+  ink × panel                    #211E1A  #FFFFFF  16.60   ✓
+  ink-2 × bg                     #6B6558  #F5F3EE   5.22   ✓
+  ink-2 × panel                  #6B6558  #FFFFFF   5.79   ✓
+  ink-2 × accent-soft            #6B6558  #EDE5FD   4.75   ✓
+  ink-2 × #ECE8DD                #6B6558  #ECE8DD   4.73   ✓
+  ink-2 × #EFEBE0                #6B6558  #EFEBE0   4.86   ✓
+  accent-deep × bg               #6D28D9  #F5F3EE   6.41   ✓
+  accent-deep × panel            #6D28D9  #FFFFFF   7.10   ✓
+  accent-deep × accent-soft      #6D28D9  #EDE5FD   5.83   ✓
+  accent-deep × #EFEBE0          #6D28D9  #EFEBE0   5.96   ✓
+  code-ink × code-bg             #F5F3EE  #211E1A  14.97   ✓
+  code-ink-2 × code-bg           #B9B3A6  #211E1A   7.95   ✓
+  ok × code-bg                   #2F9E63  #211E1A   4.89   ✓
+  accent-btn-ink × accent-btn    #FFFFFF  #7C3AED   5.70   ✓
+  accent-btn-ink × accent-btn-hover #FFFFFF  #6D28D9   7.10   ✓
+  ok-btn-ink × ok-btn            #FFFFFF  #24804F   4.91   ✓
+  err-btn-ink × err-btn          #FFFFFF  #B83B3B   5.63   ✓
+  warn-btn-ink × warn-btn        #211E1A  #D98A2B   6.02   ✓
+  accent-btn × bg                #7C3AED  #F5F3EE   5.14   ✓
+  accent-btn × panel             #7C3AED  #FFFFFF   5.70   ✓
+  accent-btn-hover × bg          #6D28D9  #F5F3EE   6.41   ✓
+  ok-btn × bg                    #24804F  #F5F3EE   4.43   · 仅提示
+  err-btn × bg                   #B83B3B  #F5F3EE   5.08   · 仅提示
+  warn-btn × bg                  #D98A2B  #F5F3EE   2.49   · 仅提示
+
+[light/lime]  bg #F5F3EE
+  断言                          前景      背景      比值   判定
+  ink × bg                       #211E1A  #F5F3EE  14.97   ✓
+  ink × panel                    #211E1A  #FFFFFF  16.60   ✓
+  ink-2 × bg                     #6B6558  #F5F3EE   5.22   ✓
+  ink-2 × panel                  #6B6558  #FFFFFF   5.79   ✓
+  ink-2 × accent-soft            #6B6558  #DCFCE7   5.27   ✓
+  ink-2 × #ECE8DD                #6B6558  #ECE8DD   4.73   ✓
+  ink-2 × #EFEBE0                #6B6558  #EFEBE0   4.86   ✓
+  accent-deep × bg               #107937  #F5F3EE   4.97   ✓
+  accent-deep × panel            #107937  #FFFFFF   5.51   ✓
+  accent-deep × accent-soft      #107937  #DCFCE7   5.02   ✓
+  accent-deep × #EFEBE0          #107937  #EFEBE0   4.62   ✓
+  code-ink × code-bg             #F5F3EE  #211E1A  14.97   ✓
+  code-ink-2 × code-bg           #B9B3A6  #211E1A   7.95   ✓
+  ok × code-bg                   #2F9E63  #211E1A   4.89   ✓
+  accent-btn-ink × accent-btn    #FFFFFF  #117C38   5.30   ✓
+  accent-btn-ink × accent-btn-hover #FFFFFF  #0C5A29   8.37   ✓
+  ok-btn-ink × ok-btn            #FFFFFF  #24804F   4.91   ✓
+  err-btn-ink × err-btn          #FFFFFF  #B83B3B   5.63   ✓
+  warn-btn-ink × warn-btn        #211E1A  #D98A2B   6.02   ✓
+  accent-btn × bg                #117C38  #F5F3EE   4.78   ✓
+  accent-btn × panel             #117C38  #FFFFFF   5.30   ✓
+  accent-btn-hover × bg          #0C5A29  #F5F3EE   7.54   ✓
+  ok-btn × bg                    #24804F  #F5F3EE   4.43   · 仅提示
+  err-btn × bg                   #B83B3B  #F5F3EE   5.08   · 仅提示
+  warn-btn × bg                  #D98A2B  #F5F3EE   2.49   · 仅提示
+
+[dark/orange]  bg #141210
+  断言                          前景      背景      比值   判定
+  ink × bg                       #F2EFE8  #141210  16.27   ✓
+  ink × panel                    #F2EFE8  #1A1814  15.47   ✓
+  ink-2 × bg                     #B7B0A3  #141210   8.68   ✓
+  ink-2 × panel                  #B7B0A3  #1A1814   8.25   ✓
+  ink-2 × accent-soft            #B7B0A3  #3A2014   6.99   ✓
+  accent-deep × bg               #FF8A55  #141210   8.03   ✓
+  accent-deep × panel            #FF8A55  #1A1814   7.63   ✓
+  accent-deep × accent-soft      #FF8A55  #3A2014   6.46   ✓
+  code-ink × code-bg             #F2EFE8  #0F0D0C  16.89   ✓
+  code-ink-2 × code-bg           #A49E92  #0F0D0C   7.28   ✓
+  ok × code-bg                   #3EC57C  #0F0D0C   8.76   ✓
+  accent-btn-ink × accent-btn    #FFFFFF  #C4491A   4.87   ✓
+  accent-btn-ink × accent-btn-hover #FFFFFF  #C4491A   4.87   ✓
+  ok-btn-ink × ok-btn            #FFFFFF  #24804F   4.91   ✓
+  err-btn-ink × err-btn          #FFFFFF  #B83B3B   5.63   ✓
+  warn-btn-ink × warn-btn        #211E1A  #D98A2B   6.02   ✓
+  accent-btn × bg                #C4491A  #141210   3.84   ✓
+  accent-btn × panel             #C4491A  #1A1814   3.65   ✓
+  accent-btn-hover × bg          #C4491A  #141210   3.84   ✓
+  ok-btn × bg                    #24804F  #141210   3.80   · 仅提示
+  err-btn × bg                   #B83B3B  #141210   3.32   · 仅提示
+  warn-btn × bg                  #D98A2B  #141210   6.78   · 仅提示
+
+[dark/cyan]  bg #141210
+  断言                          前景      背景      比值   判定
+  ink × bg                       #F2EFE8  #141210  16.27   ✓
+  ink × panel                    #F2EFE8  #1A1814  15.47   ✓
+  ink-2 × bg                     #B7B0A3  #141210   8.68   ✓
+  ink-2 × panel                  #B7B0A3  #1A1814   8.25   ✓
+  ink-2 × accent-soft            #B7B0A3  #163134   6.41   ✓
+  accent-deep × bg               #67E8F9  #141210  12.89   ✓
+  accent-deep × panel            #67E8F9  #1A1814  12.26   ✓
+  accent-deep × accent-soft      #67E8F9  #163134   9.53   ✓
+  code-ink × code-bg             #F2EFE8  #0F0D0C  16.89   ✓
+  code-ink-2 × code-bg           #A49E92  #0F0D0C   7.28   ✓
+  ok × code-bg                   #3EC57C  #0F0D0C   8.76   ✓
+  accent-btn-ink × accent-btn    #FFFFFF  #0B79A3   4.91   ✓
+  accent-btn-ink × accent-btn-hover #FFFFFF  #0B79A3   4.91   ✓
+  ok-btn-ink × ok-btn            #FFFFFF  #24804F   4.91   ✓
+  err-btn-ink × err-btn          #FFFFFF  #B83B3B   5.63   ✓
+  warn-btn-ink × warn-btn        #211E1A  #D98A2B   6.02   ✓
+  accent-btn × bg                #0B79A3  #141210   3.81   ✓
+  accent-btn × panel             #0B79A3  #1A1814   3.62   ✓
+  accent-btn-hover × bg          #0B79A3  #141210   3.81   ✓
+  ok-btn × bg                    #24804F  #141210   3.80   · 仅提示
+  err-btn × bg                   #B83B3B  #141210   3.32   · 仅提示
+  warn-btn × bg                  #D98A2B  #141210   6.78   · 仅提示
+
+[dark/violet]  bg #141210
+  断言                          前景      背景      比值   判定
+  ink × bg                       #F2EFE8  #141210  16.27   ✓
+  ink × panel                    #F2EFE8  #1A1814  15.47   ✓
+  ink-2 × bg                     #B7B0A3  #141210   8.68   ✓
+  ink-2 × panel                  #B7B0A3  #1A1814   8.25   ✓
+  ink-2 × accent-soft            #B7B0A3  #2C2535   6.84   ✓
+  accent-deep × bg               #C4B5FD  #141210  10.12   ✓
+  accent-deep × panel            #C4B5FD  #1A1814   9.62   ✓
+  accent-deep × accent-soft      #C4B5FD  #2C2535   7.98   ✓
+  code-ink × code-bg             #F2EFE8  #0F0D0C  16.89   ✓
+  code-ink-2 × code-bg           #A49E92  #0F0D0C   7.28   ✓
+  ok × code-bg                   #3EC57C  #0F0D0C   8.76   ✓
+  accent-btn-ink × accent-btn    #FFFFFF  #7C3AED   5.70   ✓
+  accent-btn-ink × accent-btn-hover #FFFFFF  #7C3AED   5.70   ✓
+  ok-btn-ink × ok-btn            #FFFFFF  #24804F   4.91   ✓
+  err-btn-ink × err-btn          #FFFFFF  #B83B3B   5.63   ✓
+  warn-btn-ink × warn-btn        #211E1A  #D98A2B   6.02   ✓
+  accent-btn × bg                #7C3AED  #141210   3.28   ✓
+  accent-btn × panel             #7C3AED  #1A1814   3.12   ✓
+  accent-btn-hover × bg          #7C3AED  #141210   3.28   ✓
+  ok-btn × bg                    #24804F  #141210   3.80   · 仅提示
+  err-btn × bg                   #B83B3B  #141210   3.32   · 仅提示
+  warn-btn × bg                  #D98A2B  #141210   6.78   · 仅提示
+
+[dark/lime]  bg #141210
+  断言                          前景      背景      比值   判定
+  ink × bg                       #F2EFE8  #141210  16.27   ✓
+  ink × panel                    #F2EFE8  #1A1814  15.47   ✓
+  ink-2 × bg                     #B7B0A3  #141210   8.68   ✓
+  ink-2 × panel                  #B7B0A3  #1A1814   8.25   ✓
+  ink-2 × accent-soft            #B7B0A3  #1D3322   6.33   ✓
+  accent-deep × bg               #86EFAC  #141210  13.31   ✓
+  accent-deep × panel            #86EFAC  #1A1814  12.65   ✓
+  accent-deep × accent-soft      #86EFAC  #1D3322   9.70   ✓
+  code-ink × code-bg             #F2EFE8  #0F0D0C  16.89   ✓
+  code-ink-2 × code-bg           #A49E92  #0F0D0C   7.28   ✓
+  ok × code-bg                   #3EC57C  #0F0D0C   8.76   ✓
+  accent-btn-ink × accent-btn    #FFFFFF  #117C38   5.30   ✓
+  accent-btn-ink × accent-btn-hover #FFFFFF  #117C38   5.30   ✓
+  ok-btn-ink × ok-btn            #FFFFFF  #24804F   4.91   ✓
+  err-btn-ink × err-btn          #FFFFFF  #B83B3B   5.63   ✓
+  warn-btn-ink × warn-btn        #211E1A  #D98A2B   6.02   ✓
+  accent-btn × bg                #117C38  #141210   3.53   ✓
+  accent-btn × panel             #117C38  #1A1814   3.35   ✓
+  accent-btn-hover × bg          #117C38  #141210   3.53   ✓
+  ok-btn × bg                    #24804F  #141210   3.80   · 仅提示
+  err-btn × bg                   #B83B3B  #141210   3.32   · 仅提示
+  warn-btn × bg                  #D98A2B  #141210   6.78   · 仅提示
+
+[demo-29 局部主题]
+  第 1 套  #FFFFFF on #C4491A   4.87   ✓
+  第 2 套  #211E1A on #F59A4B   7.59   ✓
+  第 3 套  #FFFFFF on #8F5919   5.82   ✓
+  第 4 套  #FFFFFF on #14664D   6.91   ✓
+
+────────────────────────────
+  对比度断言全部通过

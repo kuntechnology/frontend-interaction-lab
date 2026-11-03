@@ -2,11 +2,9 @@
 // 前端交互实验室 · 构建脚本
 // 用法：node tools/build.mjs
 // ------------------------------------------------------------
-// 只做四件事，不做任何 minify / 美化 / DOM 改写：
-//   1) 读 src/lab.html（UTF-8 原样读入，不做换行归一）
-//   2) 在唯一的 </body> 前内联 inject.html（返回主页 + PV/UV 上报）
-//   3) 写 dist/index.html，并拷贝 .nojekyll
-//   4) 跑结构断言，任一失败 exit 1
+// 读取唯一 HTML 编辑源，内联本地壳层资产与可选统计。
+// 同步写 dist/index.html 与仓库根 index.html；二者均静态直出。
+// 不做 minify / 美化；结构、依赖快照、体积断言任一失败 exit 1。
 //
 // 为什么不压缩：构建期魔法会让 src 与线上不一致，排查成本立刻翻倍。
 // 压缩交给 GitHub Pages 的 gzip。
@@ -25,7 +23,7 @@ const OUT_DIR = path.join(root, 'dist');
 const OUT = path.join(OUT_DIR, 'index.html');
 
 /* 演示总数：新增 demo 时只改这一处，断言失败信息会告诉你改哪 */
-const DEMO_TOTAL = 54;
+const DEMO_TOTAL = 56;
 /* 体积预算（gzip -9） */
 const BUDGET_RAW = 300 * 1024;
 const BUDGET_GZIP = 75 * 1024;
@@ -43,12 +41,19 @@ const bodyTags = (src.match(/<\/body>/g) || []).length;
 if (bodyTags !== 1) {
     fail(`A2 </body> 出现 ${bodyTags} 次，应恰好 1 次（内联注入点必须唯一）`);
 }
-let html = src.replace('</body>', inject + '\n</body>');
+const local = (name) => fs.readFileSync(path.join(root, name), 'utf8');
+const styles = ['design/tokens.css', 'assets/lab.css', 'assets/modern.css']
+    .map((name) => `<style data-lab-asset="${name}">\n${local(name)}\n</style>`).join('\n');
+const scripts = ['assets/lab.js', 'assets/modern.js']
+    .map((name) => `<script data-lab-asset="${name}">\n${local(name)}\n</script>`).join('\n');
+let html = src.replace('</head>', styles + '\n</head>')
+    .replace('</body>', scripts + '\n' + inject + '\n</body>');
 notes.push(`已内联 inject.html（${(inject.length / 1024).toFixed(1)} KB）`);
 
 /* ---------- 3. 写产物 ---------- */
 fs.mkdirSync(OUT_DIR, { recursive: true });
 fs.writeFileSync(OUT, html, 'utf8');
+fs.writeFileSync(path.join(root, 'index.html'), html, 'utf8');
 const nojekyll = path.join(root, '.nojekyll');
 if (fs.existsSync(nojekyll)) fs.copyFileSync(nojekyll, path.join(OUT_DIR, '.nojekyll'));
 
@@ -161,25 +166,16 @@ const bDist = allowedBaseline.map((v) => `${v} ${baselineVals.filter((x) => x ==
 notes.push(`Baseline 分布: ${bDist}`);
 
 // A14 代码切片覆盖面（「复制代码」按 /* ===== NN 注释切段，没有注释就切不出来）
-const styleRegion = (() => {
-    const i = html.indexOf('/* ===== 01 ');
-    if (i === -1) return '';
-    const s = html.lastIndexOf('<style', i);
-    const e = html.indexOf('</style>', i);
-    return html.slice(s, e);
-})();
-const scriptRegion = (() => {
-    const i = html.indexOf('function copyText');
-    if (i === -1) return '';
-    const s = html.lastIndexOf('<script', i);
-    const e = html.indexOf('</' + 'script>', i);
-    return html.slice(s, e);
-})();
+const styleRegion = [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join('\n');
+const scriptRegion = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join('\n');
 const cssDemos = uniqIds.filter((n) => styleRegion.includes('/* ===== ' + n + ' ')).length;
 const jsDemos = uniqIds.filter((n) => scriptRegion.includes('/* ===== ' + n + ' ')).length;
 notes.push(`代码切片覆盖: CSS ${cssDemos}/${uniqIds.length} · JS ${jsDemos}/${uniqIds.length}`);
 if (cssDemos < 29) fail(`A14 可切片的 CSS 跌到 ${cssDemos} 个（基线 29），复制代码功能退化`);
 if (jsDemos < 46) fail(`A14 可切片的 JS 跌到 ${jsDemos} 个（基线 46），复制代码功能退化`);
+for (const no of ['55', '56']) {
+    if (!styleRegion.includes('/* ===== ' + no + ' ') || !scriptRegion.includes('/* ===== ' + no + ' ')) fail(`A14 新演示 ${no} 缺少 CSS / JS 复制标记`);
+}
 
 /* ---------- A15–A17 色彩规范静态检查 ----------
    这三条比断言更便宜、更防回滚：它们守的是「以后别顺手改坏」。

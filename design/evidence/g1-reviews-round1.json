@@ -1,0 +1,8 @@
+{
+  "stage": "G1 static shell",
+  "weights": {"technical":0.30,"beauty":0.25,"workflow":0.25,"domain_fit":0.20},
+  "reviewer_A": {"job":"job_XYoYx9k0","technical":93,"beauty":89,"workflow":92,"domain_fit":92,"weighted":91.8,"ai_slop":8,"pass":true},
+  "reviewer_B": {"job":"job_ycO62n9R","technical":82,"beauty":88,"workflow":83,"domain_fit":92,"weighted":85.75,"ai_slop":9,"pass":false,"blockers":["mobile navigation targets 34px/35px","horizontal navigation lacks explicit affordance","h1 nested in span"]},
+  "gate_pass": false,
+  "interaction_expansion_started": false
+}

@@ -1,0 +1,32 @@
+/* ===== 55 可撤销列表操作 ===== */
+#stage-55{display:block;overflow:visible}
+.undo-demo{width:min(620px,100%);margin-inline:auto}
+.undo-list{list-style:none;border:1px solid var(--lab-line);border-radius:var(--lab-radius-sm);overflow:hidden;background:var(--lab-surface)}
+.undo-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;padding:8px 10px 8px 16px;border-bottom:1px solid var(--lab-line);color:var(--lab-ink)}
+.undo-list li:last-child{border-bottom:0}
+.undo-label{min-width:0;overflow-wrap:anywhere}
+.undo-list .undo-remove,.undo-actions .btn{min-height:44px;flex:none}
+.undo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.demo-status{min-height:1.6em;margin-top:12px;color:var(--lab-muted);font-size:.92rem;overflow-wrap:anywhere}
+
+/* ===== 56 可调整分栏 ===== */
+#stage-56{display:block;overflow:visible}
+.split-demo{width:min(760px,100%);margin-inline:auto}
+.split-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.split-controls .btn{min-width:44px;min-height:44px}
+.split-range-label{font-weight:600;color:var(--lab-ink)}
+#split-range{flex:1 1 160px;min-width:120px;min-height:44px;accent-color:var(--lab-accent)}
+.split-output{margin:8px 0 14px;color:var(--lab-muted);font-variant-numeric:tabular-nums}
+.split-layout{display:grid;grid-template-columns:minmax(0,var(--split)) minmax(0,var(--split-rest));gap:12px;width:100%}
+.split-pane{min-width:0;min-height:130px;padding:16px;border:1px solid var(--lab-line);border-radius:var(--lab-radius-sm);background:var(--lab-surface);color:var(--lab-ink);overflow-wrap:anywhere}
+.split-pane h4{font-size:1rem;margin-bottom:6px}
+.split-pane p{color:var(--lab-muted);font-size:.92rem;line-height:1.55}
+@media(max-width:420px){
+  .undo-list li{padding-inline:10px;gap:8px}
+  .undo-actions{gap:8px}
+  .split-controls{gap:6px}
+  .split-range-label{flex-basis:calc(100% - 110px)}
+  #split-range{order:3;flex-basis:100%;min-width:0}
+  #split-layout{gap:6px}
+  .split-pane{padding:10px 8px;min-height:140px}
+}

@@ -1,0 +1,8 @@
+{
+  "stage": "G4 first final review",
+  "reviewer_A": {"job":"job_X0lCSqfb","technical":93,"beauty":87,"workflow":91,"domain_fit":94,"weighted":91.45,"ai_slop":7,"pass":false,"blockers":["persistent visitor identifier and optional stats external requests"],"notes":["light screenshot incorrectly remained dark"]},
+  "reviewer_B": {"job":"job_CaYq7e9M","technical":93,"beauty":83,"workflow":94,"domain_fit":94,"weighted":90.65,"ai_slop":8,"pass":false,"blockers":["invalid light screenshot evidence; beauty below threshold"]},
+  "gate_pass":false,
+  "release_blocked":true,
+  "resolution_plan":"design/amendments.md; no publication before independent re-review"
+}

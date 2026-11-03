@@ -1,0 +1,1996 @@
+{
+  "started_at": "2026-11-03T19:39:55.571155+00:00",
+  "url": "http://127.0.0.1:8873/dist/",
+  "demos": [
+    {
+      "number": 1,
+      "id": "demo-01",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "click ripple button",
+          "assertion": true,
+          "result": "ripple element count increased"
+        }
+      ],
+      "observed": {
+        "title": "涟漪按钮",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 2,
+      "id": "demo-02",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "rendered content inspection",
+          "assertion": true,
+          "result": "content payload verified"
+        }
+      ],
+      "observed": {
+        "title": "磁性按钮",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 3,
+      "id": "demo-03",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "光标聚光灯",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 4,
+      "id": "demo-04",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "打字机",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 1
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 5,
+      "id": "demo-05",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "replay counter",
+          "assertion": true,
+          "result": "counter values changed after replay"
+        }
+      ],
+      "observed": {
+        "title": "数字滚动",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 5
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 6,
+      "id": "demo-06",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "滚动揭示",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 5
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 7,
+      "id": "demo-07",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "视差滚动",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 8,
+      "id": "demo-08",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "focus .flip and press Enter",
+          "assertion": true,
+          "result": "keyboard activation toggled flip state class"
+        }
+      ],
+      "observed": {
+        "title": "3D 翻转",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 9,
+      "id": "demo-09",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "drag-sort target inspection",
+          "assertion": true,
+          "result": "draggable items present; pointer drag covered only if source exposes draggable targets"
+        }
+      ],
+      "observed": {
+        "title": "拖拽排序",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [
+          "可拖拽，也可用每行的上移和下移按钮。"
+        ],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 10,
+      "id": "demo-10",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "accordion header click",
+          "assertion": true,
+          "result": "aria-expanded changed"
+        }
+      ],
+      "observed": {
+        "title": "折叠面板",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 11,
+      "id": "demo-11",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "select second tab",
+          "assertion": true,
+          "result": "second tab became sole active tab"
+        }
+      ],
+      "observed": {
+        "title": "Tab 切换",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 1
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": [
+          "用法"
+        ]
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 12,
+      "id": "demo-12",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "trigger toast",
+          "assertion": true,
+          "result": "toast/alert node rendered"
+        }
+      ],
+      "observed": {
+        "title": "Toast 通知",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 13,
+      "id": "demo-13",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "load skeleton content",
+          "assertion": true,
+          "result": "content shown and skeleton hidden"
+        }
+      ],
+      "observed": {
+        "title": "骨架屏",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 14,
+      "id": "demo-14",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "toggle local theme",
+          "assertion": true,
+          "result": "stage theme class toggled"
+        }
+      ],
+      "observed": {
+        "title": "暗色模式",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 1
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 15,
+      "id": "demo-15",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "Canvas 粒子",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 1,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 16,
+      "id": "demo-16",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "draw with pointer then clear",
+          "assertion": true,
+          "result": "canvas bitmap changed on draw and clear"
+        }
+      ],
+      "observed": {
+        "title": "手绘画板",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 1,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 17,
+      "id": "demo-17",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 17 control",
+          "assertion": true,
+          "result": "GSAP target inline styles changed"
+        }
+      ],
+      "observed": {
+        "title": "GSAP 滚动编排",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 1,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 18,
+      "id": "demo-18",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 18 control",
+          "assertion": true,
+          "result": "Lottie button toggled play/pause label"
+        }
+      ],
+      "observed": {
+        "title": "Lottie 矢量动画",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 2,
+          "animatedContainers": 1,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 19,
+      "id": "demo-19",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 19 control",
+          "assertion": true,
+          "result": "Anime target style changed"
+        }
+      ],
+      "observed": {
+        "title": "Anime.js 补间",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 1,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 20,
+      "id": "demo-20",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 20 control",
+          "assertion": true,
+          "result": "Motion library created animation objects or inline animation state"
+        }
+      ],
+      "observed": {
+        "title": "Motion 交错",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 1,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 21,
+      "id": "demo-21",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "Three.js 3D",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 1,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 22,
+      "id": "demo-22",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "p5.js 生成艺术",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 1,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 23,
+      "id": "demo-23",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 23 control",
+          "assertion": true,
+          "result": "ECharts update toggle label changed"
+        }
+      ],
+      "observed": {
+        "title": "ECharts 动态图表",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 1,
+          "svg": 1,
+          "animatedContainers": 1,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 24,
+      "id": "demo-24",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "D3 力导向图",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 2,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 25,
+      "id": "demo-25",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 25 control",
+          "assertion": true,
+          "result": "Swiper wrapper translated"
+        }
+      ],
+      "observed": {
+        "title": "Swiper 3D 轮播",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [
+          "04\n05\n01\n02\n03",
+          ""
+        ],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 26,
+      "id": "demo-26",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 26 control",
+          "assertion": true,
+          "result": "Embla slide indicator changed"
+        }
+      ],
+      "observed": {
+        "title": "Embla 轻量轮播",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 27,
+      "id": "demo-27",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "Hammer 手势识别",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 28,
+      "id": "demo-28",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 28 control",
+          "assertion": true,
+          "result": "sequencer cell on/off class changed"
+        }
+      ],
+      "observed": {
+        "title": "Tone 音序器",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 29,
+      "id": "demo-29",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 29 control",
+          "assertion": true,
+          "result": "second theme option uniquely active"
+        }
+      ],
+      "observed": {
+        "title": "多主题切换",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": [
+          "墨夜"
+        ]
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 30,
+      "id": "demo-30",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "Vue 3.5 响应式",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 0
+      }
+    },
+    {
+      "number": 31,
+      "id": "demo-31",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "Preact + htm",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 0
+      }
+    },
+    {
+      "number": 32,
+      "id": "demo-32",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 32 control",
+          "assertion": true,
+          "result": "HTMX target replaced by fragment A"
+        }
+      ],
+      "observed": {
+        "title": "htmx 超媒体",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 7
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 33,
+      "id": "demo-33",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "open menu and increment Alpine quantity",
+          "assertion": true,
+          "result": "menu visible and quantity incremented"
+        }
+      ],
+      "observed": {
+        "title": "Alpine.js 属性驱动",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 34,
+      "id": "demo-34",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "rendered content inspection",
+          "assertion": true,
+          "result": "content payload verified"
+        }
+      ],
+      "observed": {
+        "title": "Tailwind CSS v4 原子类",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 5
+        },
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "tw-class-input",
+            "type": "text",
+            "value": "",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 35,
+      "id": "demo-35",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 35 control",
+          "assertion": true,
+          "result": "Jotai atom and derived value updated"
+        }
+      ],
+      "observed": {
+        "title": "Jotai 原子状态",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 36,
+      "id": "demo-36",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 36 control",
+          "assertion": true,
+          "result": "debounced RxJS result reflects query"
+        }
+      ],
+      "observed": {
+        "title": "RxJS 响应式流",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "rx-input",
+            "type": "text",
+            "value": "regression",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
+    },
+    {
+      "number": 37,
+      "id": "demo-37",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "Lit Web Components",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 0
+      }
+    },
+    {
+      "number": 38,
+      "id": "demo-38",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "visual/render target inspection",
+          "assertion": true,
+          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+        }
+      ],
+      "observed": {
+        "title": "滚动驱动动画",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 39,
+      "id": "demo-39",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "click first :has() checkbox card label",
+          "assertion": true,
+          "result": "associated checkbox toggled by real pointer click"
+        }
+      ],
+      "observed": {
+        "title": ":has() 选择器",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "",
+            "type": "checkbox",
+            "value": "on",
+            "checked": true,
+            "disabled": false
+          },
+          {
+            "id": "",
+            "type": "checkbox",
+            "value": "on",
+            "checked": false,
+            "disabled": false
+          },
+          {
+            "id": "",
+            "type": "checkbox",
+            "value": "on",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 40,
+      "id": "demo-40",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "set container-query slider within declared range",
+          "assertion": true,
+          "result": "range value changed within actual min/max; responsive style sampled"
+        }
+      ],
+      "observed": {
+        "title": "Container Queries",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "range_style": "none",
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "cq-range",
+            "type": "range",
+            "value": "420",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 41,
+      "id": "demo-41",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 41 control",
+          "assertion": true,
+          "result": "anchor popover visibility/expanded state changed"
+        }
+      ],
+      "observed": {
+        "title": "Anchor Positioning",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 42,
+      "id": "demo-42",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 42 control",
+          "assertion": true,
+          "result": "view transition view/output state changed"
+        }
+      ],
+      "observed": {
+        "title": "View Transitions",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 43,
+      "id": "demo-43",
+      "status": "degraded",
+      "actions": [
+        {
+          "selector": "clipboard action with denied/unavailable permission captured",
+          "assertion": true,
+          "result": "platform permission/result explicitly recorded; no clipboard success claimed"
+        }
+      ],
+      "observed": {
+        "title": "Clipboard 剪贴板",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 0
+      },
+      "capability_outcome": {
+        "clipboardWriteApi": true,
+        "status": "已复制：这段文字将被复制到剪贴板——来自 Clipboard…"
+      }
+    },
+    {
+      "number": 44,
+      "id": "demo-44",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "speech stop path",
+          "assertion": true,
+          "result": "stop control invoked without claiming audio playback"
+        }
+      ],
+      "observed": {
+        "title": "Speech 语音合成",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "sp-rate",
+            "type": "range",
+            "value": "1",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 45,
+      "id": "demo-45",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 45 control",
+          "assertion": true,
+          "result": "worker result or explicit platform error rendered"
+        }
+      ],
+      "observed": {
+        "title": "Web Worker",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": {
+        "error": [],
+        "loading_after_wait": false,
+        "marker_count": 0
+      }
+    },
+    {
+      "number": 46,
+      "id": "demo-46",
+      "status": "degraded",
+      "actions": [
+        {
+          "selector": "fullscreen API attempted; permission outcome recorded",
+          "assertion": true,
+          "result": "platform capability/status recorded; not claimed as universally successful"
+        }
+      ],
+      "observed": {
+        "title": "Fullscreen + Wake Lock",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 4
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered",
+      "capability_outcome": {
+        "fullscreenElement": true,
+        "status": "已进入全屏（按 Esc 退出）",
+        "requestFullscreen": "function"
+      }
+    },
+    {
+      "number": 47,
+      "id": "demo-47",
+      "status": "degraded",
+      "actions": [
+        {
+          "selector": "share API attempted; platform outcome recorded",
+          "assertion": true,
+          "result": "native share availability/result recorded, no share success claimed"
+        }
+      ],
+      "observed": {
+        "title": "Web Share",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered",
+      "capability_outcome": {
+        "share": "undefined",
+        "status": "当前环境无系统分享，已复制页面地址到剪贴板"
+      }
+    },
+    {
+      "number": 48,
+      "id": "demo-48",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "open/close dialog and popover",
+          "assertion": true,
+          "result": "both native modal/popover opened and closed"
+        }
+      ],
+      "observed": {
+        "title": "原生对话框 + Popover",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 5
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 49,
+      "id": "demo-49",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 49 control",
+          "assertion": true,
+          "result": "command search returns matching result; dialog closed"
+        }
+      ],
+      "observed": {
+        "title": "⌘K 命令面板",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 50,
+      "id": "demo-50",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "scroll virtual list",
+          "assertion": true,
+          "result": "visible rows rendered before and after scroll"
+        }
+      ],
+      "observed": {
+        "title": "虚拟滚动（10 万行）",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 51,
+      "id": "demo-51",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 51 control",
+          "assertion": true,
+          "result": "range within declared min/max and corresponding CSS/render output changed"
+        }
+      ],
+      "observed": {
+        "title": "前后对比滑块",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "cmp-range",
+            "type": "range",
+            "value": "64",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 52,
+      "id": "demo-52",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "file upload control available",
+          "assertion": true,
+          "result": "native file picker input and drop target confirmed; no arbitrary file injected"
+        }
+      ],
+      "observed": {
+        "title": "拖拽上传 + 预览",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 2
+        },
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "up-input",
+            "type": "file",
+            "value": "",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 53,
+      "id": "demo-53",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "keyboard scroll snap container",
+          "assertion": true,
+          "result": "snap cards/overflow confirmed and keyboard scrolling exercised"
+        }
+      ],
+      "observed": {
+        "title": "Scroll Snap 吸附",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 54,
+      "id": "demo-54",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "activate 54 control",
+          "assertion": true,
+          "result": "range within declared min/max and corresponding CSS/render output changed"
+        }
+      ],
+      "observed": {
+        "title": "@property 色阶生成",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 1,
+          "animatedContainers": 0,
+          "stageChildren": 3
+        },
+        "live_regions": [],
+        "inputs": [
+          {
+            "id": "prop-slider",
+            "type": "range",
+            "value": "231",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 55,
+      "id": "demo-55",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "remove then undo list item",
+          "assertion": true,
+          "result": "list count removed/restored and live status updated"
+        }
+      ],
+      "observed": {
+        "title": "可撤销列表操作",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 0,
+          "animatedContainers": 0,
+          "stageChildren": 1
+        },
+        "live_regions": [
+          "已撤销，恢复“项目一 · 设计稿评审”。列表共 3 项。"
+        ],
+        "inputs": [],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    },
+    {
+      "number": 56,
+      "id": "demo-56",
+      "status": "pass",
+      "actions": [
+        {
+          "selector": "increase split ratio",
+          "assertion": true,
+          "result": "range, output and layout style reflect increment"
+        }
+      ],
+      "observed": {
+        "title": "可调整分栏",
+        "prompt_present": true,
+        "copy_controls": {
+          "prompt": 1,
+          "code": 1
+        },
+        "visual_targets": {
+          "canvas": 0,
+          "svg": 0,
+          "animatedContainers": 0,
+          "stageChildren": 1
+        },
+        "live_regions": [
+          "左栏 55%，右栏 45%"
+        ],
+        "inputs": [
+          {
+            "id": "split-range",
+            "type": "range",
+            "value": "55",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "selected_tabs": []
+      },
+      "dependency_state": "native-or-rendered"
+    }
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "failed_requests": [],
+  "overall_errors": [],
+  "baseline_differences": [
+    {
+      "demo": 49,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "输入即过滤，↑↓ 移动高亮，Enter 执行，Esc 关闭——命令面板的全部要素，60 行原生 JS。",
+      "current": "搜索真实演示，↑↓ 移动、Enter 跳转、Esc 关闭；原生 dialog 管理焦点，支持点击与键盘。"
+    },
+    {
+      "demo": 50,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "DOM 里始终只有约 8 个节点，滚动时按 scrollTop 换一批。10 万行也不掉帧。",
+      "current": "只渲染可视区和缓冲行，滚动时按 scrollTop 更新窗口；十万行数据不需要十万个 DOM 节点。"
+    }
+  ],
+  "screenshots": {
+    "desktop": "/workspace/home-rebuild/overnight-lab/design/evidence/g3-screenshots/g3-desktop.png",
+    "mobile": "/workspace/home-rebuild/overnight-lab/design/evidence/g3-screenshots/g3-mobile.png",
+    "light": "/workspace/home-rebuild/overnight-lab/design/evidence/g3-screenshots/g3-light.png",
+    "mobile-light": "/workspace/home-rebuild/overnight-lab/design/evidence/g3-screenshots/g3-mobile-light.png"
+  },
+  "environment": {
+    "browser": "Chromium",
+    "executable_path": "/usr/bin/chromium"
+  },
+  "http_status": 200,
+  "structure": {
+    "demo_count": 56,
+    "ids": [
+      "demo-01",
+      "demo-02",
+      "demo-03",
+      "demo-04",
+      "demo-05",
+      "demo-06",
+      "demo-07",
+      "demo-08",
+      "demo-09",
+      "demo-10",
+      "demo-11",
+      "demo-12",
+      "demo-13",
+      "demo-14",
+      "demo-15",
+      "demo-16",
+      "demo-17",
+      "demo-18",
+      "demo-19",
+      "demo-20",
+      "demo-21",
+      "demo-22",
+      "demo-23",
+      "demo-24",
+      "demo-25",
+      "demo-26",
+      "demo-27",
+      "demo-28",
+      "demo-29",
+      "demo-30",
+      "demo-31",
+      "demo-32",
+      "demo-33",
+      "demo-34",
+      "demo-35",
+      "demo-36",
+      "demo-37",
+      "demo-38",
+      "demo-39",
+      "demo-40",
+      "demo-41",
+      "demo-42",
+      "demo-43",
+      "demo-44",
+      "demo-45",
+      "demo-46",
+      "demo-47",
+      "demo-48",
+      "demo-49",
+      "demo-50",
+      "demo-51",
+      "demo-52",
+      "demo-53",
+      "demo-54",
+      "demo-55",
+      "demo-56"
+    ],
+    "catalogue_links": 62,
+    "prompt_blocks": 56,
+    "prompt_copy_buttons": 56,
+    "code_copy_buttons": 56
+  },
+  "capabilities": {
+    "secureContext": true,
+    "speechSynthesis": true,
+    "clipboard": true,
+    "clipboardWrite": "function",
+    "share": "undefined",
+    "fullscreen": "function",
+    "wakeLock": "object",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36"
+  },
+  "screenshot_themes": {
+    "light": {
+      "theme": "light",
+      "background": "rgb(245, 244, 237)",
+      "trigger": "real theme-toggle button"
+    },
+    "mobile-light": {
+      "theme": "light",
+      "background": "rgb(245, 244, 237)",
+      "trigger": "real theme-toggle button"
+    }
+  },
+  "external_dependency_status": {
+    "status": "no observed CDN request failure"
+  },
+  "finished_at": "2026-11-03T19:40:50.706741+00:00",
+  "failed_demo_count": 0,
+  "degraded_demo_count": 3,
+  "overall_status": "degraded"
+}
