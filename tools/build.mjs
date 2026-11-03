@@ -25,7 +25,7 @@ const OUT_DIR = path.join(root, 'dist');
 const OUT = path.join(OUT_DIR, 'index.html');
 
 /* 演示总数：新增 demo 时只改这一处，断言失败信息会告诉你改哪 */
-const DEMO_TOTAL = 47;
+const DEMO_TOTAL = 54;
 /* 体积预算（gzip -9） */
 const BUDGET_RAW = 300 * 1024;
 const BUDGET_GZIP = 75 * 1024;

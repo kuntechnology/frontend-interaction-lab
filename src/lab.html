@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>前端交互实验室 v3.6.0 · Frontend Interaction Lab</title>
-<meta name="description" content="47 个前端交互技术演示：16 原生 + 13 精选库 + 8 前沿框架 + 10 新特性/API（CSS scroll-timeline / :has / Container Queries / Anchor Positioning / View Transitions / Clipboard / Speech / Worker / Fullscreen+WakeLock / Share）。附框架对比矩阵与可直接复制的精简提示词。">
+<title>前端交互实验室 v3.7.0 · Frontend Interaction Lab</title>
+<meta name="description" content="54 个前端交互技术演示：22 原生 + 13 精选库 + 8 前沿框架 + 11 新特性/API。每个演示标注 Baseline 支持度，附框架对比矩阵、可复制提示词与代码。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23EE5B1F'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23F5F3EE' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23F5F3EE'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.15/swiper-bundle.min.css">
@@ -31,6 +31,8 @@
 .wk-fps{font-family:var(--font-mono);font-size:12px;color:var(--accent-deep);min-width:64px}
 .wk-out{min-height:34px;max-width:640px;margin:10px auto 0;font-size:12.5px;color:var(--ink-2);text-align:center}
 #fs-status,#wl-status{max-width:640px;margin:6px auto 0;font-size:12.5px;color:var(--ink-2);text-align:center}
+
+
 </style>
 <style>
 /* ============ 设计 Token ============ */
@@ -764,6 +766,61 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 .copy-code-btn:hover{color:var(--ink);border-color:var(--ink-2)}
 .copy-code-btn.is-done{color:var(--ok);border-color:var(--ok)}
 .copy-code-btn:disabled{opacity:.45;cursor:not-allowed}
+/* ===== 48 原生对话框 + Popover ===== */
+#dlg-demo{border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);padding:20px 22px;max-width:320px}
+#dlg-demo::backdrop{background:rgba(20,18,16,.55);backdrop-filter:blur(2px)}
+#dlg-demo h4{font-size:15px;margin-bottom:8px}
+#dlg-demo p{font-size:13px;color:var(--ink-2);line-height:1.7;margin-bottom:14px}
+#dlg-pop{border:1px solid var(--line-strong);border-radius:10px;background:var(--panel);color:var(--ink);padding:14px 16px;font-size:13px;box-shadow:0 8px 24px rgba(20,18,16,.12)}
+
+/* ===== 49 ⌘K 命令面板 ===== */
+.cmdk-mask{position:absolute;inset:0;background:rgba(20,18,16,.42);display:flex;align-items:flex-start;justify-content:center;padding-top:26px;z-index:5}
+.cmdk{width:min(340px,92%);background:var(--panel);border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;box-shadow:0 18px 44px rgba(20,18,16,.22)}
+.cmdk input{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);font:14px var(--font-ui);padding:12px 14px;outline:none}
+.cmdk ul{list-style:none;margin:0;padding:6px;max-height:180px;overflow:auto}
+.cmdk li{padding:8px 10px;border-radius:7px;font-size:13px;color:var(--ink-2);cursor:pointer}
+.cmdk li.is-active{background:var(--accent-soft);color:var(--ink)}
+
+/* ===== 50 虚拟滚动（10 万行） ===== */
+.vs-view{height:190px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);overscroll-behavior:contain;position:relative}
+.vs-spacer{position:relative}
+.vs-rows{position:absolute;left:0;right:0;top:0;will-change:transform}
+.vs-row{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:12.5px;color:var(--ink-2);border-bottom:1px solid var(--line)}
+.vs-row b{font-family:var(--font-mono);color:var(--ink);font-weight:500}
+
+/* ===== 51 前后对比滑块 ===== */
+.cmp-wrap{position:relative;height:170px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.cmp-before,.cmp-after{position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;font-size:11px;font-family:var(--font-mono)}
+.cmp-before{background:linear-gradient(135deg,#8c8577,#5f594e);color:#f5f3ee}
+.cmp-after{background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#fff;clip-path:inset(0 0 0 var(--p))}
+.cmp-handle{position:absolute;top:0;bottom:0;left:var(--p);width:2px;background:#fff;box-shadow:0 0 0 1px rgba(20,18,16,.35)}
+.cmp-handle::after{content:"";position:absolute;top:50%;left:50%;width:26px;height:26px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(20,18,16,.3)}
+.cmp-range{width:100%;margin-top:12px;accent-color:var(--accent)}
+
+/* ===== 52 拖拽上传 + 预览 ===== */
+.up-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;height:170px;border:2px dashed var(--line-strong);border-radius:12px;background:var(--panel);cursor:pointer;transition:border-color .18s,background-color .18s;overflow:hidden}
+.up-zone.is-over{border-color:var(--accent);background:var(--accent-soft)}
+.up-txt{font-size:13px;color:var(--ink-2)}
+#up-preview{max-height:150px;max-width:100%;border-radius:8px;object-fit:contain}
+
+/* ===== 53 Scroll Snap 吸附 ===== */
+.snap-view{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-bottom:10px;overscroll-behavior-x:contain}
+.snap-card{flex:0 0 62%;height:140px;border-radius:12px;display:flex;align-items:center;justify-content:center;font:600 26px var(--font-mono);color:#fff;scroll-snap-align:center;background:linear-gradient(135deg,var(--accent),var(--accent-deep))}
+.snap-card:nth-child(even){background:linear-gradient(135deg,#6b6357,#3f3a32)}
+.snap-dots{display:flex;gap:6px;justify-content:center;margin-top:8px}
+.snap-dots i{width:7px;height:7px;border-radius:50%;background:var(--line-strong)}
+.snap-dots i.is-on{background:var(--accent)}
+
+/* ===== 54 @property 色阶生成 ===== */
+@property --hue{syntax:"<number>";inherits:true;initial-value:24}
+.prop-swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;height:150px;--hue:24}
+.prop-swatches i{border-radius:9px;display:block;transition:background-color .2s}
+.prop-swatches i:nth-child(1){background:oklch(92% .04 var(--hue))}
+.prop-swatches i:nth-child(2){background:oklch(82% .08 var(--hue))}
+.prop-swatches i:nth-child(3){background:oklch(70% .13 var(--hue))}
+.prop-swatches i:nth-child(4){background:oklch(58% .16 var(--hue))}
+.prop-swatches i:nth-child(5){background:color-mix(in oklab, oklch(48% .18 var(--hue)) 82%, #000)}
+.prop-swatches i:nth-child(6){background:color-mix(in oklab, oklch(24% .06 var(--hue)) 70%, #000)}
 </style>
 <script>try{var lt=localStorage.getItem('lab-theme');document.documentElement.setAttribute('data-theme',lt==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}try{var la=localStorage.getItem('lab-accent');if(la)document.documentElement.setAttribute('data-accent',la)}catch(e){}</script>
 </head>
@@ -775,7 +832,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 <header class="topbar">
   <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#EE5B1F"/><circle cx="32" cy="32" r="14" fill="none" stroke="#F5F3EE" stroke-width="5"/><circle cx="32" cy="32" r="4" fill="#F5F3EE"/></svg>
   <h1>前端交互实验室</h1>
-  <span class="tag">v3.6.0</span>
+  <span class="tag">v3.7.0</span>
   <div class="search-box">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
     <input id="search-input" type="search" placeholder="搜索演示…" autocomplete="off" aria-label="搜索演示">
@@ -788,7 +845,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     <button type="button" class="accent-dot" data-accent="violet" aria-label="霓虹紫" title="霓虹紫" style="--dot:#A855F7"></button>
     <button type="button" class="accent-dot" data-accent="lime" aria-label="荧光绿" title="荧光绿" style="--dot:#4ADE80"></button>
   </div>
-  <span class="meta">47 DEMOS · 原生 + 精选库 + 前沿框架</span>
+  <span class="meta">54 DEMOS · 原生 + 精选库 + 前沿框架</span>
 </header>
 
 <aside class="rail">
@@ -797,6 +854,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     <a class="rail-link" href="#demo-01"><b>01</b>涟漪按钮</a>
     <a class="rail-link" href="#demo-02"><b>02</b>磁性按钮</a>
     <a class="rail-link" href="#demo-03"><b>03</b>光标聚光灯</a>
+    <a class="rail-link" href="#demo-51"><b>51</b>前后对比滑块</a>
     <div class="rail-cat">动效呈现</div>
     <a class="rail-link" href="#demo-04"><b>04</b>打字机</a>
     <a class="rail-link" href="#demo-05"><b>05</b>数字滚动</a>
@@ -810,6 +868,11 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     <a class="rail-link" href="#demo-12"><b>12</b>Toast 通知</a>
     <a class="rail-link" href="#demo-13"><b>13</b>骨架屏</a>
     <a class="rail-link" href="#demo-14"><b>14</b>暗色模式</a>
+    <a class="rail-link" href="#demo-48"><b>48</b>原生对话框 + Popover</a>
+    <a class="rail-link" href="#demo-49"><b>49</b>⌘K 命令面板</a>
+    <a class="rail-link" href="#demo-50"><b>50</b>虚拟滚动（10 万行）</a>
+    <a class="rail-link" href="#demo-52"><b>52</b>拖拽上传 + 预览</a>
+    <a class="rail-link" href="#demo-53"><b>53</b>Scroll Snap 吸附</a>
     <div class="rail-cat">创意绘图</div>
     <a class="rail-link" href="#demo-15"><b>15</b>Canvas 粒子</a>
     <a class="rail-link" href="#demo-16"><b>16</b>手绘画板</a>
@@ -846,6 +909,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     <a class="rail-link" href="#demo-39"><b>39</b>:has() 选择器</a>
     <a class="rail-link" href="#demo-40"><b>40</b>Container Queries</a>
     <a class="rail-link" href="#demo-41"><b>41</b>Anchor Positioning</a>
+    <a class="rail-link" href="#demo-54"><b>54</b>@property 色阶生成</a>
     <div class="rail-cat">原生 API</div>
     <a class="rail-link" href="#demo-42"><b>42</b>View Transitions</a>
     <a class="rail-link" href="#demo-43"><b>43</b>Clipboard 剪贴板</a>
@@ -861,7 +925,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <section class="intro">
     <h2>前端交互实验室</h2>
-    <p class="lead">47 个可即开即用的前端交互演示：16 原生 + 13 精选库 + 8 前沿框架 + 10 CSS 新特性 / 原生 API。每个都带可直接复制的精简提示词；库与框架演示依赖 CDN，需联网打开。</p>
+    <p class="lead">54 个可即开即用的前端交互演示：22 原生 + 13 精选库 + 8 前沿框架 + 11 CSS 新特性 / 原生 API。每个都带可直接复制的精简提示词；库与框架演示依赖 CDN，需联网打开。</p>
   <p class="bl-legend"><span class="bl-badge bl-widely">Baseline 广泛可用</span><span class="bl-badge bl-newly">Baseline 新近可用</span><span class="bl-badge bl-limited">支持有限</span><span>按 <a href="https://web-platform-dx.github.io/baseline/" target="_blank" rel="noopener">Web Platform Baseline</a> 标注；库与框架类演示不适用 Baseline，不显示徽标。</span></p>
     <div class="steps">
       <div class="step"><b>01</b><p>体验：在下方演示区直接点击、拖拽、书写，感受交互效果。</p></div>
@@ -1812,6 +1876,124 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>navigator.share({title, text, url}) 调起系统分享面板（需用户手势 + secure context）；不支持或取消时降级 navigator.clipboard.writeText 复制链接并 toast。</pre>
     </div>
   </section>
+  <section class="demo" id="demo-48" data-baseline="widely" data-tags="dialog,modal,popover,原生,无框架,无障碍">
+    <div class="demo-head"><span class="demo-no">48</span><h3>原生对话框 + Popover</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
+    <p class="demo-desc">showModal() 自带焦点陷阱、Esc 关闭与 ::backdrop 遮罩；popover 属性则是轻量浮层。两者都不需要一行第三方 JS。</p>
+    <div class="stage" id="stage-48">
+      <button type="button" class="btn btn-primary" id="dlg-open">打开对话框</button>
+      <button type="button" class="btn btn-ghost btn-sm" popovertarget="dlg-pop" id="dlg-pop-btn">打开 Popover</button>
+      <dialog id="dlg-demo">
+        <h4>原生 &lt;dialog&gt;</h4>
+        <p>按 Esc 或点「关闭」都能退出，焦点会自动回到刚才的按钮。</p>
+        <form method="dialog"><button class="btn btn-ghost btn-sm">关闭</button></form>
+      </dialog>
+      <div id="dlg-pop" popover>我是 popover，点外面就消失。</div>
+      <span class="stage-hint">Esc 关闭 / 焦点自动归还触发器</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
+      <pre>用原生 <dialog> 做模态：dialog.showModal() 自带焦点陷阱、Esc 关闭、::backdrop 遮罩，关闭后焦点自动回到触发按钮。轻量浮层用 popover 属性 + popovertarget，点击外部区域自动收起。两者都不需要第三方库。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-49" data-baseline="widely" data-tags="command palette,⌘K,键盘导航,搜索,交互范式">
+    <div class="demo-head"><span class="demo-no">49</span><h3>⌘K 命令面板</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
+    <p class="demo-desc">输入即过滤，↑↓ 移动高亮，Enter 执行，Esc 关闭——命令面板的全部要素，60 行原生 JS。</p>
+    <div class="stage" id="stage-49">
+      <button type="button" class="btn btn-ghost btn-sm" id="cmdk-open">⌘K 打开命令面板</button>
+      <div class="cmdk-mask" id="cmdk-mask" hidden>
+        <div class="cmdk" role="dialog" aria-label="命令面板">
+          <input id="cmdk-input" type="text" placeholder="搜索命令…" aria-label="搜索命令" autocomplete="off">
+          <ul id="cmdk-list" role="listbox" aria-label="命令列表"></ul>
+        </div>
+      </div>
+      <span class="stage-hint">↑↓ 选择 · Enter 执行 · Esc 关闭</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
+      <pre>做一个 ⌘K 命令面板：遮罩 + 输入框 + 列表，输入即过滤，↑↓ 移动 is-active 高亮，Enter 执行当前项，Esc 关闭并把焦点还给触发按钮。全局监听 ⌘K / Ctrl+K 打开。要点是键盘路径完整，不依赖鼠标。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-50" data-baseline="widely" data-tags="virtual scroll,虚拟滚动,性能,长列表,渲染窗口">
+    <div class="demo-head"><span class="demo-no">50</span><h3>虚拟滚动（10 万行）</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
+    <p class="demo-desc">DOM 里始终只有约 8 个节点，滚动时按 scrollTop 换一批。10 万行也不掉帧。</p>
+    <div class="stage" id="stage-50">
+      <div class="vs-view" id="vs-view" tabindex="0" role="group" aria-label="虚拟滚动列表，共十万行">
+        <div class="vs-spacer" id="vs-spacer"><div class="vs-rows" id="vs-rows"></div></div>
+      </div>
+      <span class="stage-hint">共 100,000 行 · 实际渲染 8 个节点</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
+      <pre>虚拟滚动：容器固定高度 overflow-y:auto，内部放一个总高度的占位元素撑开滚动条，真实渲染层用 transform 定位。滚动时按 scrollTop / 行高 算出起始索引，只渲染可视区加少量缓冲的节点。10 万行时 DOM 里始终只有十来个元素。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-51" data-baseline="widely" data-tags="before after,对比,clip-path,滑块,微交互">
+    <div class="demo-head"><span class="demo-no">51</span><h3>前后对比滑块</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
+    <p class="demo-desc">一个 range 输入控制 clip-path 的 inset 百分比，无需 canvas，也不用两张图对齐。</p>
+    <div class="stage" id="stage-51">
+      <div class="cmp-wrap" id="cmp-wrap" style="--p:50%">
+        <div class="cmp-before"><span>原图</span></div>
+        <div class="cmp-after"><span>处理后</span></div>
+        <div class="cmp-handle" aria-hidden="true"></div>
+      </div>
+      <input type="range" id="cmp-range" min="0" max="100" value="50" aria-label="对比位置" class="cmp-range">
+      <span class="stage-hint">拖动滑块或键盘左右键</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
+      <pre>前后对比滑块：两层背景绝对定位叠在一起，上层用 clip-path: inset(0 0 0 var(--p)) 只显示右侧部分，一个 range 输入把百分比写进 CSS 自定义属性 --p。手柄用同一变量定位。比 canvas 简单得多，且天然支持键盘方向键。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-52" data-baseline="widely" data-tags="drag drop,上传,文件,预览,createObjectURL">
+    <div class="demo-head"><span class="demo-no">52</span><h3>拖拽上传 + 预览</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
+    <p class="demo-desc">dragover 高亮、drop 取文件、URL.createObjectURL 即时预览，全程不联网、不上传。</p>
+    <div class="stage" id="stage-52">
+      <label class="up-zone" id="up-zone">
+        <input type="file" id="up-input" accept="image/*" hidden>
+        <span class="up-txt">拖一张图片到这里，或点击选择</span>
+        <img id="up-preview" alt="" hidden>
+      </label>
+      <span class="stage-hint">文件不会离开你的浏览器</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
+      <pre>拖拽上传：容器监听 dragenter/dragover 时 preventDefault 并加高亮类，drop 时从 e.dataTransfer.files 取文件；配合隐藏的 input[type=file] 支持点击选择。预览用 URL.createObjectURL(file)，记得在替换或卸载时 revokeObjectURL 释放。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-53" data-baseline="widely" data-tags="scroll snap,吸附,轮播,横向滚动,滚动条">
+    <div class="demo-head"><span class="demo-no">53</span><h3>Scroll Snap 吸附</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
+    <p class="demo-desc">两行 CSS 就得到带惯性的横向吸附，不需要轮播库，也不拦截原生滚动。</p>
+    <div class="stage" id="stage-53">
+      <div class="snap-view" id="snap-view" tabindex="0" role="group" aria-label="横向吸附卡片，可左右滚动">
+        <div class="snap-card">01</div><div class="snap-card">02</div><div class="snap-card">03</div><div class="snap-card">04</div><div class="snap-card">05</div>
+      </div>
+      <div class="snap-dots" id="snap-dots" aria-hidden="true"></div>
+      <span class="stage-hint">触摸板横滑或键盘左右键</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
+      <pre>横向吸附：容器 overflow-x:auto 加 scroll-snap-type:x mandatory，子项加 scroll-snap-align:center，浏览器会自己把卡片吸到中心并保留惯性。监听 scroll 计算最近卡片来更新指示点，不要自己实现拖拽滚动。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-54" data-baseline="newly" data-tags="@property,color-mix,oklch,渐变,主题色,色阶">
+    <div class="demo-head"><span class="demo-no">54</span><h3>@property 色阶生成</h3><span class="bl-badge bl-newly">Baseline 新近可用</span></div>
+    <p class="demo-desc">注册一个 --hue 自定义属性后，color-mix 在 oklab 空间里插值，一个输入生成整条色阶。</p>
+    <div class="stage" id="stage-54">
+      <div class="prop-swatches" id="prop-swatches"></div>
+      <input type="range" id="prop-slider" min="0" max="360" value="24" aria-label="色相" class="cmp-range">
+      <span class="stage-hint">拖动改变色相，色阶由 color-mix 实时算出</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
+      <pre>用 @property 注册 --hue（syntax:"<number>"）后，它成为可动画、可参与计算的类型化属性；再用 oklch(亮度% 彩度 var(--hue)) 与 color-mix(in oklab, …) 生成整条色阶。相比手写 6 个十六进制值，改一个数字就能换整套主题色。</pre>
+    </div>
+  </section>
 
   <!-- ===== 调研说明 ===== -->
   <section class="research">
@@ -1827,8 +2009,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
   </section>
 
   <footer class="footer">
-    <span>前端交互实验室 · 16 原生 + 13 精选库 + 8 前沿框架 + 10 新特性 / API</span>
-    <span><b>v3.6.0</b> · Pride Versioning（Proud 3 · Default 6 · Shame 0）</span>
+    <span>前端交互实验室 · 22 原生 + 13 精选库 + 8 前沿框架 + 11 新特性 / API</span>
+    <span><b>v3.7.0</b> · Pride Versioning（Proud 3 · Default 7 · Shame 0）</span>
     <span>框架调研覆盖：State of JS / Rising Stars / HN / 掘金 / V2EX 等 8 渠道</span>
     <span>库类演示依赖 jsDelivr CDN，需联网打开</span>
   </footer>
@@ -2003,7 +2185,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       var out = [];
       out.push('<' + '!-- 演示 ' + no + ' · ' + (sec.querySelector('h3') || {}).textContent + ' -->');
       out.push(htmlPart);
-      if(cssPart) out.push('\n<style>\n' + cssPart + '\n</style>');
+      if(cssPart) out.push('\n' + '<' + 'style>' + '\n' + cssPart + '\n' + '<' + '/style>');
       if(jsPart) out.push('\n' + '<' + 'script>' + '\n' + jsPart + '\n' + '<' + '/script>');
       return { text: out.join('\n'), css: !!cssPart };
     }
@@ -3568,7 +3750,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     var btn = document.getElementById('share-run');
     if(!status || !btn) return;
     btn.addEventListener('click', function(){
-      var data = { title: '前端交互实验室', text: '47 个可即开即用的前端交互 demo，带可复制提示词。', url: location.href };
+      var data = { title: '前端交互实验室', text: '54 个可即开即用的前端交互 demo，带可复制提示词与代码。', url: location.href };
       function fallback(){
         var ta = document.createElement('textarea');
         ta.value = location.href; ta.style.position = 'fixed'; ta.style.opacity = '0';
@@ -3637,6 +3819,148 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     }, { passive: true });
   }catch(e){}
 })();
+
+  /* ===== 48 原生对话框 + Popover ===== */
+  (function(){
+    var dlgOpen = document.getElementById('dlg-open');
+    var dlg = document.getElementById('dlg-demo');
+    if(dlgOpen && dlg) dlgOpen.addEventListener('click', function(){ dlg.showModal(); });
+  })();
+
+  /* ===== 49 ⌘K 命令面板 ===== */
+  (function(){
+    var cmdkMask = document.getElementById('cmdk-mask');
+    var cmdkInput = document.getElementById('cmdk-input');
+    var cmdkList = document.getElementById('cmdk-list');
+    var cmdkOpen = document.getElementById('cmdk-open');
+    var CMDS = ['新建文件', '搜索演示', '切换主题', '复制链接', '打开设置'];
+    var cmdkIdx = 0, cmdkHits = CMDS.slice();
+
+    function cmdkPaint(){
+      cmdkList.innerHTML = cmdkHits.map(function(t, i){
+        return '<li role="option" class="' + (i === cmdkIdx ? 'is-active' : '') + '" data-i="' + i + '">' + t + '</li>';
+      }).join('') || '<li>无匹配命令</li>';
+    }
+    function cmdkShow(){ cmdkMask.hidden = false; cmdkInput.value = ''; cmdkHits = CMDS.slice(); cmdkIdx = 0; cmdkPaint(); cmdkInput.focus(); }
+    function cmdkHide(){ cmdkMask.hidden = true; cmdkOpen && cmdkOpen.focus(); }
+
+    if(cmdkOpen) cmdkOpen.addEventListener('click', cmdkShow);
+    if(cmdkInput) cmdkInput.addEventListener('input', function(){
+      var q = cmdkInput.value.trim();
+      cmdkHits = CMDS.filter(function(t){ return !q || t.indexOf(q) !== -1; });
+      cmdkIdx = 0; cmdkPaint();
+    });
+    document.addEventListener('keydown', function(e){
+      if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); cmdkShow(); return; }
+      if(cmdkMask.hidden) return;
+      if(e.key === 'Escape'){ cmdkHide(); }
+      else if(e.key === 'ArrowDown'){ e.preventDefault(); cmdkIdx = Math.min(cmdkIdx + 1, cmdkHits.length - 1); cmdkPaint(); }
+      else if(e.key === 'ArrowUp'){ e.preventDefault(); cmdkIdx = Math.max(cmdkIdx - 1, 0); cmdkPaint(); }
+      else if(e.key === 'Enter' && cmdkHits[cmdkIdx]){ showToast('success', '执行：' + cmdkHits[cmdkIdx]); cmdkHide(); }
+    });
+    if(cmdkList) cmdkList.addEventListener('click', function(e){
+      var li = e.target.closest('li[data-i]');
+      if(!li) return;
+      showToast('success', '执行：' + cmdkHits[+li.getAttribute('data-i')]);
+      cmdkHide();
+    });
+  })();
+
+  /* ===== 50 虚拟滚动（10 万行） ===== */
+  (function(){
+    var vsView = document.getElementById('vs-view');
+    var vsSpacer = document.getElementById('vs-spacer');
+    var vsRows = document.getElementById('vs-rows');
+    var ROW_H = 32, TOTAL_ROWS = 100000, VISIBLE = 8, BUFFER = 2;
+    if(vsView && vsSpacer && vsRows){
+      vsSpacer.style.height = (ROW_H * TOTAL_ROWS) + 'px';
+      function vsPaint(){
+        var start = Math.max(0, Math.floor(vsView.scrollTop / ROW_H) - BUFFER);
+        var end = Math.min(TOTAL_ROWS, start + VISIBLE + BUFFER * 2);
+        var html = '';
+        for(var i = start; i < end; i++){
+          html += '<div class="vs-row"><span>第 ' + (i + 1) + ' 行 · 虚拟列表条目</span><b>#' + (i + 1) + '</b></div>';
+        }
+        vsRows.innerHTML = html;
+        vsRows.style.transform = 'translateY(' + (start * ROW_H) + 'px)';
+      }
+      vsView.addEventListener('scroll', vsPaint, { passive: true });
+      vsPaint();
+    }
+  })();
+
+  /* ===== 51 前后对比滑块 ===== */
+  (function(){
+    var cmpWrap = document.getElementById('cmp-wrap');
+    var cmpRange = document.getElementById('cmp-range');
+    if(cmpWrap && cmpRange){
+      cmpRange.addEventListener('input', function(){
+        cmpWrap.style.setProperty('--p', cmpRange.value + '%');
+      });
+    }
+  })();
+
+  /* ===== 52 拖拽上传 + 预览 ===== */
+  (function(){
+    var upZone = document.getElementById('up-zone');
+    var upInput = document.getElementById('up-input');
+    var upPreview = document.getElementById('up-preview');
+    function upShow(file){
+      if(!file || !/^image\//.test(file.type)){ showToast('error', '请拖入图片文件'); return; }
+      upPreview.src = URL.createObjectURL(file);
+      upPreview.hidden = false;
+      showToast('success', '已预览 ' + file.name + '（' + Math.round(file.size / 1024) + ' KB）');
+    }
+    if(upZone){
+      ['dragenter', 'dragover'].forEach(function(t){
+        upZone.addEventListener(t, function(e){ e.preventDefault(); upZone.classList.add('is-over'); });
+      });
+      ['dragleave', 'drop'].forEach(function(t){
+        upZone.addEventListener(t, function(e){ e.preventDefault(); upZone.classList.remove('is-over'); });
+      });
+      upZone.addEventListener('drop', function(e){
+        var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        upShow(f);
+      });
+      if(upInput) upInput.addEventListener('change', function(){ upShow(upInput.files[0]); });
+    }
+  })();
+
+  /* ===== 53 Scroll Snap 吸附 ===== */
+  (function(){
+    var snapView = document.getElementById('snap-view');
+    var snapDots = document.getElementById('snap-dots');
+    if(snapView && snapDots){
+      var cards = Array.prototype.slice.call(snapView.querySelectorAll('.snap-card'));
+      snapDots.innerHTML = cards.map(function(){ return '<i></i>'; }).join('');
+      var dotEls = Array.prototype.slice.call(snapDots.children);
+      snapView.addEventListener('scroll', function(){
+        var mid = snapView.scrollLeft + snapView.clientWidth / 2;
+        var nearest = 0, best = Infinity;
+        cards.forEach(function(c, i){
+          var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
+          if(d < best){ best = d; nearest = i; }
+        });
+        dotEls.forEach(function(d, i){ d.classList.toggle('is-on', i === nearest); });
+      }, { passive: true });
+      dotEls[0] && dotEls[0].classList.add('is-on');
+    }
+  })();
+
+  /* ===== 54 @property 色阶生成 ===== */
+  (function(){
+    var propSlider = document.getElementById('prop-slider');
+    var propSw = document.getElementById('prop-swatches');
+    if(propSw && propSlider){
+      var html = '';
+      for(var i = 0; i < 6; i++) html += '<i></i>';
+      propSw.innerHTML = html;
+      propSw.style.setProperty('--hue', propSlider.value);
+      propSlider.addEventListener('input', function(){
+        propSw.style.setProperty('--hue', propSlider.value);
+      });
+    }
+  })();
 </script>
 </body>
 </html>
