@@ -371,7 +371,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;op
 .lab-swiper .s5{background:linear-gradient(135deg,#D98A2B,#F0BE6C)}
 .lab-swiper .swiper-pagination-bullet{background:var(--ink-3);opacity:.4}
 .lab-swiper .swiper-pagination-bullet-active{background:var(--accent);opacity:1}
-.lab-swiper .swiper-button-prev,.lab-swiper .swiper-button-next{color:var(--ink-2)}
+.lab-swiper .swiper-button-prev,.lab-swiper .swiper-button-next{color:var(--ink-2);background:transparent;border:0;padding:0;cursor:pointer}
 .lab-swiper .swiper-button-prev:after,.lab-swiper .swiper-button-next:after{font-size:15px;font-weight:700}
 
 /* ===== 26 Embla 轻量轮播 ===== */
@@ -731,6 +731,16 @@ html[data-theme="dark"] .anc-pop{background:rgba(32,29,25,.92)}
 html[data-theme="dark"] .ambient[data-glow] i{opacity:.4;transition:opacity .9s ease,filter .9s ease}
 html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .ambient[data-glow="g2"] .a4,html[data-theme="dark"] .ambient[data-glow="g3"] .a2,html[data-theme="dark"] .ambient[data-glow="g4"] .a3{opacity:1;filter:brightness(1.75)}
 @media(prefers-reduced-motion:reduce){html[data-theme="dark"] .ambient i{transition:none}}
+
+/* ===== Baseline 支持度徽标（文字色用 --ink，颜色只放在圆点上） ===== */
+.bl-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border:1px solid var(--line);border-radius:999px;font-size:11px;font-family:var(--font-mono);color:var(--ink);line-height:1.7;white-space:nowrap}
+.bl-badge::before{content:"";width:7px;height:7px;border-radius:50%;flex:none}
+.bl-widely::before{background:var(--ok)}
+.bl-newly::before{background:var(--warn)}
+.bl-limited::before{background:var(--err)}
+.demo-head .bl-badge{margin-left:auto}
+.bl-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0 0;font-size:12.5px;color:var(--ink-2)}
+.bl-legend a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
 </style>
 <script>try{var lt=localStorage.getItem('lab-theme');document.documentElement.setAttribute('data-theme',lt==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}try{var la=localStorage.getItem('lab-accent');if(la)document.documentElement.setAttribute('data-accent',la)}catch(e){}</script>
 </head>
@@ -828,6 +838,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
   <section class="intro">
     <h2>前端交互实验室</h2>
     <p class="lead">47 个可即开即用的前端交互演示：16 原生 + 13 精选库 + 8 前沿框架 + 10 CSS 新特性 / 原生 API。每个都带可直接复制的精简提示词；库与框架演示依赖 CDN，需联网打开。</p>
+  <p class="bl-legend"><span class="bl-badge bl-widely">Baseline 广泛可用</span><span class="bl-badge bl-newly">Baseline 新近可用</span><span class="bl-badge bl-limited">支持有限</span><span>按 <a href="https://web-platform-dx.github.io/baseline/" target="_blank" rel="noopener">Web Platform Baseline</a> 标注；库与框架类演示不适用 Baseline，不显示徽标。</span></p>
     <div class="steps">
       <div class="step"><b>01</b><p>体验：在下方演示区直接点击、拖拽、书写，感受交互效果。</p></div>
       <div class="step"><b>02</b><p>复制：点击提示词区块右上角的「复制提示词」，拿到精简实现描述。</p></div>
@@ -873,8 +884,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 微交互 ===== -->
 
-  <section class="demo" id="demo-01" data-tags="ripple,按钮,微交互,原生,material,水波纹">
-    <div class="demo-head"><span class="demo-no">01</span><h3>涟漪按钮</h3></div>
+  <section class="demo" id="demo-01" data-baseline="widely" data-tags="ripple,按钮,微交互,原生,material,水波纹">
+    <div class="demo-head"><span class="demo-no">01</span><h3>涟漪按钮</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">点击按钮，波纹从指针落点向外扩散并淡出，原生实现。</p>
     <div class="stage" id="stage-01">
       <button type="button" class="btn btn-primary ripple-demo">保存</button>
@@ -888,8 +899,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-02" data-tags="magnetic,磁性,按钮,微交互,物理,磁吸">
-    <div class="demo-head"><span class="demo-no">02</span><h3>磁性按钮</h3></div>
+  <section class="demo" id="demo-02" data-baseline="widely" data-tags="magnetic,磁性,按钮,微交互,物理,磁吸">
+    <div class="demo-head"><span class="demo-no">02</span><h3>磁性按钮</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">光标靠近时按钮被轻轻吸引，离开后弹性回位。仅桌面端生效。</p>
     <div class="stage" id="stage-02">
       <button type="button" class="btn btn-primary mag-btn">开始体验</button>
@@ -903,8 +914,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-03" data-tags="spotlight,光标,聚光灯,mask,高亮,跟随">
-    <div class="demo-head"><span class="demo-no">03</span><h3>光标聚光灯</h3></div>
+  <section class="demo" id="demo-03" data-baseline="widely" data-tags="spotlight,光标,聚光灯,mask,高亮,跟随">
+    <div class="demo-head"><span class="demo-no">03</span><h3>光标聚光灯</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">光标经过时照亮局部区域，其余内容压暗。触屏设备自动隐藏。</p>
     <div class="stage" id="stage-03">
       <div class="spot-wrap">
@@ -922,8 +933,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 动效呈现 ===== -->
 
-  <section class="demo" id="demo-04" data-tags="typewriter,打字机,文字,循环,光标">
-    <div class="demo-head"><span class="demo-no">04</span><h3>打字机</h3></div>
+  <section class="demo" id="demo-04" data-baseline="widely" data-tags="typewriter,打字机,文字,循环,光标">
+    <div class="demo-head"><span class="demo-no">04</span><h3>打字机</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">多段文案逐字打出、停顿、删除再循环，带闪烁光标。</p>
     <div class="stage" id="stage-04">
       <p class="type-line"><span id="type-text" class="type-text"></span><span class="type-caret" aria-hidden="true"></span></p>
@@ -934,8 +945,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-05" data-tags="counter,数字滚动,countup,缓动,rAF,统计">
-    <div class="demo-head"><span class="demo-no">05</span><h3>数字滚动</h3></div>
+  <section class="demo" id="demo-05" data-baseline="widely" data-tags="counter,数字滚动,countup,缓动,rAF,统计">
+    <div class="demo-head"><span class="demo-no">05</span><h3>数字滚动</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">数字从 0 平滑递增到目标值，rAF + 缓动函数实现。</p>
     <div class="stage" id="stage-05">
       <div class="stat"><b class="stat-num" data-target="128">0</b><span>用户数</span></div>
@@ -950,8 +961,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-06" data-tags="reveal,滚动揭示,进入视口,intersection,淡入">
-    <div class="demo-head"><span class="demo-no">06</span><h3>滚动揭示</h3></div>
+  <section class="demo" id="demo-06" data-baseline="widely" data-tags="reveal,滚动揭示,进入视口,intersection,淡入">
+    <div class="demo-head"><span class="demo-no">06</span><h3>滚动揭示</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">元素进入视口时淡入上移呈现，IntersectionObserver 触发一次。</p>
     <div class="stage stage-col" id="stage-06">
       <p class="reveal-item">第 1 行 · 进入视口即淡入</p>
@@ -966,11 +977,11 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-07" data-tags="parallax,视差,滚动,层次,背景">
-    <div class="demo-head"><span class="demo-no">07</span><h3>视差滚动</h3></div>
+  <section class="demo" id="demo-07" data-baseline="widely" data-tags="parallax,视差,滚动,层次,背景">
+    <div class="demo-head"><span class="demo-no">07</span><h3>视差滚动</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">背景层以 0.45 倍速移动，前景自然滚动，形成层次感。</p>
     <div class="stage" id="stage-07">
-      <div class="px-view">
+      <div class="px-view" tabindex="0" role="group" aria-label="视差滚动演示区域">
         <div class="px-bg" aria-hidden="true"><span class="px-dot px-dot-1"></span><span class="px-dot px-dot-2"></span><span class="px-dot px-dot-3"></span></div>
         <div class="px-fg">
           <h4>远景缓慢移动，近景正常滚动</h4>
@@ -987,8 +998,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-08" data-tags="flip,翻转,3d,卡片,perspective,rotateY">
-    <div class="demo-head"><span class="demo-no">08</span><h3>3D 翻转</h3></div>
+  <section class="demo" id="demo-08" data-baseline="widely" data-tags="flip,翻转,3d,卡片,perspective,rotateY">
+    <div class="demo-head"><span class="demo-no">08</span><h3>3D 翻转</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">perspective + rotateY 实现正反面翻转，hover 与点击均可触发。</p>
     <div class="stage" id="stage-08">
       <div class="flip" role="button" tabindex="0" aria-label="3D 翻转演示，点击翻转">
@@ -1007,8 +1018,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 交互范式 ===== -->
 
-  <section class="demo" id="demo-09" data-tags="drag,拖拽,排序,dnd,列表,拖放">
-    <div class="demo-head"><span class="demo-no">09</span><h3>拖拽排序</h3></div>
+  <section class="demo" id="demo-09" data-baseline="widely" data-tags="drag,拖拽,排序,dnd,列表,拖放">
+    <div class="demo-head"><span class="demo-no">09</span><h3>拖拽排序</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">HTML5 原生拖放实现列表重排，拖起项半透明占位。</p>
     <div class="stage" id="stage-09">
       <ul class="drag-list" id="drag-list">
@@ -1026,8 +1037,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-10" data-tags="accordion,折叠,手风琴,展开,faq">
-    <div class="demo-head"><span class="demo-no">10</span><h3>折叠面板</h3></div>
+  <section class="demo" id="demo-10" data-baseline="widely" data-tags="accordion,折叠,手风琴,展开,faq">
+    <div class="demo-head"><span class="demo-no">10</span><h3>折叠面板</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">同一时间仅展开一项，grid-template-rows 平滑过渡。</p>
     <div class="stage stage-col" id="stage-10">
       <div class="acc-item acc-open">
@@ -1049,8 +1060,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-11" data-tags="tab,标签页,切换,导航,下划线">
-    <div class="demo-head"><span class="demo-no">11</span><h3>Tab 切换</h3></div>
+  <section class="demo" id="demo-11" data-baseline="widely" data-tags="tab,标签页,切换,导航,下划线">
+    <div class="demo-head"><span class="demo-no">11</span><h3>Tab 切换</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">标签切换内容面板，下滑指示线平滑滑动到当前项。</p>
     <div class="stage stage-col" id="stage-11">
       <div class="tabs">
@@ -1073,8 +1084,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-12" data-tags="toast,通知,提示,弹窗,反馈">
-    <div class="demo-head"><span class="demo-no">12</span><h3>Toast 通知</h3></div>
+  <section class="demo" id="demo-12" data-baseline="widely" data-tags="toast,通知,提示,弹窗,反馈">
+    <div class="demo-head"><span class="demo-no">12</span><h3>Toast 通知</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">右上角堆叠弹出，支持三种类型，自动消失可手动关闭。</p>
     <div class="stage" id="stage-12">
       <button type="button" class="btn btn-primary toast-trigger" data-type="success">成功通知</button>
@@ -1088,8 +1099,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-13" data-tags="skeleton,骨架屏,加载,loading,占位">
-    <div class="demo-head"><span class="demo-no">13</span><h3>骨架屏</h3></div>
+  <section class="demo" id="demo-13" data-baseline="widely" data-tags="skeleton,骨架屏,加载,loading,占位">
+    <div class="demo-head"><span class="demo-no">13</span><h3>骨架屏</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">加载前灰块占位并带流动高光，数据就绪后淡出换内容。</p>
     <div class="stage stage-col" id="stage-13">
       <div class="sk-wrap">
@@ -1117,8 +1128,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-14" data-tags="dark,暗色,主题,mode,css变量,夜间">
-    <div class="demo-head"><span class="demo-no">14</span><h3>暗色模式</h3></div>
+  <section class="demo" id="demo-14" data-baseline="widely" data-tags="dark,暗色,主题,mode,css变量,夜间">
+    <div class="demo-head"><span class="demo-no">14</span><h3>暗色模式</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">CSS 变量 + 状态类切换主题，偏好写入 localStorage 自动恢复。</p>
     <div class="stage" id="stage-14">
       <div class="dm-panel">
@@ -1135,8 +1146,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 创意绘图 ===== -->
 
-  <section class="demo" id="demo-15" data-tags="particle,粒子,canvas,连线,斥力,交互">
-    <div class="demo-head"><span class="demo-no">15</span><h3>Canvas 粒子</h3></div>
+  <section class="demo" id="demo-15" data-baseline="widely" data-tags="particle,粒子,canvas,连线,斥力,交互">
+    <div class="demo-head"><span class="demo-no">15</span><h3>Canvas 粒子</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">粒子匀速运动，距离过近自动连线，鼠标经过产生斥力。</p>
     <div class="stage stage-canvas" id="stage-15">
       <canvas id="px-canvas"></canvas>
@@ -1148,8 +1159,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-16" data-tags="draw,画板,绘画,canvas,笔,手绘">
-    <div class="demo-head"><span class="demo-no">16</span><h3>手绘画板</h3></div>
+  <section class="demo" id="demo-16" data-baseline="widely" data-tags="draw,画板,绘画,canvas,笔,手绘">
+    <div class="demo-head"><span class="demo-no">16</span><h3>手绘画板</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">Pointer Events 绘制平滑曲线，支持笔宽、颜色与清空。</p>
     <div class="stage stage-col stage-draw" id="stage-16">
       <div class="draw-toolbar">
@@ -1175,7 +1186,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 库 · 动效 ===== -->
 
-  <section class="demo" id="demo-17" data-lib="gsap" data-tags="gsap,滚动,编排,scrolltrigger,动画,库">
+  <section class="demo" id="demo-17" data-baseline="na" data-lib="gsap" data-tags="gsap,滚动,编排,scrolltrigger,动画,库">
     <div class="demo-head"><span class="demo-no">17</span><h3>GSAP 滚动编排</h3></div>
     <p class="demo-desc">GSAP + ScrollTrigger：进入视口自动播放，点击按钮随时重放时间线。</p>
     <div class="stage stage-col" id="stage-17">
@@ -1193,7 +1204,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-18" data-lib="lottie" data-tags="lottie,矢量,动画,json,svg,库">
+  <section class="demo" id="demo-18" data-baseline="na" data-lib="lottie" data-tags="lottie,矢量,动画,json,svg,库">
     <div class="demo-head"><span class="demo-no">18</span><h3>Lottie 矢量动画</h3></div>
     <p class="demo-desc">播放内联 bodymovin 动画 JSON，SVG 渲染矢量缩放不失真，可暂停。</p>
     <div class="stage" id="stage-18">
@@ -1207,7 +1218,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-19" data-lib="anime" data-tags="anime,补间,tween,时间线,动画,库">
+  <section class="demo" id="demo-19" data-baseline="na" data-lib="anime" data-tags="anime,补间,tween,时间线,动画,库">
     <div class="demo-head"><span class="demo-no">19</span><h3>Anime.js 补间</h3></div>
     <p class="demo-desc">一条时间线串联位移、旋转、缩放与颜色循环补间，一键触发。</p>
     <div class="stage" id="stage-19">
@@ -1221,7 +1232,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-20" data-lib="motion" data-tags="motion,stagger,交错,弹簧,动画,库">
+  <section class="demo" id="demo-20" data-baseline="na" data-lib="motion" data-tags="motion,stagger,交错,弹簧,动画,库">
     <div class="demo-head"><span class="demo-no">20</span><h3>Motion 交错</h3></div>
     <p class="demo-desc">Motion（motion.dev）的 stagger 让列表项依次弹出，进入视口自动播放。</p>
     <div class="stage stage-col" id="stage-20">
@@ -1239,7 +1250,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 库 · 3D 与视觉 ===== -->
 
-  <section class="demo" id="demo-21" data-lib="three" data-tags="three,3d,webgl,threejs,场景,库">
+  <section class="demo" id="demo-21" data-baseline="na" data-lib="three" data-tags="three,3d,webgl,threejs,场景,库">
     <div class="demo-head"><span class="demo-no">21</span><h3>Three.js 3D</h3></div>
     <p class="demo-desc">WebGL 场景：环面结自转 + 点光源，鼠标移动改变视角姿态。</p>
     <div class="stage" id="stage-21">
@@ -1252,7 +1263,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-22" data-lib="p5" data-tags="p5,生成艺术,粒子,canvas,库">
+  <section class="demo" id="demo-22" data-baseline="na" data-lib="p5" data-tags="p5,生成艺术,粒子,canvas,库">
     <div class="demo-head"><span class="demo-no">22</span><h3>p5.js 生成艺术</h3></div>
     <p class="demo-desc">移动光标，彩色粒子沿路径流动，半透明覆盖形成笔触拖尾。</p>
     <div class="stage" id="stage-22">
@@ -1267,7 +1278,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 库 · 数据可视化 ===== -->
 
-  <section class="demo" id="demo-23" data-lib="echarts" data-tags="echarts,图表,折线,数据可视化,实时,库">
+  <section class="demo" id="demo-23" data-baseline="na" data-lib="echarts" data-tags="echarts,图表,折线,数据可视化,实时,库">
     <div class="demo-head"><span class="demo-no">23</span><h3>ECharts 动态图表</h3></div>
     <p class="demo-desc">折线图每 2s 追加数据点，模拟实时监控面板，可暂停与重置。</p>
     <div class="stage" id="stage-23">
@@ -1284,7 +1295,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-24" data-lib="d3" data-tags="d3,力导向,graph,图,数据可视化,库">
+  <section class="demo" id="demo-24" data-baseline="na" data-lib="d3" data-tags="d3,力导向,graph,图,数据可视化,库">
     <div class="demo-head"><span class="demo-no">24</span><h3>D3 力导向图</h3></div>
     <p class="demo-desc">力导向布局 + 节点拖拽：拖动任意节点，整图按物理规则重新分布。</p>
     <div class="stage" id="stage-24">
@@ -1299,7 +1310,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 库 · 滑动组件 ===== -->
 
-  <section class="demo" id="demo-25" data-lib="swiper" data-tags="swiper,轮播,carousel,3d,coverflow,库">
+  <section class="demo" id="demo-25" data-baseline="na" data-lib="swiper" data-tags="swiper,轮播,carousel,3d,coverflow,库">
     <div class="demo-head"><span class="demo-no">25</span><h3>Swiper 3D 轮播</h3></div>
     <p class="demo-desc">coverflow 3D 效果轮播：自动播放 + 分页器与前后箭头。</p>
     <div class="stage" id="stage-25">
@@ -1312,8 +1323,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
           <div class="swiper-slide s5">05</div>
         </div>
         <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev" aria-label="上一张"></div>
-        <div class="swiper-button-next" aria-label="下一张"></div>
+        <button type="button" class="swiper-button-prev" aria-label="上一张"></button>
+        <button type="button" class="swiper-button-next" aria-label="下一张"></button>
       </div>
       <span class="stage-hint">左右滑动或点击箭头</span>
     </div>
@@ -1323,7 +1334,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-26" data-lib="embla" data-tags="embla,轮播,carousel,轻量,滑动,库">
+  <section class="demo" id="demo-26" data-baseline="na" data-lib="embla" data-tags="embla,轮播,carousel,轻量,滑动,库">
     <div class="demo-head"><span class="demo-no">26</span><h3>Embla 轻量轮播</h3></div>
     <p class="demo-desc">drag free 滑动 + 上/下一张控制，核心 API 仅约 12KB，无依赖。</p>
     <div class="stage" id="stage-26">
@@ -1352,7 +1363,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 库 · 手势音频与主题 ===== -->
 
-  <section class="demo" id="demo-27" data-lib="hammer" data-tags="hammer,手势,gesture,触摸,库">
+  <section class="demo" id="demo-27" data-baseline="na" data-lib="hammer" data-tags="hammer,手势,gesture,触摸,库">
     <div class="demo-head"><span class="demo-no">27</span><h3>Hammer 手势识别</h3></div>
     <p class="demo-desc">在面板上做手势：点击、长按、滑动、拖拽，实时显示识别结果。</p>
     <div class="stage" id="stage-27">
@@ -1368,7 +1379,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-28" data-lib="tone" data-tags="tone,音频,音乐,音序器,合成器,webaudio,库">
+  <section class="demo" id="demo-28" data-baseline="na" data-lib="tone" data-tags="tone,音频,音乐,音序器,合成器,webaudio,库">
     <div class="demo-head"><span class="demo-no">28</span><h3>Tone 音序器</h3></div>
     <p class="demo-desc">8 步音序器：点击格子编辑节拍，播放时高亮走位并发声。</p>
     <div class="stage" id="stage-28">
@@ -1407,8 +1418,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-29" data-tags="theme,主题,css变量,多主题,配色">
-    <div class="demo-head"><span class="demo-no">29</span><h3>多主题切换</h3></div>
+  <section class="demo" id="demo-29" data-baseline="widely" data-tags="theme,主题,css变量,多主题,配色">
+    <div class="demo-head"><span class="demo-no">29</span><h3>多主题切换</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">同一套组件四个主题一键切换：颜色全部走 CSS 变量，原生实现。</p>
     <div class="stage" id="stage-29">
       <div class="theme-demo">
@@ -1435,7 +1446,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   <!-- ===== 框架与生态 ===== -->
 
-  <section class="demo" id="demo-30" data-lib="vue" data-tags="vue,响应式,ref,computed,v-model,组件,框架">
+  <section class="demo" id="demo-30" data-baseline="na" data-lib="vue" data-tags="vue,响应式,ref,computed,v-model,组件,框架">
     <div class="demo-head"><span class="demo-no">30</span><h3>Vue 3.5 响应式</h3></div>
     <p class="demo-desc">createApp 全局构建：ref 计数器、v-model 双向输入、computed 实时字数；子组件演示 3.5 响应式 props 解构。</p>
     <div class="stage" id="stage-30">
@@ -1448,7 +1459,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-31" data-lib="preact" data-tags="preact,react,htm,hooks,usestate,useeffect,函数组件,框架">
+  <section class="demo" id="demo-31" data-baseline="na" data-lib="preact" data-tags="preact,react,htm,hooks,usestate,useeffect,函数组件,框架">
     <div class="demo-head"><span class="demo-no">31</span><h3>Preact + htm</h3></div>
     <p class="demo-desc">htm.bind(preact.h) 免 JSX 编译，函数组件 + useState/useEffect 计数器，组件化拆分。</p>
     <div class="stage" id="stage-31">
@@ -1462,7 +1473,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-32" data-lib="htmx" data-tags="htmx,超媒体,局部刷新,ajax,swap,轮询,框架">
+  <section class="demo" id="demo-32" data-baseline="na" data-lib="htmx" data-tags="htmx,超媒体,局部刷新,ajax,swap,轮询,框架">
     <div class="demo-head"><span class="demo-no">32</span><h3>htmx 超媒体</h3></div>
     <p class="demo-desc">hx-get 触发局部内容 swap；every 3s 轮询。file:// 下用内联 template 模拟响应，双击即可运行。</p>
     <div class="stage" id="stage-32">
@@ -1483,7 +1494,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-33" data-lib="alpine" data-tags="alpine,属性驱动,下拉,模态,stepper,零js,框架">
+  <section class="demo" id="demo-33" data-baseline="na" data-lib="alpine" data-tags="alpine,属性驱动,下拉,模态,stepper,零js,框架">
     <div class="demo-head"><span class="demo-no">33</span><h3>Alpine.js 属性驱动</h3></div>
     <p class="demo-desc">纯 x-data / x-show / x-on / x-bind 实现下拉、模态、数量器，零手写业务 JS。</p>
     <div class="stage" id="stage-33" x-data="{open:false, modal:false, qty:1}">
@@ -1518,7 +1529,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-34" data-lib="tailwind" data-tags="tailwind,css,原子类,utility,暗色,运行时编译,框架">
+  <section class="demo" id="demo-34" data-baseline="na" data-lib="tailwind" data-tags="tailwind,css,原子类,utility,暗色,运行时编译,框架">
     <div class="demo-head"><span class="demo-no">34</span><h3>Tailwind CSS v4 原子类</h3></div>
     <p class="demo-desc">@tailwindcss/browser 运行时即时编译；utility 写按钮/徽章，可切暗色，class 编辑器实时预览。</p>
     <div class="stage" id="stage-34">
@@ -1545,7 +1556,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-35" data-lib="jotai" data-tags="jotai,原子,状态管理,store,派生atom,细粒度,框架">
+  <section class="demo" id="demo-35" data-baseline="na" data-lib="jotai" data-tags="jotai,原子,状态管理,store,派生atom,细粒度,框架">
     <div class="demo-head"><span class="demo-no">35</span><h3>Jotai 原子状态</h3></div>
     <p class="demo-desc">vanilla UMD 不依赖 React：多订阅共享 atom，任一处修改局部更新；一颗派生 atom 依赖两颗基础 atom。</p>
     <div class="stage" id="stage-35">
@@ -1581,7 +1592,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-36" data-lib="rxjs" data-tags="rxjs,响应式流,debounce,switchmap,throttle,observable,框架">
+  <section class="demo" id="demo-36" data-baseline="na" data-lib="rxjs" data-tags="rxjs,响应式流,debounce,switchmap,throttle,observable,框架">
     <div class="demo-head"><span class="demo-no">36</span><h3>RxJS 响应式流</h3></div>
     <p class="demo-desc">输入流 debounceTime(300) + switchMap 模拟搜索；鼠标移动 throttleTime 节流显示坐标。</p>
     <div class="stage" id="stage-36">
@@ -1600,7 +1611,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-37" data-lib="lit" data-tags="lit,web component,shadow dom,自定义元素,esm,框架">
+  <section class="demo" id="demo-37" data-baseline="na" data-lib="lit" data-tags="lit,web component,shadow dom,自定义元素,esm,框架">
     <div class="demo-head"><span class="demo-no">37</span><h3>Lit Web Components</h3></div>
     <p class="demo-desc">动态 import ESM 加载 Lit，注册 &lt;live-clock&gt; 与 &lt;count-up&gt;：Shadow DOM 封装、响应式属性、框架无关。</p>
     <div class="stage" id="stage-37">
@@ -1617,11 +1628,11 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     </div>
   </section>
 
-  <section class="demo" id="demo-38" data-tags="css,scroll-timeline,view-timeline,滚动驱动,新特性">
-    <div class="demo-head"><span class="demo-no">38</span><h3>滚动驱动动画</h3></div>
+  <section class="demo" id="demo-38" data-baseline="limited" data-tags="css,scroll-timeline,view-timeline,滚动驱动,新特性">
+    <div class="demo-head"><span class="demo-no">38</span><h3>滚动驱动动画</h3><span class="bl-badge bl-limited">支持有限</span></div>
     <p class="demo-desc">CSS <code>view-timeline</code> 让动画进度直接绑定滚动位置：卡片随进入视角缩放、上浮、变色，零 JS。</p>
     <div class="stage" id="stage-38">
-      <div class="sd-track" id="sd-track">
+      <div class="sd-track" id="sd-track" tabindex="0" role="group" aria-label="手势拖拽卡片列表">
         <span class="sd-chip">A</span><span class="sd-chip">B</span><span class="sd-chip">C</span><span class="sd-chip">D</span><span class="sd-chip">E</span><span class="sd-chip">F</span><span class="sd-chip">G</span><span class="sd-chip">H</span><span class="sd-chip">I</span><span class="sd-chip">J</span><span class="sd-chip">K</span><span class="sd-chip">L</span><span class="sd-chip">M</span><span class="sd-chip">N</span>
       </div>
       <p class="fw-note" id="sd-note">横向拖动轨道，卡片随进入/离开视角自动缩放上浮。需 Chrome 115+ 支持 animation-timeline。</p>
@@ -1631,8 +1642,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>用 animation-timeline: view(inline) 把 keyframes 绑定到滚动视角：卡片进入视口时 scale/opacity/translate 随进度变化，离开反向回退。纯 CSS，无滚动监听 JS。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-39" data-tags="css,:has(),关系选择器,父级感知,新特性">
-    <div class="demo-head"><span class="demo-no">39</span><h3>:has() 选择器</h3></div>
+  <section class="demo" id="demo-39" data-baseline="newly" data-tags="css,:has(),关系选择器,父级感知,新特性">
+    <div class="demo-head"><span class="demo-no">39</span><h3>:has() 选择器</h3><span class="bl-badge bl-newly">Baseline 新近可用</span></div>
     <p class="demo-desc"><code>:has()</code> 让父级感知子级状态：勾选卡片即整卡高亮加徽章，跨分支影响无需 JS 类切换。</p>
     <div class="stage" id="stage-39">
       <div class="has-grid">
@@ -1650,8 +1661,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>用 .card:has(input:checked) 让父级感知子项选中态：选中时整卡高亮、伪元素显示徽章；:has(+ ) 还能做相邻兄弟影响。省掉 JS 类切换。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-40" data-tags="css,container queries,容器查询,响应式,新特性">
-    <div class="demo-head"><span class="demo-no">40</span><h3>Container Queries</h3></div>
+  <section class="demo" id="demo-40" data-baseline="newly" data-tags="css,container queries,容器查询,响应式,新特性">
+    <div class="demo-head"><span class="demo-no">40</span><h3>Container Queries</h3><span class="bl-badge bl-newly">Baseline 新近可用</span></div>
     <p class="demo-desc">容器查询按「容器宽度」而非视口响应：拖窄容器，卡片自动从横排变纵排、字号变小。</p>
     <div class="stage" id="stage-40">
       <input type="range" id="cq-range" min="220" max="620" value="620" aria-label="容器宽度">
@@ -1666,8 +1677,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>容器设 container-type: inline-size，内部组件用 @container (max-width: 360px) 断点切换布局/字号，响应式绑定到容器而非视口，组件可复用。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-41" data-tags="css,anchor positioning,锚点定位,气泡,新特性">
-    <div class="demo-head"><span class="demo-no">41</span><h3>Anchor Positioning</h3></div>
+  <section class="demo" id="demo-41" data-baseline="limited" data-tags="css,anchor positioning,锚点定位,气泡,新特性">
+    <div class="demo-head"><span class="demo-no">41</span><h3>Anchor Positioning</h3><span class="bl-badge bl-limited">支持有限</span></div>
     <p class="demo-desc">锚点定位让弹层相对任意锚点摆放：拖拽锚点，气泡自动跟随；点击切换四向位置。</p>
     <div class="stage" id="stage-41">
       <div class="anc-wrap" id="anc-wrap">
@@ -1685,8 +1696,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>锚点元素设 anchor-name: --anc，弹层用 position-anchor: --anc + position-area: top 定位；旧浏览器用 getBoundingClientRect 手动摆位降级。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-42" data-tags="api,view transitions,页面过渡,新特性">
-    <div class="demo-head"><span class="demo-no">42</span><h3>View Transitions</h3></div>
+  <section class="demo" id="demo-42" data-baseline="newly" data-tags="api,view transitions,页面过渡,新特性">
+    <div class="demo-head"><span class="demo-no">42</span><h3>View Transitions</h3><span class="bl-badge bl-newly">Baseline 新近可用</span></div>
     <p class="demo-desc"><code>document.startViewTransition()</code> 让视图切换拥有平滑的交叉淡化，浏览器自动捕获新旧状态。</p>
     <div class="stage" id="stage-42">
       <button type="button" class="btn btn-primary btn-sm" id="vt-toggle">切换为列表视图</button>
@@ -1700,8 +1711,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>document.startViewTransition(() => 切换视图类) 一行触发平滑过渡：浏览器自动做新旧快照交叉淡化，降级直接切换。适合多视图页面的廉价转场。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-43" data-tags="api,clipboard,剪贴板,复制,粘贴">
-    <div class="demo-head"><span class="demo-no">43</span><h3>Clipboard 剪贴板</h3></div>
+  <section class="demo" id="demo-43" data-baseline="widely" data-tags="api,clipboard,剪贴板,复制,粘贴">
+    <div class="demo-head"><span class="demo-no">43</span><h3>Clipboard 剪贴板</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">Async Clipboard API 读写剪贴板：复制演示文本、读取剪贴板内容，均可在 file:// 下工作。</p>
     <div class="stage" id="stage-43">
       <p class="cl-src" id="cl-src">这段文字将被复制到剪贴板——来自 Clipboard API 演示。</p>
@@ -1716,8 +1727,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>navigator.clipboard.writeText / readText 异步读写剪贴板，需用户手势与 secure context；旧环境降级 document.execCommand("copy") + textarea 兜底。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-44" data-tags="api,speech,语音合成,tts">
-    <div class="demo-head"><span class="demo-no">44</span><h3>Speech 语音合成</h3></div>
+  <section class="demo" id="demo-44" data-baseline="widely" data-tags="api,speech,语音合成,tts">
+    <div class="demo-head"><span class="demo-no">44</span><h3>Speech 语音合成</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">SpeechSynthesis 让页面开口朗读：中文朗读演示文案，语速可调，支持播放与停止。</p>
     <div class="stage" id="stage-44">
       <p class="sp-src">你好，我是浏览器语音合成。前端交互实验室用原生 API 演示朗读能力，语速可以通过下方的滑块调节。</p>
@@ -1733,8 +1744,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>new SpeechSynthesisUtterance(text) + speechSynthesis.speak() 朗读；rate/pitch 可调，cancel() 停止。必须由用户手势触发，选 zh-CN 语音。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-45" data-tags="api,web worker,多线程,计算">
-    <div class="demo-head"><span class="demo-no">45</span><h3>Web Worker</h3></div>
+  <section class="demo" id="demo-45" data-baseline="widely" data-tags="api,web worker,多线程,计算">
+    <div class="demo-head"><span class="demo-no">45</span><h3>Web Worker</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">Worker 把重计算搬到后台线程：求第 40 万位的质数区间，主线程动画依然满帧流畅。</p>
     <div class="stage" id="stage-45">
       <div class="wk-bar">
@@ -1749,8 +1760,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>把 CPU 密集任务封装成 new Worker(URL.createObjectURL(new Blob([code]))) 内联脚本，postMessage 通信；主线程保持渲染流畅，任务结束 onmessage 回收。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-46" data-tags="api,fullscreen,全屏,wake lock,屏幕常亮">
-    <div class="demo-head"><span class="demo-no">46</span><h3>Fullscreen + Wake Lock</h3></div>
+  <section class="demo" id="demo-46" data-baseline="widely" data-tags="api,fullscreen,全屏,wake lock,屏幕常亮">
+    <div class="demo-head"><span class="demo-no">46</span><h3>Fullscreen + Wake Lock</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">全屏沉浸 + 屏幕常亮：适合演示、阅读、看板等场景，两个 API 都由用户手势触发。</p>
     <div class="stage" id="stage-46">
       <div class="wk-bar">
@@ -1765,8 +1776,8 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre>document.documentElement.requestFullscreen() 全屏，fullscreenchange 监听状态；navigator.wakeLock?.request("screen") 保持常亮，visibilitychange 时重新申请。均需用户手势。</pre>
     </div>
   </section>
-  <section class="demo" id="demo-47" data-tags="api,web share,分享,系统分享">
-    <div class="demo-head"><span class="demo-no">47</span><h3>Web Share</h3></div>
+  <section class="demo" id="demo-47" data-baseline="limited" data-tags="api,web share,分享,系统分享">
+    <div class="demo-head"><span class="demo-no">47</span><h3>Web Share</h3><span class="bl-badge bl-limited">支持有限</span></div>
     <p class="demo-desc">Web Share 调起系统分享面板（移动端友好），桌面端自动降级为复制链接 + 提示。</p>
     <div class="stage" id="stage-47">
       <button type="button" class="btn btn-primary" id="share-run">分享这个实验室</button>

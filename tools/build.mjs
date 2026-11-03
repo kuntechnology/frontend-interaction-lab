@@ -126,6 +126,23 @@ const demoNoRail = [...demoSet].filter((h) => !railSet.has(h));
 if (railOrphan.length) fail(`A9 目录链接指向不存在的 demo: ${railOrphan.slice(0, 6).join(', ')}`);
 if (demoNoRail.length) fail(`A9 有 ${demoNoRail.length} 个 demo 没有目录入口: ${demoNoRail.slice(0, 6).join(', ')}`);
 
+// A10 Baseline 标注合法且覆盖完整
+const baselineVals = [...html.matchAll(/<section class="demo"[^>]*data-baseline="([^"]+)"/g)].map((m) => m[1]);
+const allowedBaseline = ['widely', 'newly', 'limited', 'na'];
+if (baselineVals.length !== uniqIds.length) {
+    fail(`A10 有 ${uniqIds.length - baselineVals.length} 个 demo 缺少 data-baseline`);
+}
+const badBaseline = baselineVals.filter((v) => !allowedBaseline.includes(v));
+if (badBaseline.length) fail(`A10 非法 data-baseline 值: ${[...new Set(badBaseline)].join(', ')}`);
+// 只数 demo 头部里的徽标（图例里也有同样 class，不能直接数 class）
+const badgeCount = count(/<\/h3><span class="bl-badge bl-/g);
+const naCount = baselineVals.filter((v) => v === 'na').length;
+if (badgeCount !== uniqIds.length - naCount) {
+    fail(`A10 徽标 ${badgeCount} 个，应为非 na 的 ${uniqIds.length - naCount} 个`);
+}
+const bDist = allowedBaseline.map((v) => `${v} ${baselineVals.filter((x) => x === v).length}`).join(' / ');
+notes.push(`Baseline 分布: ${bDist}`);
+
 // A11 外部依赖快照
 const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'tools/deps.snapshot.json'), 'utf8')).urls;
 const liveUrls = [...new Set(html.match(/https?:\/\/[^\s"'<>)]+/g) || [])].sort();

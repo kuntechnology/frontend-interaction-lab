@@ -29,6 +29,7 @@
     "https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js",
     "https://kuntechnology.github.io/",
     "https://lab-meta.yagook.workers.dev",
-    "https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
+    "https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap",
+    "https://web-platform-dx.github.io/baseline/"
   ]
 }
