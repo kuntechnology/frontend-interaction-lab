@@ -1,0 +1,3483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前端交互实验室 v3.6.0 · Frontend Interaction Lab</title>
+<meta name="description" content="47 个前端交互技术演示：16 原生 + 13 精选库 + 8 前沿框架 + 10 新特性/API（CSS scroll-timeline / :has / Container Queries / Anchor Positioning / View Transitions / Clipboard / Speech / Worker / Fullscreen+WakeLock / Share）。附框架对比矩阵与可直接复制的精简提示词。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23EE5B1F'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23F5F3EE' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23F5F3EE'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.15/swiper-bundle.min.css">
+<style type="text/tailwindcss">
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/* 42 View Transitions */
+.vt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;margin:12px auto 0}
+.vt-cell{display:flex;align-items:center;justify-content:center;height:64px;border-radius:10px;background:var(--accent-soft);border:1px solid var(--line);font-family:var(--font-mono);font-size:16px;color:var(--ink-2)}
+.vt-grid.vt-list{grid-template-columns:1fr}
+.vt-grid.vt-list .vt-cell{height:38px}
+/* 43 Clipboard */
+.cl-src{font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;max-width:620px;margin:0 auto 10px}
+.cl-bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cl-out{min-height:34px;max-width:620px;margin:10px auto 0;font-size:12.5px;color:var(--ink-2)}
+/* 44 Speech */
+.sp-src{font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;max-width:620px;margin:0 auto 10px;line-height:1.7}
+.sp-bar{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+.sp-rate{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
+.sp-rate input{accent-color:var(--accent);width:110px}
+/* 45 Worker / 46 Fullscreen 共用 */
+.wk-bar{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.wk-fps{font-family:var(--font-mono);font-size:12px;color:var(--accent-deep);min-width:64px}
+.wk-out{min-height:34px;max-width:640px;margin:10px auto 0;font-size:12.5px;color:var(--ink-2);text-align:center}
+#fs-status,#wl-status{max-width:640px;margin:6px auto 0;font-size:12.5px;color:var(--ink-2);text-align:center}
+</style>
+<style>
+/* ============ 设计 Token ============ */
+:root{
+  --bg:#F5F3EE;            /* 纸张 */
+  --panel:#FFFFFF;
+  --ink:#211E1A;           /* 墨 */
+  --ink-2:#6F6A5F;
+  --ink-3:#9C968A;
+  --line:#E5E1D6;
+  --line-strong:#D5D0C2;
+  --accent:#EE5B1F;        /* 信号橙 */
+  --accent-deep:#D4480F;
+  --accent-soft:#FBE4D4;
+  --ok:#2F9E63;
+  --err:#D64545;
+  --warn:#D98A2B;
+  --code-bg:#211E1A;
+  --code-ink:#F5F3EE;
+  --code-ink-2:#B9B3A6;
+  --radius:10px;
+  --font-ui:'Noto Sans SC',system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono',SFMono-Regular,Consolas,'Liberation Mono',monospace;
+  --topbar-h:56px;
+  --rail-w:240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+/* 纸张噪点：极淡 grain 提升印刷质感（内容层之下，不影响任何组件渲染） */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E")}
+/* 等宽数字：编号、统计值、代码、数据一律 tabular 对齐，数字滚动/数据值宽度稳定 */
+.demo-no,.step b,.stat b,.prompt pre,.footer b,.jt-val,.pa-count,.vue-counter,.rx-coord,.theme-tag,.seq-status{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+::selection{background:var(--accent);color:#fff}
+
+/* ============ 顶栏 ============ */
+.topbar{position:sticky;top:0;z-index:50;height:var(--topbar-h);background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 20px}
+.topbar .logo{width:26px;height:26px;flex:none}
+.topbar h1{font-size:16px;font-weight:700;letter-spacing:.5px}
+.topbar .tag{font-family:var(--font-mono);font-size:11px;color:var(--accent-deep);background:var(--accent-soft);border:1px solid var(--accent);border-radius:4px;padding:1px 7px}
+.topbar .meta{margin-left:auto;font-size:12px;color:var(--ink-3);font-family:var(--font-mono)}
+
+/* 滚动进度条 */
+#progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:60;pointer-events:none;background:transparent}
+#progress i{display:block;height:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
+
+/* ============ 侧栏索引 ============ */
+.rail{position:fixed;top:var(--topbar-h);bottom:0;left:0;width:var(--rail-w);border-right:1px solid var(--line);overflow-y:auto;padding:22px 14px 40px;scrollbar-width:thin}
+.rail-cat{margin:18px 8px 8px;font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:2px}
+.rail-cat:first-child{margin-top:0}
+.rail-link{display:flex;align-items:baseline;gap:10px;padding:6px 10px;border-radius:6px;color:var(--ink-2);text-decoration:none;font-size:13.5px;border-left:3px solid transparent}
+.rail-link b{font-family:var(--font-mono);font-weight:500;font-size:11px;color:var(--ink-3);width:20px;flex:none}
+.rail-link:hover{background:#ECE8DD;color:var(--ink)}
+.rail-link.is-active{background:var(--accent-soft);color:var(--ink);border-left-color:var(--accent)}
+.rail-link.is-active b{color:var(--accent-deep)}
+
+/* ============ 主区 ============ */
+.main{margin-left:var(--rail-w);padding:48px 56px 90px;max-width:1180px}
+@media(min-width:1200px){.main{padding-left:72px;padding-right:72px}}
+
+/* 介绍区 */
+.intro{padding-bottom:48px;border-bottom:1px solid var(--line)}
+.intro h2{font-size:32px;font-weight:700;letter-spacing:1px}
+.intro .lead{color:var(--ink-2);font-size:15.5px;max-width:60ch;margin-top:12px;text-wrap:pretty}
+.steps{display:flex;gap:40px;margin-top:28px;flex-wrap:wrap}
+.step{flex:1;min-width:180px;display:flex;gap:12px;align-items:flex-start}
+.step b{font-family:var(--font-mono);font-size:14px;color:var(--accent-deep);font-weight:600;line-height:1.6;flex:none}
+.step p{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+
+/* ============ 演示区块（行式，非卡片） ============ */
+.demo{border-top:1px solid var(--line);padding:46px 0 42px;scroll-margin-top:calc(var(--topbar-h) + 20px)}
+.demo-head{display:flex;gap:16px;align-items:baseline}
+.demo-no{font-family:var(--font-mono);font-size:14px;color:var(--accent-deep);font-weight:600;width:46px;flex:none}
+.demo-head h3{font-size:22px;font-weight:700;letter-spacing:.3px;text-wrap:balance}
+.demo-desc{margin-top:4px;color:var(--ink-2);font-size:14px;max-width:64ch}
+.demo-meta{margin-top:8px;font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:1px}
+
+/* 演示舞台 */
+.stage{position:relative;margin-top:20px;background:radial-gradient(520px 280px at 88% -8%,rgba(238,91,31,.055),transparent 70%),radial-gradient(460px 260px at 0% 106%,rgba(47,111,214,.05),transparent 70%),var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px 28px 44px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;min-height:210px;overflow:hidden}
+.stage-hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);font-size:11px;color:var(--ink-3);letter-spacing:1px;pointer-events:none;white-space:nowrap;background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(10px) saturate(1.3);backdrop-filter:blur(10px) saturate(1.3);border:1px solid rgba(255,255,255,.65);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 0 0 1px rgba(33,30,26,.04);padding:2px 12px;border-radius:999px;z-index:6}
+
+/* 通用按钮 */
+.btn{appearance:none;border:1px solid transparent;font-family:var(--font-ui);font-size:14px;font-weight:500;border-radius:8px;padding:9px 20px;cursor:pointer;transition:background .18s,border-color .18s,color .18s,transform .18s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-deep)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn-ghost:hover{border-color:var(--ink-2)}
+.btn-ghost:disabled,.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+.btn-sm{padding:6px 14px;font-size:13px;border-radius:6px}
+
+/* ============ 提示词块 ============ */
+.prompt{margin-top:18px;background:var(--code-bg);border-radius:var(--radius);padding:16px 20px 18px;position:relative}
+.prompt-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.prompt-label{font-size:11px;letter-spacing:3px;color:var(--code-ink-2);font-weight:600}
+.copy-btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:12.5px;padding:6px 14px;cursor:pointer;font-family:var(--font-ui);transition:background .18s}
+.copy-btn:hover{background:var(--accent-deep)}
+.copy-btn svg{width:13px;height:13px}
+.copy-btn.is-done{background:var(--ok)}
+.prompt pre{font-family:var(--font-mono);font-size:13px;color:var(--code-ink);white-space:pre-wrap;word-break:break-word;line-height:1.85}
+
+/* ============ Toast ============ */
+#toast-wrap{position:fixed;top:calc(var(--topbar-h) + 14px);right:18px;z-index:80;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{pointer-events:auto;display:flex;align-items:center;gap:9px;background:var(--code-bg);color:var(--code-ink);font-size:13px;padding:11px 16px;border-radius:8px;box-shadow:0 8px 24px rgba(33,30,26,.18);animation:toast-in .25s ease}
+.toast i{width:8px;height:8px;border-radius:50%;flex:none}
+.toast.t-success i{background:var(--ok)}
+.toast.t-error i{background:var(--err)}
+.toast.t-warning i{background:var(--warn)}
+.toast.is-out{animation:toast-out .22s ease forwards}
+@keyframes toast-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes toast-out{to{opacity:0;transform:translateY(-6px)}}
+
+/* ============ 页脚 ============ */
+.footer{border-top:1px solid var(--line);margin-top:40px;padding-top:26px;color:var(--ink-3);font-size:12.5px;display:flex;flex-wrap:wrap;gap:8px 26px}
+.footer b{font-family:var(--font-mono);font-weight:500}
+
+/* ============ 响应式 ============ */
+@media(max-width:1080px){
+  .rail{position:static;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--line);overflow-x:auto;padding:10px 16px}
+  .rail nav{display:flex;gap:6px;align-items:center}
+  .rail-cat{display:none}
+  .rail-link{flex:none;padding:7px 12px;border-left:none;border-bottom:2px solid transparent}
+  .rail-link.is-active{border-left:none;border-bottom-color:var(--accent)}
+  .main{margin-left:0;padding:36px 24px 70px}
+}
+@media(max-width:640px){
+  .main{padding:30px 18px 60px}
+  .intro h2{font-size:26px}
+  .steps{flex-direction:column;gap:16px}
+  .demo{padding:38px 0 34px}
+  .demo-head h3{font-size:19px}
+  .stage{padding:22px 16px 40px;min-height:190px}
+  .prompt{padding:14px 16px 16px}
+  .topbar .meta{display:none}
+}
+
+/* ===== 01 涟漪按钮 ===== */
+.ripple-demo{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;transform:scale(0);background:rgba(255,255,255,.55);pointer-events:none;animation:ripple .6s ease-out forwards}
+.btn-ghost.ripple-demo .ripple{background:rgba(238,91,31,.2)}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+
+/* ===== 02 磁性按钮 ===== */
+.mag-btn{will-change:transform}
+.mag-btn.is-away{transition:transform .5s cubic-bezier(.22,1,.36,1)}
+
+/* ===== 03 光标聚光灯 ===== */
+#stage-03{justify-content:flex-start;align-items:center}
+.spot-wrap{position:relative;z-index:2;max-width:560px;padding:22px 26px;color:var(--ink)}
+.spot-wrap p{margin-bottom:14px;color:var(--ink)}
+.spot-wrap p:last-child{margin-bottom:0}
+.spot-mask{position:absolute;inset:0;z-index:1;background:radial-gradient(260px circle at var(--sx,50%) var(--sy,50%),rgba(255,255,255,0) 30%,rgba(33,30,26,.92) 72%);pointer-events:none;transition:opacity .3s}
+@media(prefers-reduced-motion:reduce){.ripple,.spot-mask{transition:none;animation-duration:.01ms}}
+
+/* ===== 04 打字机 ===== */
+.type-line{display:flex;align-items:center;min-height:1.8em;font-size:21px;font-weight:600}
+.type-text{color:var(--ink)}
+.type-caret{display:inline-block;width:2px;height:1.05em;margin-left:5px;background:var(--accent);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ===== 05 数字滚动 ===== */
+.stat{text-align:center;min-width:118px}
+.stat b{display:block;font-family:var(--font-mono);font-size:34px;font-weight:600;color:var(--accent-deep);line-height:1.3}
+.stat span{font-size:12.5px;color:var(--ink-3);letter-spacing:1px}
+
+/* ===== 06 滚动揭示 ===== */
+#stage-06{flex-direction:column;align-items:center;gap:12px;padding:38px 28px}
+.reveal-item{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;font-size:15px;color:var(--ink-2)}
+.reveal-item.is-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal-item{opacity:1;transform:none;transition:none}}
+
+/* ===== 07 视差滚动 ===== */
+#stage-07{height:300px;padding:0;align-items:stretch;flex-direction:column}
+.px-view{position:relative;width:100%;height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.px-bg{position:absolute;top:0;left:0;right:0;height:560px;will-change:transform;pointer-events:none;background:
+  radial-gradient(circle at 18% 24%,rgba(238,91,31,.26) 0 90px,transparent 91px),
+  radial-gradient(circle at 82% 40%,rgba(47,111,214,.16) 0 70px,transparent 71px),
+  radial-gradient(circle at 34% 78%,rgba(47,158,99,.18) 0 60px,transparent 61px),
+  linear-gradient(180deg,#EFEBDF,#F5F3EE)}
+.px-dot{position:absolute;border-radius:50%;border:2px solid var(--accent);opacity:.5}
+.px-dot-1{width:120px;height:120px;left:12%;top:70px}
+.px-dot-2{width:60px;height:60px;right:16%;top:200px;border-color:#2F6FD6}
+.px-dot-3{width:34px;height:34px;left:30%;top:330px;border-color:#2F9E63}
+.px-fg{position:relative;z-index:2;padding:26px 30px 40px;max-width:600px;min-height:520px}
+.px-fg h4{font-size:17px;margin-bottom:10px}
+.px-fg p{margin-bottom:10px;color:var(--ink-2);font-size:14px}
+
+/* ===== 08 3D 翻转 ===== */
+.flip{width:220px;height:140px;perspective:900px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.flip.is-flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:var(--radius);backface-visibility:hidden;-webkit-backface-visibility:hidden;font-size:15px;letter-spacing:1px}
+.flip-front{background:var(--accent);color:#fff}
+.flip-back{background:var(--code-bg);color:var(--code-ink);transform:rotateY(180deg)}
+@media(prefers-reduced-motion:reduce){.flip-inner{transition:none}}
+
+/* ===== 09 拖拽排序 ===== */
+#stage-09{align-items:center;justify-content:center}
+.drag-list{list-style:none;width:min(430px,100%);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.drag-list li{display:flex;align-items:center;gap:12px;padding:11px 16px;background:var(--panel);border-bottom:1px solid var(--line);font-size:14px;cursor:grab;transition:background .15s,opacity .15s;user-select:none}
+.drag-list li:last-child{border-bottom:none}
+.drag-list li:hover{background:#F7F4EC}
+.drag-list li.drag-src{opacity:.35}
+.drag-grip{color:var(--ink-3);font-size:15px;letter-spacing:2px}
+
+/* ===== 10 折叠面板 ===== */
+#stage-10{align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.acc-item{width:100%;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.acc-item + .acc-item{margin-top:10px}
+.acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:none;padding:13px 18px;font-family:var(--font-ui);font-size:14.5px;font-weight:500;color:var(--ink);cursor:pointer;text-align:left}
+.acc-head:hover{background:#F7F4EC}
+.acc-ico{width:8px;height:8px;border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:rotate(45deg);transition:transform .3s;flex:none;margin-top:-4px}
+.acc-open .acc-ico{transform:rotate(-135deg);margin-top:4px}
+.acc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease}
+.acc-open .acc-body{grid-template-rows:1fr}
+.acc-content{overflow:hidden;min-height:0}
+.acc-content p{margin:0;padding:4px 18px 16px;color:var(--ink-2);font-size:13.5px;line-height:1.8}
+
+/* ===== 11 Tab 切换 ===== */
+#stage-11{align-items:stretch;justify-content:flex-start}
+.tabs{width:100%;max-width:560px}
+.tab-bar{position:relative;display:flex;gap:2px;border-bottom:1px solid var(--line)}
+.tab-btn{appearance:none;border:none;background:transparent;font-family:var(--font-ui);font-size:14.5px;font-weight:500;color:var(--ink-2);padding:11px 22px;cursor:pointer;position:relative;z-index:1}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.is-active{color:var(--accent-deep)}
+.tab-ink{position:absolute;bottom:-1px;left:0;height:2px;background:var(--accent);transition:transform .28s cubic-bezier(.4,0,.2,1),width .28s cubic-bezier(.4,0,.2,1)}
+.tab-panels{margin-top:16px}
+.tab-panel{display:none;color:var(--ink-2);font-size:14px;line-height:1.85;min-height:84px}
+.tab-panel.is-active{display:block;animation:panel-in .3s ease}
+@keyframes panel-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ===== 12 Toast 触发按钮 ===== */
+.toast-trigger[data-type="success"]{background:var(--ok);color:#fff}
+.toast-trigger[data-type="success"]:hover{background:#277F50}
+.toast-trigger[data-type="warning"]{background:var(--warn);color:#fff}
+.toast-trigger[data-type="warning"]:hover{background:#B9711E}
+.toast-trigger[data-type="error"]{background:var(--err);color:#fff}
+.toast-trigger[data-type="error"]:hover{background:#B33A3A}
+
+/* ===== 13 骨架屏 ===== */
+#stage-13{align-items:center;flex-direction:column;gap:0}
+.sk-wrap{width:min(420px,100%);position:relative}
+.sk-shimmer{display:flex;flex-direction:column;gap:12px;padding:18px;border:1px solid var(--line);border-radius:8px}
+.sk-line{height:12px;border-radius:6px;background:linear-gradient(90deg,#EDE9DE 25%,#F8F5EE 50%,#EDE9DE 75%);background-size:200% 100%;animation:shimmer 1.2s infinite}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+.sk-line-avatar{width:44px;height:44px;border-radius:50%;flex:none}
+.sk-line-title{height:18px;width:70%}
+.sk-line-short{width:55%}
+.sk-content{display:flex;flex-direction:column;gap:10px;padding:18px;border:1px solid var(--line);border-radius:8px;animation:content-in .35s ease}
+.sk-content[hidden]{display:none}
+.sk-avatar-real{width:44px;height:44px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent);flex:none}
+.sk-content h4{font-size:15px}
+.sk-content p{font-size:13px;color:var(--ink-2);line-height:1.8}
+.sk-actions{display:flex;gap:10px;margin-top:14px}
+@keyframes content-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.sk-line{animation:none}}
+
+/* ===== 14 暗色模式 ===== */
+.dm-panel{width:min(430px,100%);border:1px solid var(--line);border-radius:8px;padding:20px 22px;background:var(--panel);color:var(--ink);transition:background .35s,color .35s,border-color .35s}
+.dm-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.dm-head b{font-size:15px}
+.dm-panel p{font-size:13.5px;color:var(--ink-2);margin-bottom:10px;transition:color .35s}
+.dm-panel p:last-child{margin-bottom:0}
+.dm-toggle{appearance:none;border:none;background:transparent;cursor:pointer;padding:0}
+.dm-track{display:inline-block;width:46px;height:24px;border-radius:12px;background:#D9D4C6;position:relative;transition:background .3s}
+.dm-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.stage.is-dark .dm-panel{background:var(--code-bg);border-color:#3A362E;color:var(--code-ink)}
+.stage.is-dark .dm-panel p{color:var(--code-ink-2)}
+.stage.is-dark .dm-track{background:var(--accent)}
+.stage.is-dark .dm-thumb{transform:translateX(22px)}
+
+/* ===== 15 Canvas 粒子 ===== */
+#stage-15{padding:0;min-height:320px;background:var(--code-bg)}
+#px-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
+#stage-15 .stage-hint{color:#8A8478;background:rgba(33,30,26,.72);border-color:#3A362E}
+
+/* ===== 16 手绘画板 ===== */
+#stage-16{align-items:stretch;justify-content:flex-start;flex-direction:column;padding:18px}
+.draw-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.draw-color{width:22px;height:22px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;background:var(--dc,#211E1A);transition:transform .15s}
+.draw-color:hover{transform:scale(1.15)}
+.draw-color.is-active{border-color:var(--accent);box-shadow:0 0 0 2px #fff inset}
+.draw-sep{width:1px;height:20px;background:var(--line-strong);margin:0 4px}
+.draw-size{appearance:none;border:1px solid var(--line-strong);background:var(--panel);border-radius:6px;font-family:var(--font-ui);font-size:12.5px;padding:5px 12px;cursor:pointer;color:var(--ink-2)}
+.draw-size.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
+#draw-canvas{width:100%;height:280px;border:1px solid var(--line);border-radius:8px;background:#fff;touch-action:none;cursor:crosshair;display:block}
+
+/* ===== 17 GSAP 滚动编排 ===== */
+#stage-17{align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.gs-scroll{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.gs-block{width:min(420px,100%);padding:12px 16px;border-radius:8px;font-size:14px;font-weight:500;background:var(--accent-soft);color:var(--accent-deep);border:1px solid var(--accent);opacity:0;transform:translateY(26px)}
+.gs-block-2{background:#EAF1FB;color:#2F6FD6;border-color:#2F6FD6}
+.gs-block-3{background:#EAF6F0;color:#2F9E63;border-color:#2F9E63}
+
+/* ===== 18 Lottie 矢量动画 ===== */
+.lottie-box{width:200px;height:200px}
+.lottie-box svg{width:100%;height:100%}
+
+/* ===== 19 Anime.js 补间 ===== */
+.anime-box{width:64px;height:64px;border-radius:12px;background:var(--accent);margin-bottom:14px}
+
+/* ===== 20 Motion 交错 ===== */
+.motion-list{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
+.motion-item{width:56px;height:56px;border-radius:10px;background:var(--ink);color:var(--code-ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:15px;opacity:0}
+
+/* ===== 21 Three.js 3D ===== */
+#stage-21{min-height:320px;padding:0}
+.three-box{position:absolute;inset:0}
+.three-box canvas{display:block}
+
+/* ===== 22 p5.js 生成艺术 ===== */
+#stage-22{min-height:320px;padding:0}
+.p5-box{position:absolute;inset:0}
+.p5-box canvas{display:block}
+
+/* ===== 23 ECharts 动态图表 ===== */
+#stage-23{min-height:340px;align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.echart-box{width:100%;height:250px;margin-bottom:14px}
+.ec-actions{display:flex;gap:10px}
+
+/* ===== 24 D3 力导向图 ===== */
+#stage-24{min-height:360px;padding:0 0 40px}
+.d3-graph{width:100%;height:320px;display:block}
+.d3-graph .link{stroke:#D5D0C2;stroke-width:1.5}
+.d3-graph .node{cursor:grab}
+.d3-graph .node circle{fill:var(--accent);stroke:#fff;stroke-width:2}
+.d3-graph .node text{font-size:11px;fill:var(--ink-2);font-family:var(--font-mono);text-anchor:middle}
+
+/* ===== 25 Swiper 3D 轮播 ===== */
+#stage-25{min-height:340px;align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.lab-swiper{width:100%;max-width:680px;padding:0 40px 26px;position:relative;margin:0 auto}
+.lab-swiper .swiper-slide{height:180px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:28px;color:#fff}
+.lab-swiper .s1{background:linear-gradient(135deg,#EE5B1F,#F59A4B)}
+.lab-swiper .s2{background:linear-gradient(135deg,#2F6FD6,#5FA8E8)}
+.lab-swiper .s3{background:linear-gradient(135deg,#2F9E63,#6CCB92)}
+.lab-swiper .s4{background:linear-gradient(135deg,#7B61C9,#B39BE8)}
+.lab-swiper .s5{background:linear-gradient(135deg,#D98A2B,#F0BE6C)}
+.lab-swiper .swiper-pagination-bullet{background:var(--ink-3);opacity:.4}
+.lab-swiper .swiper-pagination-bullet-active{background:var(--accent);opacity:1}
+.lab-swiper .swiper-button-prev,.lab-swiper .swiper-button-next{color:var(--ink-2)}
+.lab-swiper .swiper-button-prev:after,.lab-swiper .swiper-button-next:after{font-size:15px;font-weight:700}
+
+/* ===== 26 Embla 轻量轮播 ===== */
+#stage-26{min-height:320px;align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.embla{overflow:hidden;width:100%;max-width:680px;margin:0 auto}
+.embla-viewport{overflow:hidden}
+.embla-container{display:flex;gap:14px}
+.embla-slide{flex:0 0 240px;height:150px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:22px;color:#fff;user-select:none}
+.e1{background:var(--ink)}
+.e2{background:var(--accent)}
+.e3{background:#2F6FD6}
+.e4{background:#2F9E63}
+.embla-actions{display:flex;align-items:center;gap:10px;margin-top:14px}
+.embla-dot{font-family:var(--font-mono);font-size:12px;color:var(--ink-3)}
+
+/* ===== 27 Hammer 手势 ===== */
+#stage-27{align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.gesture-pad{width:min(560px,100%);border:2px dashed var(--line-strong);border-radius:12px;padding:26px;text-align:center;background:#FBFAF7;touch-action:manipulation}
+.gesture-pad p{color:var(--ink-2);font-size:14px}
+.gesture-log{margin-top:14px;min-height:96px;font-family:var(--font-mono);font-size:13px;color:var(--ink-2);line-height:2;word-break:break-word}
+.gesture-log span{display:block}
+.gesture-log b{color:var(--accent-deep)}
+
+/* ===== 28 Tone 音序器 ===== */
+#stage-28{align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+.seq-rows{display:flex;flex-direction:column;gap:10px}
+.seq-row{display:flex;align-items:center;gap:12px}
+.seq-row>span{width:44px;flex:none;font-size:12.5px;color:var(--ink-3);letter-spacing:1px}
+.seq-cells{display:flex;gap:6px;flex-wrap:wrap}
+.seq-cell{width:34px;height:34px;border-radius:8px;border:1px solid var(--line-strong);background:var(--panel);cursor:pointer;transition:background .12s,transform .12s}
+.seq-cell:hover{transform:translateY(-1px)}
+.seq-cell.is-on{background:var(--accent);border-color:var(--accent)}
+.seq-cell.is-play{outline:2px solid var(--ink);outline-offset:2px}
+.seq-actions{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.seq-status{font-size:12.5px;color:var(--ink-3)}
+
+/* ===== 29 多主题切换 ===== */
+#stage-29{align-items:stretch;justify-content:flex-start;flex-direction:column;gap:0}
+#stage-29{--t-bg:#F5F3EE;--t-panel:#fff;--t-ink:#211E1A;--t-ink2:#6F6A5F;--t-line:#E5E1D6;--t-accent:#EE5B1F;--t-accent-deep:#D4480F}
+#stage-29[data-theme="night"]{--t-bg:#201D19;--t-panel:#2A2621;--t-ink:#F5F3EE;--t-ink2:#B9B3A6;--t-line:#3A362E;--t-accent:#F59A4B;--t-accent-deep:#EE5B1F}
+#stage-29[data-theme="sand"]{--t-bg:#F3EADB;--t-panel:#FBF6EC;--t-ink:#3B342A;--t-ink2:#7D7261;--t-line:#E2D5BE;--t-accent:#C77B23;--t-accent-deep:#A05F16}
+#stage-29[data-theme="mint"]{--t-bg:#EAF3EF;--t-panel:#F7FBF9;--t-ink:#1F332C;--t-ink2:#5F7A70;--t-line:#CFE2D9;--t-accent:#1E8E6A;--t-accent-deep:#14664D}
+.theme-demo{width:min(560px,100%);border:1px solid var(--t-line);border-radius:10px;overflow:hidden;background:var(--t-panel);color:var(--t-ink);transition:background .35s,color .35s,border-color .35s}
+.theme-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--t-line);background:var(--t-bg);transition:background .35s,border-color .35s}
+.theme-head b{font-size:15px}
+.theme-tag{font-size:11.5px;color:var(--t-ink2);font-family:var(--font-mono);transition:color .35s}
+.theme-body{padding:18px}
+.theme-body p{font-size:13.5px;color:var(--t-ink2);margin-bottom:14px;line-height:1.8;transition:color .35s}
+.theme-btn{background:var(--t-accent);color:#fff;margin-right:10px;transition:background .35s}
+.theme-btn:hover{background:var(--t-accent-deep)}
+.theme-btn-ghost{background:transparent;color:var(--t-ink);border-color:var(--t-line);transition:color .35s,border-color .35s}
+.theme-btn-ghost:hover{border-color:var(--t-ink2)}
+.theme-switcher{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.theme-opt{border:1px solid var(--line-strong);background:var(--panel);border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--ink-2);font-family:var(--font-ui);transition:background .15s,color .15s}
+.theme-opt:hover{border-color:var(--ink-2)}
+.theme-opt.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* ============ v3 · 顶栏搜索 ============ */
+.search-box{position:relative;display:flex;align-items:center;margin-left:auto;width:220px}
+.search-box svg{position:absolute;left:9px;width:14px;height:14px;color:var(--ink-3);pointer-events:none}
+.search-box input{width:100%;appearance:none;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(12px) saturate(1.3);backdrop-filter:blur(12px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1px rgba(33,30,26,.05);border-radius:7px;padding:7px 30px 7px 30px;font-size:13px;font-family:var(--font-ui);color:var(--ink);outline:none;transition:border-color .15s}
+.search-box input::placeholder{color:var(--ink-3)}
+.search-box input:focus{border-color:var(--accent)}
+.search-clear{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:20px;height:20px;border:none;background:transparent;border-radius:50%;cursor:pointer;color:var(--ink-3);font-size:14px;line-height:1;display:none;align-items:center;justify-content:center}
+.search-clear:hover{background:var(--line);color:var(--ink)}
+.search-clear.is-show{display:flex}
+.search-status{margin:0 0 0;padding:10px 0 0;font-family:var(--font-mono);font-size:12px;color:var(--accent-deep);display:none}
+.search-status.is-show{display:block}
+body.is-filtering .demo:not(.is-match){display:none}
+
+/* ============ v3 · 框架对比矩阵（行式表格，非卡片） ============ */
+.matrix-wrap{margin-top:40px;border-top:1px solid var(--line);padding-top:30px}
+.matrix-title{font-size:18px;font-weight:700;letter-spacing:.3px}
+.matrix-sub{margin-top:4px;color:var(--ink-2);font-size:13.5px;max-width:64ch}
+.matrix-scroll{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
+table.matrix{table-layout:fixed;width:100%;border-collapse:collapse;font-size:13px;min-width:760px}
+table.matrix col.c-dim{width:16%}
+table.matrix col.c-lib{width:14%}
+table.matrix th,table.matrix td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.6}
+table.matrix thead th{background:#EFEBE0;font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--ink);letter-spacing:.5px}
+table.matrix tbody th{font-weight:600;color:var(--ink);white-space:nowrap}
+table.matrix td{color:var(--ink-2)}
+table.matrix tbody tr:last-child td,table.matrix tbody tr:last-child th{border-bottom:none}
+table.matrix td .pill{display:inline-block;font-family:var(--font-mono);font-size:11px;color:var(--accent-deep);background:var(--accent-soft);border:1px solid var(--accent);border-radius:4px;padding:0 6px;margin:1px 2px 1px 0}
+
+/* ============ v3 · 调研说明 ============ */
+.research{margin-top:46px;border-top:1px dashed var(--line-strong);padding-top:24px}
+.research h3{font-size:15px;font-weight:700;letter-spacing:.5px}
+.research ul{margin:12px 0 0;padding-left:18px;color:var(--ink-2);font-size:13.5px}
+.research li{margin-bottom:6px;line-height:1.7}
+.research li b{font-family:var(--font-mono);font-weight:500;color:var(--ink)}
+
+/* ============ v3 · 框架 demo 共用 ============ */
+.fw-note{font-size:11.5px;color:var(--ink-3);font-family:var(--font-mono);letter-spacing:.5px;max-width:100%;text-align:center}
+.fw-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;min-width:200px}
+.fw-card h5{font-size:13px;font-weight:600;margin-bottom:10px;color:var(--ink)}
+.kv-row{display:flex;justify-content:space-between;gap:14px;font-size:13px;padding:4px 0;color:var(--ink-2)}
+.kv-row b{font-family:var(--font-mono);color:var(--ink);font-weight:600}
+
+/* 30 Vue */
+#stage-30{flex-direction:column;gap:14px}
+.vue-box{width:100%;max-width:460px;text-align:left}
+.vue-counter{font-family:var(--font-mono);font-size:30px;color:var(--accent-deep);font-weight:600}
+.vue-input{width:100%;padding:8px 12px;border:1px solid var(--line-strong);border-radius:6px;font-size:14px;font-family:var(--font-ui);margin:8px 0;outline:none}
+.vue-input:focus{border-color:var(--accent)}
+.vue-child{margin-top:10px;border-left:3px solid var(--accent);padding:8px 12px;background:#FBF7F0;font-size:13px;color:var(--ink-2)}
+
+/* 31 Preact+htm */
+#stage-31{flex-direction:column;gap:10px}
+.pa-box{width:100%;max-width:420px;text-align:left}
+.pa-count{font-family:var(--font-mono);font-size:28px;color:var(--accent-deep);font-weight:600}
+
+/* 32 htmx */
+#stage-32{flex-direction:column;gap:14px}
+.hx-swap{width:100%;max-width:460px;border:1px dashed var(--line-strong);border-radius:8px;padding:16px 18px;min-height:96px;background:#FBF7F0}
+.hx-frag{font-size:14px;color:var(--ink)}
+.hx-frag b{color:var(--accent-deep)}
+
+/* 33 Alpine */
+#stage-33{align-items:flex-start;justify-content:flex-start;gap:24px}
+.alp-menu{position:relative;display:inline-block}
+.alp-dropdown{position:absolute;top:calc(100% + 6px);left:0;background:var(--panel);border:1px solid var(--line-strong);border-radius:8px;min-width:160px;box-shadow:0 8px 22px rgba(33,30,26,.12);z-index:5;overflow:hidden}
+.alp-dropdown button{display:block;width:100%;text-align:left;padding:9px 14px;border:none;background:transparent;font-size:13.5px;cursor:pointer;color:var(--ink-2)}
+.alp-dropdown button:hover{background:var(--accent-soft);color:var(--ink)}
+.alp-modal-mask{position:absolute;inset:0;background:rgba(33,30,26,.45);display:flex;align-items:center;justify-content:center;z-index:6}
+.alp-modal{background:var(--panel);border-radius:10px;padding:22px 26px;max-width:280px;text-align:center}
+.alp-stepper{display:flex;align-items:center;gap:12px}
+.alp-stepper b{font-family:var(--font-mono);font-size:22px;color:var(--accent-deep);min-width:34px;text-align:center}
+
+/* 34 Tailwind */
+#stage-34{flex-direction:column;align-items:stretch;gap:16px}
+.tw-preview{width:100%;border:1px solid var(--line-strong);border-radius:8px;padding:18px;transition:background .25s}
+.tw-editor{width:100%;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tw-editor input{flex:1;min-width:220px;font-family:var(--font-mono);font-size:13px;padding:8px 12px;border:1px solid var(--line-strong);border-radius:6px;outline:none}
+.tw-editor input:focus{border-color:var(--accent)}
+
+/* 35 Jotai */
+#stage-35{flex-direction:column;gap:16px}
+.jt-grid{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;width:100%}
+.jt-node{border:1px solid var(--line-strong);border-radius:8px;padding:12px 16px;min-width:150px;background:var(--panel);text-align:center}
+.jt-node .jt-label{font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:1px}
+.jt-node .jt-val{font-family:var(--font-mono);font-size:22px;color:var(--accent-deep);font-weight:600;margin:4px 0}
+.jt-node.derived{border-color:var(--accent);background:var(--accent-soft)}
+.jt-graph{width:100%;text-align:center;font-family:var(--font-mono);font-size:11.5px;color:var(--ink-2)}
+.jt-graph code{display:inline-block;margin:2px 3px;background:#EFEBE0;padding:1px 6px;border-radius:4px;color:var(--accent-deep)}
+
+/* 36 RxJS */
+#stage-36{flex-direction:column;gap:14px;align-items:stretch}
+.rx-search{width:100%;max-width:440px;align-self:center}
+.rx-search input{width:100%;padding:9px 14px;border:1px solid var(--line-strong);border-radius:7px;font-size:14px;outline:none;font-family:var(--font-ui)}
+.rx-search input:focus{border-color:var(--accent)}
+.rx-status{font-family:var(--font-mono);font-size:12.5px;color:var(--ink-2);min-height:1.6em}
+.rx-pipe{width:100%;font-family:var(--font-mono);font-size:11.5px;color:var(--ink-2);text-align:center;line-height:2}
+.rx-pipe .arrow{color:var(--accent);margin:0 6px}
+.rx-coord{font-family:var(--font-mono);font-size:13px;color:var(--accent-deep)}
+
+/* 37 Lit */
+#stage-37{flex-direction:column;gap:14px}
+.live-clock-demo,.count-up-demo{font-family:var(--font-ui)}
+
+/* ============ v3.2 · 玻璃体按钮（全局，置于末尾保证覆盖） ============ */
+/* Alpine x-show 防闪现：加载前隐藏属性驱动元素，Alpine 启动时自动移除 */
+[x-cloak]{display:none!important}
+/* 半透明玻璃底 + 背景模糊 + 顶部内高光 + 1px 微描边；降级浏览器仍保持半透明底可读 */
+.btn,.btn-ghost,.btn-sm,.copy-btn,.toast-trigger,.theme-opt,.theme-btn,.theme-btn-ghost,.draw-size,.search-clear{
+  -webkit-backdrop-filter:blur(14px) saturate(1.35);
+  backdrop-filter:blur(14px) saturate(1.35);
+  border:1px solid rgba(255,255,255,.55);
+  background:rgba(255,255,255,.40);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -10px 14px -10px rgba(255,255,255,.38),0 0 0 1px rgba(33,30,26,.06),0 2px 6px rgba(33,30,26,.05)
+}
+.btn-ghost{background:rgba(255,255,255,.40)}
+.btn-ghost:hover{background:rgba(255,255,255,.62);border-color:rgba(255,255,255,.72)}
+.btn-primary,.copy-btn{background:rgba(238,91,31,.85);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 0 1px rgba(238,91,31,.25),0 2px 6px rgba(33,30,26,.12)}
+.btn-primary:hover,.copy-btn:hover{background:rgba(212,72,15,.92)}
+.theme-btn{background:color-mix(in srgb,var(--t-accent) 78%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 0 1px var(--t-accent),0 2px 6px rgba(33,30,26,.12)}
+.theme-btn:hover{background:color-mix(in srgb,var(--t-accent-deep) 86%,transparent)}
+.toast-trigger[data-type="success"]{background:rgba(47,158,99,.78)}
+.toast-trigger[data-type="success"]:hover{background:rgba(39,127,80,.86)}
+.toast-trigger[data-type="warning"]{background:rgba(217,138,43,.78)}
+.toast-trigger[data-type="warning"]:hover{background:rgba(185,113,30,.86)}
+.toast-trigger[data-type="error"]{background:rgba(214,69,69,.78)}
+.toast-trigger[data-type="error"]:hover{background:rgba(179,58,58,.86)}
+.copy-btn.is-done{background:rgba(47,158,99,.82)}
+.theme-opt{background:rgba(255,255,255,.40)}
+.theme-opt.is-active{background:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 0 1px rgba(33,30,26,.35),0 2px 6px rgba(33,30,26,.1)}
+.theme-btn-ghost{background:rgba(255,255,255,.35)}
+.draw-size{background:rgba(255,255,255,.45)}
+.draw-size.is-active{background:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 0 1px rgba(33,30,26,.35),0 2px 6px rgba(33,30,26,.1)}
+.search-clear{background:rgba(255,255,255,.55)}
+/* 无 backdrop-filter 支持：回退为原实色，保证对比度 */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .btn-primary,.copy-btn{background:var(--accent)}
+  .btn-primary:hover,.copy-btn:hover{background:var(--accent-deep)}
+  .theme-btn{background:var(--t-accent)}
+  .theme-btn:hover{background:var(--t-accent-deep)}
+  .copy-btn.is-done{background:var(--ok)}
+  .toast-trigger[data-type="success"]{background:var(--ok)}
+  .toast-trigger[data-type="success"]:hover{background:#277F50}
+  .toast-trigger[data-type="warning"]{background:var(--warn)}
+  .toast-trigger[data-type="warning"]:hover{background:#B9711E}
+  .toast-trigger[data-type="error"]{background:var(--err)}
+  .toast-trigger[data-type="error"]:hover{background:#B33A3A}
+}
+
+/* 移动端搜索换行 */
+@media(max-width:640px){
+  .topbar{flex-wrap:wrap;height:auto;padding:8px 16px;gap:8px}
+  .search-box{order:10;flex-basis:100%;width:100%;margin-left:0}
+}
+
+/* ============ v3.3 · 夜光实验室（暗色主题 + 玻璃艺术） ============ */
+html[data-theme="dark"]{
+  --bg:#141210;--panel:rgba(30,27,23,.62);--ink:#F2EFE8;--ink-2:#B7B0A3;--ink-3:#8B8478;
+  --line:rgba(255,255,255,.09);--line-strong:rgba(255,255,255,.22);
+  --accent:#FF6A2A;--accent-deep:#FF8A55;--accent-soft:rgba(255,106,42,.16);
+  --ok:#3EC57C;--err:#E05B5B;--warn:#E8A53C;
+  --code-bg:rgba(10,9,8,.55);--code-ink:#F2EFE8;--code-ink-2:#A49E92;
+}
+html[data-theme="dark"] body::before{opacity:.07;mix-blend-mode:overlay}
+/* 光斑氛围层 */
+.ambient{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.ambient i{position:absolute;border-radius:50%;opacity:0;transition:opacity 1s}
+.ambient .a1{width:560px;height:560px;left:-140px;top:-100px;background:radial-gradient(circle,rgba(255,106,42,.2),transparent 65%)}
+.ambient .a2{width:660px;height:660px;right:-190px;bottom:-150px;background:radial-gradient(circle,rgba(64,140,255,.15),transparent 65%)}
+html[data-theme="dark"] .ambient i{opacity:1;animation:drift 24s ease-in-out infinite alternate}
+html[data-theme="dark"] .ambient .a2{animation-delay:-11s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(80px,55px) scale(1.18)}}
+@media(prefers-reduced-motion:reduce){html[data-theme="dark"] .ambient i{animation:none}}
+/* 顶栏玻璃 + 搜索聚焦发光 */
+html[data-theme="dark"] .topbar{background:rgba(20,18,16,.74);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border-bottom-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .search-box input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+html[data-theme="dark"] .search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 1px rgba(255,106,42,.45),0 0 20px -6px rgba(255,106,42,.6)}
+/* 侧栏 */
+html[data-theme="dark"] .rail{scrollbar-color:rgba(255,255,255,.16) transparent}
+html[data-theme="dark"] .rail-link:hover{background:rgba(255,255,255,.07);color:var(--ink)}
+html[data-theme="dark"] .rail-link.is-active{background:rgba(255,106,42,.15)}
+/* 主题切换按钮 */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-strong);background:rgba(255,255,255,.55);color:var(--ink);cursor:pointer;margin:0 6px;transition:background .18s,border-color .18s,box-shadow .18s;flex:none}
+.theme-toggle:hover{border-color:var(--accent)}
+html[data-theme="dark"] .theme-toggle{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#FFD9A0;box-shadow:0 0 16px -4px rgba(255,106,42,.55)}
+.theme-toggle svg{width:16px;height:16px}
+/* 舞台玻璃 */
+html[data-theme="dark"] .stage{-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 0 0 1px rgba(255,255,255,.05),0 24px 60px -24px rgba(0,0,0,.6)}
+html[data-theme="dark"] .stage-hint{background:rgba(20,18,16,.52);border-color:rgba(255,255,255,.12);color:var(--ink-2)}
+/* 提示词玻璃黑 */
+html[data-theme="dark"] .prompt{-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 0 0 1px rgba(255,255,255,.06)}
+/* 按钮霓虹 */
+html[data-theme="dark"] .btn-primary{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 20px -6px rgba(255,106,42,.6)}
+html[data-theme="dark"] .btn-primary:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 0 30px -4px rgba(255,106,42,.85)}
+html[data-theme="dark"] .btn-ghost:hover{border-color:rgba(255,255,255,.45);box-shadow:0 0 16px -6px rgba(255,106,42,.55)}
+/* hero：渐变字 + 光带 */
+html[data-theme="dark"] .intro h2{background:linear-gradient(100deg,#FFF 15%,#FFC9A6 50%,#FF6A2A 90%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 46px rgba(255,106,42,.16)}
+html[data-theme="dark"] .intro h2::after{content:"";display:block;width:66px;height:3px;margin-top:16px;border-radius:99px;background:linear-gradient(90deg,#FF6A2A,#4E8CFF);box-shadow:0 0 20px rgba(255,106,42,.7)}
+/* 进度光轨 */
+html[data-theme="dark"] #progress i{background:linear-gradient(90deg,#FF6A2A,#4E8CFF);box-shadow:0 0 12px rgba(255,106,42,.8)}
+/* 当前 demo 标题发光 */
+html[data-theme="dark"] .demo.is-current .demo-head h3{color:var(--accent-deep);text-shadow:0 0 26px rgba(255,106,42,.5)}
+/* 图表展品纸底（深色玻璃展柜里的白展板） */
+html[data-theme="dark"] .echart-box{background:rgba(247,244,238,.94);border-radius:10px}
+html[data-theme="dark"] .d3-graph .link{stroke:rgba(255,255,255,.25)}
+/* toast 玻璃 */
+html[data-theme="dark"] .toast{background:rgba(20,18,16,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 8px 28px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08)}
+/* ============ v3.4 · 霓虹氛围灯 / 玻璃扫光 / 启动序列 / 星云 ============ */
+/* 霓虹四色：亮色 + 暗色双套 */
+html[data-accent="cyan"]{--accent:#0E9FD6;--accent-deep:#087FB0;--accent-soft:#DBF1FB}
+html[data-theme="dark"][data-accent="cyan"]{--accent:#22D3EE;--accent-deep:#67E8F9;--accent-soft:rgba(34,211,238,.16)}
+html[data-accent="violet"]{--accent:#7C3AED;--accent-deep:#6D28D9;--accent-soft:#EDE5FD}
+html[data-theme="dark"][data-accent="violet"]{--accent:#A78BFA;--accent-deep:#C4B5FD;--accent-soft:rgba(167,139,250,.16)}
+html[data-accent="lime"]{--accent:#16A34A;--accent-deep:#15803D;--accent-soft:#DCFCE7}
+html[data-theme="dark"][data-accent="lime"]{--accent:#4ADE80;--accent-deep:#86EFAC;--accent-soft:rgba(74,222,128,.16)}
+/* 氛围灯切换器 */
+.accent-switch{display:inline-flex;align-items:center;gap:6px;margin:0 6px;flex:none}
+.accent-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(33,30,26,.18);background:var(--dot);cursor:pointer;padding:0;transition:transform .18s,box-shadow .18s;flex:none}
+.accent-dot:hover{transform:scale(1.2)}
+.accent-dot.is-active{transform:scale(1.25);box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--dot),0 0 16px -2px var(--dot)}
+html[data-theme="dark"] .accent-dot{border-color:rgba(255,255,255,.25)}
+/* 星云升级：a3/a4 + 星点层 */
+.ambient .a3{width:420px;height:420px;left:38%;top:8%;background:radial-gradient(circle,rgba(64,200,255,.13),transparent 62%)}
+.ambient .a4{width:380px;height:380px;left:6%;top:58%;background:radial-gradient(circle,rgba(168,85,247,.1),transparent 60%)}
+html[data-theme="dark"] .ambient .a3{opacity:1;animation:drift 31s ease-in-out infinite alternate-reverse}
+html[data-theme="dark"] .ambient .a4{opacity:1;animation:drift 27s ease-in-out infinite alternate;animation-delay:-8s}
+.ambient .stars{position:absolute;inset:0;opacity:0;transition:opacity 1s;background-image:radial-gradient(1.5px 1.5px at 12% 22%,rgba(255,255,255,.8),transparent 100%),radial-gradient(1px 1px at 28% 64%,rgba(255,255,255,.65),transparent 100%),radial-gradient(1.5px 1.5px at 44% 12%,rgba(255,255,255,.7),transparent 100%),radial-gradient(1px 1px at 58% 38%,rgba(255,255,255,.55),transparent 100%),radial-gradient(1.5px 1.5px at 72% 18%,rgba(255,255,255,.7),transparent 100%),radial-gradient(1px 1px at 84% 52%,rgba(255,255,255,.6),transparent 100%),radial-gradient(1.5px 1.5px at 92% 82%,rgba(255,255,255,.7),transparent 100%),radial-gradient(1px 1px at 18% 86%,rgba(255,255,255,.55),transparent 100%)}
+html[data-theme="dark"] .ambient .stars{opacity:.5;animation:star-drift 40s linear infinite alternate}
+@keyframes star-drift{from{transform:translate(0,0)}to{transform:translate(-30px,18px)}}
+/* 玻璃扫光：舞台 + 主按钮 hover */
+html[data-theme="dark"] .stage::after{content:"";position:absolute;inset:-2px;pointer-events:none;z-index:5;background:linear-gradient(115deg,transparent 22%,rgba(255,255,255,.05) 44%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.05) 56%,transparent 78%);transform:translateX(-130%) skewX(-8deg);animation:sheen 9s ease-in-out infinite}
+@keyframes sheen{0%,62%{transform:translateX(-130%) skewX(-8deg)}78%,100%{transform:translateX(130%) skewX(-8deg)}}
+html[data-theme="dark"] .btn,html[data-theme="dark"] .copy-btn{position:relative;overflow:hidden}
+html[data-theme="dark"] .btn-primary::after,html[data-theme="dark"] .copy-btn::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-130%);transition:transform .65s ease}
+html[data-theme="dark"] .btn-primary:hover::after,html[data-theme="dark"] .copy-btn:hover::after{transform:translateX(130%)}
+/* 启动序列 */
+html[data-theme="dark"] .intro h2{animation:lab-on .9s cubic-bezier(.22,1,.36,1) both}
+html[data-theme="dark"] .intro .lead{animation:lab-fade .7s ease .15s both}
+html[data-theme="dark"] .intro .steps{animation:lab-fade .7s ease .3s both}
+@keyframes lab-on{from{opacity:0;filter:blur(9px);transform:translateY(16px)}to{opacity:1;filter:blur(0);transform:none}}
+@keyframes lab-fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="dark"] .stage::after,html[data-theme="dark"] .btn-primary::after,html[data-theme="dark"] .copy-btn::after,html[data-theme="dark"] .ambient .stars,html[data-theme="dark"] .ambient .a1,html[data-theme="dark"] .ambient .a2,html[data-theme="dark"] .ambient .a3,html[data-theme="dark"] .ambient .a4{animation:none!important}
+  html[data-theme="dark"] .intro h2,html[data-theme="dark"] .intro .lead,html[data-theme="dark"] .intro .steps{animation:none!important}
+}
+
+/* ============ v3.5 · CSS 新特性 + 原生 API ============ */
+/* 38 滚动驱动动画 */
+.sd-track{display:flex;gap:14px;overflow-x:auto;padding:10px 4px 18px;scroll-snap-type:x proximity;max-width:100%}
+.sd-track::-webkit-scrollbar{height:6px}
+.sd-track::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px}
+.sd-chip{flex:none;width:86px;height:72px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);border-radius:10px;scroll-snap-align:center}
+@supports (animation-timeline: view(inline)){
+  .sd-chip{animation:sdPop linear both;animation-timeline:view(inline);animation-range:entry 10% cover 40%}
+}
+@keyframes sdPop{
+  from{opacity:.25;transform:scale(.7) translateY(10px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+html[data-theme="dark"] .sd-chip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:var(--ink-2)}
+/* 39 :has() */
+.has-grid{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.has-card{display:flex;flex-direction:column;gap:4px;width:180px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);cursor:pointer;transition:border-color .25s,box-shadow .25s;text-align:center}
+.has-card b{font-size:14px;color:var(--ink)}
+html[data-theme="dark"] .has-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+.has-card span{font-size:12px;color:var(--ink-2)}
+.has-card input{position:absolute;opacity:0;pointer-events:none}
+.has-card:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 6px 18px -10px rgba(238,91,31,.5)}
+.has-card:has(input:checked) b{color:var(--accent-deep)}
+.has-card:has(input:checked)::after{content:"已选中";align-self:center;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--accent);color:#fff}
+.has-rows{display:flex;flex-direction:column;gap:6px;max-width:560px;margin:0 auto;font-size:12.5px;color:var(--ink-2)}
+.has-rows span{padding:6px 0}
+.has-rows span:has(+ span){border-bottom:1px dashed var(--line-strong)}
+
+/* 40 Container Queries */
+#cq-range{width:min(560px,100%);accent-color:var(--accent);margin:2px 0 14px;display:block}
+.cq-wrap{container-type:inline-size;display:flex;gap:12px;border:1px dashed var(--line-strong);border-radius:10px;padding:14px;max-width:100%;transition:width .1s}
+.cq-card{flex:1 1 0;min-width:0;display:flex;flex-direction:row;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:13px;color:var(--ink)}
+.cq-card b{color:var(--accent-deep);flex:none}
+@container (max-width: 360px){
+  .cq-card{flex-direction:column;text-align:center;font-size:12px}
+  .cq-card span{display:none}
+}
+html[data-theme="dark"] .cq-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+/* 41 Anchor Positioning */
+.anc-wrap{position:relative;width:100%;height:180px;border:1px dashed var(--line-strong);border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:visible}
+.anc-anchor{position:absolute;left:calc(50% - 37px);top:calc(50% - 19px);width:74px;height:38px;border-radius:999px;background:var(--accent);border:0;color:#fff;font-size:13px;cursor:grab;touch-action:none;box-shadow:0 4px 14px -6px rgba(238,91,31,.6)}
+.anc-anchor:active{cursor:grabbing}
+.anc-pop{position:absolute;padding:10px 14px;border-radius:8px;background:var(--panel);border:1px solid var(--line-strong);font-size:12.5px;color:var(--ink);box-shadow:0 12px 30px -14px rgba(0,0,0,.4);z-index:2;pointer-events:none;text-align:center;line-height:1.6}
+.anc-bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+@supports (anchor-name: --anc){
+  .anc-anchor{anchor-name:--anc}
+  .anc-pop{position-anchor:--anc;position-area:top;left:auto;right:auto;top:auto;bottom:auto}
+  .anc-pop.anc-right{position-area:right}
+  .anc-pop.anc-bottom{position-area:bottom}
+  .anc-pop.anc-left{position-area:left}
+}
+html[data-theme="dark"] .anc-pop{background:rgba(32,29,25,.92)}
+
+/* v3.6 · 光随内容：当前章节对应光斑聚焦微亮 */
+html[data-theme="dark"] .ambient[data-glow] i{opacity:.4;transition:opacity .9s ease,filter .9s ease}
+html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .ambient[data-glow="g2"] .a4,html[data-theme="dark"] .ambient[data-glow="g3"] .a2,html[data-theme="dark"] .ambient[data-glow="g4"] .a3{opacity:1;filter:brightness(1.75)}
+@media(prefers-reduced-motion:reduce){html[data-theme="dark"] .ambient i{transition:none}}
+</style>
+<script>try{var lt=localStorage.getItem('lab-theme');document.documentElement.setAttribute('data-theme',lt==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}try{var la=localStorage.getItem('lab-accent');if(la)document.documentElement.setAttribute('data-accent',la)}catch(e){}</script>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i><i class="stars"></i></div>
+
+<div id="progress"><i></i></div>
+
+<header class="topbar">
+  <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#EE5B1F"/><circle cx="32" cy="32" r="14" fill="none" stroke="#F5F3EE" stroke-width="5"/><circle cx="32" cy="32" r="4" fill="#F5F3EE"/></svg>
+  <h1>前端交互实验室</h1>
+  <span class="tag">v3.6.0</span>
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="search-input" type="search" placeholder="搜索演示…" autocomplete="off" aria-label="搜索演示">
+    <button type="button" id="search-clear" class="search-clear" aria-label="清空搜索">×</button>
+  </div>
+  <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换明暗主题" title="切换明暗主题"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  <div class="accent-switch" role="group" aria-label="霓虹氛围灯">
+    <button type="button" class="accent-dot is-active" data-accent="orange" aria-label="信号橙" title="信号橙" style="--dot:#FF6A2A"></button>
+    <button type="button" class="accent-dot" data-accent="cyan" aria-label="电光青" title="电光青" style="--dot:#22D3EE"></button>
+    <button type="button" class="accent-dot" data-accent="violet" aria-label="霓虹紫" title="霓虹紫" style="--dot:#A855F7"></button>
+    <button type="button" class="accent-dot" data-accent="lime" aria-label="荧光绿" title="荧光绿" style="--dot:#4ADE80"></button>
+  </div>
+  <span class="meta">47 DEMOS · 原生 + 精选库 + 前沿框架</span>
+</header>
+
+<aside class="rail">
+  <nav aria-label="演示目录">
+    <div class="rail-cat">微交互</div>
+    <a class="rail-link" href="#demo-01"><b>01</b>涟漪按钮</a>
+    <a class="rail-link" href="#demo-02"><b>02</b>磁性按钮</a>
+    <a class="rail-link" href="#demo-03"><b>03</b>光标聚光灯</a>
+    <div class="rail-cat">动效呈现</div>
+    <a class="rail-link" href="#demo-04"><b>04</b>打字机</a>
+    <a class="rail-link" href="#demo-05"><b>05</b>数字滚动</a>
+    <a class="rail-link" href="#demo-06"><b>06</b>滚动揭示</a>
+    <a class="rail-link" href="#demo-07"><b>07</b>视差滚动</a>
+    <a class="rail-link" href="#demo-08"><b>08</b>3D 翻转</a>
+    <div class="rail-cat">交互范式</div>
+    <a class="rail-link" href="#demo-09"><b>09</b>拖拽排序</a>
+    <a class="rail-link" href="#demo-10"><b>10</b>折叠面板</a>
+    <a class="rail-link" href="#demo-11"><b>11</b>Tab 切换</a>
+    <a class="rail-link" href="#demo-12"><b>12</b>Toast 通知</a>
+    <a class="rail-link" href="#demo-13"><b>13</b>骨架屏</a>
+    <a class="rail-link" href="#demo-14"><b>14</b>暗色模式</a>
+    <div class="rail-cat">创意绘图</div>
+    <a class="rail-link" href="#demo-15"><b>15</b>Canvas 粒子</a>
+    <a class="rail-link" href="#demo-16"><b>16</b>手绘画板</a>
+    <div class="rail-cat">库 · 动效</div>
+    <a class="rail-link" href="#demo-17"><b>17</b>GSAP 滚动编排</a>
+    <a class="rail-link" href="#demo-18"><b>18</b>Lottie 矢量动画</a>
+    <a class="rail-link" href="#demo-19"><b>19</b>Anime.js 补间</a>
+    <a class="rail-link" href="#demo-20"><b>20</b>Motion 交错</a>
+    <div class="rail-cat">库 · 3D 视觉</div>
+    <a class="rail-link" href="#demo-21"><b>21</b>Three.js 3D</a>
+    <a class="rail-link" href="#demo-22"><b>22</b>p5.js 生成艺术</a>
+    <div class="rail-cat">库 · 数据可视化</div>
+    <a class="rail-link" href="#demo-23"><b>23</b>ECharts 图表</a>
+    <a class="rail-link" href="#demo-24"><b>24</b>D3 力导向图</a>
+    <div class="rail-cat">库 · 滑动组件</div>
+    <a class="rail-link" href="#demo-25"><b>25</b>Swiper 轮播</a>
+    <a class="rail-link" href="#demo-26"><b>26</b>Embla 轻量轮播</a>
+    <div class="rail-cat">库 · 手势音频</div>
+    <a class="rail-link" href="#demo-27"><b>27</b>Hammer 手势</a>
+    <a class="rail-link" href="#demo-28"><b>28</b>Tone 音序器</a>
+    <div class="rail-cat">库 · 主题系统</div>
+    <a class="rail-link" href="#demo-29"><b>29</b>多主题切换</a>
+    <div class="rail-cat">框架与生态</div>
+    <a class="rail-link" href="#demo-30"><b>30</b>Vue 3.5 响应式</a>
+    <a class="rail-link" href="#demo-31"><b>31</b>Preact + htm</a>
+    <a class="rail-link" href="#demo-32"><b>32</b>htmx 超媒体</a>
+    <a class="rail-link" href="#demo-33"><b>33</b>Alpine 属性驱动</a>
+    <a class="rail-link" href="#demo-34"><b>34</b>Tailwind v4 原子类</a>
+    <a class="rail-link" href="#demo-35"><b>35</b>Jotai 原子状态</a>
+    <a class="rail-link" href="#demo-36"><b>36</b>RxJS 响应式流</a>
+    <a class="rail-link" href="#demo-37"><b>37</b>Lit Web Components</a>
+    <div class="rail-cat">CSS 新特性</div>
+    <a class="rail-link" href="#demo-38"><b>38</b>滚动驱动动画</a>
+    <a class="rail-link" href="#demo-39"><b>39</b>:has() 选择器</a>
+    <a class="rail-link" href="#demo-40"><b>40</b>Container Queries</a>
+    <a class="rail-link" href="#demo-41"><b>41</b>Anchor Positioning</a>
+    <div class="rail-cat">原生 API</div>
+    <a class="rail-link" href="#demo-42"><b>42</b>View Transitions</a>
+    <a class="rail-link" href="#demo-43"><b>43</b>Clipboard 剪贴板</a>
+    <a class="rail-link" href="#demo-44"><b>44</b>Speech 语音合成</a>
+    <a class="rail-link" href="#demo-45"><b>45</b>Web Worker</a>
+    <a class="rail-link" href="#demo-46"><b>46</b>Fullscreen + Wake Lock</a>
+    <a class="rail-link" href="#demo-47"><b>47</b>Web Share</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <section class="intro">
+    <h2>前端交互实验室</h2>
+    <p class="lead">47 个可即开即用的前端交互演示：16 原生 + 13 精选库 + 8 前沿框架 + 10 CSS 新特性 / 原生 API。每个都带可直接复制的精简提示词；库与框架演示依赖 CDN，需联网打开。</p>
+    <div class="steps">
+      <div class="step"><b>01</b><p>体验：在下方演示区直接点击、拖拽、书写，感受交互效果。</p></div>
+      <div class="step"><b>02</b><p>复制：点击提示词区块右上角的「复制提示词」，拿到精简实现描述。</p></div>
+      <div class="step"><b>03</b><p>复用：将提示词粘贴进你的项目或 AI 工具，按需调整细节后投入使用。</p></div>
+    </div>
+  </section>
+
+  <div id="search-status" class="search-status" aria-live="polite"></div>
+
+  <!-- ===== 框架对比矩阵 ===== -->
+  <button type="button" class="btn btn-ghost" id="matrix-toggle" aria-expanded="false" style="margin-top:30px">查看框架对比矩阵</button>
+  <section class="matrix-wrap" id="matrix" hidden>
+    <div class="matrix-title">框架对比矩阵</div>
+    <p class="matrix-sub">8 个前沿框架与原生 JS 的横向取舍。单文件原型场景优先看「单文件友好度」一列。</p>
+    <div class="matrix-scroll">
+      <table class="matrix">
+        <colgroup>
+          <col class="c-dim">
+          <col class="c-lib"><col class="c-lib"><col class="c-lib"><col class="c-lib"><col class="c-lib"><col class="c-lib">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>原生 JS</th>
+            <th>Vue 3.5</th>
+            <th>Preact (React)</th>
+            <th>htmx</th>
+            <th>Alpine.js</th>
+            <th>Tailwind v4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>体积 (gzip)</th><td>0 KB</td><td>~35 KB</td><td>~3 KB</td><td>~14 KB</td><td>~15 KB</td><td>Play 运行时</td></tr>
+          <tr><th>学习曲线</th><td>平缓，需原生功底</td><td>平缓–中等</td><td>平缓，React 心智</td><td>极平缓，HTML 属性</td><td>极平缓，HTML 属性</td><td>平缓，utility 记忆</td></tr>
+          <tr><th>核心范式</th><td>命令式 DOM</td><td>响应式 + 组件</td><td>函数组件 + Hooks</td><td>超媒体，局部 swap</td><td>声明式属性增强</td><td>原子类，utility-first</td></tr>
+          <tr><th>单文件友好度</th><td>极高</td><td>高（全局构建）</td><td>高（UMD + htm）</td><td>高</td><td>高</td><td>中（运行时编译）</td></tr>
+          <tr><th>典型场景</th><td>轻量交互、脚本增强</td><td>中大型 SPA / 组件库</td><td>兼容 React 生态的小体量场景</td><td>服务端模板局部刷新</td><td>渐进增强小部件</td><td>快速原型、设计收敛</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fw-note" style="margin-top:10px;text-align:left">注：Tailwind Play CDN 仅用于开发原型，生产环境需经构建流程；体积数字为大致量级，随版本波动。</p>
+  </section>
+
+  <!-- ===== 微交互 ===== -->
+
+  <section class="demo" id="demo-01" data-tags="ripple,按钮,微交互,原生,material,水波纹">
+    <div class="demo-head"><span class="demo-no">01</span><h3>涟漪按钮</h3></div>
+    <p class="demo-desc">点击按钮，波纹从指针落点向外扩散并淡出，原生实现。</p>
+    <div class="stage" id="stage-01">
+      <button type="button" class="btn btn-primary ripple-demo">保存</button>
+      <button type="button" class="btn btn-ghost ripple-demo">取消</button>
+      <button type="button" class="btn btn-primary ripple-demo">提交订单</button>
+      <span class="stage-hint">任意位置点击</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用原生 JS 与 CSS 实现涟漪按钮：点击时从指针落点生成圆形波纹，0.6s 内扩散至按钮边界并淡出。波纹由绝对定位元素承载，颜色取主色半透明。不依赖任何库。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-02" data-tags="magnetic,磁性,按钮,微交互,物理,磁吸">
+    <div class="demo-head"><span class="demo-no">02</span><h3>磁性按钮</h3></div>
+    <p class="demo-desc">光标靠近时按钮被轻轻吸引，离开后弹性回位。仅桌面端生效。</p>
+    <div class="stage" id="stage-02">
+      <button type="button" class="btn btn-primary mag-btn">开始体验</button>
+      <button type="button" class="btn btn-ghost mag-btn">查看文档</button>
+      <button type="button" class="btn btn-primary mag-btn">立即下载</button>
+      <span class="stage-hint">移动光标靠近按钮</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>实现磁性按钮：监听 mousemove，光标进入按钮周围 80px 范围时按钮向光标方向平滑偏移，最大 10px；光标离开后弹性回位。仅桌面启用，触屏设备忽略此效果。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-03" data-tags="spotlight,光标,聚光灯,mask,高亮,跟随">
+    <div class="demo-head"><span class="demo-no">03</span><h3>光标聚光灯</h3></div>
+    <p class="demo-desc">光标经过时照亮局部区域，其余内容压暗。触屏设备自动隐藏。</p>
+    <div class="stage" id="stage-03">
+      <div class="spot-wrap">
+        <p>把光标移入这片区域，一个圆形聚光会跟随你的指针移动，照亮下面的文字内容。</p>
+        <p>实现思路：用 CSS 变量存储光标坐标，叠加一个径向渐变遮罩层，配合 rAF 节流更新，性能开销极小。</p>
+        <p>聚光半径、颜色与衰减均可调，常用于夜间模式、沉浸式阅读或产品首页的氛围营造。</p>
+      </div>
+      <div class="spot-mask" aria-hidden="true"></div>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>实现光标聚光灯：页面跟随光标显示一个径向渐变高亮圆，其余区域压暗。用 CSS 变量存光标坐标，mousemove 时以 rAF 节流更新；触屏设备（无 hover 能力）自动隐藏。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 动效呈现 ===== -->
+
+  <section class="demo" id="demo-04" data-tags="typewriter,打字机,文字,循环,光标">
+    <div class="demo-head"><span class="demo-no">04</span><h3>打字机</h3></div>
+    <p class="demo-desc">多段文案逐字打出、停顿、删除再循环，带闪烁光标。</p>
+    <div class="stage" id="stage-04">
+      <p class="type-line"><span id="type-text" class="type-text"></span><span class="type-caret" aria-hidden="true"></span></p>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>实现打字机循环：多条文案逐字打出，停顿后逐字删除再输入下一条。打字速度与停顿时长可调，带闪烁光标。原生 JS 实现，不依赖任何库。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-05" data-tags="counter,数字滚动,countup,缓动,rAF,统计">
+    <div class="demo-head"><span class="demo-no">05</span><h3>数字滚动</h3></div>
+    <p class="demo-desc">数字从 0 平滑递增到目标值，rAF + 缓动函数实现。</p>
+    <div class="stage" id="stage-05">
+      <div class="stat"><b class="stat-num" data-target="128">0</b><span>用户数</span></div>
+      <div class="stat"><b class="stat-num" data-target="99.7" data-decimal="1">0</b><span>满意度 %</span></div>
+      <div class="stat"><b class="stat-num" data-target="42">0</b><span>上线版本</span></div>
+      <button type="button" class="btn btn-ghost btn-sm" id="stat-run">重新播放</button>
+      <span class="stage-hint">进入视口自动播放，可手动重播</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>数字滚动计数：数字从 0 平滑递增到目标值，用 requestAnimationFrame 与缓动函数实现，支持小数与千分位格式；进入视口或点击时触发。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-06" data-tags="reveal,滚动揭示,进入视口,intersection,淡入">
+    <div class="demo-head"><span class="demo-no">06</span><h3>滚动揭示</h3></div>
+    <p class="demo-desc">元素进入视口时淡入上移呈现，IntersectionObserver 触发一次。</p>
+    <div class="stage stage-col" id="stage-06">
+      <p class="reveal-item">第 1 行 · 进入视口即淡入</p>
+      <p class="reveal-item">第 2 行 · 依次错峰出现</p>
+      <p class="reveal-item">第 3 行 · 仅触发一次，性能友好</p>
+      <p class="reveal-item">第 4 行 · 支持任意元素与过渡</p>
+      <span class="stage-hint">上下滚动本页查看效果</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>滚动揭示：元素进入视口时淡入并上移 16px 呈现。用 IntersectionObserver 触发一次后停止观察，尊重 prefers-reduced-motion 关闭动画。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-07" data-tags="parallax,视差,滚动,层次,背景">
+    <div class="demo-head"><span class="demo-no">07</span><h3>视差滚动</h3></div>
+    <p class="demo-desc">背景层以 0.45 倍速移动，前景自然滚动，形成层次感。</p>
+    <div class="stage" id="stage-07">
+      <div class="px-view">
+        <div class="px-bg" aria-hidden="true"><span class="px-dot px-dot-1"></span><span class="px-dot px-dot-2"></span><span class="px-dot px-dot-3"></span></div>
+        <div class="px-fg">
+          <h4>远景缓慢移动，近景正常滚动</h4>
+          <p>在区域内上下滚动，观察两个图层的速度差。背景圆点以 0.45 倍速跟随，形成纵深错觉。</p>
+          <p>实现要点：滚动监听里只更新 transform 的 translate3d，把合成交给 GPU，避免直接读写 scrollTop 引发整页重排。</p>
+          <p>视差常用于产品页、故事化长页与游戏化叙事，速度系数建议控制在 0.3 – 0.7 之间，避免晕动。</p>
+        </div>
+      </div>
+      <span class="stage-hint">在区域内滚动</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>实现视差滚动：滚动时背景层以 0.45 倍速、前景以 1 倍速移动，产生层次感。用 rAF + translate3d 更新，不直接读写 scrollTop 引发重排；速度系数控制在 0.3–0.7。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-08" data-tags="flip,翻转,3d,卡片,perspective,rotateY">
+    <div class="demo-head"><span class="demo-no">08</span><h3>3D 翻转</h3></div>
+    <p class="demo-desc">perspective + rotateY 实现正反面翻转，hover 与点击均可触发。</p>
+    <div class="stage" id="stage-08">
+      <div class="flip" role="button" tabindex="0" aria-label="3D 翻转演示，点击翻转">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span>正面 · Front</span></div>
+          <div class="flip-face flip-back"><span>背面 · Back</span></div>
+        </div>
+      </div>
+      <span class="stage-hint">悬停或点击翻转</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>CSS 3D 翻转：容器设置 perspective，子元素 rotateY(180deg) 翻面；背面加 backface-visibility:hidden。hover 或点击触发，0.6s 缓动过渡。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 交互范式 ===== -->
+
+  <section class="demo" id="demo-09" data-tags="drag,拖拽,排序,dnd,列表,拖放">
+    <div class="demo-head"><span class="demo-no">09</span><h3>拖拽排序</h3></div>
+    <p class="demo-desc">HTML5 原生拖放实现列表重排，拖起项半透明占位。</p>
+    <div class="stage" id="stage-09">
+      <ul class="drag-list" id="drag-list">
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目一</li>
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目二</li>
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目三</li>
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目四</li>
+        <li draggable="true"><span class="drag-grip" aria-hidden="true">⋮⋮</span>拖拽排序 · 条目五</li>
+      </ul>
+      <span class="stage-hint">按住左侧手柄拖动</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>HTML5 拖拽排序列表：用 dragstart / dragover / drop 完成重排，拖起时显示半透明占位，落点处做 DOM 插入。触屏设备需另行实现 pointer 事件方案。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-10" data-tags="accordion,折叠,手风琴,展开,faq">
+    <div class="demo-head"><span class="demo-no">10</span><h3>折叠面板</h3></div>
+    <p class="demo-desc">同一时间仅展开一项，grid-template-rows 平滑过渡。</p>
+    <div class="stage stage-col" id="stage-10">
+      <div class="acc-item acc-open">
+        <button type="button" class="acc-head">什么是折叠面板的平滑动画要点？<span class="acc-ico" aria-hidden="true"></span></button>
+        <div class="acc-body"><div class="acc-content"><p>展开收起时内容高度不确定，用 grid-template-rows 在 0fr 与 1fr 之间过渡，动画不会随内容高度跳变。</p></div></div>
+      </div>
+      <div class="acc-item">
+        <button type="button" class="acc-head">如何保证同一时间只展开一项？<span class="acc-ico" aria-hidden="true"></span></button>
+        <div class="acc-body"><div class="acc-content"><p>维护一个「当前展开项」状态，展开新项时先把上一项收起，再展开当前项。</p></div></div>
+      </div>
+      <div class="acc-item">
+        <button type="button" class="acc-head">折叠面板适合什么场景？<span class="acc-ico" aria-hidden="true"></span></button>
+        <div class="acc-body"><div class="acc-content"><p>FAQ、设置分组、条款说明等「多段短内容按需查看」的场景，能显著降低页面信息密度。</p></div></div>
+      </div>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>折叠面板：同一时间只展开一项；用 grid-template-rows 0fr→1fr 过渡实现平滑展开收起，点击头部切换；内容高度变化时动画不跳变。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-11" data-tags="tab,标签页,切换,导航,下划线">
+    <div class="demo-head"><span class="demo-no">11</span><h3>Tab 切换</h3></div>
+    <p class="demo-desc">标签切换内容面板，下滑指示线平滑滑动到当前项。</p>
+    <div class="stage stage-col" id="stage-11">
+      <div class="tabs">
+        <div class="tab-bar" role="tablist" aria-label="示例标签页">
+          <button type="button" class="tab-btn is-active" role="tab" aria-selected="true">概述</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false">用法</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false">技巧</button>
+          <span class="tab-ink" aria-hidden="true"></span>
+        </div>
+        <div class="tab-panels">
+          <div class="tab-panel is-active" role="tabpanel">Tab 切换是内容分组的最基础范式：一组互斥的标签对应一组面板，激活态必须有清晰的位置反馈。</div>
+          <div class="tab-panel" role="tabpanel">用 role=tablist / tab / tabpanel 标记结构，支持方向键切换，激活面板用 aria-selected 与 hidden 表达状态。</div>
+          <div class="tab-panel" role="tabpanel">指示线通过测量激活标签的 offsetLeft 与 offsetWidth 做 transform 平移，避免反复读取布局。</div>
+        </div>
+      </div>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>Tab 切换：点击标签切换内容面板，激活标签带下滑指示线并平滑滑动到当前项。用 role=tablist / tab / tabpanel 保证可访问性，方向键可切换。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-12" data-tags="toast,通知,提示,弹窗,反馈">
+    <div class="demo-head"><span class="demo-no">12</span><h3>Toast 通知</h3></div>
+    <p class="demo-desc">右上角堆叠弹出，支持三种类型，自动消失可手动关闭。</p>
+    <div class="stage" id="stage-12">
+      <button type="button" class="btn btn-primary toast-trigger" data-type="success">成功通知</button>
+      <button type="button" class="btn btn-ghost toast-trigger" data-type="warning">警告通知</button>
+      <button type="button" class="btn btn-ghost toast-trigger" data-type="error">错误通知</button>
+      <span class="stage-hint">点击查看右上角反馈</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>Toast 通知系统：右上角堆叠弹出，支持 success / warning / error 三种类型，自动 3s 消失可手动关闭；进出场带动画，队列管理避免重叠。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-13" data-tags="skeleton,骨架屏,加载,loading,占位">
+    <div class="demo-head"><span class="demo-no">13</span><h3>骨架屏</h3></div>
+    <p class="demo-desc">加载前灰块占位并带流动高光，数据就绪后淡出换内容。</p>
+    <div class="stage stage-col" id="stage-13">
+      <div class="sk-wrap">
+        <div class="sk-shimmer" id="sk-shimmer" aria-hidden="true">
+          <div class="sk-line sk-line-avatar"></div>
+          <div class="sk-line sk-line-title"></div>
+          <div class="sk-line"></div>
+          <div class="sk-line sk-line-short"></div>
+        </div>
+        <div class="sk-content" id="sk-content" hidden>
+          <div class="sk-avatar-real" aria-hidden="true"></div>
+          <h4>数据分析周报 · 第 39 期</h4>
+          <p>本周访问量 12.8 万，环比 +6.2%；转化率 3.1%，其中移动端贡献 58%。完整报告已同步至团队空间。</p>
+        </div>
+      </div>
+      <div class="sk-actions">
+        <button type="button" class="btn btn-primary btn-sm" id="sk-load">模拟加载</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="sk-reset">重置</button>
+      </div>
+      <span class="stage-hint">观察骨架与内容的交替</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>骨架屏：内容加载前用灰色块占位，带流动高光 shimmer 动画；数据就绪后骨架淡出、真实内容淡入。用 CSS keyframes 实现，避免布局跳动（CLS）。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-14" data-tags="dark,暗色,主题,mode,css变量,夜间">
+    <div class="demo-head"><span class="demo-no">14</span><h3>暗色模式</h3></div>
+    <p class="demo-desc">CSS 变量 + 状态类切换主题，偏好写入 localStorage 自动恢复。</p>
+    <div class="stage" id="stage-14">
+      <div class="dm-panel">
+        <div class="dm-head"><b>主题演示面板</b><button type="button" class="dm-toggle" id="dm-toggle" aria-label="切换明暗主题"><span class="dm-track"><span class="dm-thumb"></span></span></button></div>
+        <p>当前所有颜色都通过 CSS 变量声明。切换主题时，背景、文字、边框与强调色一次性整体变化，不需要改动任何组件代码。</p>
+        <p>偏好写入 localStorage，下次打开页面自动恢复上次的选择。</p>
+      </div>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>暗色模式：用 html[data-theme] + CSS 变量实现主题切换，所有颜色走 var()；切换时背景与图标平滑过渡，偏好写入 localStorage 并自动恢复。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 创意绘图 ===== -->
+
+  <section class="demo" id="demo-15" data-tags="particle,粒子,canvas,连线,斥力,交互">
+    <div class="demo-head"><span class="demo-no">15</span><h3>Canvas 粒子</h3></div>
+    <p class="demo-desc">粒子匀速运动，距离过近自动连线，鼠标经过产生斥力。</p>
+    <div class="stage stage-canvas" id="stage-15">
+      <canvas id="px-canvas"></canvas>
+      <span class="stage-hint">移动光标扰动粒子</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>Canvas 粒子连线：粒子在画布内匀速运动，间距小于阈值时连线、透明度随距离递减；鼠标经过产生斥力。resize 自适应，移动端降低粒子数量。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-16" data-tags="draw,画板,绘画,canvas,笔,手绘">
+    <div class="demo-head"><span class="demo-no">16</span><h3>手绘画板</h3></div>
+    <p class="demo-desc">Pointer Events 绘制平滑曲线，支持笔宽、颜色与清空。</p>
+    <div class="stage stage-col stage-draw" id="stage-16">
+      <div class="draw-toolbar">
+        <button type="button" class="draw-color is-active" data-color="#211E1A" aria-label="墨色"></button>
+        <button type="button" class="draw-color" data-color="#EE5B1F" aria-label="橙色"></button>
+        <button type="button" class="draw-color" data-color="#2F6FD6" aria-label="蓝色"></button>
+        <button type="button" class="draw-color" data-color="#2F9E63" aria-label="绿色"></button>
+        <span class="draw-sep"></span>
+        <button type="button" class="draw-size is-active" data-size="3">细</button>
+        <button type="button" class="draw-size" data-size="8">中</button>
+        <button type="button" class="draw-size" data-size="16">粗</button>
+        <span class="draw-sep"></span>
+        <button type="button" class="btn btn-ghost btn-sm" id="draw-clear">清空</button>
+      </div>
+      <canvas id="draw-canvas"></canvas>
+      <span class="stage-hint">鼠标或手指直接绘制</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>Pointer Events 手绘画板：pointerdown / move / up 绘制平滑曲线，支持笔宽、颜色切换与清空；用 rAF 节流绘制，兼容鼠标与触屏。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 库 · 动效 ===== -->
+
+  <section class="demo" id="demo-17" data-lib="gsap" data-tags="gsap,滚动,编排,scrolltrigger,动画,库">
+    <div class="demo-head"><span class="demo-no">17</span><h3>GSAP 滚动编排</h3></div>
+    <p class="demo-desc">GSAP + ScrollTrigger：进入视口自动播放，点击按钮随时重放时间线。</p>
+    <div class="stage stage-col" id="stage-17">
+      <div class="gs-scroll" id="gs-scroll">
+        <div class="gs-block gs-block-1">GSAP 时间线</div>
+        <div class="gs-block gs-block-2">滚动触发</div>
+        <div class="gs-block gs-block-3">交错入场</div>
+      </div>
+      <button type="button" class="btn btn-primary btn-sm" id="gs-play">播放时间线</button>
+      <span class="stage-hint">进入视口自动播放，可手动重放</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 GSAP + ScrollTrigger</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 GSAP 时间线编排一组元素依次入场：位移 + 透明度错峰 0.18s；再用 ScrollTrigger 绑定滚动，元素进入视口（start: top 85%）时自动播放。CDN 引入 gsap 与 ScrollTrigger。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-18" data-lib="lottie" data-tags="lottie,矢量,动画,json,svg,库">
+    <div class="demo-head"><span class="demo-no">18</span><h3>Lottie 矢量动画</h3></div>
+    <p class="demo-desc">播放内联 bodymovin 动画 JSON，SVG 渲染矢量缩放不失真，可暂停。</p>
+    <div class="stage" id="stage-18">
+      <div id="lottie-box" class="lottie-box"></div>
+      <button type="button" class="btn btn-ghost btn-sm" id="lottie-toggle">暂停</button>
+      <span class="stage-hint">内联动画数据，无需外部 JSON</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 lottie-web</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 lottie-web 加载 bodymovin 格式的动画 JSON（可直接内联为对象），renderer 用 svg 保证矢量清晰，loop 循环播放；暴露 play / pause 控制接口。CDN 引入 lottie-web。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-19" data-lib="anime" data-tags="anime,补间,tween,时间线,动画,库">
+    <div class="demo-head"><span class="demo-no">19</span><h3>Anime.js 补间</h3></div>
+    <p class="demo-desc">一条时间线串联位移、旋转、缩放与颜色循环补间，一键触发。</p>
+    <div class="stage" id="stage-19">
+      <div class="anime-box" id="anime-box"></div>
+      <button type="button" class="btn btn-primary btn-sm" id="anime-play">播放</button>
+      <span class="stage-hint">观察方块的多属性补间</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 animejs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 anime.js 的 timeline 串联多个补间：位移、旋转 180°、缩放回弹与背景色循环，easing 用 easeInOutExpo；每段 add 一个目标状态即可。CDN 引入 animejs。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-20" data-lib="motion" data-tags="motion,stagger,交错,弹簧,动画,库">
+    <div class="demo-head"><span class="demo-no">20</span><h3>Motion 交错</h3></div>
+    <p class="demo-desc">Motion（motion.dev）的 stagger 让列表项依次弹出，进入视口自动播放。</p>
+    <div class="stage stage-col" id="stage-20">
+      <div class="motion-list" id="motion-list">
+        <span class="motion-item">01</span><span class="motion-item">02</span><span class="motion-item">03</span><span class="motion-item">04</span><span class="motion-item">05</span><span class="motion-item">06</span>
+      </div>
+      <button type="button" class="btn btn-primary btn-sm" id="motion-run">交错入场</button>
+      <span class="stage-hint">对比 GSAP 的编排方式</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 motion</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 motion 的 animate 与 stagger 实现列表项依次入场：y 从 24 到 0、opacity 0 到 1，stagger 间隔 0.06s，easing 用 ease-out。CDN 引入 motion 的 UMD 构建。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 库 · 3D 与视觉 ===== -->
+
+  <section class="demo" id="demo-21" data-lib="three" data-tags="three,3d,webgl,threejs,场景,库">
+    <div class="demo-head"><span class="demo-no">21</span><h3>Three.js 3D</h3></div>
+    <p class="demo-desc">WebGL 场景：环面结自转 + 点光源，鼠标移动改变视角姿态。</p>
+    <div class="stage" id="stage-21">
+      <div id="three-box" class="three-box"></div>
+      <span class="stage-hint">移动光标旋转视角</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 three</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 three.js 创建场景、透视相机与点光源，加载 TorusKnotGeometry（MeshStandardMaterial），渲染器开 antialias 与 alpha 透明背景；rAF 循环自转，鼠标位置映射到目标角度做缓动。CDN 引入 three。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-22" data-lib="p5" data-tags="p5,生成艺术,粒子,canvas,库">
+    <div class="demo-head"><span class="demo-no">22</span><h3>p5.js 生成艺术</h3></div>
+    <p class="demo-desc">移动光标，彩色粒子沿路径流动，半透明覆盖形成笔触拖尾。</p>
+    <div class="stage" id="stage-22">
+      <div id="p5-box" class="p5-box"></div>
+      <span class="stage-hint">移动光标绘制</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 p5</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 p5.js 实例模式：draw 中按概率在光标附近生成粒子，粒子随机漂移并逐步淡出；背景用低透明度填充实现拖尾。限制粒子总量，触屏同样生效。CDN 引入 p5。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 库 · 数据可视化 ===== -->
+
+  <section class="demo" id="demo-23" data-lib="echarts" data-tags="echarts,图表,折线,数据可视化,实时,库">
+    <div class="demo-head"><span class="demo-no">23</span><h3>ECharts 动态图表</h3></div>
+    <p class="demo-desc">折线图每 2s 追加数据点，模拟实时监控面板，可暂停与重置。</p>
+    <div class="stage" id="stage-23">
+      <div id="echart-box" class="echart-box"></div>
+      <div class="ec-actions">
+        <button type="button" class="btn btn-ghost btn-sm" id="ec-toggle">暂停更新</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="ec-reset">重置</button>
+      </div>
+      <span class="stage-hint">观察折线实时滚动</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 echarts</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 echarts.init 初始化折线图，setOption 定义双数据系列与双 y 轴；setInterval 每 2s push 一个新数据点并重设 option，数据超长时 shift 旧点；提供暂停 / 继续与重置按钮。CDN 引入 echarts。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-24" data-lib="d3" data-tags="d3,力导向,graph,图,数据可视化,库">
+    <div class="demo-head"><span class="demo-no">24</span><h3>D3 力导向图</h3></div>
+    <p class="demo-desc">力导向布局 + 节点拖拽：拖动任意节点，整图按物理规则重新分布。</p>
+    <div class="stage" id="stage-24">
+      <svg id="d3-graph" class="d3-graph" viewBox="0 0 640 320" role="img" aria-label="力导向关系图"></svg>
+      <span class="stage-hint">拖动任意节点</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 d3</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 d3.forceSimulation 布局节点与连线：forceLink 定连接距离、forceManyBody 定斥力、forceCollide 防重叠；节点加 d3.drag 行为，drag 中写入 d.fx / d.fy 实现拖拽固定。CDN 引入 d3。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 库 · 滑动组件 ===== -->
+
+  <section class="demo" id="demo-25" data-lib="swiper" data-tags="swiper,轮播,carousel,3d,coverflow,库">
+    <div class="demo-head"><span class="demo-no">25</span><h3>Swiper 3D 轮播</h3></div>
+    <p class="demo-desc">coverflow 3D 效果轮播：自动播放 + 分页器与前后箭头。</p>
+    <div class="stage" id="stage-25">
+      <div class="swiper lab-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide s1">01</div>
+          <div class="swiper-slide s2">02</div>
+          <div class="swiper-slide s3">03</div>
+          <div class="swiper-slide s4">04</div>
+          <div class="swiper-slide s5">05</div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev" aria-label="上一张"></div>
+        <div class="swiper-button-next" aria-label="下一张"></div>
+      </div>
+      <span class="stage-hint">左右滑动或点击箭头</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 swiper</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 Swiper 初始化 coverflow 效果轮播：effect: coverflow、loop 循环、autoplay 自动播放、pagination 分页器与 navigation 箭头。CDN 引入 swiper-bundle 的 js 与 css 两个文件。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-26" data-lib="embla" data-tags="embla,轮播,carousel,轻量,滑动,库">
+    <div class="demo-head"><span class="demo-no">26</span><h3>Embla 轻量轮播</h3></div>
+    <p class="demo-desc">drag free 滑动 + 上/下一张控制，核心 API 仅约 12KB，无依赖。</p>
+    <div class="stage" id="stage-26">
+      <div class="embla">
+        <div class="embla-viewport" id="embla-viewport">
+          <div class="embla-container">
+            <div class="embla-slide e1">轻量</div>
+            <div class="embla-slide e2">流畅</div>
+            <div class="embla-slide e3">可拖</div>
+            <div class="embla-slide e4">API 简洁</div>
+          </div>
+        </div>
+      </div>
+      <div class="embla-actions">
+        <button type="button" class="btn btn-ghost btn-sm" id="embla-prev">上一张</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="embla-next">下一张</button>
+        <span class="embla-dot" id="embla-dot">1 / 4</span>
+      </div>
+      <span class="stage-hint">左右拖动或点击按钮</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 embla-carousel</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 embla-carousel 核心 API：EmblaCarousel(viewport, { dragFree: true })；scrollPrev / scrollNext 做按钮控制，on('select') 回调更新页码指示。CDN 引入 embla-carousel 的 UMD 构建。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 库 · 手势音频与主题 ===== -->
+
+  <section class="demo" id="demo-27" data-lib="hammer" data-tags="hammer,手势,gesture,触摸,库">
+    <div class="demo-head"><span class="demo-no">27</span><h3>Hammer 手势识别</h3></div>
+    <p class="demo-desc">在面板上做手势：点击、长按、滑动、拖拽，实时显示识别结果。</p>
+    <div class="stage" id="stage-27">
+      <div id="gesture-pad" class="gesture-pad">
+        <p>在这片区域做手势</p>
+        <div class="gesture-log" id="gesture-log"><span>等待手势…</span></div>
+      </div>
+      <span class="stage-hint">鼠标或手指均可，触屏支持双指捏合</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 hammerjs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 Hammer(dom) 绑定 tap / press / swipe / pan / rotate / pinch 手势，各事件回调读取 e.type 与 e.direction 更新反馈面板；捏合与旋转默认需双指，桌面端自动忽略。CDN 引入 hammerjs。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-28" data-lib="tone" data-tags="tone,音频,音乐,音序器,合成器,webaudio,库">
+    <div class="demo-head"><span class="demo-no">28</span><h3>Tone 音序器</h3></div>
+    <p class="demo-desc">8 步音序器：点击格子编辑节拍，播放时高亮走位并发声。</p>
+    <div class="stage" id="stage-28">
+      <div class="seq-rows">
+        <div class="seq-row"><span>主音</span><div class="seq-cells" data-voice="melody">
+          <button type="button" class="seq-cell is-on" data-step="0" aria-label="主音第1步"></button>
+          <button type="button" class="seq-cell" data-step="1" aria-label="主音第2步"></button>
+          <button type="button" class="seq-cell is-on" data-step="2" aria-label="主音第3步"></button>
+          <button type="button" class="seq-cell is-on" data-step="3" aria-label="主音第4步"></button>
+          <button type="button" class="seq-cell" data-step="4" aria-label="主音第5步"></button>
+          <button type="button" class="seq-cell is-on" data-step="5" aria-label="主音第6步"></button>
+          <button type="button" class="seq-cell" data-step="6" aria-label="主音第7步"></button>
+          <button type="button" class="seq-cell is-on" data-step="7" aria-label="主音第8步"></button>
+        </div></div>
+        <div class="seq-row"><span>低音</span><div class="seq-cells" data-voice="bass">
+          <button type="button" class="seq-cell is-on" data-step="0" aria-label="低音第1步"></button>
+          <button type="button" class="seq-cell" data-step="1" aria-label="低音第2步"></button>
+          <button type="button" class="seq-cell" data-step="2" aria-label="低音第3步"></button>
+          <button type="button" class="seq-cell is-on" data-step="3" aria-label="低音第4步"></button>
+          <button type="button" class="seq-cell is-on" data-step="4" aria-label="低音第5步"></button>
+          <button type="button" class="seq-cell" data-step="5" aria-label="低音第6步"></button>
+          <button type="button" class="seq-cell is-on" data-step="6" aria-label="低音第7步"></button>
+          <button type="button" class="seq-cell" data-step="7" aria-label="低音第8步"></button>
+        </div></div>
+      </div>
+      <div class="seq-actions">
+        <button type="button" class="btn btn-primary btn-sm" id="seq-play">播放</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="seq-clear">清空</button>
+        <span class="seq-status" id="seq-status">点击播放开始发声</span>
+      </div>
+      <span class="stage-hint">点击格子编辑，播放时跟随</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 tone</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 Tone.Synth + Tone.Transport 做 8 步音序器：Tone.Sequence 按步触发音符，当前步高亮用 on('step') 更新格子状态；首次点击播放时调用 Tone.start() 解锁音频。CDN 引入 tone。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-29" data-tags="theme,主题,css变量,多主题,配色">
+    <div class="demo-head"><span class="demo-no">29</span><h3>多主题切换</h3></div>
+    <p class="demo-desc">同一套组件四个主题一键切换：颜色全部走 CSS 变量，原生实现。</p>
+    <div class="stage" id="stage-29">
+      <div class="theme-demo">
+        <div class="theme-head"><b>主题预览面板</b><span class="theme-tag">当前：纸张</span></div>
+        <div class="theme-body">
+          <p>背景、文字、边框、强调色均通过 CSS 变量声明，切换主题时组件零改动。</p>
+          <button type="button" class="btn theme-btn">主要按钮</button>
+          <button type="button" class="btn theme-btn-ghost">次要按钮</button>
+        </div>
+      </div>
+      <div class="theme-switcher">
+        <button type="button" class="theme-opt is-active" data-theme="paper">纸张</button>
+        <button type="button" class="theme-opt" data-theme="night">墨夜</button>
+        <button type="button" class="theme-opt" data-theme="sand">沙金</button>
+        <button type="button" class="theme-opt" data-theme="mint">青翠</button>
+      </div>
+      <span class="stage-hint">点击主题即时切换</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 html[data-theme] + CSS 变量实现多主题：每个主题只重定义一组颜色变量（背景/文字/边框/强调色），组件样式全部引用 var()；切换时更新 dataset 并做颜色过渡。原生实现，无需第三方库。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 框架与生态 ===== -->
+
+  <section class="demo" id="demo-30" data-lib="vue" data-tags="vue,响应式,ref,computed,v-model,组件,框架">
+    <div class="demo-head"><span class="demo-no">30</span><h3>Vue 3.5 响应式</h3></div>
+    <p class="demo-desc">createApp 全局构建：ref 计数器、v-model 双向输入、computed 实时字数；子组件演示 3.5 响应式 props 解构。</p>
+    <div class="stage" id="stage-30">
+      <div id="vue-root" class="vue-box"></div>
+      <span class="stage-hint">点击按钮计数 · 输入文字实时统计</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 vue</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 Vue.createApp 挂载：ref 计数器 + v-model 双向绑定输入框 + computed 实时字数；子组件用响应式 props 解构保持 prop 响应式。需引入 vue（全局构建 vue.global.prod.js）。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-31" data-lib="preact" data-tags="preact,react,htm,hooks,usestate,useeffect,函数组件,框架">
+    <div class="demo-head"><span class="demo-no">31</span><h3>Preact + htm</h3></div>
+    <p class="demo-desc">htm.bind(preact.h) 免 JSX 编译，函数组件 + useState/useEffect 计数器，组件化拆分。</p>
+    <div class="stage" id="stage-31">
+      <div id="preact-root" class="pa-box"></div>
+      <p class="fw-note">Preact 3KB · React API 兼容 · React 19 官方已无 UMD 构建</p>
+      <span class="stage-hint">点击按钮计数</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 preact + htm</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 htm.bind(preact.h) 得到 html 标签函数，免 JSX 编译；preact.render 挂载函数组件，useState 计数、useEffect 打印副作用日志。需引入 preact + htm。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-32" data-lib="htmx" data-tags="htmx,超媒体,局部刷新,ajax,swap,轮询,框架">
+    <div class="demo-head"><span class="demo-no">32</span><h3>htmx 超媒体</h3></div>
+    <p class="demo-desc">hx-get 触发局部内容 swap；every 3s 轮询。file:// 下用内联 template 模拟响应，双击即可运行。</p>
+    <div class="stage" id="stage-32">
+      <div class="hx-swap" id="hx-target"><div class="hx-frag">初始内容：点击下方按钮，我会被局部替换（不刷新整页）。</div></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button type="button" class="btn btn-primary" hx-get="/frag-a" hx-target="#hx-target" hx-swap="innerHTML">加载片段 A</button>
+        <button type="button" class="btn btn-ghost" hx-get="/frag-b" hx-target="#hx-target" hx-swap="innerHTML">加载片段 B</button>
+      </div>
+      <div class="hx-frag" style="width:100%">轮询状态：<span id="hx-poll" hx-get="/frag-poll" hx-trigger="every 3s" hx-swap="innerHTML">等待首帧…</span></div>
+      <template data-url="/frag-a"><div class="hx-frag">片段 <b>A</b> · 局部 swap 完成，URL 与整页都没变。</div></template>
+      <template data-url="/frag-b"><div class="hx-frag">片段 <b>B</b> · 来自内联 template 的模拟响应片段。</div></template>
+      <template data-url="/frag-poll">轮询帧 <b>#{{n}}</b> · 每 3 秒自动更新一次</template>
+      <span class="stage-hint">htmx 属性驱动 · file:// 用 template mock</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 htmx.org</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 hx-get/hx-target/hx-swap 让普通按钮触发局部刷新，hx-trigger="every 3s" 做轮询。离线环境监听 htmx:beforeRequest 并 preventDefault，从内联 template 取片段手动 swap。需引入 htmx.org。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-33" data-lib="alpine" data-tags="alpine,属性驱动,下拉,模态,stepper,零js,框架">
+    <div class="demo-head"><span class="demo-no">33</span><h3>Alpine.js 属性驱动</h3></div>
+    <p class="demo-desc">纯 x-data / x-show / x-on / x-bind 实现下拉、模态、数量器，零手写业务 JS。</p>
+    <div class="stage" id="stage-33" x-data="{open:false, modal:false, qty:1}">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;justify-content:center;width:100%">
+        <div class="alp-menu">
+          <button type="button" class="btn btn-ghost" x-on:click="open=!open">菜单 ▾</button>
+          <div class="alp-dropdown" x-show="open" x-cloak x-on:click.outside="open=false">
+            <button type="button" x-on:click="open=false">操作一</button>
+            <button type="button" x-on:click="open=false">操作二</button>
+            <button type="button" x-on:click="open=false">操作三</button>
+          </div>
+        </div>
+        <div class="alp-stepper">
+          <button type="button" class="btn btn-ghost btn-sm" x-on:click="qty=qty-1" x-bind:disabled="qty<=1">−</button>
+          <b x-text="qty"></b>
+          <button type="button" class="btn btn-ghost btn-sm" x-on:click="qty=qty+1">＋</button>
+        </div>
+        <button type="button" class="btn btn-primary" x-on:click="modal=true">打开模态</button>
+      </div>
+      <div class="alp-modal-mask" x-show="modal" x-cloak x-on:click.self="modal=false">
+        <div class="alp-modal">
+          <b style="font-size:15px">Alpine 模态框</b>
+          <p style="font-size:13px;color:var(--ink-2);margin:10px 0 16px">x-show 控制显隐，x-on:click.self 点遮罩关闭。</p>
+          <button type="button" class="btn btn-primary btn-sm" x-on:click="modal=false">关闭</button>
+        </div>
+      </div>
+      <span class="stage-hint">全部行为由 HTML 属性声明</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 alpinejs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 x-data 声明状态，x-show 控制显隐，x-on:click 绑事件，x-bind:disabled 绑属性，x-on:click.outside 点外部关闭。同等交互用原生 JS 约需 60+ 行。需引入 alpinejs。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-34" data-lib="tailwind" data-tags="tailwind,css,原子类,utility,暗色,运行时编译,框架">
+    <div class="demo-head"><span class="demo-no">34</span><h3>Tailwind CSS v4 原子类</h3></div>
+    <p class="demo-desc">@tailwindcss/browser 运行时即时编译；utility 写按钮/徽章，可切暗色，class 编辑器实时预览。</p>
+    <div class="stage" id="stage-34">
+      <div class="tw-preview bg-white dark:bg-stone-900" id="tw-preview">
+        <div class="flex flex-wrap gap-3 items-center">
+          <button type="button" class="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700">主按钮</button>
+          <button type="button" class="border border-stone-300 px-4 py-2 rounded-md dark:border-stone-600 dark:text-stone-100">次按钮</button>
+          <span class="px-2 py-0.5 text-xs rounded bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">徽章</span>
+          <span class="px-2 py-0.5 text-xs rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">成功</span>
+        </div>
+        <p class="mt-4 text-sm text-stone-600 dark:text-stone-300">这段文字随暗色切换变色，卡片背景也跟着切换。</p>
+      </div>
+      <div class="tw-editor">
+        <input id="tw-class-input" type="text" placeholder="输入 utility 类，如 bg-sky-100 p-6 rounded-lg">
+        <button type="button" class="btn btn-ghost btn-sm" id="tw-dark-toggle">切暗色</button>
+      </div>
+      <div id="tw-live" class="border border-dashed border-stone-300 dark:border-stone-600 p-4 text-sm text-stone-700 dark:text-stone-200">实时预览：在这里应用你输入的类</div>
+      <p class="fw-note">Play CDN 仅用于开发原型，生产需构建</p>
+      <span class="stage-hint">输入类名即时编译</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 @tailwindcss/browser</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 @tailwindcss/browser 在浏览器即时编译 utility 类；dark: 前缀配合 .dark 根类做暗色；class 编辑器监听 input 把类名实时写到预览元素上。需引入 @tailwindcss/browser。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-35" data-lib="jotai" data-tags="jotai,原子,状态管理,store,派生atom,细粒度,框架">
+    <div class="demo-head"><span class="demo-no">35</span><h3>Jotai 原子状态</h3></div>
+    <p class="demo-desc">vanilla UMD 不依赖 React：多订阅共享 atom，任一处修改局部更新；一颗派生 atom 依赖两颗基础 atom。</p>
+    <div class="stage" id="stage-35">
+      <div class="jt-grid">
+        <div class="jt-node">
+          <div class="jt-label">atom · 数量 a</div>
+          <div class="jt-val" id="jt-a-val">–</div>
+          <div style="display:flex;gap:6px;justify-content:center">
+            <button type="button" class="btn btn-ghost btn-sm" data-jt="dec-a">−1</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-jt="inc-a">+1</button>
+          </div>
+        </div>
+        <div class="jt-node">
+          <div class="jt-label">atom · 倍数 b</div>
+          <div class="jt-val" id="jt-b-val">–</div>
+          <div style="display:flex;gap:6px;justify-content:center">
+            <button type="button" class="btn btn-ghost btn-sm" data-jt="dec-b">−</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-jt="inc-b">＋</button>
+          </div>
+        </div>
+        <div class="jt-node derived">
+          <div class="jt-label">派生 atom · a × b</div>
+          <div class="jt-val" id="jt-c-val">–</div>
+          <div style="font-size:11px;color:var(--ink-3)">自动重算</div>
+        </div>
+      </div>
+      <div class="jt-graph">依赖图：<code>atomA</code> <span>×</span> <code>atomB</code> <span class="arrow">→</span> <code>derivedAtom = a × b</code></div>
+      <span class="stage-hint">改 a 或 b，三处局部更新</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 jotai (vanilla)</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 jotai/vanilla 的 atom + createStore 建基础 atom 与派生 atom；store.sub 订阅，任意 set 只通知依赖它的订阅处，实现细粒度局部更新。需引入 jotai (vanilla)。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-36" data-lib="rxjs" data-tags="rxjs,响应式流,debounce,switchmap,throttle,observable,框架">
+    <div class="demo-head"><span class="demo-no">36</span><h3>RxJS 响应式流</h3></div>
+    <p class="demo-desc">输入流 debounceTime(300) + switchMap 模拟搜索；鼠标移动 throttleTime 节流显示坐标。</p>
+    <div class="stage" id="stage-36">
+      <div class="rx-search">
+        <input id="rx-input" type="text" placeholder="输入关键词，如 vue / htmx…">
+        <div class="rx-status" id="rx-status">空闲</div>
+        <div id="rx-result" class="fw-card" style="margin-top:8px;min-height:48px">输入后停止 300ms 触发模拟请求</div>
+      </div>
+      <div class="rx-pipe">输入 <span class="arrow">→</span> debounceTime(300ms) <span class="arrow">→</span> switchMap(mockSearch) <span class="arrow">→</span> 渲染结果</div>
+      <div>鼠标在舞台上移动：<span class="rx-coord" id="rx-coord">x: –, y: –</span></div>
+      <span class="stage-hint">快速连续输入会自动取消上一次请求</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 rxjs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>fromEvent(input,'input') → debounceTime(300) → distinctUntilChanged → switchMap(q => mockApi$(q))，订阅后渲染结果；鼠标流用 throttleTime(100) 节流显示坐标。需引入 rxjs。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-37" data-lib="lit" data-tags="lit,web component,shadow dom,自定义元素,esm,框架">
+    <div class="demo-head"><span class="demo-no">37</span><h3>Lit Web Components</h3></div>
+    <p class="demo-desc">动态 import ESM 加载 Lit，注册 &lt;live-clock&gt; 与 &lt;count-up&gt;：Shadow DOM 封装、响应式属性、框架无关。</p>
+    <div class="stage" id="stage-37">
+      <div id="lit-mount" style="display:flex;gap:28px;flex-wrap:wrap;justify-content:center;align-items:center;width:100%;min-height:60px">
+        <live-clock></live-clock>
+        <count-up start="0" step="1"></count-up>
+      </div>
+      <p class="fw-note">Shadow DOM 样式隔离 · 可嵌入任何框架 · 加载失败见右上角提示</p>
+      <span class="stage-hint">进入页面自动加载 Lit ESM</span>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 lit（ESM 动态加载）</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>动态 import() 加载 Lit ESM，用 LitElement + html 标签函数定义自定义元素，properties 声明响应式属性；Shadow DOM 样式隔离，框架无关可嵌入。需引入 lit（ESM 动态加载）。</pre>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-38" data-tags="css,scroll-timeline,view-timeline,滚动驱动,新特性">
+    <div class="demo-head"><span class="demo-no">38</span><h3>滚动驱动动画</h3></div>
+    <p class="demo-desc">CSS <code>view-timeline</code> 让动画进度直接绑定滚动位置：卡片随进入视角缩放、上浮、变色，零 JS。</p>
+    <div class="stage" id="stage-38">
+      <div class="sd-track" id="sd-track">
+        <span class="sd-chip">A</span><span class="sd-chip">B</span><span class="sd-chip">C</span><span class="sd-chip">D</span><span class="sd-chip">E</span><span class="sd-chip">F</span><span class="sd-chip">G</span><span class="sd-chip">H</span><span class="sd-chip">I</span><span class="sd-chip">J</span><span class="sd-chip">K</span><span class="sd-chip">L</span><span class="sd-chip">M</span><span class="sd-chip">N</span>
+      </div>
+      <p class="fw-note" id="sd-note">横向拖动轨道，卡片随进入/离开视角自动缩放上浮。需 Chrome 115+ 支持 animation-timeline。</p>
+      <span class="stage-hint">纯 CSS：animation-timeline: view(inline)</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 animation-timeline: view(inline) 把 keyframes 绑定到滚动视角：卡片进入视口时 scale/opacity/translate 随进度变化，离开反向回退。纯 CSS，无滚动监听 JS。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-39" data-tags="css,:has(),关系选择器,父级感知,新特性">
+    <div class="demo-head"><span class="demo-no">39</span><h3>:has() 选择器</h3></div>
+    <p class="demo-desc"><code>:has()</code> 让父级感知子级状态：勾选卡片即整卡高亮加徽章，跨分支影响无需 JS 类切换。</p>
+    <div class="stage" id="stage-39">
+      <div class="has-grid">
+        <label class="has-card"><input type="checkbox" name="has-demo"><b>标题 A</b><span>勾选我，整卡 :has 生效</span></label>
+        <label class="has-card"><input type="checkbox" name="has-demo"><b>标题 B</b><span>勾选我，整卡 :has 生效</span></label>
+        <label class="has-card"><input type="checkbox" name="has-demo"><b>标题 C</b><span>勾选我，整卡 :has 生效</span></label>
+      </div>
+      <div class="has-rows">
+        <span>纯 CSS 实现：父级 .has-card:has(input:checked) 高亮并显示徽章。</span>
+        <span>相邻影响：.has-rows span:has(+ span) 给非末项加分隔线。</span>
+      </div>
+      <span class="stage-hint">勾选卡片体验整卡联动</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>用 .card:has(input:checked) 让父级感知子项选中态：选中时整卡高亮、伪元素显示徽章；:has(+ ) 还能做相邻兄弟影响。省掉 JS 类切换。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-40" data-tags="css,container queries,容器查询,响应式,新特性">
+    <div class="demo-head"><span class="demo-no">40</span><h3>Container Queries</h3></div>
+    <p class="demo-desc">容器查询按「容器宽度」而非视口响应：拖窄容器，卡片自动从横排变纵排、字号变小。</p>
+    <div class="stage" id="stage-40">
+      <input type="range" id="cq-range" min="220" max="620" value="620" aria-label="容器宽度">
+      <div class="cq-wrap" id="cq-wrap">
+        <div class="cq-card"><b>卡片一</b><span>宽度足够时横排展示，容器收窄后自动纵向堆叠。</span></div>
+        <div class="cq-card"><b>卡片二</b><span>@container (max-width: 360px) 内切换布局与字号。</span></div>
+      </div>
+      <p class="fw-note">拖动滑块改变容器宽度，观察卡片响应。Chrome 105+ 支持 container queries。</p>
+      <span class="stage-hint">@container (max-width: 360px)</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>容器设 container-type: inline-size，内部组件用 @container (max-width: 360px) 断点切换布局/字号，响应式绑定到容器而非视口，组件可复用。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-41" data-tags="css,anchor positioning,锚点定位,气泡,新特性">
+    <div class="demo-head"><span class="demo-no">41</span><h3>Anchor Positioning</h3></div>
+    <p class="demo-desc">锚点定位让弹层相对任意锚点摆放：拖拽锚点，气泡自动跟随；点击切换四向位置。</p>
+    <div class="stage" id="stage-41">
+      <div class="anc-wrap" id="anc-wrap">
+        <button type="button" class="anc-anchor" id="anc-anchor" aria-label="拖动锚点">锚点</button>
+        <div class="anc-pop" id="anc-pop" hidden>定位提示<br>拖拽我上方的锚点试试</div>
+      </div>
+      <div class="anc-bar">
+        <button type="button" class="btn btn-primary btn-sm" id="anc-toggle">显示 / 隐藏气泡</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="anc-pos">切换位置（上 / 右 / 下 / 左）</button>
+      </div>
+      <p class="fw-note" id="anc-note">Chrome 125+ 原生 anchor-name 定位；旧浏览器自动降级为 JS 计算定位。</p>
+      <span class="stage-hint">position-anchor + position-area</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>锚点元素设 anchor-name: --anc，弹层用 position-anchor: --anc + position-area: top 定位；旧浏览器用 getBoundingClientRect 手动摆位降级。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-42" data-tags="api,view transitions,页面过渡,新特性">
+    <div class="demo-head"><span class="demo-no">42</span><h3>View Transitions</h3></div>
+    <p class="demo-desc"><code>document.startViewTransition()</code> 让视图切换拥有平滑的交叉淡化，浏览器自动捕获新旧状态。</p>
+    <div class="stage" id="stage-42">
+      <button type="button" class="btn btn-primary btn-sm" id="vt-toggle">切换为列表视图</button>
+      <div class="vt-grid" id="vt-view">
+        <span class="vt-cell">1</span><span class="vt-cell">2</span><span class="vt-cell">3</span><span class="vt-cell">4</span><span class="vt-cell">5</span><span class="vt-cell">6</span>
+      </div>
+      <p class="fw-note">点击切换网格 / 列表，旧视图淡出、新视图淡入。Chrome 111+ 支持；旧浏览器直接切换。</p>
+      <span class="stage-hint">startViewTransition(() =&gt; 改 DOM)</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>document.startViewTransition(() => 切换视图类) 一行触发平滑过渡：浏览器自动做新旧快照交叉淡化，降级直接切换。适合多视图页面的廉价转场。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-43" data-tags="api,clipboard,剪贴板,复制,粘贴">
+    <div class="demo-head"><span class="demo-no">43</span><h3>Clipboard 剪贴板</h3></div>
+    <p class="demo-desc">Async Clipboard API 读写剪贴板：复制演示文本、读取剪贴板内容，均可在 file:// 下工作。</p>
+    <div class="stage" id="stage-43">
+      <p class="cl-src" id="cl-src">这段文字将被复制到剪贴板——来自 Clipboard API 演示。</p>
+      <div class="cl-bar">
+        <button type="button" class="btn btn-primary btn-sm" id="cl-copy">复制演示文本</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="cl-read">读取剪贴板</button>
+      </div>
+      <pre class="cl-out" id="cl-out">读取结果将显示在这里…</pre>
+      <span class="stage-hint">navigator.clipboard.writeText / readText</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>navigator.clipboard.writeText / readText 异步读写剪贴板，需用户手势与 secure context；旧环境降级 document.execCommand("copy") + textarea 兜底。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-44" data-tags="api,speech,语音合成,tts">
+    <div class="demo-head"><span class="demo-no">44</span><h3>Speech 语音合成</h3></div>
+    <p class="demo-desc">SpeechSynthesis 让页面开口朗读：中文朗读演示文案，语速可调，支持播放与停止。</p>
+    <div class="stage" id="stage-44">
+      <p class="sp-src">你好，我是浏览器语音合成。前端交互实验室用原生 API 演示朗读能力，语速可以通过下方的滑块调节。</p>
+      <div class="sp-bar">
+        <button type="button" class="btn btn-primary btn-sm" id="sp-play">播放</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="sp-stop">停止</button>
+        <label class="sp-rate">语速 <input type="range" id="sp-rate" min="0.5" max="2" step="0.1" value="1"></label>
+      </div>
+      <p class="fw-note" id="sp-status">点击播放后朗读上方文案。需浏览器语音数据，首次使用可能需联网下载语音。</p>
+      <span class="stage-hint">speechSynthesis.speak(new SpeechSynthesisUtterance())</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>new SpeechSynthesisUtterance(text) + speechSynthesis.speak() 朗读；rate/pitch 可调，cancel() 停止。必须由用户手势触发，选 zh-CN 语音。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-45" data-tags="api,web worker,多线程,计算">
+    <div class="demo-head"><span class="demo-no">45</span><h3>Web Worker</h3></div>
+    <p class="demo-desc">Worker 把重计算搬到后台线程：求第 40 万位的质数区间，主线程动画依然满帧流畅。</p>
+    <div class="stage" id="stage-45">
+      <div class="wk-bar">
+        <button type="button" class="btn btn-primary btn-sm" id="wk-run">计算质数（后台线程）</button>
+        <span class="wk-fps" id="wk-fps">帧率 --</span>
+      </div>
+      <pre class="wk-out" id="wk-out">点击开始：在 Worker 中筛选 2–200000 的质数并统计个数。</pre>
+      <p class="fw-note">右侧帧率计数器持续跳动，证明主线程未被阻塞。Worker 代码用 Blob URL 内联。</p>
+      <span class="stage-hint">new Worker(URL.createObjectURL(blob))</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>把 CPU 密集任务封装成 new Worker(URL.createObjectURL(new Blob([code]))) 内联脚本，postMessage 通信；主线程保持渲染流畅，任务结束 onmessage 回收。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-46" data-tags="api,fullscreen,全屏,wake lock,屏幕常亮">
+    <div class="demo-head"><span class="demo-no">46</span><h3>Fullscreen + Wake Lock</h3></div>
+    <p class="demo-desc">全屏沉浸 + 屏幕常亮：适合演示、阅读、看板等场景，两个 API 都由用户手势触发。</p>
+    <div class="stage" id="stage-46">
+      <div class="wk-bar">
+        <button type="button" class="btn btn-primary btn-sm" id="fs-toggle">进入 / 退出全屏</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="wl-toggle">保持屏幕常亮</button>
+      </div>
+      <p class="fw-note" id="fs-status">全屏：document.documentElement.requestFullscreen()</p>
+      <p class="fw-note" id="wl-status">常亮：navigator.wakeLock.request("screen")，需 HTTPS / 本地文件 + 用户手势</p>
+      <span class="stage-hint">requestFullscreen / wakeLock.request</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>document.documentElement.requestFullscreen() 全屏，fullscreenchange 监听状态；navigator.wakeLock?.request("screen") 保持常亮，visibilitychange 时重新申请。均需用户手势。</pre>
+    </div>
+  </section>
+  <section class="demo" id="demo-47" data-tags="api,web share,分享,系统分享">
+    <div class="demo-head"><span class="demo-no">47</span><h3>Web Share</h3></div>
+    <p class="demo-desc">Web Share 调起系统分享面板（移动端友好），桌面端自动降级为复制链接 + 提示。</p>
+    <div class="stage" id="stage-47">
+      <button type="button" class="btn btn-primary" id="share-run">分享这个实验室</button>
+      <p class="fw-note" id="share-status">navigator.share({ title, text, url }) —— 点击后调用系统分享；失败或不可用时复制页面地址。</p>
+      <span class="stage-hint">navigator.share / 降级复制链接</span>
+    </div><div class="prompt">
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <pre>navigator.share({title, text, url}) 调起系统分享面板（需用户手势 + secure context）；不支持或取消时降级 navigator.clipboard.writeText 复制链接并 toast。</pre>
+    </div>
+  </section>
+
+  <!-- ===== 调研说明 ===== -->
+  <section class="research">
+    <h3>已调研但未收录</h3>
+    <ul>
+      <li><b>Svelte 5</b> — 需编译，无浏览器运行时，单文件双击不可运行。</li>
+      <li><b>SolidJS</b> — 需 JSX/Solid 编译，无 UMD 构建。</li>
+      <li><b>Astro</b> — SSG / 构建框架，非运行时库。</li>
+      <li><b>Qwik</b> — 需构建期序列化，社区热度下行。</li>
+      <li><b>shadcn/ui</b> — 源码复制集而非库，无 CDN 入口。</li>
+      <li><b>React 19</b> — 官方已移除 UMD 构建，本实验室用 Preact + htm 兼容路线替代演示。</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <span>前端交互实验室 · 16 原生 + 13 精选库 + 8 前沿框架 + 10 新特性 / API</span>
+    <span><b>v3.6.0</b> · Pride Versioning（Proud 3 · Default 6 · Shame 0）</span>
+    <span>框架调研覆盖：State of JS / Rising Stars / HN / 掘金 / V2EX 等 8 渠道</span>
+    <span>库类演示依赖 jsDelivr CDN，需联网打开</span>
+  </footer>
+</main>
+
+<div id="toast-wrap" aria-live="polite"></div>
+
+<!-- ===== 第三方库（jsDelivr CDN）===== -->
+
+<!-- ===== v3 新增：前沿框架 CDN（jsDelivr 优先）===== -->
+
+<script>
+(function(){
+  'use strict';
+
+  /* ===== Toast 通知 ===== */
+  var toastWrap = document.getElementById('toast-wrap');
+  function showToast(type, msg){
+    var el = document.createElement('div');
+    el.className = 'toast t-' + (type || 'success');
+    var dot = document.createElement('i');
+    el.appendChild(dot);
+    el.appendChild(document.createTextNode(msg));
+    toastWrap.appendChild(el);
+    setTimeout(function(){ el.classList.add('is-out'); }, 2600);
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 3000);
+  }
+  window.showToast = showToast;
+
+  /* 库加载失败兜底：按钮保留，点击提示联网 */
+  function noLib(id, name){
+    var b = document.getElementById(id);
+    if(!b) return;
+    b.addEventListener('click', function(){
+      showToast('error', name + ' 加载失败，请联网后刷新页面');
+    });
+  }
+  /* ===== v3.2 · CDN 按需加载 ===== */
+  var LIBS = {
+    gsap:    { js: ['https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js','https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'] },
+    lottie:  { js: ['https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js'] },
+    anime:   { js: ['https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js'] },
+    motion:  { js: ['https://cdn.jsdelivr.net/npm/motion@10.18.0/dist/motion.umd.js'] },
+    three:   { js: ['https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js'] },
+    p5:      { js: ['https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js'] },
+    echarts: { js: ['https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js'] },
+    d3:      { js: ['https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js'] },
+    swiper:  { js: ['https://cdn.jsdelivr.net/npm/swiper@11.1.15/swiper-bundle.min.js'] },
+    embla:   { js: ['https://cdn.jsdelivr.net/npm/embla-carousel@8.1.6/embla-carousel.umd.js'] },
+    hammer:  { js: ['https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js'] },
+    tone:    { js: ['https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.js'] },
+    vue:     { js: ['https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js'] },
+    preact:  { js: ['https://cdn.jsdelivr.net/npm/preact@10.26.4/dist/preact.min.umd.js','https://cdn.jsdelivr.net/npm/preact@10.26.4/hooks/dist/hooks.umd.js','https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js'] },
+    htmx:    { js: ['https://cdn.jsdelivr.net/npm/htmx.org@2.0.4/dist/htmx.min.js'] },
+    alpine:  { js: ['https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js'] },
+    tailwind:{ js: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.13/dist/index.global.js'] },
+    jotai:   { js: ['https://cdn.jsdelivr.net/npm/jotai@2.2.0/umd/vanilla.production.js'] },
+    rxjs:    { js: ['https://cdn.jsdelivr.net/npm/rxjs@7.8.2/dist/bundles/rxjs.umd.min.js'] },
+    lit:     { js: null }
+  };
+  var LAB = (function(){
+    var ready = {}, loading = {}, waiters = {}, timers = {};
+    function flush(k){
+      var list = (waiters[k] || []).splice(0);
+      waiters[k] = [];
+      list.forEach(function(it){ it.fn(); });
+    }
+    function fail(k){
+      var list = (waiters[k] || []).slice();
+      /* 保留等待者：CDN 抖动导致首次加载失败后，LAB.load 重试成功仍会 flush 初始化 demo（自愈） */
+      list.forEach(function(it){ (it.fb || defaultFb)(it); });
+    }
+    function defaultFb(it){
+      if(it.id) noLib(it.id, it.name);
+      else showToast('error', (it.name || '库') + ' 加载失败，请联网后刷新页面');
+    }
+    function load(k){
+      if(ready[k] || loading[k]) return;
+      var urls = LIBS[k] && LIBS[k].js;
+      if(!urls){ ready[k] = true; flush(k); return; }
+      loading[k] = true;
+      inject(0);
+      function inject(i){
+        var s = document.createElement('script');
+        s.src = urls[i];
+        s.onload = function(){
+          if(i < urls.length - 1){ inject(i + 1); }
+          else { loading[k] = false; ready[k] = true; flush(k); }
+        };
+        s.onerror = function(){ loading[k] = false; fail(k); };
+        document.head.appendChild(s);
+      }
+    }
+    function wait(opt){
+      var k = opt.key, it = opt;
+      (waiters[k] = waiters[k] || []).push(it);
+      if(ready[k]){ flush(k); return; }
+      if(timers[k]) clearTimeout(timers[k]);
+      timers[k] = setTimeout(function(){
+        if(!ready[k]){
+          if(loading[k]){
+            /* 慢网：库仍在加载，先提示兜底，保留等待者——加载完成仍会初始化 demo */
+            var list = (waiters[k] || []).slice();
+            list.forEach(function(w){ (w.fb || defaultFb)(w); });
+          }else{
+            fail(k);
+          }
+        }
+      }, 12000);
+    }
+    return { load: load, wait: wait };
+  })();
+  /* 进入视口预加载：demo 靠近视口 420px 内时注入其依赖库 */
+  var lazyIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        (en.target.getAttribute('data-lib') || '').split(',').forEach(function(k){
+          k = k.trim();
+          if(k) LAB.load(k);
+        });
+      }
+    });
+  }, { rootMargin: '0px 0px 420px 0px' });
+  document.querySelectorAll('.demo[data-lib]').forEach(function(s){ lazyIO.observe(s); });
+
+
+  /* ===== 复制提示词 ===== */
+  function copyText(text){
+    if(navigator.clipboard && window.isSecureContext){
+      return navigator.clipboard.writeText(text);
+    }
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+    return Promise.resolve();
+  }
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.copy-btn');
+    if(!btn) return;
+    var promptEl = btn.closest('.prompt');
+    var text = promptEl.querySelector('pre').textContent;
+    copyText(text).then(function(){
+      var old = btn.innerHTML;
+      btn.classList.add('is-done');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>已复制';
+      var guided = false;
+      try{ guided = sessionStorage.getItem('lab-copy-guided'); }catch(e){}
+      if(!guided){
+        showToast('success', '已复制，去 AI 工具粘贴');
+        try{ sessionStorage.setItem('lab-copy-guided','1'); }catch(e){}
+      } else {
+        showToast('success', '提示词已复制到剪贴板');
+      }
+      setTimeout(function(){ btn.classList.remove('is-done'); btn.innerHTML = old; }, 2000);
+    });
+  });
+
+  /* ===== v3.3 · 明暗主题切换 ===== */
+  var themeBtn = document.getElementById('theme-toggle');
+  themeBtn.addEventListener('click', function(){
+    var d = document.documentElement;
+    var next = d.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    d.setAttribute('data-theme', next);
+    try{ localStorage.setItem('lab-theme', next); }catch(e){}
+  });
+  /* v3.4 · 霓虹氛围灯 */
+  document.querySelectorAll('.accent-dot').forEach(function(dot){
+    dot.addEventListener('click', function(){
+      var d = document.documentElement;
+      var acc = dot.getAttribute('data-accent');
+      d.setAttribute('data-accent', acc);
+      document.querySelectorAll('.accent-dot').forEach(function(x){ x.classList.toggle('is-active', x === dot); });
+      try{ localStorage.setItem('lab-accent', acc); }catch(e){}
+    });
+  });
+
+  /* ===== 侧栏滚动高亮（滚动监听） ===== */
+  var railLinks = Array.prototype.slice.call(document.querySelectorAll('.rail-link'));
+  var demoSeen = {};
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        var id = en.target.id;
+        demoSeen[id] = true;
+        railLinks.forEach(function(a){
+          a.classList.toggle('is-active', a.getAttribute('href') === '#' + id);
+        });
+        document.querySelectorAll('.demo.is-current').forEach(function(d){ d.classList.remove('is-current'); });
+        var cur = document.getElementById(id);
+        if(cur) cur.classList.add('is-current');
+      }
+    });
+  }, { rootMargin: '-15% 0px -62% 0px' });
+  document.querySelectorAll('.demo').forEach(function(s){ spy.observe(s); });
+
+  /* ===== 顶部滚动进度条 ===== */
+  var prog = document.querySelector('#progress i');
+  function updateProg(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - window.innerHeight;
+    var v = max > 0 ? window.scrollY / max : 0;
+    prog.style.transform = 'scaleX(' + v + ')';
+  }
+  window.addEventListener('scroll', updateProg, { passive: true });
+  window.addEventListener('resize', updateProg);
+  updateProg();
+
+  /* ===== 01 涟漪按钮 ===== */
+  (function(){
+    var stage = document.getElementById('stage-01');
+    stage.addEventListener('click', function(e){
+      var btn = e.target.closest('.ripple-demo');
+      if(!btn) return;
+      var r = btn.getBoundingClientRect();
+      var d = Math.max(r.width, r.height) * 2;
+      var s = document.createElement('span');
+      s.className = 'ripple';
+      s.style.width = s.style.height = d + 'px';
+      s.style.left = (e.clientX - r.left - d / 2) + 'px';
+      s.style.top = (e.clientY - r.top - d / 2) + 'px';
+      btn.appendChild(s);
+      s.addEventListener('animationend', function(){ s.remove(); });
+    });
+  })();
+
+  /* ===== 02 磁性按钮 ===== */
+  (function(){
+    var stage = document.getElementById('stage-02');
+    var btns = Array.prototype.slice.call(stage.querySelectorAll('.mag-btn'));
+    if(!window.matchMedia('(hover: hover)').matches) return;
+    var raf = null;
+    stage.addEventListener('mousemove', function(e){
+      if(raf) return;
+      raf = requestAnimationFrame(function(){
+        raf = null;
+        var best = null, bd = Infinity;
+        btns.forEach(function(b){
+          var r = b.getBoundingClientRect();
+          var dx = e.clientX - (r.left + r.width / 2);
+          var dy = e.clientY - (r.top + r.height / 2);
+          var d = Math.hypot(dx, dy);
+          if(d < bd){ bd = d; best = b; }
+        });
+        btns.forEach(function(b){
+          var r = b.getBoundingClientRect();
+          var dx = e.clientX - (r.left + r.width / 2);
+          var dy = e.clientY - (r.top + r.height / 2);
+          if(b === best && bd < 90){
+            var pull = bd === 0 ? 0 : Math.min(bd * 0.16, 10);
+            var nx = bd ? (dx / bd) * pull : 0;
+            var ny = bd ? (dy / bd) * pull : 0;
+            b.style.transform = 'translate(' + nx.toFixed(1) + 'px,' + ny.toFixed(1) + 'px)';
+            b.classList.remove('is-away');
+          }else{
+            b.style.transform = '';
+          }
+        });
+      });
+    });
+    stage.addEventListener('mouseleave', function(){
+      btns.forEach(function(b){
+        b.style.transform = '';
+        b.classList.add('is-away');
+      });
+    });
+    stage.addEventListener('click', function(e){
+      if(e.target.closest('.mag-btn')){
+        showToast('success', '磁性按钮交互已触发，点击动作可按需绑定');
+      }
+    });
+  })();
+
+  /* ===== 03 光标聚光灯 ===== */
+  (function(){
+    var stage = document.getElementById('stage-03');
+    var mask = stage.querySelector('.spot-mask');
+    if(!window.matchMedia('(hover: hover)').matches){ mask.style.opacity = '0'; return; }
+    var ticking = false;
+    stage.addEventListener('mousemove', function(e){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var r = stage.getBoundingClientRect();
+        stage.style.setProperty('--sx', (e.clientX - r.left) + 'px');
+        stage.style.setProperty('--sy', (e.clientY - r.top) + 'px');
+        ticking = false;
+      });
+    });
+  })();
+
+  /* ===== 04 打字机 ===== */
+  (function(){
+    var el = document.getElementById('type-text');
+    var phrases = [
+      '原生 JS 实现，无依赖，可直接复用。',
+      '逐字打出，停顿后删除，再输入下一条。',
+      '速度与停顿时长均可按需调整。'
+    ];
+    var p = 0, i = 0, deleting = false, timer = null;
+    function tick(){
+      var cur = phrases[p];
+      if(!deleting){
+        i++;
+        el.textContent = cur.slice(0, i);
+        if(i === cur.length){ deleting = true; timer = setTimeout(tick, 1700); return; }
+      }else{
+        i--;
+        el.textContent = cur.slice(0, i);
+        if(i === 0){
+          deleting = false;
+          p = (p + 1) % phrases.length;
+          timer = setTimeout(tick, 420);
+          return;
+        }
+      }
+      timer = setTimeout(tick, deleting ? 34 : 72);
+    }
+    timer = setTimeout(tick, 350);
+  })();
+
+  /* ===== 05 数字滚动 ===== */
+  (function(){
+    var stage = document.getElementById('stage-05');
+    var nums = Array.prototype.slice.call(stage.querySelectorAll('.stat-num'));
+    var running = 0;
+    function run(){
+      nums.forEach(function(n){
+        var target = parseFloat(n.getAttribute('data-target'));
+        var dec = parseInt(n.getAttribute('data-decimal') || '0', 10);
+        var start = null;
+        running++;
+        function fmt(v){
+          return dec > 0 ? v.toFixed(dec) : Math.round(v).toLocaleString('zh-CN');
+        }
+        function frame(ts){
+          if(!start) start = ts;
+          var t = Math.min((ts - start) / 1300, 1);
+          var eased = 1 - Math.pow(1 - t, 3);
+          n.textContent = fmt(target * eased);
+          if(t < 1){ requestAnimationFrame(frame); }
+          else{
+            n.textContent = fmt(target);
+            running--;
+          }
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+    run();
+    document.getElementById('stat-run').addEventListener('click', function(){
+      if(running === 0){ nums.forEach(function(n){ n.textContent = '0'; }); run(); }
+    });
+  })();
+
+  /* ===== 06 滚动揭示 ===== */
+  (function(){
+    var items = Array.prototype.slice.call(document.querySelectorAll('#stage-06 .reveal-item'));
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add('is-in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    items.forEach(function(it){ io.observe(it); });
+  })();
+
+  /* ===== 07 视差滚动 ===== */
+  (function(){
+    var view = document.querySelector('#stage-07 .px-view');
+    var bg = view.querySelector('.px-bg');
+    var raf = null;
+    view.addEventListener('scroll', function(){
+      if(raf) return;
+      raf = requestAnimationFrame(function(){
+        raf = null;
+        bg.style.transform = 'translate3d(0,' + (view.scrollTop * 0.45).toFixed(1) + 'px,0)';
+      });
+    }, { passive: true });
+  })();
+
+  /* ===== 08 3D 翻转 ===== */
+  (function(){
+    var flip = document.querySelector('#stage-08 .flip');
+    flip.addEventListener('click', function(){ flip.classList.toggle('is-flipped'); });
+    flip.addEventListener('mouseenter', function(){ flip.classList.add('is-flipped'); });
+    flip.addEventListener('mouseleave', function(){ flip.classList.remove('is-flipped'); });
+    flip.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip.classList.toggle('is-flipped'); }
+    });
+  })();
+
+  /* ===== 09 拖拽排序 ===== */
+  (function(){
+    var list = document.getElementById('drag-list');
+    var dragging = null;
+    list.addEventListener('dragstart', function(e){
+      var li = e.target.closest('li');
+      if(!li) return;
+      dragging = li;
+      li.classList.add('drag-src');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', li.textContent);
+    });
+    list.addEventListener('dragover', function(e){
+      e.preventDefault();
+      if(!dragging) return;
+      var target = e.target.closest('li');
+      if(!target || target === dragging) return;
+      var rect = target.getBoundingClientRect();
+      var before = e.clientY < rect.top + rect.height / 2;
+      list.insertBefore(dragging, before ? target : target.nextSibling);
+    });
+    list.addEventListener('drop', function(e){ e.preventDefault(); });
+    list.addEventListener('dragend', function(){
+      if(dragging) dragging.classList.remove('drag-src');
+      dragging = null;
+    });
+  })();
+
+  /* ===== 10 折叠面板 ===== */
+  (function(){
+    var stage = document.getElementById('stage-10');
+    var items = Array.prototype.slice.call(stage.querySelectorAll('.acc-item'));
+    stage.addEventListener('click', function(e){
+      var head = e.target.closest('.acc-head');
+      if(!head) return;
+      var item = head.closest('.acc-item');
+      var wasOpen = item.classList.contains('acc-open');
+      items.forEach(function(it){ it.classList.remove('acc-open'); });
+      if(!wasOpen) item.classList.add('acc-open');
+    });
+  })();
+
+  /* ===== 11 Tab 切换 ===== */
+  (function(){
+    var stage = document.getElementById('stage-11');
+    var bar = stage.querySelector('.tab-bar');
+    var btns = Array.prototype.slice.call(bar.querySelectorAll('.tab-btn'));
+    var panels = Array.prototype.slice.call(stage.querySelectorAll('.tab-panel'));
+    var ink = bar.querySelector('.tab-ink');
+    function moveInk(btn){
+      ink.style.left = btn.offsetLeft + 'px';
+      ink.style.width = btn.offsetWidth + 'px';
+    }
+    function activate(btn, focus){
+      btns.forEach(function(b){
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+      });
+      panels.forEach(function(p, i){ p.classList.toggle('is-active', btns[i] === btn); });
+      moveInk(btn);
+      if(focus) btn.focus();
+    }
+    bar.addEventListener('click', function(e){
+      var btn = e.target.closest('.tab-btn');
+      if(btn) activate(btn, false);
+    });
+    bar.addEventListener('keydown', function(e){
+      var idx = btns.indexOf(document.activeElement);
+      if(idx === -1) return;
+      if(e.key === 'ArrowRight'){ e.preventDefault(); activate(btns[(idx + 1) % btns.length], true); }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); activate(btns[(idx + btns.length - 1) % btns.length], true); }
+    });
+    var active = bar.querySelector('.tab-btn.is-active');
+    moveInk(active);
+    window.addEventListener('resize', function(){
+      var a = bar.querySelector('.tab-btn.is-active');
+      if(a) moveInk(a);
+    });
+  })();
+
+  /* ===== 12 Toast 触发 ===== */
+  (function(){
+    var stage = document.getElementById('stage-12');
+    var msgs = { success: '操作成功，数据已同步。', warning: '内容即将过期，请注意检查。', error: '请求失败，请稍后重试。' };
+    stage.addEventListener('click', function(e){
+      var btn = e.target.closest('.toast-trigger');
+      if(!btn) return;
+      showToast(btn.getAttribute('data-type'), msgs[btn.getAttribute('data-type')]);
+    });
+  })();
+
+  /* ===== 13 骨架屏 ===== */
+  (function(){
+    var sk = document.getElementById('sk-shimmer');
+    var content = document.getElementById('sk-content');
+    var loadBtn = document.getElementById('sk-load');
+    var resetBtn = document.getElementById('sk-reset');
+    var timer = null;
+    loadBtn.addEventListener('click', function(){
+      if(timer) return;
+      loadBtn.disabled = true;
+      timer = setTimeout(function(){
+        sk.style.display = 'none';
+        content.hidden = false;
+        loadBtn.disabled = false;
+        timer = null;
+        showToast('success', '数据加载完成，已切换为真实内容');
+      }, 1400);
+    });
+    resetBtn.addEventListener('click', function(){
+      if(timer){ clearTimeout(timer); timer = null; }
+      sk.style.display = '';
+      content.hidden = true;
+      loadBtn.disabled = false;
+    });
+  })();
+
+  /* ===== 14 暗色模式 ===== */
+  (function(){
+    var stage = document.getElementById('stage-14');
+    var toggle = document.getElementById('dm-toggle');
+    var KEY = 'lab-dark-theme';
+    function apply(isDark){
+      stage.classList.toggle('is-dark', isDark);
+      toggle.setAttribute('role', 'switch');
+      toggle.setAttribute('aria-checked', isDark ? 'true' : 'false');
+    }
+    var saved = null;
+    try{ saved = localStorage.getItem(KEY); }catch(e){}
+    var isDark = saved === '1' || (saved === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    apply(isDark);
+    toggle.addEventListener('click', function(){
+      isDark = !isDark;
+      apply(isDark);
+      try{ localStorage.setItem(KEY, isDark ? '1' : '0'); }catch(e){}
+    });
+  })();
+
+  /* ===== 15 Canvas 粒子 ===== */
+  (function(){
+    var stage = document.getElementById('stage-15');
+    var canvas = document.getElementById('px-canvas');
+    var ctx = canvas.getContext('2d');
+    var W = 0, H = 0, dpr = 1;
+    var mouse = { x: -1e4, y: -1e4 };
+    var particles = [];
+    var raf = null;
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = stage.clientWidth; H = stage.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var count = Math.min(70, Math.max(24, Math.round(W * H / 16000)));
+      particles = [];
+      for(var i = 0; i < count; i++){
+        particles.push({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - .5) * .6, vy: (Math.random() - .5) * .6,
+          r: Math.random() * 2.2 + 1.2
+        });
+      }
+    }
+    function loop(){
+      ctx.clearRect(0, 0, W, H);
+      var LINK = 120;
+      particles.forEach(function(p){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < 0 || p.x > W) p.vx *= -1;
+        if(p.y < 0 || p.y > H) p.vy *= -1;
+        var dx = p.x - mouse.x, dy = p.y - mouse.y;
+        var d2 = dx * dx + dy * dy;
+        if(d2 < 19600){
+          var d = Math.sqrt(d2) || 1;
+          var force = (140 - d) / 140 * 1.1;
+          p.x += (dx / d) * force;
+          p.y += (dy / d) * force;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(245,243,238,.75)';
+        ctx.fill();
+      });
+      for(var i = 0; i < particles.length; i++){
+        for(var j = i + 1; j < particles.length; j++){
+          var a = particles[i], b = particles[j];
+          var dx = a.x - b.x, dy = a.y - b.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if(dist < LINK){
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = 'rgba(238,91,31,' + ((1 - dist / LINK) * .28).toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+      raf = requestAnimationFrame(loop);
+    }
+    stage.addEventListener('mousemove', function(e){
+      var r = stage.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    stage.addEventListener('mouseleave', function(){ mouse.x = -1e4; mouse.y = -1e4; });
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden && raf) cancelAnimationFrame(raf);
+      else if(!document.hidden && !raf) raf = requestAnimationFrame(loop);
+    });
+    window.addEventListener('resize', resize);
+    resize();
+    raf = requestAnimationFrame(loop);
+  })();
+
+  /* ===== 16 手绘画板 ===== */
+  (function(){
+    var stage = document.getElementById('stage-16');
+    var canvas = document.getElementById('draw-canvas');
+    var ctx = canvas.getContext('2d');
+    var dpr = 1;
+    var color = '#211E1A', size = 3, drawing = false, last = null;
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = canvas.clientWidth * dpr;
+      canvas.height = canvas.clientHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+    function pos(e){
+      var r = canvas.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+    canvas.addEventListener('pointerdown', function(e){
+      drawing = true;
+      try{ canvas.setPointerCapture(e.pointerId); }catch(err){}
+      last = pos(e);
+      ctx.beginPath();
+      ctx.arc(last.x, last.y, size / 2, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    });
+    canvas.addEventListener('pointermove', function(e){
+      if(!drawing) return;
+      var p = pos(e);
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = size;
+      ctx.stroke();
+      last = p;
+    });
+    function stop(){ drawing = false; last = null; }
+    canvas.addEventListener('pointerup', stop);
+    canvas.addEventListener('pointercancel', stop);
+    stage.addEventListener('click', function(e){
+      var c = e.target.closest('.draw-color');
+      if(c){
+        color = c.getAttribute('data-color');
+        stage.querySelectorAll('.draw-color').forEach(function(x){ x.classList.remove('is-active'); });
+        c.classList.add('is-active');
+        return;
+      }
+      var s = e.target.closest('.draw-size');
+      if(s){
+        size = parseInt(s.getAttribute('data-size'), 10);
+        stage.querySelectorAll('.draw-size').forEach(function(x){ x.classList.remove('is-active'); });
+        s.classList.add('is-active');
+      }
+    });
+    document.getElementById('draw-clear').addEventListener('click', function(){
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    });
+    window.addEventListener('resize', resize);
+    resize();
+  })();
+
+  /* ===== 17 GSAP + ScrollTrigger ===== */
+  (function run(){
+    if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined'){
+      LAB.wait({ key: 'gsap', id: 'gs-play', name: 'GSAP', fn: run });
+      return;
+    }
+    var blocks = gsap.utils.toArray('#gs-scroll .gs-block');
+    var tl = gsap.timeline({ paused: true });
+    tl.to(blocks, { opacity: 1, y: 0, duration: .7, stagger: .18, ease: 'power3.out' });
+    var played = false;
+    function doPlay(){
+      if(!played){ played = true; tl.play(); }
+    }
+    ScrollTrigger.create({
+      trigger: '#stage-17', start: 'top 85%', once: true,
+      onEnter: doPlay
+    });
+    // 兜底：进入视口即播放（兼容无滚动事件的环境）
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting) doPlay();
+      });
+    }, { threshold: 0.2 });
+    io.observe(document.getElementById('stage-17'));
+    // 兜底：加载后自动播放一次，保证任意环境下效果可见
+    setTimeout(doPlay, 600);
+    document.getElementById('gs-play').addEventListener('click', function(){ tl.restart(); });
+  })();
+
+  /* ===== 18 Lottie ===== */
+  (function run(){
+    if(typeof lottie === 'undefined'){
+      LAB.wait({ key: 'lottie', id: 'lottie-toggle', name: 'lottie-web', fn: run });
+      return;
+    }
+    var animData = {
+      "v":"5.7.4","fr":30,"ip":0,"op":90,"w":200,"h":200,"nm":"dot","ddd":0,"assets":[],
+      "layers":[
+        {"ddd":0,"ind":1,"ty":4,"nm":"ring","sr":1,"ks":{
+          "o":{"a":0,"k":100},"r":{"a":0,"k":0},
+          "p":{"a":1,"k":[
+            {"t":0,"s":[100,100,0],"e":[100,70,0],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}},
+            {"t":45,"s":[100,70,0],"e":[100,130,0],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}},
+            {"t":90,"s":[100,130,0],"e":[100,100,0],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}}
+          ]},
+          "a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},
+          "ao":0,
+          "shapes":[{"ty":"gr","it":[
+            {"ty":"el","p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[60,60]}},
+            {"ty":"st","c":{"a":0,"k":[0.933,0.357,0.122,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":4}},
+            {"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}
+          ],"nm":"ringgrp"}],
+          "ip":0,"op":90,"st":0
+        },
+        {"ddd":0,"ind":2,"ty":4,"nm":"dot","sr":1,"ks":{
+          "o":{"a":1,"k":[
+            {"t":0,"s":[0],"e":[100],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}},
+            {"t":45,"s":[100],"e":[100]},
+            {"t":75,"s":[100],"e":[0]}
+          ]},
+          "r":{"a":0,"k":0},
+          "p":{"a":1,"k":[
+            {"t":0,"s":[100,100,0],"e":[100,62,0],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}},
+            {"t":45,"s":[100,62,0],"e":[100,138,0],"i":{"x":[0.4],"y":[1]},"o":{"x":[0.6],"y":[0]}},
+            {"t":90,"s":[100,138,0],"e":[100,100,0]}
+          ]},
+          "a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},
+          "ao":0,
+          "shapes":[{"ty":"gr","it":[
+            {"ty":"el","p":{"a":0,"k":[0,0]},"s":{"a":0,"k":[34,34]}},
+            {"ty":"fl","c":{"a":0,"k":[0.933,0.357,0.122,1]},"o":{"a":0,"k":100}},
+            {"ty":"tr","p":{"a":0,"k":[0,0]},"a":{"a":0,"k":[0,0]},"s":{"a":0,"k":[100,100]},"r":{"a":0,"k":0},"o":{"a":0,"k":100}}
+          ],"nm":"dotgrp"}],
+          "ip":0,"op":90,"st":0
+        }
+      ]
+    };
+    var anim = lottie.loadAnimation({
+      container: document.getElementById('lottie-box'),
+      renderer: 'svg', loop: true, autoplay: true, animationData: animData
+    });
+    var playing = true;
+    document.getElementById('lottie-toggle').addEventListener('click', function(){
+      playing = !playing;
+      if(playing){ anim.play(); this.textContent = '暂停'; }
+      else{ anim.pause(); this.textContent = '播放'; }
+    });
+  })();
+
+  /* ===== 19 Anime.js ===== */
+  (function run(){
+    if(typeof anime === 'undefined'){
+      LAB.wait({ key: 'anime', id: 'anime-play', name: 'anime.js', fn: run });
+      return;
+    }
+    document.getElementById('anime-play').addEventListener('click', function(){
+      var tl = anime.timeline({ easing: 'easeInOutExpo' });
+      tl.add({ targets: '#anime-box', translateX: 90, rotate: 180, scale: [1, 1.25, 1], duration: 900 })
+        .add({ targets: '#anime-box', translateX: 0, rotate: 0, duration: 900 })
+        .add({ targets: '#anime-box', backgroundColor: ['#EE5B1F', '#2F6FD6', '#2F9E63', '#EE5B1F'], duration: 1200, easing: 'easeOutQuad' });
+    });
+  })();
+
+  /* ===== 20 Motion 交错 ===== */
+  (function run(){
+    if(typeof Motion === 'undefined' || typeof Motion.animate !== 'function'){
+      LAB.wait({ key: 'motion', id: 'motion-run', name: 'motion', fn: run });
+      return;
+    }
+    var items = Array.prototype.slice.call(document.querySelectorAll('#motion-list .motion-item'));
+    function run(){
+      try{ Motion.animate('#motion-list .motion-item', { y: 24, opacity: [0, 1] }, { duration: 0.5, delay: Motion.stagger(0.06), easing: 'ease-out' }); }
+      catch(e){ /* 目标选择器不可用时静默降级 */ }
+    }
+    run();
+    document.getElementById('motion-run').addEventListener('click', run);
+  })();
+
+  /* ===== 21 Three.js ===== */
+  (function run(){
+    if(typeof THREE === 'undefined'){
+      LAB.wait({ key: 'three', name: 'three.js', fn: run });
+      return;
+    }
+    var box = document.getElementById('three-box');
+    var W = box.clientWidth || 640, H = box.clientHeight || 320;
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
+    camera.position.z = 5;
+    var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(W, H);
+    box.appendChild(renderer.domElement);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+    var light = new THREE.PointLight(0xEE5B1F, 1.6, 20);
+    light.position.set(3, 3, 3);
+    scene.add(light);
+    var mesh = new THREE.Mesh(
+      new THREE.TorusKnotGeometry(1, 0.32, 128, 24),
+      new THREE.MeshStandardMaterial({ color: 0xEE5B1F, roughness: 0.35, metalness: 0.1 })
+    );
+    scene.add(mesh);
+    var dragging = false, lastX = 0, lastY = 0;
+    var stage = document.getElementById('stage-21');
+    stage.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'mouse' && e.button !== 0) return;
+      dragging = true; lastX = e.clientX; lastY = e.clientY;
+      try{ stage.setPointerCapture(e.pointerId); }catch(err){}
+    });
+    stage.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      mesh.rotation.y += (e.clientX - lastX) * 0.012;
+      mesh.rotation.x += (e.clientY - lastY) * 0.012;
+      lastX = e.clientX; lastY = e.clientY;
+    });
+    stage.addEventListener('pointerup', function(){ dragging = false; });
+    stage.addEventListener('pointercancel', function(){ dragging = false; });
+    function loop(){
+      if(!dragging) mesh.rotation.y += 0.004;
+      renderer.render(scene, camera);
+      requestAnimationFrame(loop);
+    }
+    loop();
+    window.addEventListener('resize', function(){
+      var w2 = box.clientWidth, h2 = box.clientHeight;
+      if(w2 > 0 && h2 > 0){
+        camera.aspect = w2 / h2;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w2, h2);
+      }
+    });
+  })();
+
+  /* ===== 22 p5.js ===== */
+  (function run(){
+    if(typeof p5 === 'undefined'){
+      LAB.wait({ key: 'p5', name: 'p5.js', fn: run });
+      return;
+    }
+    var box = document.getElementById('p5-box');
+    var sketch = function(p){
+      var particles = [];
+      p.setup = function(){
+        p.createCanvas(Math.max(box.clientWidth, 200), Math.max(box.clientHeight, 200));
+        p.background(245, 243, 238);
+        p.noStroke();
+      };
+      p.draw = function(){
+        p.background(245, 243, 238, 26);
+        if(p.mouseX > 0 && p.mouseY > 0 && p.frameCount % 2 === 0){
+          particles.push({
+            x: p.mouseX + p.random(-16, 16),
+            y: p.mouseY + p.random(-16, 16),
+            life: 1
+          });
+        }
+        particles.forEach(function(pt){
+          pt.life -= 0.018;
+          pt.x += p.random(-0.6, 0.6);
+          pt.y += p.random(-0.6, 0.6);
+          if(pt.life > 0){
+            p.fill(238, 91, 31, pt.life * 150);
+            p.circle(pt.x, pt.y, 5 + pt.life * 7);
+          }
+        });
+        particles = particles.filter(function(pt){ return pt.life > 0; });
+        if(particles.length > 600) particles.splice(0, particles.length - 600);
+      };
+      p.windowResized = function(){
+        var w = box.clientWidth, h = box.clientHeight;
+        if(w > 0 && h > 0) p.resizeCanvas(w, h);
+      };
+    };
+    new p5(sketch, 'p5-box');
+  })();
+
+  /* ===== 23 ECharts ===== */
+  (function run(){
+    if(typeof echarts === 'undefined'){
+      LAB.wait({ key: 'echarts', id: 'ec-toggle', name: 'echarts', fn: run, fb: function(){ noLib('ec-toggle', 'echarts'); noLib('ec-reset', 'echarts'); } });
+      return;
+    }
+    var chart = echarts.init(document.getElementById('echart-box'));
+    var base = -7;
+    var series = [
+      { name: '请求量', data: [], lineStyle: { color: '#EE5B1F', width: 2 }, itemStyle: { color: '#EE5B1F' }, smooth: true },
+      { name: '错误率', data: [], lineStyle: { color: '#2F6FD6', width: 2 }, itemStyle: { color: '#2F6FD6' }, smooth: true, yAxisIndex: 1 }
+    ];
+    function push(shift){
+      base++;
+      series[0].data.push([String(base), Math.round(50 + Math.random() * 40)]);
+      series[1].data.push([String(base), +(Math.random() * 2.5).toFixed(1)]);
+      if(shift){ series.forEach(function(s){ s.data.shift(); }); }
+    }
+    for(var i = 0; i < 8; i++) push(false);
+    function render(){
+      chart.setOption({
+        animation: false,
+        grid: { left: 42, right: 50, top: 36, bottom: 30 },
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['请求量', '错误率'], top: 0 },
+        xAxis: { type: 'category', data: series[0].data.map(function(d){ return d[0]; }), boundaryGap: false, axisLine: { lineStyle: { color: '#D5D0C2' } } },
+        yAxis: [
+          { type: 'value', name: '请求量', min: 0, max: 100, splitLine: { lineStyle: { color: '#EFEBDF' } } },
+          { type: 'value', name: '错误率 %', min: 0, max: 3, splitLine: { show: false } }
+        ],
+        series: series
+      });
+    }
+    render();
+    var timer = null, running = true;
+    function step(){ push(true); render(); }
+    timer = setInterval(step, 2000);
+    document.getElementById('ec-toggle').addEventListener('click', function(){
+      running = !running;
+      if(running){ timer = setInterval(step, 2000); this.textContent = '暂停更新'; }
+      else{ clearInterval(timer); timer = null; this.textContent = '继续更新'; }
+    });
+    document.getElementById('ec-reset').addEventListener('click', function(){
+      base = -7;
+      series.forEach(function(s){ s.data = []; });
+      for(var i = 0; i < 8; i++) push(false);
+      render();
+    });
+    window.addEventListener('resize', function(){ chart.resize(); });
+  })();
+
+  /* ===== 24 D3 力导向图 ===== */
+  (function run(){
+    if(typeof d3 === 'undefined'){
+      LAB.wait({ key: 'd3', name: 'd3', fn: run });
+      return;
+    }
+    var nodes = [
+      { id: 'a', label: '用户' }, { id: 'b', label: '订单' }, { id: 'c', label: '支付' },
+      { id: 'd', label: '商品' }, { id: 'e', label: '库存' }, { id: 'f', label: '物流' },
+      { id: 'g', label: '售后' }, { id: 'h', label: '风控' }
+    ];
+    var links = [
+      { source: 'a', target: 'b' }, { source: 'b', target: 'c' }, { source: 'b', target: 'd' },
+      { source: 'd', target: 'e' }, { source: 'b', target: 'f' }, { source: 'a', target: 'h' },
+      { source: 'c', target: 'h' }, { source: 'f', target: 'g' }, { source: 'd', target: 'g' }
+    ];
+    var svg = d3.select('#d3-graph');
+    var W = 640, H = 320;
+    var linkEl = svg.append('g').selectAll('line').data(links).join('line').attr('class', 'link');
+    var nodeEl = svg.append('g').selectAll('g').data(nodes).join('g').attr('class', 'node')
+      .call(d3.drag()
+        .on('start', dragStart)
+        .on('drag', dragged)
+        .on('end', dragEnd));
+    nodeEl.append('circle').attr('r', 16);
+    nodeEl.append('text').attr('dy', 30).text(function(d){ return d.label; });
+    var sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id(function(d){ return d.id; }).distance(90))
+      .force('charge', d3.forceManyBody().strength(-260))
+      .force('center', d3.forceCenter(W / 2, H / 2))
+      .force('collide', d3.forceCollide(28));
+    sim.on('tick', function(){
+      linkEl.attr('x1', function(d){ return d.source.x; }).attr('y1', function(d){ return d.source.y; })
+        .attr('x2', function(d){ return d.target.x; }).attr('y2', function(d){ return d.target.y; });
+      nodeEl.attr('transform', function(d){ return 'translate(' + d.x + ',' + d.y + ')'; });
+    });
+    function dragStart(e, d){
+      if(!e.active) sim.alphaTarget(0.3).restart();
+      d.fx = d.x; d.fy = d.y;
+    }
+    function dragged(e, d){ d.fx = e.x; d.fy = e.y; }
+    function dragEnd(e, d){
+      if(!e.active) sim.alphaTarget(0);
+      d.fx = null; d.fy = null;
+    }
+  })();
+
+  /* ===== 25 Swiper ===== */
+  (function run(){
+    if(typeof Swiper === 'undefined'){
+      LAB.wait({ key: 'swiper', name: 'swiper', fn: run });
+      return;
+    }
+    new Swiper('.lab-swiper', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 1.6,
+      loop: true,
+      speed: 500,
+      autoplay: { delay: 2200, disableOnInteraction: false },
+      pagination: { el: '.lab-swiper .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.lab-swiper .swiper-button-next', prevEl: '.lab-swiper .swiper-button-prev' },
+      coverflowEffect: { rotate: 34, stretch: 0, depth: 90, modifier: 1.2, slideShadows: false },
+      breakpoints: { 640: { slidesPerView: 2 } }
+    });
+  })();
+
+  /* ===== 26 Embla ===== */
+  (function run(){
+    if(typeof EmblaCarousel === 'undefined'){
+      LAB.wait({ key: 'embla', id: 'embla-prev', name: 'embla-carousel', fn: run, fb: function(){ noLib('embla-prev', 'embla-carousel'); noLib('embla-next', 'embla-carousel'); } });
+      return;
+    }
+    var embla = EmblaCarousel(document.getElementById('embla-viewport'), { dragFree: true });
+    var dot = document.getElementById('embla-dot');
+    function update(){
+      dot.textContent = (embla.selectedScrollSnap() + 1) + ' / ' + embla.scrollSnapList().length;
+    }
+    embla.on('select', update);
+    update();
+    document.getElementById('embla-prev').addEventListener('click', function(){ embla.scrollPrev(); });
+    document.getElementById('embla-next').addEventListener('click', function(){ embla.scrollNext(); });
+  })();
+
+  /* ===== 27 Hammer 手势 ===== */
+  (function run(){
+    if(typeof Hammer === 'undefined'){
+      LAB.wait({ key: 'hammer', name: 'hammerjs', fn: run });
+      return;
+    }
+    var pad = document.getElementById('gesture-pad');
+    var log = document.getElementById('gesture-log');
+    var mc = new Hammer(pad);
+    var names = { tap: '轻点', press: '长按', swipe: '滑动', pan: '拖拽', rotate: '旋转', pinch: '捏合' };
+    var dirs = { 2: '左', 4: '右', 8: '上', 16: '下' };
+    function record(type, e){
+      var dir = e.direction ? (' · ' + (dirs[e.direction] || '')) : '';
+      var line = document.createElement('span');
+      line.innerHTML = '<b>' + (names[type] || type) + '</b>' + dir + ' @ (' + Math.round(e.center.x) + ',' + Math.round(e.center.y) + ')';
+      log.insertBefore(line, log.firstChild);
+      while(log.children.length > 6) log.lastChild.remove();
+    }
+    ['tap', 'press', 'swipe', 'pan', 'rotate', 'pinch'].forEach(function(t){
+      mc.on(t, function(e){ record(t, e); });
+    });
+  })();
+
+  /* ===== 28 Tone 音序器 ===== */
+  (function run(){
+    if(typeof Tone === 'undefined'){
+      LAB.wait({ key: 'tone', id: 'seq-play', name: 'tone', fn: run });
+      return;
+    }
+    var cells = Array.prototype.slice.call(document.querySelectorAll('#stage-28 .seq-cell'));
+    var playBtn = document.getElementById('seq-play');
+    var status = document.getElementById('seq-status');
+    var playing = false, started = false, synth = null, bass = null, seq = null;
+    cells.forEach(function(c){
+      c.addEventListener('click', function(){ c.classList.toggle('is-on'); });
+    });
+    document.getElementById('seq-clear').addEventListener('click', function(){
+      cells.forEach(function(c){ c.classList.remove('is-on'); });
+    });
+    playBtn.addEventListener('click', function(){
+      if(!started){
+        Tone.start();
+        synth = new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: .01, decay: .2, sustain: .1, release: .4 } }).toDestination();
+        bass = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: .02, decay: .3, sustain: .2, release: .5 } }).toDestination();
+        bass.volume.value = -8;
+        started = true;
+      }
+      playing = !playing;
+      if(playing){
+        Tone.Transport.bpm.value = 112;
+        var melodyCells = document.querySelectorAll('.seq-cells[data-voice="melody"] .seq-cell');
+        var bassCells = document.querySelectorAll('.seq-cells[data-voice="bass"] .seq-cell');
+        var scale = [261.63, 293.66, 329.63, 392, 440, 493.88, 523.25, 587.33];
+        seq = new Tone.Sequence(function(time, step){
+          cells.forEach(function(c, i){ c.classList.toggle('is-play', i === step); });
+          if(melodyCells[step].classList.contains('is-on')) synth.triggerAttackRelease(scale[step], '8n', time);
+          if(bassCells[step].classList.contains('is-on')) bass.triggerAttackRelease(scale[step % 4] / 2, '8n', time);
+        }, [0, 1, 2, 3, 4, 5, 6, 7], '8n');
+        Tone.Transport.start();
+        playBtn.textContent = '停止';
+        status.textContent = '播放中 · 点击格子实时编辑';
+      }else{
+        Tone.Transport.stop();
+        if(seq){ seq.dispose(); seq = null; }
+        cells.forEach(function(c){ c.classList.remove('is-play'); });
+        playBtn.textContent = '播放';
+        status.textContent = '已停止';
+      }
+    });
+  })();
+
+  /* ===== 29 多主题切换 ===== */
+  (function(){
+    var stage = document.getElementById('stage-29');
+    var tag = stage.querySelector('.theme-tag');
+    var names = { paper: '纸张', night: '墨夜', sand: '沙金', mint: '青翠' };
+    stage.addEventListener('click', function(e){
+      var opt = e.target.closest('.theme-opt');
+      if(!opt) return;
+      stage.querySelectorAll('.theme-opt').forEach(function(x){ x.classList.remove('is-active'); });
+      opt.classList.add('is-active');
+      var t = opt.getAttribute('data-theme');
+      stage.setAttribute('data-theme', t);
+      tag.textContent = '当前：' + names[t];
+    });
+  })();
+
+  /* ===== DEMO-SCRIPTS-SLOT ===== */
+
+  /* ===== v3 搜索 / 筛选 ===== */
+  (function(){
+    var input = document.getElementById('search-input');
+    var clearBtn = document.getElementById('search-clear');
+    var status = document.getElementById('search-status');
+    var demos = Array.prototype.slice.call(document.querySelectorAll('.demo'));
+    function apply(){
+      var q = input.value.trim().toLowerCase();
+      var n = 0;
+      demos.forEach(function(sec){
+        var h3 = sec.querySelector('h3');
+        var desc = sec.querySelector('.demo-desc');
+        var hay = (h3 ? h3.textContent : '') + ' ' + (desc ? desc.textContent : '') + ' ' + (sec.getAttribute('data-tags') || '');
+        var hit = !q || hay.toLowerCase().indexOf(q) !== -1;
+        sec.style.display = hit ? '' : 'none';
+        if(hit) n++;
+      });
+      if(q){
+        status.textContent = '找到 ' + n + ' 个演示（关键词：' + input.value.trim() + '）';
+        status.classList.add('is-show');
+        clearBtn.classList.add('is-show');
+      }else{
+        status.classList.remove('is-show');
+        clearBtn.classList.remove('is-show');
+      }
+    }
+    input.addEventListener('input', apply);
+    clearBtn.addEventListener('click', function(){ input.value = ''; apply(); input.focus(); });
+  })();
+
+  /* ===== 30 Vue 3.5 响应式 ===== */
+  (function run(){
+    if(typeof Vue === 'undefined'){
+      LAB.wait({ key: 'vue', name: 'Vue', fn: run });
+      return;
+    }
+    var Child = {
+      props: ['initial'],
+      setup: function(props){
+        return function(){
+          return Vue.h('div', { 'class': 'vue-child' },
+            '子组件收到 prop：' + props.initial + '（响应式 props 解构，随父级实时更新）');
+        };
+      }
+    };
+    var App = {
+      components: { 'my-child': Child },
+      data: function(){ return { count: 0, text: '' }; },
+      computed: { chars: function(){ return this.text.length; } },
+      template:
+        '<div>' +
+        '  <div class="vue-counter">{{ count }}</div>' +
+        '  <div style="display:flex;gap:8px;margin:10px 0">' +
+        '    <button type="button" class="btn btn-primary btn-sm" @click="count=count+1">+1</button>' +
+        '    <button type="button" class="btn btn-ghost btn-sm" @click="count=count-1">-1</button>' +
+        '  </div>' +
+        '  <input class="vue-input" v-model="text" placeholder="输入点什么…">' +
+        '  <div style="font-size:13px;color:var(--ink-2)">已输入 <b style="font-family:var(--font-mono);color:var(--accent-deep)">{{ chars }}</b> 个字符</div>' +
+        '  <my-child :initial="count"></my-child>' +
+        '</div>'
+    };
+    Vue.createApp(App).mount('#vue-root');
+  })();
+
+  /* ===== 31 Preact + htm ===== */
+  (function run(){
+    if(typeof preact === 'undefined' || typeof htm === 'undefined' || typeof preactHooks === 'undefined'){
+      LAB.wait({ key: 'preact', name: 'Preact+htm', fn: run });
+      return;
+    }
+    var html = htm.bind(preact.h);
+    var useState = preactHooks.useState, useEffect = preactHooks.useEffect;
+    function Counter(props){
+      var st = useState(0);
+      var count = st[0], set = st[1];
+      useEffect(function(){ /* 副作用：count 变化时打日志 */ });
+      return html`
+        <div>
+          <div class="pa-count">${count}</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button type="button" class="btn btn-primary btn-sm" onClick=${function(){ set(count + 1); }}>+1</button>
+            <button type="button" class="btn btn-ghost btn-sm" onClick=${function(){ set(count - 1); }}>-1</button>
+          </div>
+          <div style="font-size:12px;color:var(--ink-3);margin-top:8px">函数组件 + useState · 父级传入：${props.title}</div>
+        </div>`;
+    }
+    preact.render(html`<${Counter} title="Preact 计数器" />`, document.getElementById('preact-root'));
+  })();
+
+  /* ===== 32 htmx 超媒体（file:// 下用 template mock）===== */
+  (function run(){
+    if(typeof htmx === 'undefined'){
+      LAB.wait({ key: 'htmx', name: 'htmx', fn: run });
+      return;
+    }
+    var pollCount = 0;
+    document.addEventListener('htmx:beforeRequest', function(evt){
+      var elt = (evt.detail && evt.detail.elt) ? evt.detail.elt : evt.target;
+      if(!elt || !elt.getAttribute) return;
+      var url = elt.getAttribute('hx-get') || elt.getAttribute('hx-post') || '';
+      var tpl = document.querySelector('template[data-url="' + url + '"]');
+      if(!tpl) return;
+      evt.preventDefault();
+      var out = tpl.innerHTML;
+      if(url === '/frag-poll'){ pollCount++; out = out.replace('{{n}}', pollCount); }
+      var sel = elt.getAttribute('hx-target');
+      var target = sel ? document.querySelector(sel) : elt;
+      if(target) target.innerHTML = out;
+    }, true);
+  })();
+
+  /* ===== 33 Alpine.js 兜底 ===== */
+  (function run(){
+    if(typeof Alpine === 'undefined'){
+      LAB.wait({ key: 'alpine', name: 'Alpine', fn: run, fb: function(){
+        showToast('error', 'Alpine 加载失败，请联网后刷新页面');
+        document.getElementById('stage-33').addEventListener('click', function(){ showToast('error', 'Alpine 未加载，属性驱动交互不可用'); });
+      } });
+    }
+  })();
+
+  /* ===== 34 Tailwind v4 ===== */
+  (function(){
+    var stage = document.getElementById('stage-34');
+    var toggle = document.getElementById('tw-dark-toggle');
+    var input = document.getElementById('tw-class-input');
+    var live = document.getElementById('tw-live');
+    var baseCls = 'border border-dashed border-stone-300 dark:border-stone-600 p-4 text-sm text-stone-700 dark:text-stone-200';
+    toggle.addEventListener('click', function(){
+      stage.classList.toggle('dark');
+      showToast('success', stage.classList.contains('dark') ? '已切暗色' : '已切亮色');
+    });
+    input.addEventListener('input', function(){
+      live.className = baseCls + ' ' + input.value;
+    });
+  })();
+
+  /* ===== 35 Jotai vanilla ===== */
+  (function run(){
+    var J = window.jotai || window.jotaiVanilla || window.JotaiVanilla;
+    if(!J || !J.atom){
+      LAB.wait({ key: 'jotai', name: 'jotai', fn: run });
+      return;
+    }
+    var aAtom = J.atom(3), bAtom = J.atom(2);
+    var cAtom = J.atom(function(get){ return get(aAtom) * get(bAtom); });
+    var store = J.createStore();
+    var aVal = document.getElementById('jt-a-val');
+    var bVal = document.getElementById('jt-b-val');
+    var cVal = document.getElementById('jt-c-val');
+    function render(){
+      aVal.textContent = store.get(aAtom);
+      bVal.textContent = store.get(bAtom);
+      cVal.textContent = store.get(cAtom);
+    }
+    render();
+    store.sub(aAtom, render);
+    store.sub(bAtom, render);
+    store.sub(cAtom, render);
+    var map = { 'inc-a':[aAtom,1], 'dec-a':[aAtom,-1], 'inc-b':[bAtom,1], 'dec-b':[bAtom,-1] };
+    document.querySelectorAll('#stage-35 [data-jt]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var m = map[btn.getAttribute('data-jt')];
+        store.set(m[0], function(v){ return v + m[1]; });
+      });
+    });
+  })();
+
+  /* ===== 36 RxJS ===== */
+  (function run(){
+    if(typeof rxjs === 'undefined'){
+      LAB.wait({ key: 'rxjs', name: 'rxjs', fn: run });
+      return;
+    }
+    var stage = document.getElementById('stage-36');
+    var input = document.getElementById('rx-input');
+    var statusEl = document.getElementById('rx-status');
+    var resultEl = document.getElementById('rx-result');
+    var coordEl = document.getElementById('rx-coord');
+    var op = rxjs.operators;
+    function mockSearch(q){
+      return new rxjs.Observable(function(sub){
+        if(!q){ sub.next({ empty: true }); sub.complete(); return; }
+        var t = setTimeout(function(){
+          sub.next({ q: q, hits: q.length * 7 });
+          sub.complete();
+        }, 500);
+        return function(){ clearTimeout(t); };
+      });
+    }
+    rxjs.fromEvent(input, 'input').pipe(
+      op.debounceTime(300),
+      op.map(function(e){ return e.target.value.trim(); }),
+      op.distinctUntilChanged(),
+      op.tap(function(){ statusEl.textContent = '请求中…'; }),
+      op.switchMap(mockSearch)
+    ).subscribe(function(res){
+      if(res.empty){
+        statusEl.textContent = '空闲';
+        resultEl.textContent = '输入后停止 300ms 触发模拟请求';
+        return;
+      }
+      statusEl.textContent = '完成（期间新输入会自动取消上一次）';
+      resultEl.innerHTML = '结果：<b>' + res.q + '</b> · 约 ' + res.hits + ' 条命中';
+    });
+    rxjs.fromEvent(stage, 'mousemove').pipe(op.throttleTime(100)).subscribe(function(e){
+      var r = stage.getBoundingClientRect();
+      coordEl.textContent = 'x: ' + Math.round(e.clientX - r.left) + ', y: ' + Math.round(e.clientY - r.top);
+    });
+  })();
+
+  /* ===== 37 Lit ESM 动态加载 ===== */
+  (function(){
+    function run(){
+    if(!('customElements' in window)){
+      showToast('error', '当前浏览器不支持自定义元素');
+      return;
+    }
+    Promise.all([
+      import('https://cdn.jsdelivr.net/npm/lit-html@3.2.0/+esm'),
+      import('https://cdn.jsdelivr.net/npm/lit-element@4.1.0/lit-element.js/+esm')
+    ]).then(function(mods){
+      var html = mods[0].html;
+      var LitElement = mods[1].LitElement;
+      class LiveClock extends LitElement {
+        constructor(){ super(); this._t = new Date(); }
+        connectedCallback(){
+          super.connectedCallback();
+          this._id = setInterval(function(){ this._t = new Date(); this.requestUpdate(); }.bind(this), 1000);
+        }
+        disconnectedCallback(){ super.disconnectedCallback(); clearInterval(this._id); }
+        render(){
+          return html`<div style="font-family:monospace;font-size:22px;color:#D4480F">🕐 ${this._t.toLocaleTimeString()}</div>`;
+        }
+      }
+      class CountUp extends LitElement {
+        static get properties(){ return { start:{ type: Number }, step:{ type: Number } }; }
+        constructor(){ super(); this.start = 0; this.step = 1; this._v = 0; }
+        connectedCallback(){
+          super.connectedCallback();
+          this._v = this.start;
+          this._id = setInterval(function(){ this._v += this.step; this.requestUpdate(); }.bind(this), 100);
+        }
+        disconnectedCallback(){ super.disconnectedCallback(); clearInterval(this._id); }
+        render(){
+          return html`<div style="font-family:monospace;font-size:22px;color:#D4480F">▲ ${this._v}</div>`;
+        }
+      }
+      if(!customElements.get('live-clock')) customElements.define('live-clock', LiveClock);
+      if(!customElements.get('count-up')) customElements.define('count-up', CountUp);
+    }).catch(function(){
+      showToast('error', 'Lit 加载失败，请联网后刷新页面');
+    });
+    }
+    LAB.wait({ key: 'lit', name: 'Lit', fn: run });
+  })();
+
+  /* ===== 38 滚动驱动动画：纯 CSS，仅检测支持并提示 ===== */
+  (function(){
+    var note = document.getElementById('sd-note');
+    if(note && !CSS.supports('animation-timeline', 'view(inline)')){
+      note.textContent = '当前浏览器不支持 animation-timeline，卡片为静态展示。建议 Chrome 115+ 体验。';
+    }
+  })();
+
+  /* ===== 40 Container Queries ===== */
+  (function(){
+    var range = document.getElementById('cq-range');
+    var wrap = document.getElementById('cq-wrap');
+    if(!range || !wrap) return;
+    function apply(){ wrap.style.width = range.value + 'px'; }
+    range.addEventListener('input', apply);
+    apply();
+  })();
+
+  /* ===== 41 Anchor Positioning ===== */
+  (function(){
+    var wrap = document.getElementById('anc-wrap');
+    var anchor = document.getElementById('anc-anchor');
+    var pop = document.getElementById('anc-pop');
+    var note = document.getElementById('anc-note');
+    if(!anchor || !pop) return;
+    var supportsAnchor = false;
+    try{ supportsAnchor = CSS.supports('anchor-name', '--anc'); }catch(e){}
+    if(!supportsAnchor && note) note.textContent = '当前浏览器不支持 Anchor Positioning，已降级为 JS 计算定位（Chrome 125+ 体验原生锚点）。';
+    var dirs = ['top', 'right', 'bottom', 'left'], di = 0;
+    function place(){
+      var r = anchor.getBoundingClientRect(), w = wrap.getBoundingClientRect();
+      var x = r.left - w.left, y = r.top - w.top;
+      var bw = pop.offsetWidth, bh = pop.offsetHeight;
+      var dir = pop.getAttribute('data-pos') || 'top';
+      if(dir === 'top'){ pop.style.left = (x + r.width / 2 - bw / 2) + 'px'; pop.style.top = (y - bh - 8) + 'px'; }
+      else if(dir === 'right'){ pop.style.left = (x + r.width + 8) + 'px'; pop.style.top = (y + r.height / 2 - bh / 2) + 'px'; }
+      else if(dir === 'bottom'){ pop.style.left = (x + r.width / 2 - bw / 2) + 'px'; pop.style.top = (y + r.height + 8) + 'px'; }
+      else { pop.style.left = (x - bw - 8) + 'px'; pop.style.top = (y + r.height / 2 - bh / 2) + 'px'; }
+    }
+    document.getElementById('anc-toggle').addEventListener('click', function(){
+      pop.hidden = !pop.hidden;
+      if(!pop.hidden && !supportsAnchor) place();
+    });
+    document.getElementById('anc-pos').addEventListener('click', function(){
+      di = (di + 1) % 4;
+      pop.setAttribute('data-pos', dirs[di]);
+      pop.className = 'anc-pop' + (supportsAnchor ? ' anc-' + dirs[di] : '');
+      if(!pop.hidden && !supportsAnchor) place();
+    });
+    var dragging = false, ox = 0, oy = 0;
+    anchor.addEventListener('pointerdown', function(e){
+      dragging = true; ox = e.clientX; oy = e.clientY;
+      try{ anchor.setPointerCapture(e.pointerId); }catch(err){}
+    });
+    anchor.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      var wr = wrap.getBoundingClientRect();
+      var ar = anchor.getBoundingClientRect();
+      var x = (ar.left - wr.left) + (e.clientX - ox);
+      var y = (ar.top - wr.top) + (e.clientY - oy);
+      x = Math.max(0, Math.min(wr.width - anchor.offsetWidth, x));
+      y = Math.max(0, Math.min(wr.height - anchor.offsetHeight, y));
+      anchor.style.left = x + 'px';
+      anchor.style.top = y + 'px';
+      ox = e.clientX; oy = e.clientY;
+      if(!pop.hidden && !supportsAnchor) place();
+    });
+    anchor.addEventListener('pointerup', function(){ dragging = false; });
+    anchor.addEventListener('pointercancel', function(){ dragging = false; });
+  })();
+
+  /* ===== 42 View Transitions ===== */
+  (function(){
+    var view = document.getElementById('vt-view');
+    var btn = document.getElementById('vt-toggle');
+    if(!view || !btn) return;
+    var isList = false;
+    function flip(){
+      isList = !isList;
+      view.classList.toggle('vt-list', isList);
+      btn.textContent = isList ? '切换为网格视图' : '切换为列表视图';
+    }
+    var vtBusy = false;
+    btn.addEventListener('click', function(){
+      if(vtBusy) return;
+      vtBusy = true;
+      setTimeout(function(){ vtBusy = false; }, 800);
+      if(document.startViewTransition){
+        try{
+          var vt = document.startViewTransition(flip);
+          try{ if(vt.finished){ vt.finished.catch(function(){}); } }catch(e){}
+        }catch(e){ flip(); }
+      } else { flip(); }
+    });
+  })();
+
+  /* ===== 43 Clipboard ===== */
+  (function(){
+    var out = document.getElementById('cl-out');
+    var srcEl = document.getElementById('cl-src');
+    if(!out || !srcEl) return;
+    var src = srcEl.textContent.replace(/\s+/g, ' ').trim();
+    function done(){ out.textContent = '已复制：' + src.slice(0, 26) + '…'; }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = src; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); done(); }
+      catch(e){ out.textContent = '复制失败，请手动选择文本'; }
+      document.body.removeChild(ta);
+    }
+    document.getElementById('cl-copy').addEventListener('click', function(){
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(src).then(done).catch(fallback);
+      } else { fallback(); }
+    });
+    document.getElementById('cl-read').addEventListener('click', function(){
+      if(navigator.clipboard && navigator.clipboard.readText){
+        navigator.clipboard.readText().then(function(t){
+          out.textContent = '剪贴板内容：' + (t || '(空)');
+        }).catch(function(){
+          out.textContent = '读取被拒绝（浏览器要求 HTTPS / 本地文件与用户授权）';
+        });
+      } else {
+        out.textContent = '当前环境不支持 navigator.clipboard.readText';
+      }
+    });
+  })();
+
+  /* ===== 44 Speech 语音合成 ===== */
+  (function(){
+    var status = document.getElementById('sp-status');
+    var rate = document.getElementById('sp-rate');
+    var srcEl = document.querySelector('#stage-44 .sp-src');
+    if(!status || !rate || !srcEl) return;
+    var text = srcEl.textContent.replace(/\s+/g, ' ').trim();
+    document.getElementById('sp-play').addEventListener('click', function(){
+      if(!('speechSynthesis' in window)){ status.textContent = '当前浏览器不支持 SpeechSynthesis'; return; }
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN';
+      u.rate = parseFloat(rate.value);
+      speechSynthesis.speak(u);
+      status.textContent = '正在朗读（语速 ×' + rate.value + '）…';
+    });
+    document.getElementById('sp-stop').addEventListener('click', function(){
+      if('speechSynthesis' in window) speechSynthesis.cancel();
+      status.textContent = '已停止朗读';
+    });
+    rate.addEventListener('input', function(){ status.textContent = '语速设为 ×' + rate.value; });
+  })();
+
+  /* ===== 45 Web Worker ===== */
+  (function(){
+    var out = document.getElementById('wk-out');
+    var fps = document.getElementById('wk-fps');
+    if(!out || !fps) return;
+    var frames = 0, last = performance.now();
+    (function tick(){
+      frames++;
+      var now = performance.now();
+      if(now - last >= 500){
+        fps.textContent = '帧率 ' + Math.round(frames * 1000 / (now - last));
+        frames = 0; last = now;
+      }
+      requestAnimationFrame(tick);
+    })();
+    var workerCode = 'self.onmessage=function(e){var n=e.data;var s=new Uint8Array(n+1);var c=0;for(var i=2;i<=n;i++){if(!s[i]){c++;for(var j=i*i;j<=n;j+=i)s[j]=1;}}self.postMessage(c);};';
+    document.getElementById('wk-run').addEventListener('click', function(){
+      out.textContent = 'Worker 计算中…';
+      try{
+        var worker = new Worker(URL.createObjectURL(new Blob([workerCode], { type: 'application/javascript' })));
+        worker.onmessage = function(e){
+          out.textContent = '2–200000 区间质数个数：' + e.data.toLocaleString() + '（后台线程完成，主线程未卡顿）';
+          worker.terminate();
+        };
+        worker.onerror = function(){ out.textContent = 'Worker 运行出错'; };
+        worker.postMessage(200000);
+      }catch(e2){
+        out.textContent = '当前环境不支持 Worker：' + String(e2).slice(0, 46);
+      }
+    });
+  })();
+
+  /* ===== 46 Fullscreen + Wake Lock ===== */
+  (function(){
+    var fsBtn = document.getElementById('fs-toggle');
+    var wlBtn = document.getElementById('wl-toggle');
+    var fsStatus = document.getElementById('fs-status');
+    var wlStatus = document.getElementById('wl-status');
+    if(!fsBtn || !wlBtn) return;
+    var wlSentinel = null;
+    function fsOn(){ return !!(document.fullscreenElement); }
+    fsBtn.addEventListener('click', function(){
+      if(fsOn()){
+        if(document.exitFullscreen) document.exitFullscreen().catch(function(){});
+      } else {
+        var el = document.documentElement;
+        if(el.requestFullscreen){
+          el.requestFullscreen().catch(function(e){ fsStatus.textContent = '全屏被拒绝：' + String(e).slice(0, 40); });
+        } else { fsStatus.textContent = '当前浏览器不支持全屏'; }
+      }
+    });
+    document.addEventListener('fullscreenchange', function(){
+      fsBtn.textContent = fsOn() ? '退出全屏' : '进入 / 退出全屏';
+      fsStatus.textContent = fsOn() ? '已进入全屏（按 Esc 退出）' : '全屏已退出';
+    });
+    wlBtn.addEventListener('click', function(){
+      if(!('wakeLock' in navigator)){
+        wlStatus.textContent = '当前环境不支持 Wake Lock（需 HTTPS + 用户手势）';
+        return;
+      }
+      if(wlSentinel){
+        wlSentinel.release().then(function(){
+          wlSentinel = null;
+          wlBtn.textContent = '保持屏幕常亮';
+          wlStatus.textContent = '已释放常亮';
+        });
+        return;
+      }
+      navigator.wakeLock.request('screen').then(function(s){
+        wlSentinel = s;
+        wlBtn.textContent = '释放常亮';
+        wlStatus.textContent = '屏幕常亮已开启（离开页面自动释放）';
+      }).catch(function(e){ wlStatus.textContent = '常亮申请失败：' + String(e).slice(0, 40); });
+    });
+    document.addEventListener('visibilitychange', function(){
+      if(document.visibilityState === 'visible' && wlSentinel){
+        navigator.wakeLock.request('screen').then(function(s){ wlSentinel = s; });
+      }
+    });
+  })();
+
+  /* ===== 47 Web Share ===== */
+  (function(){
+    var status = document.getElementById('share-status');
+    var btn = document.getElementById('share-run');
+    if(!status || !btn) return;
+    btn.addEventListener('click', function(){
+      var data = { title: '前端交互实验室', text: '47 个可即开即用的前端交互 demo，带可复制提示词。', url: location.href };
+      function fallback(){
+        var ta = document.createElement('textarea');
+        ta.value = location.href; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); status.textContent = '当前环境无系统分享，已复制页面地址到剪贴板'; }
+        catch(e2){ status.textContent = '分享不可用，也无法复制地址'; }
+        document.body.removeChild(ta);
+      }
+      if(navigator.share){
+        navigator.share(data).then(function(){ status.textContent = '已调起系统分享面板'; })
+          .catch(function(e){
+            if(e && e.name === 'AbortError'){ status.textContent = '分享被取消'; }
+            else { fallback(); }
+          });
+      } else { fallback(); }
+    });
+  })();
+
+  
+  /* ===== v3.6 · 光随内容走 ===== */
+  (function(){
+    var ambient = document.querySelector('.ambient');
+    if(!ambient) return;
+    var ticking = false;
+    function groupOf(n){
+      if(n < 17) return 'g1';
+      if(n < 30) return 'g2';
+      if(n < 38) return 'g3';
+      return 'g4';
+    }
+    function update(){
+      ticking = false;
+      var el = document.elementFromPoint(Math.floor(window.innerWidth/2), Math.floor(window.innerHeight*0.5));
+      var sec = el ? el.closest('.demo') : null;
+      if(sec){
+        var no = parseInt(sec.id.replace('demo-',''), 10);
+        ambient.setAttribute('data-glow', groupOf(no));
+      }
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    update();
+  })();
+
+/* ===== v3.2 · 对比矩阵展开/收起 ===== */
+  var mToggle = document.getElementById('matrix-toggle');
+  var mWrap = document.getElementById('matrix');
+  mToggle.addEventListener('click', function(){
+    var open = mWrap.hidden;
+    mWrap.hidden = !open;
+    mToggle.setAttribute('aria-expanded', String(open));
+    mToggle.textContent = open ? '收起对比矩阵' : '查看框架对比矩阵';
+  });
+
+  /* ===== v3.2 · 滚动位置记忆 ===== */
+  try{
+    var labSaved = sessionStorage.getItem('lab-scroll');
+    if(labSaved){
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ window.scrollTo(0, parseInt(labSaved, 10) || 0); }); });
+    }
+    var labT = null;
+    window.addEventListener('scroll', function(){
+      if(labT) return;
+      labT = setTimeout(function(){ labT = null; try{ sessionStorage.setItem('lab-scroll', String(window.scrollY)); }catch(e){} }, 200);
+    }, { passive: true });
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
