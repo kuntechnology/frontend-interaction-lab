@@ -23,12 +23,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 构建 + 断言：任一失败就在这里中止，坏产物不会被发出去
+      - name: 构建（src/lab.html → dist/）
+        run: node tools/build.mjs
+
+      - name: 校验产物
+        run: node tools/verify.mjs
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
+      # 只上传 dist/：parts/ 与旧外壳 index.html 不再进入产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: './dist'
+
       - name: Deploy to Pages
         id: deployment
         uses: actions/deploy-pages@v4
