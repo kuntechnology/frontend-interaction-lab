@@ -758,6 +758,12 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 .fb-btn b{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink-2)}
 .fb-btn.is-on b{color:var(--ink)}
 @media (pointer:coarse){.fb-btn{min-height:40px}}
+
+/* ===== 复制代码（次级按钮，与橙色主按钮区分） ===== */
+.copy-code-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--ink-2);border:1px solid var(--line-strong);border-radius:6px;font-size:12.5px;padding:5px 11px;margin-left:8px;cursor:pointer;font-family:var(--font-ui);transition:color .18s,border-color .18s}
+.copy-code-btn:hover{color:var(--ink);border-color:var(--ink-2)}
+.copy-code-btn.is-done{color:var(--ok);border-color:var(--ok)}
+.copy-code-btn:disabled{opacity:.45;cursor:not-allowed}
 </style>
 <script>try{var lt=localStorage.getItem('lab-theme');document.documentElement.setAttribute('data-theme',lt==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}try{var la=localStorage.getItem('lab-accent');if(la)document.documentElement.setAttribute('data-accent',la)}catch(e){}</script>
 </head>
@@ -912,7 +918,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">任意位置点击</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用原生 JS 与 CSS 实现涟漪按钮：点击时从指针落点生成圆形波纹，0.6s 内扩散至按钮边界并淡出。波纹由绝对定位元素承载，颜色取主色半透明。不依赖任何库。</pre>
     </div>
   </section>
@@ -927,7 +933,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">移动光标靠近按钮</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>实现磁性按钮：监听 mousemove，光标进入按钮周围 80px 范围时按钮向光标方向平滑偏移，最大 10px；光标离开后弹性回位。仅桌面启用，触屏设备忽略此效果。</pre>
     </div>
   </section>
@@ -944,7 +950,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <div class="spot-mask" aria-hidden="true"></div>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>实现光标聚光灯：页面跟随光标显示一个径向渐变高亮圆，其余区域压暗。用 CSS 变量存光标坐标，mousemove 时以 rAF 节流更新；触屏设备（无 hover 能力）自动隐藏。</pre>
     </div>
   </section>
@@ -958,7 +964,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="type-line"><span id="type-text" class="type-text"></span><span class="type-caret" aria-hidden="true"></span></p>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>实现打字机循环：多条文案逐字打出，停顿后逐字删除再输入下一条。打字速度与停顿时长可调，带闪烁光标。原生 JS 实现，不依赖任何库。</pre>
     </div>
   </section>
@@ -974,7 +980,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">进入视口自动播放，可手动重播</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>数字滚动计数：数字从 0 平滑递增到目标值，用 requestAnimationFrame 与缓动函数实现，支持小数与千分位格式；进入视口或点击时触发。</pre>
     </div>
   </section>
@@ -990,7 +996,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">上下滚动本页查看效果</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>滚动揭示：元素进入视口时淡入并上移 16px 呈现。用 IntersectionObserver 触发一次后停止观察，尊重 prefers-reduced-motion 关闭动画。</pre>
     </div>
   </section>
@@ -1011,7 +1017,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">在区域内滚动</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>实现视差滚动：滚动时背景层以 0.45 倍速、前景以 1 倍速移动，产生层次感。用 rAF + translate3d 更新，不直接读写 scrollTop 引发重排；速度系数控制在 0.3–0.7。</pre>
     </div>
   </section>
@@ -1029,7 +1035,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">悬停或点击翻转</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>CSS 3D 翻转：容器设置 perspective，子元素 rotateY(180deg) 翻面；背面加 backface-visibility:hidden。hover 或点击触发，0.6s 缓动过渡。</pre>
     </div>
   </section>
@@ -1050,7 +1056,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">按住左侧手柄拖动</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>HTML5 拖拽排序列表：用 dragstart / dragover / drop 完成重排，拖起时显示半透明占位，落点处做 DOM 插入。触屏设备需另行实现 pointer 事件方案。</pre>
     </div>
   </section>
@@ -1073,7 +1079,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       </div>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>折叠面板：同一时间只展开一项；用 grid-template-rows 0fr→1fr 过渡实现平滑展开收起，点击头部切换；内容高度变化时动画不跳变。</pre>
     </div>
   </section>
@@ -1097,7 +1103,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       </div>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>Tab 切换：点击标签切换内容面板，激活标签带下滑指示线并平滑滑动到当前项。用 role=tablist / tab / tabpanel 保证可访问性，方向键可切换。</pre>
     </div>
   </section>
@@ -1112,7 +1118,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">点击查看右上角反馈</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>Toast 通知系统：右上角堆叠弹出，支持 success / warning / error 三种类型，自动 3s 消失可手动关闭；进出场带动画，队列管理避免重叠。</pre>
     </div>
   </section>
@@ -1141,7 +1147,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">观察骨架与内容的交替</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>骨架屏：内容加载前用灰色块占位，带流动高光 shimmer 动画；数据就绪后骨架淡出、真实内容淡入。用 CSS keyframes 实现，避免布局跳动（CLS）。</pre>
     </div>
   </section>
@@ -1157,7 +1163,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       </div>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>暗色模式：用 html[data-theme] + CSS 变量实现主题切换，所有颜色走 var()；切换时背景与图标平滑过渡，偏好写入 localStorage 并自动恢复。</pre>
     </div>
   </section>
@@ -1172,7 +1178,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">移动光标扰动粒子</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>Canvas 粒子连线：粒子在画布内匀速运动，间距小于阈值时连线、透明度随距离递减；鼠标经过产生斥力。resize 自适应，移动端降低粒子数量。</pre>
     </div>
   </section>
@@ -1197,7 +1203,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">鼠标或手指直接绘制</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>Pointer Events 手绘画板：pointerdown / move / up 绘制平滑曲线，支持笔宽、颜色切换与清空；用 rAF 节流绘制，兼容鼠标与触屏。</pre>
     </div>
   </section>
@@ -1217,7 +1223,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">进入视口自动播放，可手动重放</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 GSAP + ScrollTrigger</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 GSAP + ScrollTrigger</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 GSAP 时间线编排一组元素依次入场：位移 + 透明度错峰 0.18s；再用 ScrollTrigger 绑定滚动，元素进入视口（start: top 85%）时自动播放。CDN 引入 gsap 与 ScrollTrigger。</pre>
     </div>
   </section>
@@ -1231,7 +1237,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">内联动画数据，无需外部 JSON</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 lottie-web</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 lottie-web</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 lottie-web 加载 bodymovin 格式的动画 JSON（可直接内联为对象），renderer 用 svg 保证矢量清晰，loop 循环播放；暴露 play / pause 控制接口。CDN 引入 lottie-web。</pre>
     </div>
   </section>
@@ -1245,7 +1251,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">观察方块的多属性补间</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 animejs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 animejs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 anime.js 的 timeline 串联多个补间：位移、旋转 180°、缩放回弹与背景色循环，easing 用 easeInOutExpo；每段 add 一个目标状态即可。CDN 引入 animejs。</pre>
     </div>
   </section>
@@ -1261,7 +1267,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">对比 GSAP 的编排方式</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 motion</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 motion</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 motion 的 animate 与 stagger 实现列表项依次入场：y 从 24 到 0、opacity 0 到 1，stagger 间隔 0.06s，easing 用 ease-out。CDN 引入 motion 的 UMD 构建。</pre>
     </div>
   </section>
@@ -1276,7 +1282,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">移动光标旋转视角</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 three</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 three</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 three.js 创建场景、透视相机与点光源，加载 TorusKnotGeometry（MeshStandardMaterial），渲染器开 antialias 与 alpha 透明背景；rAF 循环自转，鼠标位置映射到目标角度做缓动。CDN 引入 three。</pre>
     </div>
   </section>
@@ -1289,7 +1295,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">移动光标绘制</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 p5</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 p5</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 p5.js 实例模式：draw 中按概率在光标附近生成粒子，粒子随机漂移并逐步淡出；背景用低透明度填充实现拖尾。限制粒子总量，触屏同样生效。CDN 引入 p5。</pre>
     </div>
   </section>
@@ -1308,7 +1314,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">观察折线实时滚动</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 echarts</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 echarts</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 echarts.init 初始化折线图，setOption 定义双数据系列与双 y 轴；setInterval 每 2s push 一个新数据点并重设 option，数据超长时 shift 旧点；提供暂停 / 继续与重置按钮。CDN 引入 echarts。</pre>
     </div>
   </section>
@@ -1321,7 +1327,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">拖动任意节点</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 d3</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 d3</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 d3.forceSimulation 布局节点与连线：forceLink 定连接距离、forceManyBody 定斥力、forceCollide 防重叠；节点加 d3.drag 行为，drag 中写入 d.fx / d.fy 实现拖拽固定。CDN 引入 d3。</pre>
     </div>
   </section>
@@ -1347,7 +1353,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">左右滑动或点击箭头</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 swiper</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 swiper</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 Swiper 初始化 coverflow 效果轮播：effect: coverflow、loop 循环、autoplay 自动播放、pagination 分页器与 navigation 箭头。CDN 引入 swiper-bundle 的 js 与 css 两个文件。</pre>
     </div>
   </section>
@@ -1374,7 +1380,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">左右拖动或点击按钮</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 embla-carousel</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 embla-carousel</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 embla-carousel 核心 API：EmblaCarousel(viewport, { dragFree: true })；scrollPrev / scrollNext 做按钮控制，on('select') 回调更新页码指示。CDN 引入 embla-carousel 的 UMD 构建。</pre>
     </div>
   </section>
@@ -1392,7 +1398,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">鼠标或手指均可，触屏支持双指捏合</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 hammerjs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 hammerjs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 Hammer(dom) 绑定 tap / press / swipe / pan / rotate / pinch 手势，各事件回调读取 e.type 与 e.direction 更新反馈面板；捏合与旋转默认需双指，桌面端自动忽略。CDN 引入 hammerjs。</pre>
     </div>
   </section>
@@ -1431,7 +1437,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">点击格子编辑，播放时跟随</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 tone</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 tone</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 Tone.Synth + Tone.Transport 做 8 步音序器：Tone.Sequence 按步触发音符，当前步高亮用 on('step') 更新格子状态；首次点击播放时调用 Tone.start() 解锁音频。CDN 引入 tone。</pre>
     </div>
   </section>
@@ -1457,7 +1463,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">点击主题即时切换</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 html[data-theme] + CSS 变量实现多主题：每个主题只重定义一组颜色变量（背景/文字/边框/强调色），组件样式全部引用 var()；切换时更新 dataset 并做颜色过渡。原生实现，无需第三方库。</pre>
     </div>
   </section>
@@ -1472,7 +1478,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">点击按钮计数 · 输入文字实时统计</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 vue</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 vue</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 Vue.createApp 挂载：ref 计数器 + v-model 双向绑定输入框 + computed 实时字数；子组件用响应式 props 解构保持 prop 响应式。需引入 vue（全局构建 vue.global.prod.js）。</pre>
     </div>
   </section>
@@ -1486,7 +1492,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">点击按钮计数</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 preact + htm</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 preact + htm</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 htm.bind(preact.h) 得到 html 标签函数，免 JSX 编译；preact.render 挂载函数组件，useState 计数、useEffect 打印副作用日志。需引入 preact + htm。</pre>
     </div>
   </section>
@@ -1507,7 +1513,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">htmx 属性驱动 · file:// 用 template mock</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 htmx.org</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 htmx.org</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 hx-get/hx-target/hx-swap 让普通按钮触发局部刷新，hx-trigger="every 3s" 做轮询。离线环境监听 htmx:beforeRequest 并 preventDefault，从内联 template 取片段手动 swap。需引入 htmx.org。</pre>
     </div>
   </section>
@@ -1542,7 +1548,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">全部行为由 HTML 属性声明</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 alpinejs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 alpinejs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 x-data 声明状态，x-show 控制显隐，x-on:click 绑事件，x-bind:disabled 绑属性，x-on:click.outside 点外部关闭。同等交互用原生 JS 约需 60+ 行。需引入 alpinejs。</pre>
     </div>
   </section>
@@ -1569,7 +1575,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">输入类名即时编译</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 @tailwindcss/browser</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 @tailwindcss/browser</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 @tailwindcss/browser 在浏览器即时编译 utility 类；dark: 前缀配合 .dark 根类做暗色；class 编辑器监听 input 把类名实时写到预览元素上。需引入 @tailwindcss/browser。</pre>
     </div>
   </section>
@@ -1605,7 +1611,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">改 a 或 b，三处局部更新</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 jotai (vanilla)</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 jotai (vanilla)</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 jotai/vanilla 的 atom + createStore 建基础 atom 与派生 atom；store.sub 订阅，任意 set 只通知依赖它的订阅处，实现细粒度局部更新。需引入 jotai (vanilla)。</pre>
     </div>
   </section>
@@ -1624,7 +1630,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">快速连续输入会自动取消上一次请求</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 rxjs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 rxjs</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>fromEvent(input,'input') → debounceTime(300) → distinctUntilChanged → switchMap(q => mockApi$(q))，订阅后渲染结果；鼠标流用 throttleTime(100) 节流显示坐标。需引入 rxjs。</pre>
     </div>
   </section>
@@ -1641,7 +1647,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <span class="stage-hint">进入页面自动加载 Lit ESM</span>
     </div>
     <div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 lit（ESM 动态加载）</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 需引入 lit（ESM 动态加载）</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>动态 import() 加载 Lit ESM，用 LitElement + html 标签函数定义自定义元素，properties 声明响应式属性；Shadow DOM 样式隔离，框架无关可嵌入。需引入 lit（ESM 动态加载）。</pre>
     </div>
   </section>
@@ -1656,7 +1662,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="fw-note" id="sd-note">横向拖动轨道，卡片随进入/离开视角自动缩放上浮。需 Chrome 115+ 支持 animation-timeline。</p>
       <span class="stage-hint">纯 CSS：animation-timeline: view(inline)</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 animation-timeline: view(inline) 把 keyframes 绑定到滚动视角：卡片进入视口时 scale/opacity/translate 随进度变化，离开反向回退。纯 CSS，无滚动监听 JS。</pre>
     </div>
   </section>
@@ -1675,7 +1681,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       </div>
       <span class="stage-hint">勾选卡片体验整卡联动</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>用 .card:has(input:checked) 让父级感知子项选中态：选中时整卡高亮、伪元素显示徽章；:has(+ ) 还能做相邻兄弟影响。省掉 JS 类切换。</pre>
     </div>
   </section>
@@ -1691,7 +1697,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="fw-note">拖动滑块改变容器宽度，观察卡片响应。Chrome 105+ 支持 container queries。</p>
       <span class="stage-hint">@container (max-width: 360px)</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>容器设 container-type: inline-size，内部组件用 @container (max-width: 360px) 断点切换布局/字号，响应式绑定到容器而非视口，组件可复用。</pre>
     </div>
   </section>
@@ -1710,7 +1716,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="fw-note" id="anc-note">Chrome 125+ 原生 anchor-name 定位；旧浏览器自动降级为 JS 计算定位。</p>
       <span class="stage-hint">position-anchor + position-area</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>锚点元素设 anchor-name: --anc，弹层用 position-anchor: --anc + position-area: top 定位；旧浏览器用 getBoundingClientRect 手动摆位降级。</pre>
     </div>
   </section>
@@ -1725,7 +1731,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="fw-note">点击切换网格 / 列表，旧视图淡出、新视图淡入。Chrome 111+ 支持；旧浏览器直接切换。</p>
       <span class="stage-hint">startViewTransition(() =&gt; 改 DOM)</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>document.startViewTransition(() => 切换视图类) 一行触发平滑过渡：浏览器自动做新旧快照交叉淡化，降级直接切换。适合多视图页面的廉价转场。</pre>
     </div>
   </section>
@@ -1741,7 +1747,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <pre class="cl-out" id="cl-out">读取结果将显示在这里…</pre>
       <span class="stage-hint">navigator.clipboard.writeText / readText</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>navigator.clipboard.writeText / readText 异步读写剪贴板，需用户手势与 secure context；旧环境降级 document.execCommand("copy") + textarea 兜底。</pre>
     </div>
   </section>
@@ -1758,7 +1764,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="fw-note" id="sp-status">点击播放后朗读上方文案。需浏览器语音数据，首次使用可能需联网下载语音。</p>
       <span class="stage-hint">speechSynthesis.speak(new SpeechSynthesisUtterance())</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>new SpeechSynthesisUtterance(text) + speechSynthesis.speak() 朗读；rate/pitch 可调，cancel() 停止。必须由用户手势触发，选 zh-CN 语音。</pre>
     </div>
   </section>
@@ -1774,7 +1780,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="fw-note">右侧帧率计数器持续跳动，证明主线程未被阻塞。Worker 代码用 Blob URL 内联。</p>
       <span class="stage-hint">new Worker(URL.createObjectURL(blob))</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>把 CPU 密集任务封装成 new Worker(URL.createObjectURL(new Blob([code]))) 内联脚本，postMessage 通信；主线程保持渲染流畅，任务结束 onmessage 回收。</pre>
     </div>
   </section>
@@ -1790,7 +1796,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="fw-note" id="wl-status">常亮：navigator.wakeLock.request("screen")，需 HTTPS / 本地文件 + 用户手势</p>
       <span class="stage-hint">requestFullscreen / wakeLock.request</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>document.documentElement.requestFullscreen() 全屏，fullscreenchange 监听状态；navigator.wakeLock?.request("screen") 保持常亮，visibilitychange 时重新申请。均需用户手势。</pre>
     </div>
   </section>
@@ -1802,7 +1808,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
       <p class="fw-note" id="share-status">navigator.share({ title, text, url }) —— 点击后调用系统分享；失败或不可用时复制页面地址。</p>
       <span class="stage-hint">navigator.share / 降级复制链接</span>
     </div><div class="prompt">
-      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button></div>
+      <div class="prompt-head"><span class="prompt-label">提示词 · 零依赖</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
       <pre>navigator.share({title, text, url}) 调起系统分享面板（需用户手势 + secure context）；不支持或取消时降级 navigator.clipboard.writeText 复制链接并 toast。</pre>
     </div>
   </section>
@@ -1964,6 +1970,66 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
     document.body.removeChild(ta);
     return Promise.resolve();
   }
+  /* ===== 复制代码：从页面自身的 style / script 里按注释切片，零额外体积 ===== */
+  (function(){
+    /* 演示级代码块的注释格式统一为「斜杠星 ===== NN 标题 ===== 星斜杠」，
+       所以直接从当前文档的样式表与脚本里切，不额外内嵌一份副本 —— 永远与页面同步 */
+    function regionText(pick){
+      var nodes = document.querySelectorAll('style, script');
+      for(var i = 0; i < nodes.length; i++){
+        var t = nodes[i].textContent || '';
+        if(pick(t)) return t;
+      }
+      return '';
+    }
+    var styleText = regionText(function(t){ return t.indexOf('/* ===== 01') !== -1; });
+    var scriptText = regionText(function(t){ return t.indexOf('function copyText') !== -1; });
+
+    function sliceByMarker(text, no){
+      if(!text) return '';
+      var head = '/* ===== ' + no;
+      var start = text.indexOf(head);
+      if(start === -1) return '';
+      var rest = text.indexOf('/* ===== ', start + head.length);
+      return text.slice(start, rest === -1 ? text.length : rest).trim();
+    }
+
+    function buildCode(no){
+      var sec = document.getElementById('demo-' + no);
+      if(!sec) return { text: '', css: false };
+      var htmlPart = sec.outerHTML;
+      var cssPart = sliceByMarker(styleText, no);
+      var jsPart = sliceByMarker(scriptText, no);
+      var out = [];
+      out.push('<' + '!-- 演示 ' + no + ' · ' + (sec.querySelector('h3') || {}).textContent + ' -->');
+      out.push(htmlPart);
+      if(cssPart) out.push('\n<style>\n' + cssPart + '\n</style>');
+      if(jsPart) out.push('\n' + '<' + 'script>' + '\n' + jsPart + '\n' + '<' + '/script>');
+      return { text: out.join('\n'), css: !!cssPart };
+    }
+
+    document.addEventListener('click', function(e){
+      var btn = e.target.closest ? e.target.closest('.copy-code-btn') : null;
+      if(!btn) return;
+      e.stopPropagation();
+      var sec = btn.closest('.demo');
+      if(!sec) return;
+      var no = (sec.id || '').replace('demo-', '');
+      var built = buildCode(no);
+      if(!built.text){ showToast('error', '这段代码暂时无法提取'); return; }
+      copyText(built.text).then(function(){
+        var old = btn.textContent;
+        btn.classList.add('is-done');
+        btn.textContent = '已复制';
+        /* 诚实提示：大部分演示的样式写在页面公共样式表里，单独复制出去不能直接跑 */
+        showToast('success', built.css
+          ? '已复制 HTML + CSS + JS'
+          : '已复制 HTML + JS（样式依赖页面公共样式表）');
+        setTimeout(function(){ btn.classList.remove('is-done'); btn.textContent = old; }, 2000);
+      });
+    });
+  })();
+
   document.addEventListener('click', function(e){
     var btn = e.target.closest('.copy-btn');
     if(!btn) return;

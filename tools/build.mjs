@@ -143,6 +143,27 @@ if (badgeCount !== uniqIds.length - naCount) {
 const bDist = allowedBaseline.map((v) => `${v} ${baselineVals.filter((x) => x === v).length}`).join(' / ');
 notes.push(`Baseline 分布: ${bDist}`);
 
+// A14 代码切片覆盖面（「复制代码」按 /* ===== NN 注释切段，没有注释就切不出来）
+const styleRegion = (() => {
+    const i = html.indexOf('/* ===== 01 ');
+    if (i === -1) return '';
+    const s = html.lastIndexOf('<style', i);
+    const e = html.indexOf('</style>', i);
+    return html.slice(s, e);
+})();
+const scriptRegion = (() => {
+    const i = html.indexOf('function copyText');
+    if (i === -1) return '';
+    const s = html.lastIndexOf('<script', i);
+    const e = html.indexOf('</' + 'script>', i);
+    return html.slice(s, e);
+})();
+const cssDemos = uniqIds.filter((n) => styleRegion.includes('/* ===== ' + n + ' ')).length;
+const jsDemos = uniqIds.filter((n) => scriptRegion.includes('/* ===== ' + n + ' ')).length;
+notes.push(`代码切片覆盖: CSS ${cssDemos}/${uniqIds.length} · JS ${jsDemos}/${uniqIds.length}`);
+if (cssDemos < 29) fail(`A14 可切片的 CSS 跌到 ${cssDemos} 个（基线 29），复制代码功能退化`);
+if (jsDemos < 46) fail(`A14 可切片的 JS 跌到 ${jsDemos} 个（基线 46），复制代码功能退化`);
+
 // A11 外部依赖快照
 const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'tools/deps.snapshot.json'), 'utf8')).urls;
 const liveUrls = [...new Set(html.match(/https?:\/\/[^\s"'<>)]+/g) || [])].sort();
