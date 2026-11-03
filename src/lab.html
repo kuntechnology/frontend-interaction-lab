@@ -17,13 +17,22 @@
   --bg:#F5F3EE;            /* 纸张 */
   --panel:#FFFFFF;
   --ink:#211E1A;           /* 墨 */
-  --ink-2:#6F6A5F;
+  --ink-2:#6B6558;
   --ink-3:#9C968A;
   --line:#E5E1D6;
   --line-strong:#D5D0C2;
   --accent:#EE5B1F;        /* 信号橙 */
-  --accent-deep:#D4480F;
+  --accent-deep:#B04317;
   --accent-soft:#FBE4D4;
+  /* 实色按钮底：白字必须 ≥4.5:1。--accent 本身太亮（白字仅 3.41），
+     所以它只用于边框/装饰；凡是「白字按钮」一律用下面这组 -btn 令牌。 */
+  --accent-btn:#C4491A;
+  --accent-btn-hover:#A63B0D;
+  --accent-btn-ink:#FFFFFF;
+  /* 语义按钮：琥珀色配白字永远到不了 4.5（最深的 #AE6E22 已是棕色），故用深墨字 */
+  --ok-btn:#24804F;   --ok-btn-ink:#FFFFFF;
+  --err-btn:#B83B3B;  --err-btn-ink:#FFFFFF;
+  --warn-btn:#D98A2B; --warn-btn-ink:#211E1A;
   --ok:#2F9E63;
   --err:#D64545;
   --warn:#D98A2B;
@@ -575,6 +584,12 @@ html[data-theme="dark"]{
   --accent:#FF6A2A;--accent-deep:#FF8A55;--accent-soft:rgba(255,106,42,.16);
   --ok:#3EC57C;--err:#E05B5B;--warn:#E8A53C;
   --code-bg:rgba(10,9,8,.55);--code-ink:#F2EFE8;--code-ink-2:#A49E92;
+  /* 浅色的 --accent-btn-hover #A63B0D 在暗底上只有 2.89:1，按钮轮廓会糊掉；
+     其余 -btn 令牌在暗底均 ≥3.28，无需覆盖（不做明暗极性翻转） */
+  /* 暗色下「白字 ≥4.5」要求填充亮度 ≤0.183，而「轮廓 ≥3」要求 ≥0.132，
+     窗口极窄 —— hover 无法靠调明度实现，改为填充不变 + 外环提示（CSS 见按钮规则）。
+     故此处 hover 与填充同值。 */
+  --accent-btn-hover:#C4491A;
 }
 html[data-theme="dark"] body::before{opacity:.07;mix-blend-mode:overlay}
 /* 光斑氛围层 */
@@ -622,12 +637,12 @@ html[data-theme="dark"] .d3-graph .link{stroke:rgba(255,255,255,.25)}
 html[data-theme="dark"] .toast{background:rgba(20,18,16,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 8px 28px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08)}
 /* ============ v3.4 · 霓虹氛围灯 / 玻璃扫光 / 启动序列 / 星云 ============ */
 /* 霓虹四色：亮色 + 暗色双套 */
-html[data-accent="cyan"]{--accent:#0E9FD6;--accent-deep:#087FB0;--accent-soft:#DBF1FB}
-html[data-theme="dark"][data-accent="cyan"]{--accent:#22D3EE;--accent-deep:#67E8F9;--accent-soft:rgba(34,211,238,.16)}
-html[data-accent="violet"]{--accent:#7C3AED;--accent-deep:#6D28D9;--accent-soft:#EDE5FD}
-html[data-theme="dark"][data-accent="violet"]{--accent:#A78BFA;--accent-deep:#C4B5FD;--accent-soft:rgba(167,139,250,.16)}
-html[data-accent="lime"]{--accent:#16A34A;--accent-deep:#15803D;--accent-soft:#DCFCE7}
-html[data-theme="dark"][data-accent="lime"]{--accent:#4ADE80;--accent-deep:#86EFAC;--accent-soft:rgba(74,222,128,.16)}
+html[data-accent="cyan"]{--accent:#0E9FD6;--accent-deep:#0A6F96;--accent-soft:#DBF1FB;--accent-btn:#0B79A3;--accent-btn-hover:#085F80;--accent-btn-ink:#FFFFFF}
+html[data-theme="dark"][data-accent="cyan"]{--accent:#22D3EE;--accent-deep:#67E8F9;--accent-soft:rgba(34,211,238,.16);--accent-btn:#0B79A3;--accent-btn-hover:#0B79A3;--accent-btn-ink:#FFFFFF}
+html[data-accent="violet"]{--accent:#7C3AED;--accent-deep:#6D28D9;--accent-soft:#EDE5FD;--accent-btn:#7C3AED;--accent-btn-hover:#6D28D9;--accent-btn-ink:#FFFFFF}
+html[data-theme="dark"][data-accent="violet"]{--accent:#A78BFA;--accent-deep:#C4B5FD;--accent-soft:rgba(167,139,250,.16);--accent-btn:#7C3AED;--accent-btn-hover:#7C3AED;--accent-btn-ink:#FFFFFF}
+html[data-accent="lime"]{--accent:#16A34A;--accent-deep:#107937;--accent-soft:#DCFCE7;--accent-btn:#117C38;--accent-btn-hover:#0C5A29;--accent-btn-ink:#FFFFFF}
+html[data-theme="dark"][data-accent="lime"]{--accent:#4ADE80;--accent-deep:#86EFAC;--accent-soft:rgba(74,222,128,.16);--accent-btn:#117C38;--accent-btn-hover:#117C38;--accent-btn-ink:#FFFFFF}
 /* 氛围灯切换器 */
 .accent-switch{display:inline-flex;align-items:center;gap:6px;margin:0 6px;flex:none}
 .accent-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(33,30,26,.18);background:var(--dot);cursor:pointer;padding:0;transition:transform .18s,box-shadow .18s;flex:none}
@@ -799,6 +814,13 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 .prop-swatches i:nth-child(4){background:oklch(58% .16 var(--hue))}
 .prop-swatches i:nth-child(5){background:color-mix(in oklab, oklch(48% .18 var(--hue)) 82%, #000)}
 .prop-swatches i:nth-child(6){background:color-mix(in oklab, oklch(24% .06 var(--hue)) 70%, #000)}
+
+/* ===== 暗色按钮 hover：填充不变，改用外环 =====
+   暗色下「白字 ≥4.5」要求填充亮度 ≤0.183，「轮廓 ≥3」要求 ≥0.132，窗口只有
+   0.05 宽，hover 无法靠调明度实现；改为保持填充、加一圈白色外环作为反馈。 */
+html[data-theme="dark"] .btn-primary:hover,
+html[data-theme="dark"] .copy-btn:hover,
+html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,255,.34)}
 
 /* ===== 42-47 的原生 API 演示样式 =====
    这些规则原本写在 tailwindcss 类型的样式块里（type=text/tailwindcss），要等 @tailwindcss/browser

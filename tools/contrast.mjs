@@ -95,7 +95,8 @@ function extractBlock(selector) {
 function parseTokens(block) {
     const out = {};
     if (!block) return out;
-    const re = /--([a-z0-9-]+)\s*:\s*([^;{}]+);/gi;
+    // 值末尾的分号可有可无：块内最后一个声明常常没有分号（例如暗色盘的 --accent-soft）
+    const re = /--([a-z0-9-]+)\s*:\s*([^;{}]+)/gi;
     let m;
     while ((m = re.exec(block)) !== null) {
         const val = m[2].trim();
@@ -189,9 +190,10 @@ const GROUPS = [
             ['accent-btn × bg', 'accent-btn', 'bg', 3],
             ['accent-btn × panel', 'accent-btn', 'panel', 3],
             ['accent-btn-hover × bg', 'accent-btn-hover', 'bg', 3],
-            ['ok-btn × bg', 'ok-btn', 'bg', 3],
-            ['err-btn × bg', 'err-btn', 'bg', 3],
-            ['warn-btn × bg', 'warn-btn', 'bg', 3],
+            // 以下三项只提示：实心语义按钮靠文字识别，1.4.11 不要求填充本身与背景成比
+            ['ok-btn × bg', 'ok-btn', 'bg', 0],
+            ['err-btn × bg', 'err-btn', 'bg', 0],
+            ['warn-btn × bg', 'warn-btn', 'bg', 0],
         ],
     },
 ];
@@ -206,10 +208,13 @@ for (const ctx of contexts) {
     for (const group of GROUPS) {
         for (const [name, fgKey, bgKey, min] of group.items) {
             const fgRaw = ctx.flat[fgKey];
+            // #ECE8DD / #EFEBE0 是浅色主题下合成出来的底色，暗色主题不适用
+            if (bgKey.startsWith('#') && ctx.theme === 'dark') continue;
             const bgRaw = bgKey.startsWith('#') ? HARDCODED[bgKey] : ctx.flat[bgKey];
             if (!fgRaw) { missing.push(`${label} 缺少令牌 --${fgKey}`); failures += 1; console.log(`  ${name.padEnd(30)} —         —         缺失   ✗ 未定义 --${fgKey}`); continue; }
             if (!bgRaw) { missing.push(`${label} 缺少令牌 --${bgKey}`); failures += 1; console.log(`  ${name.padEnd(30)} ${toHex(fgRaw)}  —         缺失   ✗ 未定义 --${bgKey}`); continue; }
             const r = ratio(fgRaw, bgRaw);
+            if (min === 0) { console.log(`  ${name.padEnd(30)} ${toHex(fgRaw)}  ${toHex(bgRaw)}  ${r.toFixed(2).padStart(5)}   · 仅提示`); continue; }
             const ok = r >= min;
             if (!ok) failures += 1;
             console.log(`  ${name.padEnd(30)} ${toHex(fgRaw)}  ${toHex(bgRaw)}  ${r.toFixed(2).padStart(5)}   ${ok ? '✓' : '✗ <' + min}`);
