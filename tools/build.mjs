@@ -181,6 +181,38 @@ notes.push(`代码切片覆盖: CSS ${cssDemos}/${uniqIds.length} · JS ${jsDemo
 if (cssDemos < 29) fail(`A14 可切片的 CSS 跌到 ${cssDemos} 个（基线 29），复制代码功能退化`);
 if (jsDemos < 46) fail(`A14 可切片的 JS 跌到 ${jsDemos} 个（基线 46），复制代码功能退化`);
 
+/* ---------- A15–A17 色彩规范静态检查 ----------
+   这三条比断言更便宜、更防回滚：它们守的是「以后别顺手改坏」。
+   允许显式逃生口 /* a11y-allow:ink3-text *\/，但会把允许项打印出来逼复查。 */
+
+// A15 --ink-3 不得作文字色（它只有 2.65:1，只配做分隔线与圆点）
+const ink3TextHits = [...styleRegion.matchAll(/(?:^|;)\s*color\s*:\s*var\(\s*--ink-3\s*\)/g)];
+const ink3Allowed = ink3TextHits.filter((m) => styleRegion.slice(Math.max(0, m.index - 60), m.index).includes('a11y-allow:ink3-text'));
+if (ink3TextHits.length - ink3Allowed.length > 0) {
+    fail(`A15 有 ${ink3TextHits.length - ink3Allowed.length} 处把 --ink-3 当文字色（2.65:1）。请改用 --ink-2，或加 /* a11y-allow:ink3-text */ 说明理由`);
+}
+if (ink3Allowed.length) notes.push(`⚠ A15 允许项 ${ink3Allowed.length} 处（请复核）`);
+
+// A16 实色按钮底不得再用硬编码橙色玻璃（85% 橙叠白底 = #F07441，白字仅 3.90）
+// 只拦「不透明度 ≥0.5 的填充」：20% 那种是涟漪/光晕类装饰，不承载文字
+const hardOrange = [...html.matchAll(/background\s*:\s*rgba\(\s*(?:238\s*,\s*91\s*,\s*31|212\s*,\s*72\s*,\s*15)\s*,\s*([\d.]+)\s*\)/g)]
+    .filter((m) => parseFloat(m[1]) >= 0.5);
+if (hardOrange.length) {
+    fail(`A16 发现 ${hardOrange.length} 处硬编码橙色实色底（应改用 var(--accent-btn)，否则对比度算不准）：${hardOrange[0][0].slice(0, 40)}`);
+}
+
+// A17 实色填充类选择器不得再用 var(--accent)（它作白字底只有 3.41）
+const FILL_SELECTORS = ['.btn-primary{', '.copy-btn{', '.anc-anchor{', '.theme-btn{', '::selection{'];
+FILL_SELECTORS.forEach((sel) => {
+    const i = html.indexOf(sel);
+    if (i === -1) return;
+    const end = html.indexOf('}', i);
+    const block = html.slice(i, end);
+    if (/background\s*:\s*var\(\s*--accent\s*\)/.test(block)) {
+        fail(`A17 ${sel.replace('{', '')} 仍用 var(--accent) 作背景（白字仅 3.41），应用 --accent-btn`);
+    }
+});
+
 // A11 外部依赖快照
 const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'tools/deps.snapshot.json'), 'utf8')).urls;
 const liveUrls = [...new Set(html.match(/https?:\/\/[^\s"'<>)]+/g) || [])].sort();

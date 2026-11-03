@@ -35,6 +35,12 @@ jobs:
       - name: 校验产物
         run: node tools/verify.mjs
 
+      # 色彩令牌对比度：明/暗 × 四套强调色盘共 8 个上下文。
+      # 这条比 axe 更严 —— axe 对渐变/玻璃上的文字只报 incomplete 不报 violation，
+      # 所以真正判定「是否达标」以这个静态矩阵为准。
+      - name: 色彩令牌对比度断言
+        run: node tools/contrast.mjs
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
