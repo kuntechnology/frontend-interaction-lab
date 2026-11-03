@@ -545,6 +545,12 @@ table.matrix td .pill{display:inline-block;font-family:var(--font-mono);font-siz
 }
 .btn-ghost{background:rgba(255,255,255,.40)}
 .btn-ghost:hover{background:rgba(255,255,255,.62);border-color:rgba(255,255,255,.72)}
+/* 暗色下 40% 白会把底衬提到中灰，浅色文字只剩 4.24:1；降到 7% 既保留玻璃感又达标 */
+html[data-theme="dark"] .btn-ghost{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18)}
+html[data-theme="dark"] .btn-ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.30)}
+/* 暗色下 40% 白会把底衬提到中灰，浅色文字只剩 4.24:1；降到 7% 既保留玻璃感又达标 */
+html[data-theme="dark"] .btn-ghost{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18)}
+html[data-theme="dark"] .btn-ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.30)}
 .btn-primary,.copy-btn{background:rgba(238,91,31,.85);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 0 1px rgba(238,91,31,.25),0 2px 6px rgba(33,30,26,.12)}
 .btn-primary:hover,.copy-btn:hover{background:rgba(212,72,15,.92)}
 .theme-btn{background:color-mix(in srgb,var(--t-accent) 78%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 0 1px var(--t-accent),0 2px 6px rgba(33,30,26,.12)}
@@ -741,6 +747,17 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 .demo-head .bl-badge{margin-left:auto}
 .bl-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0 0;font-size:12.5px;color:var(--ink-2)}
 .bl-legend a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+
+/* ===== 分类筛选条（与搜索共用同一套显示规则） ===== */
+.filter-bar{position:sticky;top:var(--topbar-h);z-index:30;display:flex;gap:8px;overflow-x:auto;padding:12px 0 10px;margin:-14px 0 14px;background:var(--bg);border-bottom:1px solid var(--line);scrollbar-width:thin}
+.filter-bar::-webkit-scrollbar{height:4px}
+.filter-bar::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:2px}
+.fb-btn{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:5px 13px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink-2);font:13px/1.4 var(--font-ui);cursor:pointer;white-space:nowrap;transition:border-color .18s,color .18s,background-color .18s}
+.fb-btn:hover{border-color:var(--line-strong);color:var(--ink)}
+.fb-btn.is-on{border-color:var(--accent);background:var(--accent-soft);color:var(--ink);font-weight:600}
+.fb-btn b{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink-2)}
+.fb-btn.is-on b{color:var(--ink)}
+@media (pointer:coarse){.fb-btn{min-height:40px}}
 </style>
 <script>try{var lt=localStorage.getItem('lab-theme');document.documentElement.setAttribute('data-theme',lt==='light'?'light':'dark')}catch(e){document.documentElement.setAttribute('data-theme','dark')}try{var la=localStorage.getItem('lab-accent');if(la)document.documentElement.setAttribute('data-accent',la)}catch(e){}</script>
 </head>
@@ -834,6 +851,7 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 </aside>
 
 <main class="main">
+<div class="filter-bar" id="filter-bar" role="group" aria-label="按分类筛选演示"></div>
 
   <section class="intro">
     <h2>前端交互实验室</h2>
@@ -2924,34 +2942,98 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 
   /* ===== DEMO-SCRIPTS-SLOT ===== */
 
-  /* ===== v3 搜索 / 筛选 ===== */
+  /* ===== v4 · 搜索 + 分类筛选（单一显示真源） ===== */
   (function(){
     var input = document.getElementById('search-input');
     var clearBtn = document.getElementById('search-clear');
     var status = document.getElementById('search-status');
+    var bar = document.getElementById('filter-bar');
     var demos = Array.prototype.slice.call(document.querySelectorAll('.demo'));
-    function apply(){
-      var q = input.value.trim().toLowerCase();
+    if(!bar) return;
+
+    /* 分类不另设数据源：直接读左侧目录的 .rail-cat / .rail-link 结构。
+       目录即分类，加演示时不需要维护第二份映射。 */
+    var catOf = {}, groups = [];
+    Array.prototype.forEach.call(document.querySelectorAll('.rail-cat'), function(catEl){
+      var name = (catEl.textContent || '').trim();
+      var node = catEl.nextElementSibling, n = 0;
+      while(node && !node.classList.contains('rail-cat')){
+        if(node.classList.contains('rail-link')){
+          var m = /#(demo-\d{2})/.exec(node.getAttribute('href') || '');
+          if(m){ catOf[m[1]] = name; n++; }
+        }
+        node = node.nextElementSibling;
+      }
+      if(n) groups.push({ name: name, n: n });
+    });
+
+    var state = { q: '', cat: 'all' };
+
+    /* 分类按钮与计数由 groups 生成，天然与目录一致 */
+    var chips = [{ name: '全部', n: demos.length, cat: 'all' }].concat(groups.map(function(g){ return { name: g.name, n: g.n, cat: g.name }; }));
+    bar.innerHTML = chips.map(function(c){
+      return '<button type="button" class="fb-btn' + (c.cat === 'all' ? ' is-on' : '') + '" data-cat="' + c.cat + '" aria-pressed="' + (c.cat === 'all') + '">' +
+             c.name + '<b>' + c.n + '</b></button>';
+    }).join('');
+
+    function paint(){
       var n = 0;
       demos.forEach(function(sec){
         var h3 = sec.querySelector('h3');
         var desc = sec.querySelector('.demo-desc');
-        var hay = (h3 ? h3.textContent : '') + ' ' + (desc ? desc.textContent : '') + ' ' + (sec.getAttribute('data-tags') || '');
-        var hit = !q || hay.toLowerCase().indexOf(q) !== -1;
-        sec.style.display = hit ? '' : 'none';
+        var hay = ((h3 ? h3.textContent : '') + ' ' + (desc ? desc.textContent : '') + ' ' + (sec.getAttribute('data-tags') || '')).toLowerCase();
+        var hit = (!state.q || hay.indexOf(state.q) !== -1) && (state.cat === 'all' || catOf[sec.id] === state.cat);
+        sec.classList.toggle('is-match', hit);
         if(hit) n++;
       });
-      if(q){
-        status.textContent = '找到 ' + n + ' 个演示（关键词：' + input.value.trim() + '）';
-        status.classList.add('is-show');
-        clearBtn.classList.add('is-show');
-      }else{
-        status.classList.remove('is-show');
-        clearBtn.classList.remove('is-show');
+      /* 显示与否只由 CSS 的 body.is-filtering + .is-match 决定；
+         JS 不再写 sec.style.display，避免搜索与筛选两处互相覆盖 */
+      var on = !!state.q || state.cat !== 'all';
+      document.body.classList.toggle('is-filtering', on);
+
+      if(status){
+        if(on){
+          var parts = [];
+          if(state.q) parts.push('关键词「' + state.q + '」');
+          if(state.cat !== 'all') parts.push('分类「' + state.cat + '」');
+          status.textContent = parts.join(' + ') + '：命中 ' + n + ' / ' + demos.length + ' 个演示';
+          status.classList.add('is-show');
+        }else{
+          status.classList.remove('is-show');
+        }
       }
+      if(clearBtn) clearBtn.classList.toggle('is-show', !!state.q);
+      Array.prototype.forEach.call(bar.children, function(b){
+        var active = b.getAttribute('data-cat') === state.cat;
+        b.classList.toggle('is-on', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+      /* 状态写进 URL：筛完刷新不会回到全部 */
+      try{
+        var u = new URL(location.href);
+        if(state.q) u.searchParams.set('q', state.q); else u.searchParams.delete('q');
+        if(state.cat !== 'all') u.searchParams.set('cat', state.cat); else u.searchParams.delete('cat');
+        history.replaceState(null, '', u.pathname + u.search + u.hash);
+      }catch(e){}
     }
-    input.addEventListener('input', apply);
-    clearBtn.addEventListener('click', function(){ input.value = ''; apply(); input.focus(); });
+
+    bar.addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('.fb-btn') : null;
+      if(!b) return;
+      state.cat = b.getAttribute('data-cat');
+      paint();
+    });
+    if(input) input.addEventListener('input', function(){ state.q = input.value.trim(); paint(); });
+    if(clearBtn) clearBtn.addEventListener('click', function(){ input.value = ''; state.q = ''; paint(); input.focus(); });
+
+    /* 从 URL 恢复初始状态（可分享的筛选链接） */
+    try{
+      var sp = new URLSearchParams(location.search);
+      if(sp.get('q')){ state.q = sp.get('q'); if(input) input.value = state.q; }
+      if(sp.get('cat')) state.cat = sp.get('cat');
+    }catch(e){}
+
+    paint();
   })();
 
   /* ===== 30 Vue 3.5 响应式 ===== */
