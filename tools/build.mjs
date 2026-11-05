@@ -56,6 +56,11 @@ fs.writeFileSync(OUT, html, 'utf8');
 fs.writeFileSync(path.join(root, 'index.html'), html, 'utf8');
 const nojekyll = path.join(root, '.nojekyll');
 if (fs.existsSync(nojekyll)) fs.copyFileSync(nojekyll, path.join(OUT_DIR, '.nojekyll'));
+const demo51Image = path.join(root, 'assets/demo51-landscape.webp');
+const distAssets = path.join(OUT_DIR, 'assets');
+fs.mkdirSync(distAssets, { recursive: true });
+fs.copyFileSync(demo51Image, path.join(distAssets, 'demo51-landscape.webp'));
+notes.push('已复制第51项本地风景图至 dist/assets');
 
 /* ---------- 3b. SEO 基建：robots / sitemap / 404 ----------
    改前这三样都不存在（线上 404），搜索与分享基本没有抓手。

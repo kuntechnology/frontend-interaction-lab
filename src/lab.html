@@ -784,12 +784,21 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 .vs-row b{font-family:var(--font-mono);color:var(--ink);font-weight:500}
 
 /* ===== 51 前后对比滑块 ===== */
-.cmp-wrap{position:relative;height:170px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
-.cmp-before,.cmp-after{position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;font-size:11px;font-family:var(--font-mono)}
-.cmp-before{background:linear-gradient(135deg,#8c8577,#5f594e);color:#f5f3ee}
-.cmp-after{background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#fff;clip-path:inset(0 0 0 var(--p))}
-.cmp-handle{position:absolute;top:0;bottom:0;left:var(--p);width:2px;background:#fff;box-shadow:0 0 0 1px rgba(20,18,16,.35)}
-.cmp-handle::after{content:"";position:absolute;top:50%;left:50%;width:26px;height:26px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(20,18,16,.3)}
+#stage-51{background:none;border:0;padding:0;display:flex;align-items:stretch;justify-content:flex-start;flex-direction:column;flex-wrap:nowrap;gap:0;min-height:0;overflow:visible}
+#stage-51 .stage-hint{position:static;left:auto;bottom:auto;transform:none;align-self:center;margin-top:10px;font-size:12px;color:var(--ink-2);letter-spacing:.2px;white-space:normal;text-align:center;background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;box-shadow:none;padding:0;border-radius:0}
+.cmp-wrap{position:relative;width:100%;aspect-ratio:16/9;min-height:190px;max-height:360px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#253127;isolation:isolate}
+.cmp-before,.cmp-after{position:absolute;inset:0;display:flex;align-items:flex-end;padding:12px;font-size:11px;font-family:var(--font-mono);color:#fff}
+.cmp-before{background:linear-gradient(135deg,#485446,#222c29)}
+.cmp-after{z-index:1;background:linear-gradient(135deg,#a58b62,#354c4a);clip-path:inset(0 0 0 var(--p))}
+.cmp-image{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center 52%}
+.cmp-after .cmp-image{filter:brightness(1.08) contrast(1.09) saturate(1.16)}
+.cmp-label{position:relative;z-index:1;border:1px solid rgba(255,255,255,.58);border-radius:999px;padding:5px 9px;background:rgba(15,20,17,.72);color:#fff;line-height:1.1;text-shadow:0 1px 2px rgba(0,0,0,.45);box-shadow:0 2px 8px rgba(0,0,0,.15);pointer-events:none;backdrop-filter:blur(4px)}
+.cmp-after .cmp-label{margin-left:auto}
+.cmp-fallback-note{position:absolute;z-index:3;left:50%;top:12px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:5px 8px;border-radius:6px;background:rgba(15,20,17,.78);color:#fff;font-size:11px;line-height:1.3;text-align:center}
+.cmp-wrap.is-fallback .cmp-image{display:none}
+ .cmp-wrap.is-fallback .cmp-before{background:linear-gradient(135deg,#6d6a5d,#28362e)}
+.cmp-handle{position:absolute;z-index:2;top:0;bottom:0;left:var(--p);width:2px;background:#fff;box-shadow:0 0 0 1px rgba(20,18,16,.35);pointer-events:none}
+.cmp-handle::after{content:"";position:absolute;top:50%;left:50%;width:30px;height:30px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;border:2px solid rgba(21,26,22,.8);box-shadow:0 2px 8px rgba(20,18,16,.3)}
 .cmp-range{width:100%;margin-top:12px;accent-color:var(--accent)}
 
 /* ===== 52 拖拽上传 + 预览 ===== */
@@ -1986,13 +1995,14 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     <div class="demo-head"><span class="demo-no">51</span><h3>前后对比滑块</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
     <p class="demo-desc">一个 range 输入控制 clip-path 的 inset 百分比，无需 canvas，也不用两张图对齐。</p>
     <div class="stage" id="stage-51">
-      <div class="cmp-wrap" id="cmp-wrap" style="--p:50%">
-        <div class="cmp-before"><span>原图</span></div>
-        <div class="cmp-after"><span>处理后</span></div>
+      <div class="cmp-wrap" id="cmp-wrap" style="--p:50%" role="group" aria-label="同一张风景的原图与调色后对比">
+        <div class="cmp-before"><img class="cmp-image" src="assets/demo51-landscape.webp" alt="原创高山湖泊、针叶林和远峰倒映在清晨水面上" width="1600" height="900" loading="eager" decoding="async"><span class="cmp-label">原图</span></div>
+        <div class="cmp-after"><img class="cmp-image" src="assets/demo51-landscape.webp" alt="" width="1600" height="900" loading="eager" decoding="async"><span class="cmp-label">调色后</span></div>
         <div class="cmp-handle" aria-hidden="true"></div>
+        <span class="cmp-fallback-note" role="status" hidden>风景图暂时无法读取，仍可拖动查看色调处理差异。</span>
       </div>
-      <input type="range" id="cmp-range" min="0" max="100" value="50" aria-label="对比位置" class="cmp-range">
-      <span class="stage-hint">拖动滑块或键盘左右键</span>
+      <input type="range" id="cmp-range" min="0" max="100" value="50" aria-label="对比位置" aria-describedby="cmp-description" class="cmp-range">
+      <span class="stage-hint" id="cmp-description">左侧原图 · 右侧调色后。可拖动滑块或用键盘左右键。</span>
     </div>
     <div class="prompt">
       <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
@@ -3988,12 +3998,23 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
   /* ===== 51 前后对比滑块 ===== */
   (function(){
     var cmpWrap = document.getElementById('cmp-wrap');
-    var cmpRange = document.getElementById('cmp-range');
-    if(cmpWrap && cmpRange){
-      cmpRange.addEventListener('input', function(){
-        cmpWrap.style.setProperty('--p', cmpRange.value + '%');
-      });
-    }
+      var cmpRange = document.getElementById('cmp-range');
+      if(cmpWrap && cmpRange){
+        var cmpImages = cmpWrap.querySelectorAll('.cmp-image');
+        var cmpFallbackNote = cmpWrap.querySelector('.cmp-fallback-note');
+        var cmpFallback = function(){
+          if(cmpWrap.classList.contains('is-fallback')) return;
+          cmpWrap.classList.add('is-fallback');
+          if(cmpFallbackNote) cmpFallbackNote.hidden = false;
+        };
+        cmpRange.addEventListener('input', function(){
+          cmpWrap.style.setProperty('--p', cmpRange.value + '%');
+        });
+        cmpImages.forEach(function(img){
+          img.addEventListener('error', cmpFallback, {once:true});
+          if(typeof img.decode === 'function') img.decode().catch(cmpFallback);
+        });
+      }
   })();
 
   /* ===== 52 拖拽上传 + 预览 ===== */
