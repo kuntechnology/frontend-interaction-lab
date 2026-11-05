@@ -808,23 +808,22 @@ html[data-theme="dark"] .ambient[data-glow="g1"] .a1,html[data-theme="dark"] .am
 #up-preview{max-height:150px;max-width:100%;border-radius:8px;object-fit:contain}
 
 /* ===== 53 Scroll Snap 吸附 ===== */
-.snap-view{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-bottom:10px;overscroll-behavior-x:contain}
-.snap-card{flex:0 0 62%;height:140px;border-radius:12px;display:flex;align-items:center;justify-content:center;font:600 26px var(--font-mono);color:#fff;scroll-snap-align:center;background:linear-gradient(135deg,var(--accent),var(--accent-deep))}
+.snap-view{display:flex;flex:0 1 820px;min-width:0;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain}
+.snap-card{flex:0 0 calc(100% - 76px);height:140px;border-radius:12px;display:grid;place-items:center;font:600 26px var(--font-mono);color:#fff;scroll-snap-align:start;background:linear-gradient(135deg,var(--accent),var(--accent-deep))}
 .snap-card:nth-child(even){background:linear-gradient(135deg,#6b6357,#3f3a32)}
-.snap-dots{display:flex;gap:6px;justify-content:center;margin-top:8px}
-.snap-dots i{width:7px;height:7px;border-radius:50%;background:var(--line-strong)}
-.snap-dots i.is-on{background:var(--accent)}
+.snap-dots{display:flex;flex:0 1 100%;gap:8px;justify-content:center;margin-top:8px}
+.snap-dots button{appearance:none;width:32px;height:32px;padding:10px;border:0;border-radius:50%;background:var(--line-strong);background-clip:content-box;cursor:pointer}
+.snap-dots button[aria-current="true"]{background-color:var(--accent-btn)}
+#snap-status{font-size:12px}
+@media(prefers-reduced-motion:reduce){.snap-view{scroll-behavior:auto}}
 
 /* ===== 54 @property 色阶生成 ===== */
 @property --hue{syntax:"<number>";inherits:true;initial-value:24}
-.prop-swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;height:150px;--hue:24}
-.prop-swatches i{border-radius:9px;display:block;transition:background-color .2s}
-.prop-swatches i:nth-child(1){background:oklch(92% .04 var(--hue))}
-.prop-swatches i:nth-child(2){background:oklch(82% .08 var(--hue))}
-.prop-swatches i:nth-child(3){background:oklch(70% .13 var(--hue))}
-.prop-swatches i:nth-child(4){background:oklch(58% .16 var(--hue))}
-.prop-swatches i:nth-child(5){background:color-mix(in oklab, oklch(48% .18 var(--hue)) 82%, #000)}
-.prop-swatches i:nth-child(6){background:color-mix(in oklab, oklch(24% .06 var(--hue)) 70%, #000)}
+.prop-swatches{display:grid;flex:1 1 100%;grid-template-columns:repeat(6,1fr);gap:8px;width:100%;height:150px;--hue:24}
+.prop-swatches i{display:block;border-radius:9px;background:hsl(var(--hue),65%,var(--l));transition:background-color .2s}
+.prop-swatches i:nth-child(1){--l:94%}.prop-swatches i:nth-child(2){--l:84%}.prop-swatches i:nth-child(3){--l:73%}.prop-swatches i:nth-child(4){--l:61%}.prop-swatches i:nth-child(5){--l:47%}.prop-swatches i:nth-child(6){--l:27%}
+@supports (color:oklch(70% .12 24)){.prop-swatches i{background:oklch(var(--l) .12 var(--hue))}}
+@supports (color:color-mix(in oklab,oklch(50% .12 24),#000)){.prop-swatches i:nth-child(5){background:color-mix(in oklab,oklch(var(--l) .12 var(--hue)) 82%,#000)}.prop-swatches i:nth-child(6){background:color-mix(in oklab,oklch(var(--l) .12 var(--hue)) 70%,#000)}}
 
 /* ===== 暗色按钮 hover：填充不变，改用外环 =====
    暗色下「白字 ≥4.5」要求填充亮度 ≤0.183，「轮廓 ≥3」要求 ≥0.132，窗口只有
@@ -2029,17 +2028,17 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
 
   <section class="demo" id="demo-53" data-baseline="widely" data-tags="scroll snap,吸附,轮播,横向滚动,滚动条">
     <div class="demo-head"><span class="demo-no">53</span><h3>Scroll Snap 吸附</h3><span class="bl-badge bl-widely">Baseline 广泛可用</span></div>
-    <p class="demo-desc">两行 CSS 就得到带惯性的横向吸附，不需要轮播库，也不拦截原生滚动。</p>
+    <p class="demo-desc">原生横向滚动与吸附，触摸/键盘可用；分页同步当前项。</p>
     <div class="stage" id="stage-53">
-      <div class="snap-view" id="snap-view" tabindex="0" role="group" aria-label="横向吸附卡片，可左右滚动">
+      <div class="snap-view" id="snap-view" tabindex="0" role="region" aria-label="横向吸附卡片">
         <div class="snap-card">01</div><div class="snap-card">02</div><div class="snap-card">03</div><div class="snap-card">04</div><div class="snap-card">05</div>
       </div>
-      <div class="snap-dots" id="snap-dots" aria-hidden="true"></div>
-      <span class="stage-hint">触摸板横滑或键盘左右键</span>
+      <div class="snap-dots" id="snap-dots" role="group" aria-label="跳转到卡片"></div>
+      <span class="stage-hint" id="snap-status" role="status" aria-live="polite">第 1 / 5 · ← →</span>
     </div>
     <div class="prompt">
       <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
-      <pre>横向吸附：容器 overflow-x:auto 加 scroll-snap-type:x mandatory，子项加 scroll-snap-align:center，浏览器会自己把卡片吸到中心并保留惯性。监听 scroll 计算最近卡片来更新指示点，不要自己实现拖拽滚动。</pre>
+      <pre>容器 overflow-x:auto、scroll-snap-type:x mandatory；卡片 flex:0 0 calc(100% - 76px)、scroll-snap-align:start；预览下张，分页同步。</pre>
     </div>
   </section>
 
@@ -2047,13 +2046,13 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     <div class="demo-head"><span class="demo-no">54</span><h3>@property 色阶生成</h3><span class="bl-badge bl-newly">Baseline 新近可用</span></div>
     <p class="demo-desc">注册一个 --hue 自定义属性后，color-mix 在 oklab 空间里插值，一个输入生成整条色阶。</p>
     <div class="stage" id="stage-54">
-      <div class="prop-swatches" id="prop-swatches"></div>
+      <div class="prop-swatches" id="prop-swatches" role="img" aria-label="六级色阶"><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <input type="range" id="prop-slider" min="0" max="360" value="24" aria-label="色相" class="cmp-range">
-      <span class="stage-hint">拖动改变色相，色阶由 color-mix 实时算出</span>
+      <span class="stage-hint">拖动 · 六格同步</span>
     </div>
     <div class="prompt">
       <div class="prompt-head"><span class="prompt-label">提示词 · 原生实现</span><button type="button" class="copy-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>复制提示词</button><button type="button" class="copy-code-btn" aria-label="复制本演示的代码">复制代码</button></div>
-      <pre>用 @property 注册 --hue（syntax:"&lt;number&gt;"）后，它成为可动画、可参与计算的类型化属性；再用 oklch(亮度% 彩度 var(--hue)) 与 color-mix(in oklab, …) 生成整条色阶。相比手写 6 个十六进制值，改一个数字就能换整套主题色。</pre>
+      <pre>无 @property 时用普通 --hue + HSL；@supports 渐进增强 OKLCH/color-mix，滑块改六格。</pre>
     </div>
   </section>
 
@@ -4047,20 +4046,21 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
   (function(){
     var snapView = document.getElementById('snap-view');
     var snapDots = document.getElementById('snap-dots');
-    if(snapView && snapDots){
+    var status = document.getElementById('snap-status');
+    if(snapView && snapDots && status){
       var cards = Array.prototype.slice.call(snapView.querySelectorAll('.snap-card'));
-      snapDots.innerHTML = cards.map(function(){ return '<i></i>'; }).join('');
+      snapDots.innerHTML = cards.map(function(_, i){ return '<button type="button" aria-label="第 ' + (i + 1) + ' 张"></button>'; }).join('');
       var dotEls = Array.prototype.slice.call(snapDots.children);
-      snapView.addEventListener('scroll', function(){
-        var mid = snapView.scrollLeft + snapView.clientWidth / 2;
-        var nearest = 0, best = Infinity;
-        cards.forEach(function(c, i){
-          var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
-          if(d < best){ best = d; nearest = i; }
-        });
-        dotEls.forEach(function(d, i){ d.classList.toggle('is-on', i === nearest); });
-      }, { passive: true });
-      dotEls[0] && dotEls[0].classList.add('is-on');
+      function update(){
+        var mid = snapView.getBoundingClientRect().left + snapView.clientWidth / 2, nearest = 0, best = 1e9;
+        cards.forEach(function(c, i){ var r = c.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - mid); if(d < best){ best = d; nearest = i; } });
+        dotEls.forEach(function(d, i){ d.setAttribute('aria-current', i === nearest); });
+        status.textContent = '第 ' + (nearest + 1) + ' / ' + cards.length + ' · ← →';
+      }
+      dotEls.forEach(function(dot, i){ dot.addEventListener('click', function(){ cards[i].scrollIntoView({block:'nearest',inline:'start'}); }); });
+      snapView.addEventListener('keydown',e=>{if(e.key==='Home'||e.key==='End'){e.preventDefault();snapView.scrollTo({left:e.key==='Home'?0:snapView.scrollWidth});}});
+      snapView.addEventListener('scroll', update, {passive:true});
+      update();
     }
   })();
 
@@ -4069,13 +4069,8 @@ html[data-theme="dark"] .copy-code-btn:hover{box-shadow:0 0 0 2px rgba(255,255,2
     var propSlider = document.getElementById('prop-slider');
     var propSw = document.getElementById('prop-swatches');
     if(propSw && propSlider){
-      var html = '';
-      for(var i = 0; i < 6; i++) html += '<i></i>';
-      propSw.innerHTML = html;
       propSw.style.setProperty('--hue', propSlider.value);
-      propSlider.addEventListener('input', function(){
-        propSw.style.setProperty('--hue', propSlider.value);
-      });
+      propSlider.addEventListener('input', function(){ propSw.style.setProperty('--hue', propSlider.value); });
     }
   })();
 </script>

@@ -37,7 +37,7 @@ def baseline_contract():
         for field,sel in [('title','.demo-head h3'),('description','.demo-desc')]:
             xx=x.select_one(sel); yy=y.select_one(sel); xv=xx.get_text('\n',strip=True) if xx else None; yv=yy.get_text('\n',strip=True) if yy else None
             if xv!=yv:
-                allowed=(i==49 or i==50) and field=='description'
+                allowed=i in (49,50,53) and field=='description'
                 diffs.append({'demo':i,'field':field,'status':'authorized-fix' if allowed else 'fail','baseline':xv,'current':yv})
         # Extract pre source before parsing; entity-escaped <...> must be unescaped as text,
         # never reparsed as markup (BeautifulSoup would drop the literal tag examples).
@@ -49,7 +49,7 @@ def baseline_contract():
             return m.group(0) if m else ''
         p0,p1=prompt(block(old,ident)),prompt(block(cur,ident))
         if p0!=p1:
-            allowed=i in (48,54)
+            allowed=i in (48,53,54)
             diffs.append({'demo':i,'field':'prompt','status':'authorized-fix' if allowed else 'fail','baseline':p0,'current':p1})
     return diffs
 
@@ -150,9 +150,10 @@ with sync_playwright() as pw:
                     elif i==50:
                         x=c('#vs-view');count0=c('#vs-rows').locator('> *').count();x.evaluate('(e)=>{e.scrollTop=6000;e.dispatchEvent(new Event("scroll"))}');page.wait_for_timeout(120);count1=c('#vs-rows').locator('> *').count();action=('scroll virtual list',count0>0 and count1>0,'visible rows rendered before and after scroll');
                     elif i in (51,54):
-                        sel='#cmp-range' if i==51 else '#prop-slider';x=c(sel);lo=int(x.get_attribute('min') or 0);hi=int(x.get_attribute('max') or 100);before=x.input_value();value=str(lo+(hi-lo)//2+max(1,(hi-lo)//7));x.fill(value);page.wait_for_timeout(80);ok=x.input_value()==value and before!=value
+                        sel='#cmp-range' if i==51 else '#prop-slider';x=c(sel);lo=int(x.get_attribute('min') or 0);hi=int(x.get_attribute('max') or 100);before=x.input_value();value=str(lo+(hi-lo)//2+max(1,(hi-lo)//7));before_swatches=c('#prop-swatches').evaluate('(e)=>({width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height,colors:[...e.children].map(x=>getComputedStyle(x).backgroundColor),widths:[...e.children].map(x=>x.getBoundingClientRect().width)})') if i==54 else None;x.fill(value);page.wait_for_timeout(350 if i==54 else 80);ok=x.input_value()==value and before!=value
                         if i==51:ok=ok and c('#cmp-wrap').evaluate('(e)=>getComputedStyle(e).getPropertyValue("--p").trim()')==value+'%'
-                        else:ok=ok and c('#prop-swatches').locator('> *').count()>0
+                        else:
+                            after_colors=c('#prop-swatches').evaluate('(e)=>[...e.children].map(x=>getComputedStyle(x).backgroundColor)');ok=ok and attr(x,'aria-label')=='色相' and len(before_swatches['colors'])==6 and before_swatches['width']>0 and before_swatches['height']>0 and all(w>0 for w in before_swatches['widths']) and all(a!=b for a,b in zip(before_swatches['colors'],after_colors)) and len(set(after_colors))==6
                         desc='range within declared min/max and corresponding CSS/render output changed'
                     elif i==55:
                         before=c('#undo-list .undo-remove').count();x=c('#undo-list .undo-remove').first;x.click();removed=c('#undo-list .undo-remove').count()==before-1;status=text(c('#undo-status'));c('#undo-last').click();restored=c('#undo-list .undo-remove').count()==before;action=('remove then undo list item',removed and bool(status) and restored,'list count removed/restored and live status updated')
@@ -176,7 +177,7 @@ with sync_playwright() as pw:
                 elif i==52:
                     x=c('#up-input');action=('file upload control available',x.count()==1 and x.get_attribute('type')=='file' and c('#up-zone').count()==1,'native file picker input and drop target confirmed; no arbitrary file injected')
                 elif i==53:
-                    x=c('#snap-view');cards=c('.snap-card').count();before=x.evaluate('(e)=>e.scrollLeft');x.focus();page.keyboard.press('ArrowRight');page.wait_for_timeout(100);after=x.evaluate('(e)=>e.scrollLeft');action=('keyboard scroll snap container',cards>=2 and (after!=before or x.evaluate('(e)=>e.scrollWidth>e.clientWidth')),'snap cards/overflow confirmed and keyboard scrolling exercised')
+                    x=c('#snap-view');cards=c('.snap-card').count();geom=x.evaluate('(e)=>{var r=e.getBoundingClientRect(),a=e.children[0].getBoundingClientRect(),b=e.children[1].getBoundingClientRect();return a.left>=r.left-1&&a.right<=r.right+1&&Math.min(r.right,b.right)-Math.max(r.left,b.left)>=60}');before=x.evaluate('(e)=>e.scrollLeft');x.focus();page.keyboard.press('ArrowRight');page.wait_for_timeout(450);after=x.evaluate('(e)=>e.scrollLeft');status=text(c('#snap-status'));active=c('#snap-dots button').evaluate_all('(xs)=>xs.findIndex(x=>x.getAttribute("aria-current")==="true")');page.keyboard.press('End');page.wait_for_timeout(700);end=x.evaluate('(e)=>e.scrollLeft');end_active=c('#snap-dots button').evaluate_all('(xs)=>xs.findIndex(x=>x.getAttribute("aria-current")==="true")');page.keyboard.press('Home');page.wait_for_timeout(700);home=x.evaluate('(e)=>e.scrollLeft');home_active=c('#snap-dots button').evaluate_all('(xs)=>xs.findIndex(x=>x.getAttribute("aria-current")==="true")');action=('full snap card, preview, ArrowRight and Home/End',geom and cards==5 and after>before and '第 2 / 5' in status and active==1 and end>after and end_active==4 and home<end and home_active==0,'full first card, ≥60px preview, active page updates, and Home/End reach first/last cards')
                 else:
                     # Static/visual demos: assert concrete render targets, never infer full function from no exception.
                     targets=item['observed']['visual_targets'];present=targets['canvas']+targets['svg']+targets['animatedContainers']+targets['stageChildren']
