@@ -3,7 +3,7 @@
     {
       "test": "static-and-syntax",
       "status": "pass",
-      "detail": "root/dist byte-identical; all inline scripts parse; no runtime parts; archived search sink fixed"
+      "detail": "root/dist byte-identical; inline scripts parse; no runtime parts; visitor analytics disabled; official ECharts URL snapshotted"
     },
     {
       "test": "no-javascript",
@@ -57,6 +57,22 @@
       ]
     },
     {
+      "test": "mobile-demo-layering",
+      "status": "pass",
+      "detail": [
+        {
+          "width": 390,
+          "three_gap": 10.0,
+          "p5_gap": 10.484375
+        },
+        {
+          "width": 320,
+          "three_gap": 10.0,
+          "p5_gap": 37.390625
+        }
+      ]
+    },
+    {
       "test": "keyboard-core-workflows",
       "status": "pass",
       "detail": "sort + boundaries/live status; tabs Home/End; accordion; anchor; native modal Escape/focus; real command navigation clears filters"
@@ -74,7 +90,7 @@
     {
       "test": "all-external-dependencies-fail",
       "status": "pass",
-      "detail": "all external origins blocked: native demos remain usable, failed library exposes local retry; no uncaught exception"
+      "detail": "external origins blocked: GSAP/Three.js/p5/ECharts/Embla show retry errors; p5 reports no generation; Tone uses native Web Audio or explicit unsupported status; local controls remain available"
     },
     {
       "test": "user-input-xss",
@@ -84,7 +100,7 @@
     {
       "test": "real-touch-workflows",
       "status": "pass",
-      "detail": "trusted touch: sorting, undo, split button/range, comparison, popover light-dismiss, canvas pixels changed; outside-canvas gesture scrolls page"
+      "detail": "trusted touch: sorting, undo, split button/range, comparison, #26 Embla horizontal swipe, popover light-dismiss, canvas pixels changed; outside-canvas gesture scrolls page"
     },
     {
       "test": "reduced-motion",
@@ -92,7 +108,7 @@
       "detail": "system reduced-motion media and persisted manual CSS/transition reduction respected; no claim of full third-party GPU optimization"
     }
   ],
-  "passed": 10,
-  "total": 10,
+  "passed": 11,
+  "total": 11,
   "all_pass": true
 }

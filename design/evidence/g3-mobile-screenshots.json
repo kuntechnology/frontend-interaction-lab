@@ -1,0 +1,221 @@
+{
+  "captured_at": "2026-11-05T05:18:07.995412+00:00",
+  "url": "http://127.0.0.1:8873/",
+  "capture_mode": "DOM visual-state capture; real interactions are verified by G3 regression and robustness suites.",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "device_scale_factor": 2,
+    "touch": true
+  },
+  "screenshots": {
+    "6": {
+      "demo_id": "demo-06",
+      "stage_id": "stage-06",
+      "capture_selector": "#demo-06 .stage",
+      "heading": "滚动揭示",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-06.png",
+      "sha256": "6df26230316ef649fd50e44e0ed4cbd3a9818557e9604ddf61eab1a7b43aa967",
+      "css_bounds": {
+        "width": 350,
+        "height": 355.09
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 712
+      }
+    },
+    "15": {
+      "demo_id": "demo-15",
+      "stage_id": "stage-15",
+      "capture_selector": "#demo-15 .stage",
+      "heading": "Canvas 粒子",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-15.png",
+      "sha256": "a1c772ec690f3d2c959fc23cbad664796c33349b89bb7aff997254673385d164",
+      "css_bounds": {
+        "width": 350,
+        "height": 320
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 642
+      }
+    },
+    "20": {
+      "demo_id": "demo-20",
+      "stage_id": "stage-20",
+      "capture_selector": "#demo-20 .stage",
+      "heading": "Motion 交错",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-20.png",
+      "sha256": "73e23ee00ec68c0fa4f286fcd2f105e62cc242318095a4a7a902a30f02406dba",
+      "css_bounds": {
+        "width": 350,
+        "height": 286
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 574
+      }
+    },
+    "21": {
+      "demo_id": "demo-21",
+      "stage_id": "stage-21",
+      "capture_selector": "#demo-21 .stage",
+      "heading": "Three.js 3D",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-21.png",
+      "sha256": "7dec2bfacd6e0f299725c76a68a10bf0ee090fad4b77ab043dd42dab202211c1",
+      "css_bounds": {
+        "width": 350,
+        "height": 320
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 642
+      }
+    },
+    "22": {
+      "demo_id": "demo-22",
+      "stage_id": "stage-22",
+      "capture_selector": "#demo-22 .stage",
+      "heading": "p5.js 生成艺术",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-22.png",
+      "sha256": "613442b421fa34c5c465be9ba45b13a963e3a3c8528c3106d42d0e3d34680f2b",
+      "css_bounds": {
+        "width": 350,
+        "height": 590
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 1182
+      }
+    },
+    "23": {
+      "demo_id": "demo-23",
+      "stage_id": "stage-23",
+      "capture_selector": "#demo-23 .stage",
+      "heading": "ECharts 动态图表",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-23.png",
+      "sha256": "7be2c195f409cdf11ec8f9454fcd1a501d431661aa59d147c6b13b1406bb4c78",
+      "css_bounds": {
+        "width": 350,
+        "height": 431.14
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 864
+      }
+    },
+    "26": {
+      "demo_id": "demo-26",
+      "stage_id": "stage-26",
+      "capture_selector": "#demo-26 .stage",
+      "heading": "Embla 轻量轮播",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-26.png",
+      "sha256": "eaecf95cd9a76fb249261b996541afabf4c9bbce7db61fd9ec58bdfdbc9d5842",
+      "css_bounds": {
+        "width": 350,
+        "height": 320
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 642
+      }
+    },
+    "28": {
+      "demo_id": "demo-28",
+      "stage_id": "stage-28",
+      "capture_selector": "#demo-28 .stage",
+      "heading": "Tone 音序器",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-28.png",
+      "sha256": "0cb8ee804016564865299014aa6cd01ce7c31742d5ab00d69aaafd57feabc782",
+      "css_bounds": {
+        "width": 350,
+        "height": 306
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 614
+      }
+    },
+    "34": {
+      "demo_id": "demo-34",
+      "stage_id": "stage-34",
+      "capture_selector": "#demo-34 .stage",
+      "heading": "Tailwind CSS v4 原子类",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-34.png",
+      "sha256": "052a8f4c75c6c18008d9ef101e32f8d3380a50690eaf5ae7945799657845f51b",
+      "css_bounds": {
+        "width": 350,
+        "height": 319.86
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 642
+      }
+    },
+    "42": {
+      "demo_id": "demo-42",
+      "stage_id": "stage-42",
+      "capture_selector": "#demo-42 .stage",
+      "heading": "View Transitions",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-42.png",
+      "sha256": "509da75cf4aa57fbc640f8d447a3da15b603b78323a0676d7b624fd1ad0619d6",
+      "css_bounds": {
+        "width": 350,
+        "height": 504.97
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 1012
+      }
+    },
+    "51": {
+      "demo_id": "demo-51",
+      "stage_id": "stage-51",
+      "capture_selector": "#demo-51 .stage",
+      "heading": "前后对比滑块",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-51.png",
+      "sha256": "36c0d9af24f5b5850ed0dae025f3db4d3ee864b281d2561edae7e5eef7587573",
+      "css_bounds": {
+        "width": 350,
+        "height": 280.88
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 564
+      }
+    },
+    "53": {
+      "demo_id": "demo-53",
+      "stage_id": "stage-53",
+      "capture_selector": "#demo-53 .stage",
+      "heading": "Scroll Snap 吸附",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-53.png",
+      "sha256": "8c8568d7545400472f0e1cca259a298e00f43ffb6e6ff8470eeb337ea5703639",
+      "css_bounds": {
+        "width": 350,
+        "height": 260
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 522
+      }
+    },
+    "54": {
+      "demo_id": "demo-54",
+      "stage_id": "stage-54",
+      "capture_selector": "#demo-54 .stage",
+      "heading": "@property 色阶生成",
+      "path": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-54.png",
+      "sha256": "fa4541935da0363425fc5697d49d2f72675bbd893dded1fcbcc65923fa7856ca",
+      "css_bounds": {
+        "width": 350,
+        "height": 286
+      },
+      "image_size_px": {
+        "width": 700,
+        "height": 574
+      }
+    }
+  }
+}

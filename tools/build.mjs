@@ -24,9 +24,9 @@ const OUT = path.join(OUT_DIR, 'index.html');
 
 /* 演示总数：新增 demo 时只改这一处，断言失败信息会告诉你改哪 */
 const DEMO_TOTAL = 56;
-/* 体积预算（gzip -9） */
-const BUDGET_RAW = 300 * 1024;
-const BUDGET_GZIP = 75 * 1024;
+/* 用户批准的候选体积预算：十进制 byte，gzip -9。 */
+const BUDGET_RAW = 1_000_000;
+const BUDGET_GZIP = 250_000;
 
 const problems = [];
 const notes = [];
@@ -230,14 +230,14 @@ if (count(/id="home-link"/g) !== 1) fail('A12 #home-link 应恰好 1 个（injec
 // A13 体积预算（按 UTF-8 字节算——中文页面的字符串长度远小于字节数，用 length 会低估）
 const rawBytes = Buffer.byteLength(html, 'utf8');
 const gzipSize = zlib.gzipSync(Buffer.from(html, 'utf8'), { level: 9 }).length;
-if (rawBytes > BUDGET_RAW) fail(`A13 raw ${(rawBytes / 1024).toFixed(1)}KB 超出预算 ${BUDGET_RAW / 1024}KB`);
-if (gzipSize > BUDGET_GZIP) fail(`A13 gzip ${(gzipSize / 1024).toFixed(1)}KB 超出预算 ${BUDGET_GZIP / 1024}KB`);
+if (rawBytes > BUDGET_RAW) fail(`A13 raw ${rawBytes} B > ${BUDGET_RAW} B`);
+if (gzipSize > BUDGET_GZIP) fail(`A13 gzip-9 ${gzipSize} B > ${BUDGET_GZIP} B`);
 
 /* ---------- 报告 ---------- */
 console.log('构建产物:', path.relative(root, OUT));
 notes.forEach((n) => console.log('  · ' + n));
 console.log(`  · demo ${uniqIds.length} 个 / 目录链接 ${railSet.size} 个`);
-console.log(`  · raw ${(rawBytes / 1024).toFixed(1)} KB / gzip ${(gzipSize / 1024).toFixed(1)} KB`);
+console.log(`  · raw ${rawBytes} B / gzip-9 ${gzipSize} B · budget ${BUDGET_RAW} / ${BUDGET_GZIP} B`);
 
 if (problems.length) {
     console.error('\n断言失败 ' + problems.length + ' 项:');

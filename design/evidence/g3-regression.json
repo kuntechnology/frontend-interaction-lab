@@ -1,6 +1,7 @@
 {
-  "started_at": "2026-11-03T19:39:55.571155+00:00",
-  "url": "http://127.0.0.1:8873/dist/",
+  "started_at": "2026-11-05T04:43:29.540054+00:00",
+  "url": "http://127.0.0.1:8873/",
+  "baseline_commit": "29771ce273c65f42f024a7323fcf8b23c1ee133d",
   "demos": [
     {
       "number": 1,
@@ -158,9 +159,9 @@
       "status": "pass",
       "actions": [
         {
-          "selector": "visual/render target inspection",
+          "selector": "scroll reveal to final segment and replay",
           "assertion": true,
-          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+          "result": "final section revealed; replay returned the internal scroll area to its start"
         }
       ],
       "observed": {
@@ -174,9 +175,11 @@
           "canvas": 0,
           "svg": 1,
           "animatedContainers": 0,
-          "stageChildren": 5
+          "stageChildren": 4
         },
-        "live_regions": [],
+        "live_regions": [
+          "已重置；继续滚动以重播。"
+        ],
         "inputs": [],
         "selected_tabs": []
       },
@@ -432,9 +435,9 @@
       "status": "pass",
       "actions": [
         {
-          "selector": "visual/render target inspection",
+          "selector": "canvas particle motion pause/resume",
           "assertion": true,
-          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+          "result": "canvas bitmap moved, stayed stable while paused, then moved again"
         }
       ],
       "observed": {
@@ -448,7 +451,7 @@
           "canvas": 1,
           "svg": 1,
           "animatedContainers": 0,
-          "stageChildren": 2
+          "stageChildren": 3
         },
         "live_regions": [],
         "inputs": [],
@@ -494,7 +497,7 @@
         {
           "selector": "activate 17 control",
           "assertion": true,
-          "result": "GSAP target inline styles changed"
+          "result": "GSAP replay changes target animation state"
         }
       ],
       "observed": {
@@ -516,6 +519,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -550,6 +554,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -584,6 +589,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -596,7 +602,7 @@
         {
           "selector": "activate 20 control",
           "assertion": true,
-          "result": "Motion library created animation objects or inline animation state"
+          "result": "six labeled steps visibly animate and settle to a readable state"
         }
       ],
       "observed": {
@@ -618,6 +624,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -628,9 +635,9 @@
       "status": "pass",
       "actions": [
         {
-          "selector": "visual/render target inspection",
+          "selector": "activate 21 control",
           "assertion": true,
-          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+          "result": "3D controls remain top-right, above the canvas, and dispatch real rotate/reset clicks"
         }
       ],
       "observed": {
@@ -658,9 +665,9 @@
       "status": "pass",
       "actions": [
         {
-          "selector": "visual/render target inspection",
+          "selector": "activate 22 control",
           "assertion": true,
-          "result": "concrete canvas/svg/animation/stage content present; no claim beyond rendered surface"
+          "result": "all p5 controls update and configured generation paints visible pixels, or reports CDN failure"
         }
       ],
       "observed": {
@@ -674,13 +681,49 @@
           "canvas": 1,
           "svg": 1,
           "animatedContainers": 0,
-          "stageChildren": 2
+          "stageChildren": 3
         },
-        "live_regions": [],
-        "inputs": [],
+        "live_regions": [
+          "已生成 · 240 粒子上限"
+        ],
+        "inputs": [
+          {
+            "id": "p5-lag",
+            "type": "range",
+            "value": "20",
+            "checked": false,
+            "disabled": false
+          },
+          {
+            "id": "p5-count",
+            "type": "range",
+            "value": "240",
+            "checked": false,
+            "disabled": false
+          },
+          {
+            "id": "p5-trail",
+            "type": "range",
+            "value": "75",
+            "checked": false,
+            "disabled": false
+          },
+          {
+            "id": "p5-liquid",
+            "type": "range",
+            "value": "80",
+            "checked": false,
+            "disabled": false
+          }
+        ],
         "selected_tabs": []
       },
-      "dependency_state": "native-or-rendered"
+      "dependency_state": {
+        "error": [],
+        "phase": "ready",
+        "loading_after_wait": false,
+        "marker_count": 1
+      }
     },
     {
       "number": 23,
@@ -690,7 +733,7 @@
         {
           "selector": "activate 23 control",
           "assertion": true,
-          "result": "ECharts update toggle label changed"
+          "result": "simulated chart pauses, changes style, resets and aligns all eight request/error/category points"
         }
       ],
       "observed": {
@@ -704,14 +747,17 @@
           "canvas": 1,
           "svg": 1,
           "animatedContainers": 1,
-          "stageChildren": 3
+          "stageChildren": 4
         },
-        "live_regions": [],
+        "live_regions": [
+          "已重置为 8 个模拟样本"
+        ],
         "inputs": [],
         "selected_tabs": []
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -779,6 +825,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -791,7 +838,7 @@
         {
           "selector": "activate 26 control",
           "assertion": true,
-          "result": "Embla slide indicator changed"
+          "result": "Embla buttons, ArrowLeft/Right and Home/End navigate, announce status and reset to a readable first card"
         }
       ],
       "observed": {
@@ -807,12 +854,15 @@
           "animatedContainers": 0,
           "stageChildren": 3
         },
-        "live_regions": [],
+        "live_regions": [
+          "1 / 4"
+        ],
         "inputs": [],
         "selected_tabs": []
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -853,9 +903,9 @@
       "status": "pass",
       "actions": [
         {
-          "selector": "activate 28 control",
+          "selector": "edit and play/stop local sequencer audio",
           "assertion": true,
-          "result": "sequencer cell on/off class changed"
+          "result": "cell toggled; Web Audio oscillator started and playback stopped, or unsupported audio was reported explicitly"
         }
       ],
       "observed": {
@@ -947,6 +997,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 0
       }
@@ -981,6 +1032,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 0
       }
@@ -1015,6 +1067,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -1049,6 +1102,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -1059,9 +1113,9 @@
       "status": "pass",
       "actions": [
         {
-          "selector": "rendered content inspection",
+          "selector": "activate Tailwind buttons and apply a live utility class",
           "assertion": true,
-          "result": "content payload verified"
+          "result": "both buttons respond and the live preview visibly recompiles the entered classes"
         }
       ],
       "observed": {
@@ -1077,12 +1131,14 @@
           "animatedContainers": 0,
           "stageChildren": 5
         },
-        "live_regions": [],
+        "live_regions": [
+          "次按钮已触发"
+        ],
         "inputs": [
           {
             "id": "tw-class-input",
             "type": "text",
-            "value": "",
+            "value": "bg-sky-100 p-6 rounded-lg text-slate-900",
             "checked": false,
             "disabled": false
           }
@@ -1121,6 +1177,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -1163,6 +1220,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 1
       }
@@ -1197,6 +1255,7 @@
       },
       "dependency_state": {
         "error": [],
+        "phase": "ready",
         "loading_after_wait": false,
         "marker_count": 0
       }
@@ -1360,7 +1419,7 @@
         {
           "selector": "activate 42 control",
           "assertion": true,
-          "result": "view transition view/output state changed"
+          "result": "list/grid transitions announce current state and leave the screenshot on the three-column grid"
         }
       ],
       "observed": {
@@ -1376,7 +1435,9 @@
           "animatedContainers": 0,
           "stageChildren": 4
         },
-        "live_regions": [],
+        "live_regions": [
+          "当前：网格视图"
+        ],
         "inputs": [],
         "selected_tabs": []
       },
@@ -1385,12 +1446,12 @@
     {
       "number": 43,
       "id": "demo-43",
-      "status": "degraded",
+      "status": "pass",
       "actions": [
         {
           "selector": "clipboard action with denied/unavailable permission captured",
           "assertion": true,
-          "result": "platform permission/result explicitly recorded; no clipboard success claimed"
+          "result": "current clipboard outcome recorded; no success claimed when denied"
         }
       ],
       "observed": {
@@ -1410,11 +1471,7 @@
         "inputs": [],
         "selected_tabs": []
       },
-      "dependency_state": {
-        "error": [],
-        "loading_after_wait": false,
-        "marker_count": 0
-      },
+      "dependency_state": "native-or-rendered",
       "capability_outcome": {
         "clipboardWriteApi": true,
         "status": "已复制：这段文字将被复制到剪贴板——来自 Clipboard…"
@@ -1486,21 +1543,17 @@
         "inputs": [],
         "selected_tabs": []
       },
-      "dependency_state": {
-        "error": [],
-        "loading_after_wait": false,
-        "marker_count": 0
-      }
+      "dependency_state": "native-or-rendered"
     },
     {
       "number": 46,
       "id": "demo-46",
-      "status": "degraded",
+      "status": "pass",
       "actions": [
         {
           "selector": "fullscreen API attempted; permission outcome recorded",
           "assertion": true,
-          "result": "platform capability/status recorded; not claimed as universally successful"
+          "result": "platform capability/status recorded; fullscreen exited after successful verification"
         }
       ],
       "observed": {
@@ -1535,7 +1588,7 @@
         {
           "selector": "share API attempted; platform outcome recorded",
           "assertion": true,
-          "result": "native share availability/result recorded, no share success claimed"
+          "result": "native share availability/result recorded; no unsupported share success claimed"
         }
       ],
       "observed": {
@@ -1559,7 +1612,10 @@
       "capability_outcome": {
         "share": "undefined",
         "status": "当前环境无系统分享，已复制页面地址到剪贴板"
-      }
+      },
+      "notes": [
+        "system share API unavailable; app exposed copy-link fallback"
+      ]
     },
     {
       "number": 48,
@@ -1659,7 +1715,7 @@
         {
           "selector": "activate 51 control",
           "assertion": true,
-          "result": "range within declared min/max and corresponding CSS/render output changed"
+          "result": "shared landscape images decoded, fallback stays hidden, and keyboard reaches 0/100/99 before reset"
         }
       ],
       "observed": {
@@ -1680,7 +1736,7 @@
           {
             "id": "cmp-range",
             "type": "range",
-            "value": "64",
+            "value": "50",
             "checked": false,
             "disabled": false
           }
@@ -1733,9 +1789,9 @@
       "status": "pass",
       "actions": [
         {
-          "selector": "keyboard scroll snap container",
+          "selector": "full snap card, preview, ArrowRight and Home/End",
           "assertion": true,
-          "result": "snap cards/overflow confirmed and keyboard scrolling exercised"
+          "result": "full first card, ≥60px preview, active page updates, and Home/End reach first/last cards"
         }
       ],
       "observed": {
@@ -1751,7 +1807,9 @@
           "animatedContainers": 0,
           "stageChildren": 3
         },
-        "live_regions": [],
+        "live_regions": [
+          "第 1 / 5 · ← →"
+        ],
         "inputs": [],
         "selected_tabs": []
       },
@@ -1765,7 +1823,7 @@
         {
           "selector": "activate 54 control",
           "assertion": true,
-          "result": "range within declared min/max and corresponding CSS/render output changed"
+          "result": "hue slider updates all six visible color swatches to six distinct colors"
         }
       ],
       "observed": {
@@ -1874,25 +1932,96 @@
   "overall_errors": [],
   "baseline_differences": [
     {
-      "demo": 49,
+      "demo": 6,
       "field": "description",
       "status": "authorized-fix",
-      "baseline": "输入即过滤，↑↓ 移动高亮，Enter 执行，Esc 关闭——命令面板的全部要素，60 行原生 JS。",
-      "current": "搜索真实演示，↑↓ 移动、Enter 跳转、Esc 关闭；原生 dialog 管理焦点，支持点击与键盘。"
+      "baseline": "元素进入视口时淡入上移呈现，IntersectionObserver 触发一次。",
+      "current": "在舞台内部滚动，分段说明进入视口后逐步显现；可以重播并尊重减少动态效果。"
     },
     {
-      "demo": 50,
+      "demo": 15,
       "field": "description",
       "status": "authorized-fix",
-      "baseline": "DOM 里始终只有约 8 个节点，滚动时按 scrollTop 换一批。10 万行也不掉帧。",
-      "current": "只渲染可视区和缓冲行，滚动时按 scrollTop 更新窗口；十万行数据不需要十万个 DOM 节点。"
+      "baseline": "粒子匀速运动，距离过近自动连线，鼠标经过产生斥力。",
+      "current": "粒子持续运动并按距离连线；离屏、后台或减少动态效果时暂停。"
+    },
+    {
+      "demo": 20,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "Motion（motion.dev）的 stagger 让列表项依次弹出，进入视口自动播放。",
+      "current": "Motion 交错入场可重复播放；库未加载时使用原生动画。"
+    },
+    {
+      "demo": 21,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "WebGL 场景：环面结自转 + 点光源，鼠标移动改变视角姿态。",
+      "current": "拖动旋转环面结；前景按钮可旋转或复位，避免画布遮挡。"
+    },
+    {
+      "demo": 22,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "移动光标，彩色粒子沿路径流动，半透明覆盖形成笔触拖尾。",
+      "current": "可选择粒子样式、跟随延迟、总数、渐变拖尾和液化程度，再按配置生成。"
+    },
+    {
+      "demo": 23,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "折线图每 2s 追加数据点，模拟实时监控面板，可暂停与重置。",
+      "current": "展示模拟请求量和错误率；可暂停、重置、切换三种图表样式并查看官方文档。"
+    },
+    {
+      "demo": 26,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "drag free 滑动 + 上/下一张控制，核心 API 仅约 12KB，无依赖。",
+      "current": "按钮、页码垂直对齐；卡片完整可读，边缘裁切柔和。"
+    },
+    {
+      "demo": 28,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "8 步音序器：点击格子编辑节拍，播放时高亮走位并发声。",
+      "current": "8 步音序器在用户点击后解锁并本地合成；页面进入后台时停止。"
+    },
+    {
+      "demo": 34,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "@tailwindcss/browser 运行时即时编译；utility 写按钮/徽章，可切暗色，class 编辑器实时预览。",
+      "current": "主、次按钮均可操作并反馈；按钮不依赖 Tailwind CDN。"
+    },
+    {
+      "demo": 42,
+      "field": "description",
+      "status": "authorized-fix",
+      "baseline": "document.startViewTransition()\n让视图切换拥有平滑的交叉淡化，浏览器自动捕获新旧状态。",
+      "current": "六个交互步骤在宽松网格与列表间切换；支持不依赖 View Transitions 的降级。"
     }
   ],
   "screenshots": {
-    "desktop": "/workspace/home-rebuild/overnight-lab/design/evidence/g3-screenshots/g3-desktop.png",
-    "mobile": "/workspace/home-rebuild/overnight-lab/design/evidence/g3-screenshots/g3-mobile.png",
-    "light": "/workspace/home-rebuild/overnight-lab/design/evidence/g3-screenshots/g3-light.png",
-    "mobile-light": "/workspace/home-rebuild/overnight-lab/design/evidence/g3-screenshots/g3-mobile-light.png"
+    "desktop": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-desktop.png",
+    "mobile": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile.png",
+    "light": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-light.png",
+    "mobile-light": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-light.png"
+  },
+  "demo_screenshots": {
+    "6": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-06.png",
+    "15": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-15.png",
+    "20": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-20.png",
+    "21": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-21.png",
+    "22": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-22.png",
+    "23": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-23.png",
+    "26": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-26.png",
+    "28": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-28.png",
+    "34": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-34.png",
+    "42": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-42.png",
+    "51": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-51.png",
+    "53": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-53.png",
+    "54": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-demo-54.png"
   },
   "environment": {
     "browser": "Chromium",
@@ -1989,8 +2118,24 @@
   "external_dependency_status": {
     "status": "no observed CDN request failure"
   },
-  "finished_at": "2026-11-03T19:40:50.706741+00:00",
+  "finished_at": "2026-11-05T04:44:51.033380+00:00",
   "failed_demo_count": 0,
-  "degraded_demo_count": 3,
-  "overall_status": "degraded"
+  "degraded_demo_count": 1,
+  "overall_status": "degraded",
+  "mobile_demo_screenshots": {
+    "6": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-06.png",
+    "15": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-15.png",
+    "20": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-20.png",
+    "21": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-21.png",
+    "22": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-22.png",
+    "23": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-23.png",
+    "26": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-26.png",
+    "28": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-28.png",
+    "34": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-34.png",
+    "42": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-42.png",
+    "51": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-51.png",
+    "53": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-53.png",
+    "54": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-screenshots/g3-mobile-demo-54.png"
+  },
+  "mobile_screenshots_manifest": "/workspace/home-rebuild/frontend-lab-fixes-20261104/design/evidence/g3-mobile-screenshots.json"
 }

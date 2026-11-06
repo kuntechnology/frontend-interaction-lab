@@ -1,14 +1,34 @@
+G3 候选构建证据
+基线 HEAD：29771ce273c65f42f024a7323fcf8b23c1ee133d
+分支：candidate-rebased-29771ce（未提交、未推送、未发布）
+生成时间：2026-11-05 12:55 +08:00
+
+--- node tools/build.mjs ---
 构建产物: dist/index.html
   · 已内联 inject.html（0.1 KB）
+  · 已复制第51项本地风景图至 dist/assets
   · 已生成 robots.txt / sitemap.xml / 404.html
-  · title: 前端交互实验室 v3.8.0 · Frontend Interaction Lab
+  · title: 前端交互实验室 v3.9.0 · Frontend Interaction Lab
   · Baseline 分布: widely 29 / newly 4 / limited 3 / na 20
-  · 代码切片覆盖: CSS 38/56 · JS 55/56
+  · 代码切片覆盖: CSS 39/56 · JS 55/56
   · demo 56 个 / 目录链接 56 个
-  · raw 296.7 KB / gzip 73.8 KB
+  · raw 316116 B / gzip-9 80172 B · budget 1000000 / 250000 B
 
 全部断言通过
+
+--- node tools/verify.mjs ---
 产物 dist/index.html
-  raw 296.7 KB / gzip 73.8 KB / demo 56 个
+  raw 316116 B / gzip-9 80172 B / demo 56 个 · budget 1000000 / 250000 B
 
 产物校验通过
+
+--- 独立产物核对 ---
+index.html 与 dist/index.html 原始字节数：各 316116 B
+Node zlib gzipSync(level 9)：80172 B（项目 build/verify 预算门槛的同一算法）
+gzip -n -9 命令行对照：79474 B（不同 deflate 实现，仅作交叉核对，不代替项目门槛）
+SHA256 index.html：eea8e3eb4f9defdecaac862cf95263a382ce2971d26f3e0704f2c2880dbe2b35
+SHA256 dist/index.html：eea8e3eb4f9defdecaac862cf95263a382ce2971d26f3e0704f2c2880dbe2b35
+
+--- 验收预算 ---
+raw 上限：1000000 B；构建实测：316116 B
+gzip-9 上限：250000 B；构建实测：80172 B

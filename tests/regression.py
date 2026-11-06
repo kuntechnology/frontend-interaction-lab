@@ -10,13 +10,14 @@ from datetime import datetime, timezone
 from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[1]
-URL='http://127.0.0.1:8873/dist/'
+URL='http://127.0.0.1:8873/'
+BASELINE_COMMIT='29771ce273c65f42f024a7323fcf8b23c1ee133d'
 OUT=ROOT/'design/evidence'; SHOTS=OUT/'g3-screenshots'
 OUT.mkdir(parents=True,exist_ok=True); SHOTS.mkdir(parents=True,exist_ok=True)
 
 # Per-demo deterministic interaction contracts. Assertions compare state before/after,
 # not merely that a click returned. Platform-gated APIs are intentionally separate.
-LIB_DEMOS={17:('#gs-scroll','.gs-block'),18:('#lottie-box','svg,canvas,.lottie-animation'),19:('#anime-box','*'),20:('#motion-list','.motion-item'),23:('#echart-box','canvas,svg'),25:('.lab-swiper','.swiper-slide'),26:('#embla-viewport','.embla-slide'),30:('#demo-30 .stage','*'),31:('#demo-31 .stage','*'),32:('#hx-target','*'),33:('#stage-33','*'),35:('#jt-a-val','*'),36:('#rx-result','*'),37:('#demo-37 .stage','*'),43:('#demo-43 .stage','*'),45:('#demo-45 .stage','*')}
+LIB_DEMOS={17:('#gs-scroll','.gs-block'),18:('#lottie-box','svg,canvas,.lottie-animation'),19:('#anime-box','*'),20:('#motion-list','.motion-item'),22:('#p5-box','canvas'),23:('#echart-box','canvas,svg'),25:('.lab-swiper','.swiper-slide'),26:('#embla-viewport','.embla-slide'),30:('#demo-30 .stage','*'),31:('#demo-31 .stage','*'),32:('#hx-target','*'),33:('#stage-33','*'),35:('#jt-a-val','*'),36:('#rx-result','*'),37:('#demo-37 .stage','*')}
 DEPENDENCY_SELECTORS=['.dependency-error','.lib-error','.error-state','.loading','.swiper','.echart-box','.lottie-box','.three-container','.p5-canvas']
 
 def text(locator):
@@ -26,18 +27,18 @@ def attr(locator,name):
     try:return locator.get_attribute(name,timeout=1500) or ''
     except Exception:return ''
 def baseline_contract():
-    old=subprocess.check_output(['git','show','ed9a355:src/lab.html'],cwd=ROOT,text=True)
+    old=subprocess.check_output(['git','show',BASELINE_COMMIT+':src/lab.html'],cwd=ROOT,text=True)
     cur=(ROOT/'src/lab.html').read_text()
     from bs4 import BeautifulSoup
     a,b=BeautifulSoup(old,'html.parser'),BeautifulSoup(cur,'html.parser')
     diffs=[]
-    for i in range(1,55):
+    for i in range(1,57):
         ident=f'demo-{i:02d}'; x=a.find(id=ident); y=b.find(id=ident)
         if not x or not y: diffs.append({'demo':i,'field':'block','status':'fail'});continue
         for field,sel in [('title','.demo-head h3'),('description','.demo-desc')]:
             xx=x.select_one(sel); yy=y.select_one(sel); xv=xx.get_text('\n',strip=True) if xx else None; yv=yy.get_text('\n',strip=True) if yy else None
             if xv!=yv:
-                allowed=i in (49,50,53) and field=='description'
+                allowed=i in (6,15,20,21,22,23,26,28,34,42) and field=='description'
                 diffs.append({'demo':i,'field':field,'status':'authorized-fix' if allowed else 'fail','baseline':xv,'current':yv})
         # Extract pre source before parsing; entity-escaped <...> must be unescaped as text,
         # never reparsed as markup (BeautifulSoup would drop the literal tag examples).
@@ -49,15 +50,16 @@ def baseline_contract():
             return m.group(0) if m else ''
         p0,p1=prompt(block(old,ident)),prompt(block(cur,ident))
         if p0!=p1:
-            allowed=i in (48,53,54)
+            allowed=i in (6,22,23,28)
             diffs.append({'demo':i,'field':'prompt','status':'authorized-fix' if allowed else 'fail','baseline':p0,'current':p1})
     return diffs
 
-report={'started_at':datetime.now(timezone.utc).isoformat(),'url':URL,'demos':[],'console_errors':[],'page_errors':[],'failed_requests':[],'overall_errors':[],'baseline_differences':baseline_contract(),'screenshots':{},'environment':{'browser':'Chromium','executable_path':'/usr/bin/chromium'}}
+report={'started_at':datetime.now(timezone.utc).isoformat(),'url':URL,'baseline_commit':BASELINE_COMMIT,'demos':[],'console_errors':[],'page_errors':[],'failed_requests':[],'overall_errors':[],'baseline_differences':baseline_contract(),'screenshots':{},'demo_screenshots':{},'environment':{'browser':'Chromium','executable_path':'/usr/bin/chromium'}}
 with sync_playwright() as pw:
     browser=pw.chromium.launch(headless=True,executable_path='/usr/bin/chromium')
     context=browser.new_context(viewport={'width':1440,'height':1000},device_scale_factor=1,permissions=[])
     page=context.new_page(); page.set_default_timeout(2500); page.set_default_navigation_timeout(8000)
+    page.add_init_script("""(()=>{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const create=C.prototype.createOscillator;C.prototype.createOscillator=function(){const n=create.call(this),start=n.start.bind(n);n.start=function(){window.__labOscillatorStarts=(window.__labOscillatorStarts||0)+1;return start.apply(n,arguments)};return n}})()""")
     page.on('console',lambda m: report['console_errors'].append({'type':m.type,'text':m.text,'url':m.location.get('url'),'location':m.location}) if m.type=='error' else None)
     page.on('pageerror',lambda e: report['page_errors'].append({'message':str(e),'url':page.url}))
     page.on('requestfailed',lambda r: report['failed_requests'].append({'url':r.url,'method':r.method,'failure':r.failure}))
@@ -78,17 +80,19 @@ with sync_playwright() as pw:
                 item['observed']['prompt_present']=d.locator('.prompt pre').count()==1
                 item['observed']['copy_controls']={'prompt':d.locator('.copy-btn').count(),'code':d.locator('.copy-code-btn').count()}
                 if not item['observed']['prompt_present'] or item['observed']['copy_controls']!={'prompt':1,'code':1}:raise AssertionError('prompt/copy controls missing')
-                # Wait at most 15 seconds for deferred libraries to expose ready/error evidence.
+                # Wait at most 15 seconds for the app's actual data-lib-state contract.
                 if i in LIB_DEMOS:
                     deadline=time.monotonic()+15
                     marker=LIB_DEMOS[i][0]
                     while time.monotonic()<deadline:
-                        state=d.evaluate("e=>({errors:[...e.querySelectorAll('.dependency-error,.lib-error,.error-state')].map(x=>x.innerText),loading:!!e.querySelector('.loading,[aria-busy=true]')})")
-                        if state['errors'] or not state['loading']:break
+                        state=d.evaluate("e=>({errors:[...e.querySelectorAll('.lab-lib-notice')].map(x=>x.innerText),phase:e.dataset.libState||''})")
+                        if state['errors'] or state['phase'] in ('ready','error'):break
                         page.wait_for_timeout(150)
-                    item['dependency_state']={'error':state['errors'],'loading_after_wait':state['loading'],'marker_count':d.locator(marker).count()}
+                    item['dependency_state']={'error':state['errors'],'phase':state['phase'],'loading_after_wait':state['phase']=='loading','marker_count':d.locator(marker).count()}
                     if state['errors']:
                         item['status']='degraded';item['notes']=['dependency reported error; no success claimed']
+                    elif state['phase']!='ready':
+                        item['status']='degraded';item['notes']=['dependency did not reach ready state within 15 seconds; no success claimed']
                 # Canvas/SVG/animation/interactive payload evidence before manipulation.
                 item['observed']['visual_targets']=d.evaluate("e=>({canvas:e.querySelectorAll('canvas').length,svg:e.querySelectorAll('svg').length,animatedContainers:e.querySelectorAll('.lottie-box,.anime-box,.motion-list,.gs-scroll,.echart-box,.three-container,.p5-canvas').length,stageChildren:e.querySelector('.stage')?.children.length||0})")
                 c=lambda s:d.locator(s)
@@ -111,23 +115,45 @@ with sync_playwright() as pw:
                     x=c('#dm-toggle');before=attr(c('#stage-14'),'class');x.click();after=attr(c('#stage-14'),'class');action=('toggle local theme',('is-dark' in before)!=('is-dark' in after),'stage theme class toggled')
                 elif i==16:
                     x=c('#draw-canvas');box=x.bounding_box();before=page.evaluate('(el)=>el.toDataURL()',x.element_handle());page.mouse.move(box['x']+25,box['y']+25);page.mouse.down();page.mouse.move(box['x']+100,box['y']+60,steps=4);page.mouse.up();painted=page.evaluate('(el)=>el.toDataURL()',x.element_handle())!=before;c('#draw-clear').click();cleared=page.evaluate('(el)=>el.toDataURL()',x.element_handle());action=('draw with pointer then clear',painted and cleared!=painted,'canvas bitmap changed on draw and clear')
-                elif i in (17,18,19,20,23,25,26,28,29,32,33,35,36,41,42,45,49,50,51,54,55,56):
-                    if i==17:
-                        x=c('#gs-play');before=[attr(z,'style') for z in c('.gs-block').all()];x.click();page.wait_for_timeout(250);after=[attr(z,'style') for z in c('.gs-block').all()];ok=bool(c('.gs-block').count()) and before!=after;desc='GSAP target inline styles changed'
+                elif i in (6,15,17,18,19,20,21,22,23,25,26,28,29,32,33,34,35,36,41,42,45,49,50,51,54,55,56):
+                    if i==6:
+                        area=c('#reveal-scroll');area.evaluate('(e)=>{e.scrollTop=e.scrollHeight;e.dispatchEvent(new Event("scroll"))}');page.wait_for_timeout(180);last_visible='is-in' in attr(c('.reveal-item').last,'class');c('#reveal-restart').click();reset=area.evaluate('(e)=>e.scrollTop===0') and '已重置' in text(c('#reveal-status'));action=('scroll reveal to final segment and replay',last_visible and reset,'final section revealed; replay returned the internal scroll area to its start')
+                    elif i==15:
+                        canvas=c('#px-canvas');el=canvas.element_handle();page.wait_for_timeout(180);before=page.evaluate('(e)=>e.toDataURL()',el);page.wait_for_timeout(140);moving=page.evaluate('(e)=>e.toDataURL()',el)!=before;c('#px-motion-toggle').click();stopped=attr(c('#px-motion-toggle'),'aria-pressed')=='true';paused=page.evaluate('(e)=>e.toDataURL()',el);page.wait_for_timeout(140);still=page.evaluate('(e)=>e.toDataURL()',el)==paused;c('#px-motion-toggle').click();page.wait_for_timeout(140);resumed=page.evaluate('(e)=>e.toDataURL()',el)!=paused;action=('canvas particle motion pause/resume',moving and stopped and still and resumed,'canvas bitmap moved, stayed stable while paused, then moved again')
+                    elif i==17:
+                        if not page.evaluate("typeof window.gsap==='object' && typeof window.ScrollTrigger!=='undefined'"):
+                            item['status']='degraded';item['notes']=['GSAP CDN unavailable; explicit dependency fallback required'];ok=c('#demo-17 .lab-lib-notice').count()>0;desc='GSAP unavailable with visible retry/fallback notice'
+                        else:
+                            x=c('#gs-play');before=[attr(z,'style') for z in c('.gs-block').all()];x.click();page.wait_for_timeout(150);after=[attr(z,'style') for z in c('.gs-block').all()];ok=bool(c('.gs-block').count()) and before!=after;desc='GSAP replay changes target animation state'
                     elif i==18:
-                        x=c('#lottie-toggle');before=text(x);x.click();ok=text(x)!=before;desc='Lottie button toggled play/pause label'
+                        if not page.evaluate("typeof window.lottie==='object'"):
+                            item['status']='degraded';item['notes']=['Lottie CDN unavailable; explicit dependency fallback required'];ok=c('#demo-18 .lab-lib-notice').count()>0;desc='Lottie unavailable with visible retry/fallback notice'
+                        else:
+                            x=c('#lottie-toggle');before=text(x);x.click();ok=text(x)!=before;desc='Lottie button toggled play/pause label'
                     elif i==19:
-                        x=c('#anime-play');before=attr(c('#anime-box'),'style');x.click();page.wait_for_timeout(200);ok=bool(c('#anime-box').count()) and attr(c('#anime-box'),'style')!=before;desc='Anime target style changed'
+                        if not page.evaluate("typeof window.anime==='function'"):
+                            item['status']='degraded';item['notes']=['Anime.js CDN unavailable; explicit dependency fallback required'];ok=c('#demo-19 .lab-lib-notice').count()>0;desc='Anime.js unavailable with visible retry/fallback notice'
+                        else:
+                            x=c('#anime-play');before=attr(c('#anime-box'),'style');x.click();page.wait_for_timeout(200);ok=bool(c('#anime-box').count()) and attr(c('#anime-box'),'style')!=before;desc='Anime target style changed'
                     elif i==20:
-                        x=c('#motion-run');x.click();page.wait_for_timeout(80);ok=bool(c('.motion-item').count()) and c('.motion-item').evaluate_all('(xs)=>xs.some(x=>x.getAnimations().length>0 || x.style.length>0)');desc='Motion library created animation objects or inline animation state'
+                        x=c('#motion-run');x.click();page.wait_for_timeout(160);animating=c('.motion-item').evaluate_all('(xs)=>xs.some(x=>x.getAnimations().length>0)');page.wait_for_timeout(800);labels=c('.motion-item').evaluate_all('(xs)=>xs.map(x=>x.innerText.trim())');visible=c('.motion-item').evaluate_all('(xs)=>xs.every(x=>Number(getComputedStyle(x).opacity)>=.98)');ok=len(labels)==6 and all(labels) and visible and (animating or page.evaluate("matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion==='reduce'"));desc='six labeled steps visibly animate and settle to a readable state'
+                    elif i==21:
+                        buttons=c('#stage-21 .lab-equivalent-controls button');page.evaluate("()=>{window.__labRotate=[];document.querySelector('#stage-21').addEventListener('lab-rotate',e=>window.__labRotate.push(e.detail))}");hit=buttons.first.evaluate('(e)=>{const r=e.getBoundingClientRect(),x=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return !!x&&!!x.closest(".lab-equivalent-controls")}');layout=c('#stage-21 .lab-equivalent-controls').evaluate('(e)=>{const r=e.getBoundingClientRect(),s=e.closest(".stage").getBoundingClientRect(),b=document.querySelector("#stage-21 .three-box").getBoundingClientRect();return {pos:getComputedStyle(e).position,x:r.x,y:r.y,bottom:r.bottom,canvasTop:b.top,sx:s.x,sy:s.y,sw:s.width}}');corner=layout['pos']=='absolute' and layout['x']>layout['sx']+layout['sw']*.55 and layout['y']<layout['sy']+48 and layout['canvasTop']>=layout['bottom']+4;buttons.first.click();buttons.last.click();events=page.evaluate('window.__labRotate');ok=buttons.count()==3 and hit and corner and events==['left','reset'];desc='3D controls remain top-right, above the canvas, and dispatch real rotate/reset clicks'
+                    elif i==22:
+                        c('#p5-style').select_option('ring');vals={'lag':'20','count':'240','trail':'75','liquid':'80'}
+                        for key,value in vals.items():c('#p5-'+key).fill(value)
+                        outputs=all(text(c('#p5-'+key+'-v'))==value for key,value in vals.items());c('#p5-generate').click();page.wait_for_timeout(450);ready=page.evaluate("typeof window.p5==='function'");status=text(c('#p5-status'));pixels=c('#p5-box canvas').evaluate('(e)=>{const d=e.getContext("2d").getImageData(0,0,e.width,e.height).data,b=[d[0],d[1],d[2]];let n=0;for(let i=4;i<d.length;i+=32)if(Math.abs(d[i]-b[0])+Math.abs(d[i+1]-b[1])+Math.abs(d[i+2]-b[2])>45)n++;return n}') if ready and c('#p5-box canvas').count() else 0;ok=outputs and c('#p5-style').input_value()=='ring' and ((ready and '已生成' in status and c('#p5-box canvas').count()==1 and pixels>20) or (not ready and ('失败' in status or '未就绪' in status)));desc='all p5 controls update and configured generation paints visible pixels, or reports CDN failure'
                     elif i==23:
-                        x=c('#ec-toggle');before=text(x);x.click();ok=text(x)!=before;desc='ECharts update toggle label changed'
+                        x=c('#ec-toggle');before=text(x);x.click();paused=text(x)!=before;c('#ec-style').select_option('area');style=c('#ec-style').input_value();c('#ec-reset').click();status=text(c('#ec-status'));ready=page.evaluate("typeof window.echarts==='object'");series=page.evaluate("()=>{const c=echarts.getInstanceByDom(document.getElementById('echart-box'));if(!c)return [];const o=c.getOption();return [o.series[0].data.length,o.series[1].data.length,o.xAxis[0].data.length]}") if ready else [];ok=paused and style=='area' and ((ready and '8 个模拟样本' in status and series==[8,8,8]) or (not ready and (c('.dependency-error,.lib-error,.error-state').count()>0 or '不可用' in text(c('#stage-23')))));desc='simulated chart pauses, changes style, resets and aligns all eight request/error/category points'
                     elif i==25:
                         x=c('.swiper-button-next');before=attr(c('.swiper-wrapper'),'style');x.click();page.wait_for_timeout(200);ok=attr(c('.swiper-wrapper'),'style')!=before;desc='Swiper wrapper translated'
                     elif i==26:
-                        x=c('#embla-next');before=text(c('#embla-dot'));x.click();ok=text(c('#embla-dot'))!=before;desc='Embla slide indicator changed'
+                        xs=[c('#embla-prev'),c('#embla-dot'),c('#embla-next')];centers=[x.bounding_box()['y']+x.bounding_box()['height']/2 for x in xs];aligned=max(centers)-min(centers)<2;x=c('#embla-next');before=text(c('#embla-dot'));x.click();page.wait_for_timeout(220);next_ok=text(c('#embla-dot'))=='2 / 4';c('#embla-prev').click();page.wait_for_timeout(220);back=text(c('#embla-dot'));vp=c('#embla-viewport');vp.focus();page.keyboard.press('ArrowRight');page.wait_for_timeout(260);right=text(c('#embla-dot'))=='2 / 4';page.keyboard.press('ArrowLeft');page.wait_for_timeout(260);left=text(c('#embla-dot'))=='1 / 4';page.keyboard.press('End');page.wait_for_timeout(260);end=text(c('#embla-dot'))=='4 / 4';page.keyboard.press('Home');page.wait_for_timeout(260);home=text(c('#embla-dot'))=='1 / 4';first=text(c('.embla-slide').first);fade=float(c('.embla').evaluate('(e)=>parseFloat(getComputedStyle(e,"::after").width)'));ok=aligned and next_ok and back==before and right and left and end and home and first=='轻量' and fade>=40;desc='Embla buttons, ArrowLeft/Right and Home/End navigate, announce status and reset to a readable first card'
                     elif i==28:
-                        x=c('.seq-cell').first;before=attr(x,'class');x.click();ok=attr(x,'class')!=before;desc='sequencer cell on/off class changed'
+                        x=c('.seq-cell').first;before_cell=attr(x,'class');before_pressed=attr(x,'aria-pressed');x.click();after_cell=attr(x,'class');after_pressed=attr(x,'aria-pressed');edited=before_cell!=after_cell and ('is-on' in after_cell)==(after_pressed=='true') and before_pressed!=after_pressed;c('#seq-play').click();page.wait_for_timeout(430);playing='本地合成播放中' in text(c('#seq-status'));started=page.evaluate('window.__labOscillatorStarts||0');stop_ok=False
+                        if playing:c('#seq-play').click();stop_ok='已停止' in text(c('#seq-status'))
+                        else:item['status']='degraded';item['notes']=['Web Audio was unavailable or blocked in headless Chromium; explicit failure state observed']
+                        action=('edit and play/stop local sequencer audio',edited and ((playing and started>0 and stop_ok) or (not playing and '浏览器未提供可用音频' in text(c('#seq-status')))),'cell toggled; Web Audio oscillator started and playback stopped, or unsupported audio was reported explicitly')
                     elif i==29:
                         x=c('.theme-opt').nth(1);x.click();ok='is-active' in attr(x,'class') and c('.theme-opt.is-active').count()==1;desc='second theme option uniquely active'
                     elif i==32:
@@ -142,19 +168,27 @@ with sync_playwright() as pw:
                     elif i==41:
                         x=c('#anc-toggle');before=attr(x,'aria-expanded');x.click();after=attr(x,'aria-expanded');ok=before!=after or c('#stage-41 .anc-pop:visible').count()>0;desc='anchor popover visibility/expanded state changed'
                     elif i==42:
-                        x=c('#vt-toggle');before=text(x);x.click();after=text(x);ok=before!=after or c('.vt-grid:visible').count()>0;desc='view transition view/output state changed'
+                        x=c('#vt-toggle');before_list='vt-list' in attr(c('#vt-view'),'class');x.click();page.wait_for_timeout(500);after_list='vt-list' in attr(c('#vt-view'),'class');state=text(c('#vt-current'));first_ok=before_list!=after_list and state==('当前：列表视图' if after_list else '当前：网格视图') and text(x)==('切换为网格视图' if after_list else '切换为列表视图')
+                        if after_list:
+                            x.click()
+                        page.wait_for_timeout(500);grid='vt-list' not in attr(c('#vt-view'),'class');final_state=text(c('#vt-current'));ok=first_ok and grid and final_state=='当前：网格视图' and text(x)=='切换为列表视图';desc='list/grid transitions announce current state and leave the screenshot on the three-column grid'
                     elif i==45:
                         x=c('#wk-run');before=text(d);x.click();page.wait_for_timeout(1800);after=text(d);ok=after!=before and ('质数个数' in after or '不支持 Worker' in after or 'Worker 运行出错' in after);desc='worker result or explicit platform error rendered'
                     elif i==49:
                         x=c('#cmdk-open');x.click();mask=page.locator('#cmdk-mask');opened=mask.evaluate('(e)=>e.open');page.locator('#cmdk-input').fill('翻转');page.wait_for_timeout(80);results=page.locator('#cmdk-list').inner_text();ok=opened and ('3D' in results or '翻转' in results);page.locator('#cmdk-close').click();closed=not mask.evaluate('(e)=>e.open');ok=ok and closed;desc='command search returns matching result; dialog closed'
                     elif i==50:
                         x=c('#vs-view');count0=c('#vs-rows').locator('> *').count();x.evaluate('(e)=>{e.scrollTop=6000;e.dispatchEvent(new Event("scroll"))}');page.wait_for_timeout(120);count1=c('#vs-rows').locator('> *').count();action=('scroll virtual list',count0>0 and count1>0,'visible rows rendered before and after scroll');
+                    elif i==34:
+                        primary=c('[data-tw-action="primary"]');secondary=c('[data-tw-action="secondary"]');primary.click();a='主按钮已触发' in text(c('#tw-action-status')) and attr(primary,'aria-pressed')=='true';secondary.click();b='次按钮已触发' in text(c('#tw-action-status')) and attr(secondary,'aria-pressed')=='true';live=c('#tw-live');initial=live.evaluate('(e)=>getComputedStyle(e).backgroundColor');c('#tw-class-input').fill('bg-sky-100 p-6 rounded-lg text-slate-900');page.wait_for_timeout(700);preview=live.evaluate('(e)=>({classes:e.className,bg:getComputedStyle(e).backgroundColor})');action=('activate Tailwind buttons and apply a live utility class',a and b and 'bg-sky-100' in preview['classes'] and preview['bg']!=initial,'both buttons respond and the live preview visibly recompiles the entered classes')
                     elif i in (51,54):
-                        sel='#cmp-range' if i==51 else '#prop-slider';x=c(sel);lo=int(x.get_attribute('min') or 0);hi=int(x.get_attribute('max') or 100);before=x.input_value();value=str(lo+(hi-lo)//2+max(1,(hi-lo)//7));before_swatches=c('#prop-swatches').evaluate('(e)=>({width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height,colors:[...e.children].map(x=>getComputedStyle(x).backgroundColor),widths:[...e.children].map(x=>x.getBoundingClientRect().width)})') if i==54 else None;x.fill(value);page.wait_for_timeout(350 if i==54 else 80);ok=x.input_value()==value and before!=value
-                        if i==51:ok=ok and c('#cmp-wrap').evaluate('(e)=>getComputedStyle(e).getPropertyValue("--p").trim()')==value+'%'
+                        sel='#cmp-range' if i==51 else '#prop-slider';x=c(sel);lo=int(x.get_attribute('min') or 0);hi=int(x.get_attribute('max') or 100);before=x.input_value();value=str(lo+(hi-lo)//2+max(1,(hi-lo)//7));before_swatches=c('#prop-swatches').evaluate('(e)=>({width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height,colors:[...e.children].map(x=>getComputedStyle(x).backgroundColor),widths:[...e.children].map(x=>x.getBoundingClientRect().width)})') if i==54 else None;images=c('.cmp-image').evaluate_all('(xs)=>xs.map(x=>({src:x.currentSrc||x.src,complete:x.complete,width:x.naturalWidth}))') if i==51 else None;fallback_hidden=c('.cmp-fallback-note').evaluate('(e)=>e.hidden') if i==51 else None;x.fill(value);page.wait_for_timeout(350 if i==54 else 80);ok=x.input_value()==value and before!=value
+                        if i==51:
+                            rendered=lambda v:c('#cmp-wrap').evaluate('(e)=>getComputedStyle(e).getPropertyValue("--p").trim()')==v+'%'
+                            ok=ok and len(images)==2 and images[0]['src']==images[1]['src'] and all(z['complete'] and z['width']>0 for z in images) and fallback_hidden and rendered(value)
+                            x.focus();page.keyboard.press('Home');page.wait_for_timeout(50);at0=x.input_value()=='0' and rendered('0');page.keyboard.press('End');page.wait_for_timeout(50);at100=x.input_value()=='100' and rendered('100');page.keyboard.press('ArrowLeft');page.wait_for_timeout(50);arrow=x.input_value()=='99' and rendered('99');x.fill('50');page.wait_for_timeout(50);reset=x.input_value()=='50' and rendered('50');ok=ok and at0 and at100 and arrow and reset
                         else:
                             after_colors=c('#prop-swatches').evaluate('(e)=>[...e.children].map(x=>getComputedStyle(x).backgroundColor)');ok=ok and attr(x,'aria-label')=='色相' and len(before_swatches['colors'])==6 and before_swatches['width']>0 and before_swatches['height']>0 and all(w>0 for w in before_swatches['widths']) and all(a!=b for a,b in zip(before_swatches['colors'],after_colors)) and len(set(after_colors))==6
-                        desc='range within declared min/max and corresponding CSS/render output changed'
+                        desc='shared landscape images decoded, fallback stays hidden, and keyboard reaches 0/100/99 before reset' if i==51 else 'hue slider updates all six visible color swatches to six distinct colors'
                     elif i==55:
                         before=c('#undo-list .undo-remove').count();x=c('#undo-list .undo-remove').first;x.click();removed=c('#undo-list .undo-remove').count()==before-1;status=text(c('#undo-status'));c('#undo-last').click();restored=c('#undo-list .undo-remove').count()==before;action=('remove then undo list item',removed and bool(status) and restored,'list count removed/restored and live status updated')
                     else:
@@ -165,13 +199,20 @@ with sync_playwright() as pw:
                 elif i==40:
                     x=c('#cq-range');lo=int(x.get_attribute('min') or 0);hi=int(x.get_attribute('max') or 100);v=str(lo+(hi-lo)//2);before=x.input_value();x.fill(v);page.wait_for_timeout(50);action=('set container-query slider within declared range',x.input_value()==v and before!=v,'range value changed within actual min/max; responsive style sampled');item['observed']['range_style']=d.locator('.cq-card').first.evaluate('(e)=>getComputedStyle(e).gridTemplateColumns') if d.locator('.cq-card').count() else None
                 elif i==43:
-                    x=c('#cl-copy');x.click();page.wait_for_timeout(120);status=text(c('#cl-out'));supported=page.evaluate('!!navigator.clipboard?.writeText');item['capability_outcome']={'clipboardWriteApi':supported,'status':status};item['status']='degraded';action=('clipboard action with denied/unavailable permission captured',True,'platform permission/result explicitly recorded; no clipboard success claimed')
+                    x=c('#cl-copy');x.click();page.wait_for_timeout(120);status=text(c('#cl-out'));supported=page.evaluate('!!navigator.clipboard?.writeText');copied=supported and '已复制' in status and '失败' not in status;item['capability_outcome']={'clipboardWriteApi':supported,'status':status};
+                    if not copied:item['status']='degraded';item['notes']=['clipboard API unavailable or denied; visible result recorded without success claim']
+                    action=('clipboard action with denied/unavailable permission captured',True,'current clipboard outcome recorded; no success claimed when denied')
                 elif i==44:
                     before=text(c('#sp-status'));c('#sp-stop').click();after=text(c('#sp-status'));action=('speech stop path',bool(c('#sp-stop').count()) and (before==after or after!=''),'stop control invoked without claiming audio playback')
                 elif i==46:
-                    x=c('#fs-toggle');x.click();page.wait_for_timeout(80);status=text(c('#fs-status'));fullscreen=page.evaluate('!!document.fullscreenElement');item['capability_outcome']={'fullscreenElement':fullscreen,'status':status,'requestFullscreen':page.evaluate('typeof document.documentElement.requestFullscreen')};item['status']='degraded';action=('fullscreen API attempted; permission outcome recorded',True,'platform capability/status recorded; not claimed as universally successful')
+                    x=c('#fs-toggle');x.click();page.wait_for_timeout(80);status=text(c('#fs-status'));fullscreen=page.evaluate('!!document.fullscreenElement');item['capability_outcome']={'fullscreenElement':fullscreen,'status':status,'requestFullscreen':page.evaluate('typeof document.documentElement.requestFullscreen')};
+                    if not fullscreen:item['status']='degraded';item['notes']=['fullscreen capability rejected or unavailable; visible platform outcome recorded']
+                    else:page.keyboard.press('Escape');page.wait_for_timeout(40)
+                    action=('fullscreen API attempted; permission outcome recorded',True,'platform capability/status recorded; fullscreen exited after successful verification')
                 elif i==47:
-                    x=c('#share-run');x.click();page.wait_for_timeout(250);status=text(c('#share-status'));item['capability_outcome']={'share':page.evaluate('typeof navigator.share'),'status':status};item['status']='degraded';action=('share API attempted; platform outcome recorded',True,'native share availability/result recorded, no share success claimed')
+                    x=c('#share-run');x.click();page.wait_for_timeout(250);status=text(c('#share-status'));share=page.evaluate('typeof navigator.share');item['capability_outcome']={'share':share,'status':status};
+                    if share!='function' or '无法' in status:item['status']='degraded';item['notes']=['system share API unavailable; app exposed copy-link fallback']
+                    action=('share API attempted; platform outcome recorded',True,'native share availability/result recorded; no unsupported share success claimed')
                 elif i==48:
                     x=c('#dlg-open');x.click();opened=c('#dlg-demo').evaluate('(e)=>e.open');c('#dlg-demo form button').click();closed=not c('#dlg-demo').evaluate('(e)=>e.open');p=c('#dlg-pop-btn');p.click();pop=c('#dlg-pop').evaluate('(e)=>e.matches(":popover-open")');page.keyboard.press('Escape');popclosed=not c('#dlg-pop').evaluate('(e)=>e.matches(":popover-open")');action=('open/close dialog and popover',opened and closed and pop and popclosed,'both native modal/popover opened and closed')
                 elif i==52:
@@ -190,7 +231,12 @@ with sync_playwright() as pw:
                         action=('rendered content inspection',present>0,'content payload verified')
                 item['actions'].append({'selector':action[0],'assertion':bool(action[1]),'result':action[2]})
                 if not action[1]:raise AssertionError('observable behavior assertion failed: '+action[2])
-                item['observed']['live_regions']=d.locator('[aria-live],[role=status],[role=alert]').all_inner_texts()
+                if i in (6,15,20,21,22,23,26,28,34,42,51,53,54):
+                    shot=SHOTS/f'g3-demo-{i:02d}.png';page.set_default_timeout(20000)
+                    try:d.locator('.stage').first.screenshot(path=str(shot),timeout=20000)
+                    finally:page.set_default_timeout(2500)
+                    report['demo_screenshots'][str(i)]=str(shot)
+                item['observed']['live_regions']=d.locator('[aria-live],[role=status],[role=alert]').evaluate_all('(xs)=>xs.filter(e=>!e.hidden&&e.getAttribute("aria-hidden")!=="true"&&getComputedStyle(e).display!=="none"&&getComputedStyle(e).visibility!=="hidden"&&e.getClientRects().length>0).map(e=>e.innerText)')
                 item['observed']['inputs']=d.locator('input').evaluate_all('(xs)=>xs.map(x=>({id:x.id,type:x.type,value:x.value,checked:x.checked,disabled:x.disabled}))')
                 item['observed']['selected_tabs']=d.locator('[role=tab][aria-selected="true"],.tab-btn.is-active,.theme-opt.is-active').all_inner_texts()
             except Exception as e:

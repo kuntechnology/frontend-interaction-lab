@@ -29,10 +29,13 @@ const html = fs.readFileSync(dist, 'utf8');
 const bytes = Buffer.byteLength(html, 'utf8');
 const gzip = zlib.gzipSync(Buffer.from(html, 'utf8'), { level: 9 }).length;
 const count = (re) => (html.match(re) || []).length;
+// 独立复核冻结预算（十进制 byte；gzip -9）。
+const BUDGET_RAW = 1_000_000;
+const BUDGET_GZIP = 250_000;
 
 // 1 体积
-check('体积 raw ≤ 300KB', bytes <= 300 * 1024, `${(bytes / 1024).toFixed(1)}KB`);
-check('体积 gzip ≤ 75KB', gzip <= 75 * 1024, `${(gzip / 1024).toFixed(1)}KB`);
+check('体积 raw ≤ 1,000,000 B', bytes <= BUDGET_RAW, `${bytes} B`);
+check('体积 gzip-9 ≤ 250,000 B', gzip <= BUDGET_GZIP, `${gzip} B`);
 
 // 2 结构完整
 check('以 doctype 开头', /^<!DOCTYPE html>/i.test(html));
@@ -65,7 +68,7 @@ check('#home-link 唯一', count(/id="home-link"/g) === 1, `${count(/id="home-li
 check('有 meta description', /name="description"\s+content="[^"]{40,}"/.test(html));
 
 console.log(`产物 ${path.relative(root, dist)}`);
-console.log(`  raw ${(bytes / 1024).toFixed(1)} KB / gzip ${(gzip / 1024).toFixed(1)} KB / demo ${demos} 个`);
+console.log(`  raw ${bytes} B / gzip-9 ${gzip} B / demo ${demos} 个 · budget ${BUDGET_RAW} / ${BUDGET_GZIP} B`);
 
 if (fail.length) {
     console.error('\n校验失败 ' + fail.length + ' 项：');
