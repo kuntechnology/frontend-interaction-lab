@@ -48,14 +48,18 @@ check('无 fetch 分片', !/fetchBuf\(|fetch\('parts/.test(html));
 
 // 4 内容完整（这是本次改造的核心收益：无 JS 也能读到全部内容）
 const demos = new Set([...html.matchAll(/id="demo-(\d{2})"/g)].map((m) => m[1])).size;
-check('demo 数量 = 56', demos === 56, `实际 ${demos}`);
+check('demo 数量 = 61', demos === 61, `实际 ${demos}`);
 check('有正文标题层级', count(/<h3>/g) >= demos, `h3 ${count(/<h3>/g)} 个 / demo ${demos} 个`);
 check('有 noscript 或静态正文', /<section class="demo"/.test(html));
 
 // 4b SEO 基建随产物一起发布
-['robots.txt', 'sitemap.xml', '404.html'].forEach((f) => {
+['robots.txt', 'sitemap.xml', '404.html', 'assets/media/connect.webm', 'assets/media/play.webm', 'assets/media/remote-zh.vtt'].forEach((f) => {
     check(`dist/${f} 存在`, fs.existsSync(path.join(root, 'dist', f)));
 });
+check('dist/uu.html 已移除', !fs.existsSync(path.join(root, 'dist', 'uu.html')));
+check('首页没有 UU 专题入口或品牌文案', !/UU\s*(专题|远程体验)|\.\/uu\.html/i.test(html));
+const sitemap = fs.readFileSync(path.join(root, 'dist', 'sitemap.xml'), 'utf8');
+check('sitemap 只声明实验室主页', (sitemap.match(/<loc>/g) || []).length === 1 && !/uu\.html/i.test(sitemap));
 
 // 5 外部依赖与快照一致
 const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'tools/deps.snapshot.json'), 'utf8')).urls;

@@ -19,3 +19,49 @@
 @media(max-width:360px){.lab-shell .topbar.lab-header{padding-left:14px;padding-right:14px}.lab-shell .intro.lab-intro h2{font-size:44px}.lab-shell .lab-header h1{font-size:12px}.lab-shell .lab-brand{gap:7px}}
 
 .lab-shell .intro h2::after{display:none}.lab-shell .filter-bar button{min-height:44px}.lab-shell .filter-bar{scrollbar-width:thin;scrollbar-color:var(--lab-line) transparent}html[data-accent]:not([data-accent="orange"]){--lab-accent:var(--accent-deep);--lab-accent-ink:var(--bg)}
+/* ===== G2 responsive directory filtering and sort ===== */
+.lab-shell .filter-bar{display:flex;align-items:center;gap:10px;overflow:visible}
+.lab-shell .filter-chips{display:flex;align-items:center;gap:8px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}
+.lab-shell .filter-chips::-webkit-scrollbar{height:4px}.lab-shell .filter-chips::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px}
+.lab-shell .filter-chips .fb-btn{min-height:44px}
+.lab-shell .directory-sort{display:flex;align-items:center;gap:6px;flex:none;color:var(--ink-2);font-size:12px;white-space:nowrap}
+.lab-shell .directory-sort select{max-width:148px;min-height:44px;padding:6px 24px 6px 9px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink);font:12px var(--font-ui)}
+@media(max-width:1080px){
+  .lab-shell .rail{position:sticky;top:56px;z-index:42;height:74px;min-height:74px;padding:6px 16px 4px;background:var(--bg);overflow:hidden}
+  .lab-shell .rail .lab-rail-hint{display:flex;align-items:center;justify-content:space-between;height:16px;margin:0 6px 4px;color:var(--ink-2);font-size:10px;line-height:1.2}
+  .lab-shell .rail nav{display:flex;align-items:center;gap:6px;height:44px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;white-space:nowrap}
+  .lab-shell .rail-link{display:inline-flex;align-items:center;min-height:42px;padding:5px 10px}
+  .lab-shell .filter-bar{top:130px}
+  .lab-shell .demo{scroll-margin-top:204px}
+}
+@media(max-width:700px){
+  .lab-shell .rail{top:118px;height:72px;min-height:72px;padding:5px 14px 4px}
+  .lab-shell .rail .lab-rail-hint{height:15px;margin:0 4px 4px;font-size:9px}
+  .lab-shell .rail nav{height:42px}
+  .lab-shell .filter-bar{top:190px;gap:6px;padding-top:8px;padding-bottom:8px}
+  .lab-shell .directory-sort{gap:4px;font-size:11px}
+  .lab-shell .directory-sort select{max-width:122px;padding-left:6px;font-size:11px}
+  .lab-shell .demo{scroll-margin-top:250px}
+}
+@media(max-width:700px){
+  .lab-shell .filter-bar{flex-wrap:wrap;row-gap:6px}
+  .lab-shell .filter-chips{flex:1 1 100%;width:100%}
+  .lab-shell .directory-sort{flex:1 1 100%;width:100%;justify-content:flex-end}
+  .lab-shell .rail-link{min-height:44px}
+}
+@media(max-width:360px){
+  .lab-shell .filter-bar{gap:4px}
+  .lab-shell .filter-chips{gap:6px}
+  .lab-shell .topbar.lab-header{height:auto;min-height:118px;align-content:flex-start;gap:7px 6px}
+  .lab-shell .lab-brand{order:0;gap:5px;max-width:116px}
+  .lab-shell .lab-mark{width:28px;height:30px;line-height:30px;font-size:22px}
+  .lab-shell .lab-header h1{font-size:11px;white-space:nowrap}
+  .lab-shell .lab-command-trigger{order:1;margin-left:0}
+  .lab-shell .lab-appearance{order:2}
+  .lab-shell .lab-header .search-box{order:3;flex:1 1 100%;width:100%;max-width:none}
+  .lab-shell .directory-sort select{max-width:108px}
+}
+@media(max-width:700px){
+  .lab-shell .lab-header .search-box{height:44px}
+  .lab-shell .lab-header .search-box input{min-height:44px;height:44px}
+}

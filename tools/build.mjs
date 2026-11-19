@@ -23,7 +23,7 @@ const OUT_DIR = path.join(root, 'dist');
 const OUT = path.join(OUT_DIR, 'index.html');
 
 /* 演示总数：新增 demo 时只改这一处，断言失败信息会告诉你改哪 */
-const DEMO_TOTAL = 56;
+const DEMO_TOTAL = 61;
 /* 用户批准的候选体积预算：十进制 byte，gzip -9。 */
 const BUDGET_RAW = 1_000_000;
 const BUDGET_GZIP = 250_000;
@@ -52,6 +52,8 @@ notes.push(`已内联 inject.html（${(inject.length / 1024).toFixed(1)} KB）`)
 
 /* ---------- 3. 写产物 ---------- */
 fs.mkdirSync(OUT_DIR, { recursive: true });
+const staleUuPage = path.join(OUT_DIR, 'uu.html');
+if (fs.existsSync(staleUuPage)) fs.unlinkSync(staleUuPage);
 fs.writeFileSync(OUT, html, 'utf8');
 fs.writeFileSync(path.join(root, 'index.html'), html, 'utf8');
 const nojekyll = path.join(root, '.nojekyll');
@@ -61,6 +63,12 @@ const distAssets = path.join(OUT_DIR, 'assets');
 fs.mkdirSync(distAssets, { recursive: true });
 fs.copyFileSync(demo51Image, path.join(distAssets, 'demo51-landscape.webp'));
 notes.push('已复制第51项本地风景图至 dist/assets');
+const mediaSource = path.join(root, 'assets/media');
+const mediaFiles = fs.readdirSync(mediaSource).filter((name) => /\.(webm|vtt)$/i.test(name));
+const distMedia = path.join(distAssets, 'media');
+fs.mkdirSync(distMedia, { recursive: true });
+for (const name of mediaFiles) fs.copyFileSync(path.join(mediaSource, name), path.join(distMedia, name));
+notes.push(`已复制 #61 通用视频演示的 ${mediaFiles.length} 个本地媒体/字幕资源至 dist/assets/media`);
 
 /* ---------- 3b. SEO 基建：robots / sitemap / 404 ----------
    改前这三样都不存在（线上 404），搜索与分享基本没有抓手。
@@ -178,7 +186,7 @@ const jsDemos = uniqIds.filter((n) => scriptRegion.includes('/* ===== ' + n + ' 
 notes.push(`代码切片覆盖: CSS ${cssDemos}/${uniqIds.length} · JS ${jsDemos}/${uniqIds.length}`);
 if (cssDemos < 29) fail(`A14 可切片的 CSS 跌到 ${cssDemos} 个（基线 29），复制代码功能退化`);
 if (jsDemos < 46) fail(`A14 可切片的 JS 跌到 ${jsDemos} 个（基线 46），复制代码功能退化`);
-for (const no of ['55', '56']) {
+for (const no of ['55', '56', '57', '58', '59', '60', '61']) {
     if (!styleRegion.includes('/* ===== ' + no + ' ') || !scriptRegion.includes('/* ===== ' + no + ' ')) fail(`A14 新演示 ${no} 缺少 CSS / JS 复制标记`);
 }
 
